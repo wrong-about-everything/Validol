@@ -4,9 +4,11 @@ public interface Result<T>
 {
     public Boolean isSuccessful();
 
-    public T value();
+    public T value() throws Exception;
+
+    public String error() throws Exception;
 
     public Boolean isNamed();
 
-    public String name();
+    public String name() throws Exception;
 }

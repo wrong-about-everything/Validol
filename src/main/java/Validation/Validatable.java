@@ -4,5 +4,5 @@ import Validation.Result.Result;
 
 public interface Validatable<T>
 {
-    public Result<T> result();
+    public Result<T> result() throws Exception;
 }

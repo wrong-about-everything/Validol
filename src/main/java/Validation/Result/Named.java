@@ -1,28 +1,41 @@
 package Validation.Result;
 
+import com.spencerwi.either.Either;
+
 public class Named<T> implements Result<T>
 {
     private String name;
-    private T value;
-    private Boolean successful;
+    private Either<String, T> value;
 
-    public Named(String name, T value, Boolean successful)
+    public Named(String name, Either<String, T> value)
     {
         this.name = name;
         this.value = value;
-        this.successful = successful;
     }
 
     @Override
     public Boolean isSuccessful()
     {
-        return this.successful;
+        return this.value.isRight();
     }
 
     @Override
-    public T value()
+    public T value() throws Exception
     {
-        return this.value;
+        if (!this.isSuccessful()) {
+            throw new Exception("No value exists on a non-successful element");
+        }
+
+        return this.value.getRight();
+    }
+
+    @Override
+    public String error() throws Exception {
+        if (!this.isSuccessful()) {
+            throw new Exception("No value exists on a non-successful element");
+        }
+
+        return this.value.getLeft();
     }
 
     @Override
@@ -32,7 +45,7 @@ public class Named<T> implements Result<T>
     }
 
     @Override
-    public String name()
+    public String name() throws Exception
     {
         return this.name;
     }
