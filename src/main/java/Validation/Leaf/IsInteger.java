@@ -5,24 +5,26 @@ import Validation.Result.Named;
 import Validation.Validatable;
 import com.spencerwi.either.Either;
 
-public class IsInteger<T> implements Validatable<T>
+public class IsInteger<Integer> implements Validatable<Integer>
 {
-    private Validatable<T> original;
+    private Validatable<Integer> original;
 
-    public IsInteger(Validatable<T> original)
+    public IsInteger(Validatable<Integer> original)
     {
         this.original = original;
     }
 
-    public Result<T> result() throws Exception
+    public Result<Integer> result() throws Exception
     {
-        Result<T> prevResult = this.original.result();
+        Result<Integer> prevResult = this.original.result();
 
         if (!prevResult.isSuccessful()) {
             return prevResult;
         }
 
-        if (!Integer.valueOf(Integer.parseInt(prevResult.value().toString())).toString().equals(prevResult.value().toString())) {
+        try {
+            java.lang.Integer.parseInt(prevResult.value().toString());
+        } catch (NumberFormatException e) {
             return new Named<>(prevResult.name(), Either.left("This value must be an integer."));
         }
 

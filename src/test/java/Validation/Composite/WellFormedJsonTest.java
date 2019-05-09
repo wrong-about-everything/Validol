@@ -1,50 +1,58 @@
 package Validation.Composite;
 
 import Validation.Leaf.Named;
+import Validation.Result.Result;
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import com.spencerwi.either.Either;
 import org.junit.Test;
-
-import java.util.LinkedList;
-import java.util.List;
-
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import java.util.HashMap;
+import static org.junit.Assert.*;
 
 public class WellFormedJsonTest
 {
     @Test
     public void invalidJson() throws Exception
     {
-        assertFalse(
+        Result<JsonObject> result =
             (new WellFormedJson(
                 new Named<>("vasya", Either.right("invalid json"))
             ))
-                .result()
-                    .isSuccessful()
-        );
+                .result();
+
+        assertFalse(result.isSuccessful());
+        assertEquals("This is an invalid json", result.error());
     }
 
     @Test
     public void wellFormedJson() throws Exception
     {
-        assertTrue(
+        Result<JsonObject> result =
             (new WellFormedJson(
-                new Named<>("vasya", Either.right(this.json()))
+                    new Named<>("vasya", Either.right(this.json()))
             ))
-                .result()
-                    .isSuccessful()
-        );
+                .result();
+
+        assertTrue(result.isSuccessful());
+        assertEquals("{\"fedya\":\"vasiliev\",\"valera\":{\"lesha\":\"letyagin\"},\"vasya\":1,\"tolya\":false}", result.value().toString());
+        assertEquals(1, result.value().get("vasya").getAsInt());
+        assertEquals("vasiliev", result.value().get("fedya").getAsString());
+        assertEquals("{\"lesha\":\"letyagin\"}", result.value().get("valera").toString());
+        assertEquals("letyagin", result.value().get("valera").getAsJsonObject().get("lesha").getAsString());
+        assertEquals(false, result.value().get("tolya").getAsBoolean());
     }
 
     private String json()
     {
-        List<String> target = new LinkedList<>();
-        target.add("vasya");
-        target.add("fedya");
+        HashMap<String, Object> target = new HashMap<>();
+        target.put("vasya", 1);
+        target.put("fedya", "vasiliev");
+        target.put("tolya", false);
+        HashMap<String, Object> inner = new HashMap<>();
+        inner.put("lesha", "letyagin");
+        target.put("valera", inner);
 
-        Gson gson = new Gson();
-        return gson.toJson(target, new TypeToken<List<String>>() {}.getType());
+        return new Gson().toJson(target, new TypeToken<HashMap<String, Object>>() {}.getType());
     }
 }

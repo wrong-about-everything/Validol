@@ -31,8 +31,8 @@ public class Named<T> implements Result<T>
 
     @Override
     public String error() throws Exception {
-        if (!this.isSuccessful()) {
-            throw new Exception("No value exists on a non-successful element");
+        if (this.isSuccessful()) {
+            throw new Exception("No error exists on a successful element");
         }
 
         return this.value.getLeft();
