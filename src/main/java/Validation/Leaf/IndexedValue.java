@@ -3,28 +3,27 @@ package Validation.Leaf;
 import Validation.Result.Named;
 import Validation.Result.Result;
 import Validation.Validatable;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.spencerwi.either.Either;
 
-import java.util.List;
-import java.util.Map;
-
-public class IndexedValue<T> implements Validatable<T>
+public class IndexedValue implements Validatable<JsonElement>
 {
     private String name;
-    private Map<String, T> data;
+    private JsonObject json;
 
-    public IndexedValue(String name, Map<String, T> data)
+    public IndexedValue(String name, JsonObject json)
     {
         this.name = name;
-        this.data = data;
+        this.json = json;
     }
 
-    public Result<T> result()
+    public Result<JsonElement> result()
     {
-        if (!this.data.containsKey(this.name)) {
+        if (!this.json.has(this.name)) {
             return new Named<>(this.name, Either.left(String.format("Key %s does not exist", this.name)));
         }
 
-        return new Named<>(this.name, Either.right(this.data.get(this.name)));
+        return new Named<>(this.name, Either.right(this.json.get(this.name)));
     }
 }

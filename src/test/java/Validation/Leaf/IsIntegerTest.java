@@ -10,7 +10,7 @@ public class IsIntegerTest
     @Test
     public void nonSuccessful() throws Exception
     {
-        IsInteger<?> named = new IsInteger<>(new Named<>("vasya", Either.right("miliy")));
+        IsInteger named = new IsInteger(new Named<String>("vasya", Either.right("miliy")));
 
         assertFalse(named.result().isSuccessful());
         assertEquals("vasya", named.result().name());
@@ -20,10 +20,10 @@ public class IsIntegerTest
     @Test
     public void successful() throws Exception
     {
-        IsInteger<?> named = new IsInteger<>(new Named<>("vasya", Either.right(666)));
+        IsInteger named = new IsInteger(new Named<>("vasya", Either.right(666)));
 
         assertTrue(named.result().isSuccessful());
         assertEquals("vasya", named.result().name());
-        assertEquals(666, named.result().value());
+        assertEquals(Integer.valueOf(666), named.result().value());
     }
 }

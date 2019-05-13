@@ -33,7 +33,7 @@ public class WellFormedJson implements Validatable<JsonObject>
                     Either.right(
                         new JsonParser().parse(originalResult.value())
                             .getAsJsonObject()
-                        )
+                    )
                 );
         } catch(JsonSyntaxException ex) {
             return new Named<>(originalResult.name(), Either.left("This is an invalid json"));
