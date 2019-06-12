@@ -3,7 +3,6 @@ package Validation.Composite;
 import Validation.Result.Named;
 import Validation.Result.Result;
 import Validation.Validatable;
-import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;

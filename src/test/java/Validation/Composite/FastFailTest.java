@@ -4,8 +4,6 @@ import Validation.Result.Result;
 import com.spencerwi.either.Either;
 import org.junit.Test;
 
-import java.util.HashMap;
-
 import static org.junit.Assert.*;
 
 public class FastFailTest
@@ -29,12 +27,12 @@ public class FastFailTest
     {
         Result<?> result =
             (new FastFail<>(
-                () ->new Validation.Result.Named<>("vasya", Either.left("Erronious vasya")),
+                () ->new Validation.Result.Named<>("vasya", Either.left("Erroneous vasya")),
                 belov -> new Validation.Result.Named<>("fedya", Either.right("vasiliev"))
             ))
                 .result();
 
         assertFalse(result.isSuccessful());
-        assertEquals("Erronious vasya", result.error());
+        assertEquals("Erroneous vasya", result.error());
     }
 }

@@ -7,7 +7,6 @@ import com.google.gson.reflect.TypeToken;
 import org.junit.Test;
 
 import java.util.HashMap;
-import java.util.Map;
 
 import static org.junit.Assert.*;
 

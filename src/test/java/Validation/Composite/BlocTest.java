@@ -13,7 +13,7 @@ public class BlocTest {
     @Test
     public void success() throws Exception {
         Result<Team> result =
-            new Bloc<Team>(
+            new Bloc<>(
                 List.of(
                     () -> new Named<>("vasya", Either.right("belov")),
                     () -> new Named<>("fedya", Either.right(7)),
@@ -34,42 +34,6 @@ public class BlocTest {
 
         assertTrue(result.isSuccessful());
 //        assertEquals("vasiliev", result.value());
-    }
-
-    private class Team
-    {
-        private String vasya;
-        private Integer fedya;
-        private Boolean jenya;
-
-        public Team()
-        {
-            this.vasya = "vasya";
-            this.fedya = 666;
-            this.jenya = false;
-        }
-
-        public Team(String vasya, Integer fedya, Boolean jenya)
-        {
-            this.vasya = vasya;
-            this.fedya = fedya;
-            this.jenya = jenya;
-        }
-
-        public String vasya()
-        {
-            return this.vasya;
-        }
-
-        public Integer fedya()
-        {
-            return this.fedya;
-        }
-
-        public Boolean jenya()
-        {
-            return this.jenya;
-        }
     }
 
     @Test

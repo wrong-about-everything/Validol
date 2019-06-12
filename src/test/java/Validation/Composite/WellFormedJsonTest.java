@@ -7,11 +7,58 @@ import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import com.spencerwi.either.Either;
 import org.junit.Test;
+
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
+
 import static org.junit.Assert.*;
 
 public class WellFormedJsonTest
 {
+    @Test
+    public void experiment() throws Exception
+    {
+        Result<Team> result =
+            (new FastFail<>(
+                new WellFormedJson(
+                    new Named<>("request string", Either.right(this.json()))
+                ),
+                requestString -> {
+                    try {
+                        return
+                            (new Bloc<>(
+                                List.of(
+                                    () -> new Validation.Result.Named<>("vasya", Either.right("belov")),
+                                    () -> new Validation.Result.Named<>("fedya", Either.right(7)),
+                                    () -> new Validation.Result.Named<>("jenya", Either.right(false))
+                                ),
+                                Team.class
+                            ))
+                                .result();
+                    } catch (Exception e) {
+                        // @todo Handle this shit: https://www.baeldung.com/java-lambda-exceptions, 3.2
+                        System.out.println(e.getMessage());
+//                        System.out.println(
+//                            Arrays.stream(e.getStackTrace())
+//                                .map(stackTraceElement -> stackTraceElement.toString())
+//                                .reduce(
+//                                    (stackTraceElement, stackTraceElement2) -> stackTraceElement + "\n" + stackTraceElement2
+//                                )
+//                        );
+                        throw new RuntimeException();
+                    }
+                }
+            ))
+                .result();
+
+
+
+        assertTrue(result.isSuccessful());
+        System.out.println(result.value().fedya());
+//        assertEquals("This is an invalid json", result.error());
+    }
+
     @Test
     public void invalidJson() throws Exception
     {
@@ -30,7 +77,7 @@ public class WellFormedJsonTest
     {
         Result<JsonObject> result =
             (new WellFormedJson(
-                    new Named<>("vasya", Either.right(this.json()))
+                new Named<>("vasya", Either.right(this.json()))
             ))
                 .result();
 
