@@ -1,6 +1,9 @@
 package Validation.Composite;
 
+import Validation.Leaf.AsString;
+import Validation.Leaf.IndexedValue;
 import Validation.Leaf.Named;
+import Validation.Leaf.Required;
 import Validation.Result.Result;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -8,55 +11,67 @@ import com.google.gson.reflect.TypeToken;
 import com.spencerwi.either.Either;
 import org.junit.Test;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-
+import java.util.*;
 import static org.junit.Assert.*;
 
 public class WellFormedJsonTest
 {
     @Test
-    public void experiment() throws Exception
+    public void successfulComplexRequest() throws Exception
     {
-        Result<Team> result =
+        Result<OrderRegistrationRequest> result =
             (new FastFail<>(
                 new WellFormedJson(
                     new Named<>("request string", Either.right(this.json()))
                 ),
-                requestString -> {
+                requestJsonObject -> {
                     try {
                         return
                             (new Bloc<>(
                                 List.of(
-                                    () -> new Validation.Result.Named<>("vasya", Either.right("belov")),
-                                    () -> new Validation.Result.Named<>("fedya", Either.right(7)),
-                                    () -> new Validation.Result.Named<>("jenya", Either.right(false))
+                                    new FastFail<>(
+                                        new Required(
+                                            new IndexedValue("guest", requestJsonObject)
+                                        ),
+                                        guestJsonObject -> {
+                                            try {
+                                                return
+                                                    (new Bloc<>(
+                                                        List.of(
+                                                            new AsString(
+                                                                new Required(
+                                                                    new IndexedValue("email", guestJsonObject)
+                                                                )
+                                                            ),
+                                                            new AsString(
+                                                                new Required(
+                                                                    new IndexedValue("name", guestJsonObject)
+                                                                )
+                                                            )
+                                                        ),
+                                                        Guest.class
+                                                    ))
+                                                        .result();
+                                            } catch (Exception e) {
+                                                throw new RuntimeException();
+                                            }
+                                        }
+                                    )
                                 ),
-                                Team.class
+                                OrderRegistrationRequest.class
                             ))
                                 .result();
                     } catch (Exception e) {
                         // @todo Handle this shit: https://www.baeldung.com/java-lambda-exceptions, 3.2
-                        System.out.println(e.getMessage());
-//                        System.out.println(
-//                            Arrays.stream(e.getStackTrace())
-//                                .map(stackTraceElement -> stackTraceElement.toString())
-//                                .reduce(
-//                                    (stackTraceElement, stackTraceElement2) -> stackTraceElement + "\n" + stackTraceElement2
-//                                )
-//                        );
                         throw new RuntimeException();
                     }
                 }
             ))
                 .result();
 
-
-
         assertTrue(result.isSuccessful());
-        System.out.println(result.value().fedya());
-//        assertEquals("This is an invalid json", result.error());
+        assertEquals("samokhinvadim@gmail.com", result.value().guest().email());
+        assertEquals("Vadim Samokhin", result.value().guest().name());
     }
 
     @Test
@@ -82,23 +97,19 @@ public class WellFormedJsonTest
                 .result();
 
         assertTrue(result.isSuccessful());
-        assertEquals("{\"fedya\":\"vasiliev\",\"valera\":{\"lesha\":\"letyagin\"},\"vasya\":1,\"tolya\":false}", result.value().toString());
-        assertEquals(1, result.value().get("vasya").getAsInt());
-        assertEquals("vasiliev", result.value().get("fedya").getAsString());
-        assertEquals("{\"lesha\":\"letyagin\"}", result.value().get("valera").toString());
-        assertEquals("letyagin", result.value().get("valera").getAsJsonObject().get("lesha").getAsString());
-        assertEquals(false, result.value().get("tolya").getAsBoolean());
+        assertEquals("{\"guest\":{\"name\":\"Vadim Samokhin\",\"email\":\"samokhinvadim@gmail.com\"}}", result.value().toString());
+        assertEquals("{\"name\":\"Vadim Samokhin\",\"email\":\"samokhinvadim@gmail.com\"}", result.value().get("guest").toString());
+        assertEquals("Vadim Samokhin", result.value().get("guest").getAsJsonObject().get("name").getAsString());
+        assertEquals("samokhinvadim@gmail.com", result.value().get("guest").getAsJsonObject().get("email").getAsString());
     }
 
     private String json()
     {
         HashMap<String, Object> target = new HashMap<>();
-        target.put("vasya", 1);
-        target.put("fedya", "vasiliev");
-        target.put("tolya", false);
         HashMap<String, Object> inner = new HashMap<>();
-        inner.put("lesha", "letyagin");
-        target.put("valera", inner);
+        inner.put("email", "samokhinvadim@gmail.com");
+        inner.put("name", "Vadim Samokhin");
+        target.put("guest", inner);
 
         return new Gson().toJson(target, new TypeToken<HashMap<String, Object>>() {}.getType());
     }

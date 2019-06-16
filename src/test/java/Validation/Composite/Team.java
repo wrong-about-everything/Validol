@@ -1,6 +1,6 @@
 package Validation.Composite;
 
-class Team
+public class Team
 {
     private String vasya;
     private Integer fedya;

@@ -1,6 +1,7 @@
 package Validation.Leaf;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonNull;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
@@ -17,9 +18,9 @@ public class IndexedValueTest
     {
         IndexedValue named = new IndexedValue("vasya", this.emptyJson());
 
-        assertFalse(named.result().isSuccessful());
+        assertTrue(named.result().isSuccessful());
         assertEquals("vasya", named.result().name());
-        assertEquals("Key vasya does not exist", named.result().error());
+        assertEquals(JsonNull.INSTANCE, named.result().value());
     }
 
     @Test
