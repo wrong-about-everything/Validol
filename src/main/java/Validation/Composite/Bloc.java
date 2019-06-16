@@ -5,6 +5,7 @@ import Validation.Result.Result;
 import Validation.Validatable;
 import com.spencerwi.either.Either;
 import java.util.List;
+import java.util.stream.Stream;
 
 public class Bloc<T> implements Validatable<T>
 {
@@ -20,16 +21,29 @@ public class Bloc<T> implements Validatable<T>
     public Result<T> result() throws Exception
     {
         // @todo: think about https://www.baeldung.com/gson-deserialization-guide
-        // @todo: validate all validatables!
         // @todo: create non-strictly-type version of Bloc, returning Map<String, Object>
 
-        Object[] arguments =
+
+        // @todo: validate all validatables!
+
+        Stream<Result<?>> results =
             this.validatables.stream().map(
                 (current) -> {
                     try {
-                        return current.result().value();
+                        return current.result();
                     } catch (Exception e) {
                         // @todo Handle this shit: https://www.baeldung.com/java-lambda-exceptions, 3.2
+                        throw new RuntimeException();
+                    }
+                }
+            );
+
+        Object[] arguments =
+            results.map(
+                result -> {
+                    try {
+                        return result.value();
+                    } catch (Exception e) {
                         throw new RuntimeException();
                     }
                 }

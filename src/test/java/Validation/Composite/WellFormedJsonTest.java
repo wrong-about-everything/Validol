@@ -75,6 +75,62 @@ public class WellFormedJsonTest
     }
 
     @Test
+    public void nonSuccessfulComplexRequest() throws Exception
+    {
+        Result<OrderRegistrationRequest> result =
+            (new FastFail<>(
+                new WellFormedJson(
+                    new Named<>("request string", Either.right(this.jsonWithAbsentGuestEmail()))
+                ),
+                requestJsonObject -> {
+                    try {
+                        return
+                            (new Bloc<>(
+                                List.of(
+                                    new FastFail<>(
+                                        new Required(
+                                            new IndexedValue("guest", requestJsonObject)
+                                        ),
+                                        guestJsonObject -> {
+                                            try {
+                                                return
+                                                    (new Bloc<>(
+                                                        List.of(
+                                                            new AsString(
+                                                                new Required(
+                                                                    new IndexedValue("email", guestJsonObject)
+                                                                )
+                                                            ),
+                                                            new AsString(
+                                                                new Required(
+                                                                    new IndexedValue("name", guestJsonObject)
+                                                                )
+                                                            )
+                                                        ),
+                                                        Guest.class
+                                                    ))
+                                                        .result();
+                                            } catch (Exception e) {
+                                                throw new RuntimeException();
+                                            }
+                                        }
+                                    )
+                                ),
+                                OrderRegistrationRequest.class
+                            ))
+                                .result();
+                    } catch (Exception e) {
+                        // @todo Handle this shit: https://www.baeldung.com/java-lambda-exceptions, 3.2
+                        throw new RuntimeException();
+                    }
+                }
+            ))
+                .result();
+
+        assertFalse(result.isSuccessful());
+    }
+
+    @Test
     public void invalidJson() throws Exception
     {
         Result<JsonObject> result =
@@ -108,6 +164,16 @@ public class WellFormedJsonTest
         HashMap<String, Object> target = new HashMap<>();
         HashMap<String, Object> inner = new HashMap<>();
         inner.put("email", "samokhinvadim@gmail.com");
+        inner.put("name", "Vadim Samokhin");
+        target.put("guest", inner);
+
+        return new Gson().toJson(target, new TypeToken<HashMap<String, Object>>() {}.getType());
+    }
+
+    private String jsonWithAbsentGuestEmail()
+    {
+        HashMap<String, Object> target = new HashMap<>();
+        HashMap<String, Object> inner = new HashMap<>();
         inner.put("name", "Vadim Samokhin");
         target.put("guest", inner);
 
