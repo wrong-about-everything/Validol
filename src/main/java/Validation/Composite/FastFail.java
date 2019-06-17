@@ -13,9 +13,9 @@ import java.util.function.Function;
 public class FastFail<T, R> implements Validatable<R>
 {
     private Validatable<T> original;
-    private Function<T, Result<R>> closure;
+    private VFunction<T, Result<R>> closure;
 
-    public FastFail(Validatable<T> validatable, Function<T, Result<R>> closure)
+    public FastFail(Validatable<T> validatable, VFunction<T, Result<R>> closure)
     {
         this.original = validatable;
         this.closure = closure;

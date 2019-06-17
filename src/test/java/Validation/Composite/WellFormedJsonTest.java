@@ -24,48 +24,35 @@ public class WellFormedJsonTest
                 new WellFormedJson(
                     new Named<>("request string", Either.right(this.json()))
                 ),
-                requestJsonObject -> {
-                    try {
-                        return
-                            (new Bloc<>(
-                                List.of(
-                                    new FastFail<>(
-                                        new Required(
-                                            new IndexedValue("guest", requestJsonObject)
-                                        ),
-                                        guestJsonObject -> {
-                                            try {
-                                                return
-                                                    (new Bloc<>(
-                                                        List.of(
-                                                            new AsString(
-                                                                new Required(
-                                                                    new IndexedValue("email", guestJsonObject)
-                                                                )
-                                                            ),
-                                                            new AsString(
-                                                                new Required(
-                                                                    new IndexedValue("name", guestJsonObject)
-                                                                )
-                                                            )
-                                                        ),
-                                                        Guest.class
-                                                    ))
-                                                        .result();
-                                            } catch (Exception e) {
-                                                throw new RuntimeException();
-                                            }
-                                        }
-                                    )
+                requestJsonObject ->
+                    (new Bloc<>(
+                        List.of(
+                            new FastFail<>(
+                                new Required(
+                                    new IndexedValue("guest", requestJsonObject)
                                 ),
-                                OrderRegistrationRequest.class
-                            ))
-                                .result();
-                    } catch (Exception e) {
-                        // @todo Handle this shit: https://www.baeldung.com/java-lambda-exceptions, 3.2
-                        throw new RuntimeException();
-                    }
-                }
+                                guestJsonObject ->
+                                        (new Bloc<>(
+                                            List.of(
+                                                new AsString(
+                                                    new Required(
+                                                        new IndexedValue("email", guestJsonObject)
+                                                    )
+                                                ),
+                                                new AsString(
+                                                    new Required(
+                                                        new IndexedValue("name", guestJsonObject)
+                                                    )
+                                                )
+                                            ),
+                                            Guest.class
+                                        ))
+                                            .result()
+                            )
+                        ),
+                        OrderRegistrationRequest.class
+                    ))
+                        .result()
             ))
                 .result();
 
@@ -82,48 +69,35 @@ public class WellFormedJsonTest
                 new WellFormedJson(
                     new Named<>("request string", Either.right(this.jsonWithAbsentGuestEmail()))
                 ),
-                requestJsonObject -> {
-                    try {
-                        return
-                            (new Bloc<>(
-                                List.of(
-                                    new FastFail<>(
-                                        new Required(
-                                            new IndexedValue("guest", requestJsonObject)
-                                        ),
-                                        guestJsonObject -> {
-                                            try {
-                                                return
-                                                    (new Bloc<>(
-                                                        List.of(
-                                                            new AsString(
-                                                                new Required(
-                                                                    new IndexedValue("email", guestJsonObject)
-                                                                )
-                                                            ),
-                                                            new AsString(
-                                                                new Required(
-                                                                    new IndexedValue("name", guestJsonObject)
-                                                                )
-                                                            )
-                                                        ),
-                                                        Guest.class
-                                                    ))
-                                                        .result();
-                                            } catch (Exception e) {
-                                                throw new RuntimeException();
-                                            }
-                                        }
-                                    )
+                requestJsonObject ->
+                    (new Bloc<>(
+                        List.of(
+                            new FastFail<>(
+                                new Required(
+                                    new IndexedValue("guest", requestJsonObject)
                                 ),
-                                OrderRegistrationRequest.class
-                            ))
-                                .result();
-                    } catch (Exception e) {
-                        // @todo Handle this shit: https://www.baeldung.com/java-lambda-exceptions, 3.2
-                        throw new RuntimeException();
-                    }
-                }
+                                guestJsonObject ->
+                                    (new Bloc<>(
+                                        List.of(
+                                            new AsString(
+                                                new Required(
+                                                    new IndexedValue("email", guestJsonObject)
+                                                )
+                                            ),
+                                            new AsString(
+                                                new Required(
+                                                    new IndexedValue("name", guestJsonObject)
+                                                )
+                                            )
+                                        ),
+                                        Guest.class
+                                    ))
+                                        .result()
+                            )
+                        ),
+                        OrderRegistrationRequest.class
+                    ))
+                        .result()
             ))
                 .result();
 

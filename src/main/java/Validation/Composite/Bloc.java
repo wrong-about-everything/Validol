@@ -4,6 +4,8 @@ import Validation.Result.Named;
 import Validation.Result.Result;
 import Validation.Validatable;
 import com.spencerwi.either.Either;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -27,21 +29,20 @@ public class Bloc<T> implements Validatable<T>
         // @todo: validate all validatables!
 
         Stream<Result<?>> results =
-            this.validatables.stream().map(
-                (current) -> {
-                    try {
-                        return current.result();
-                    } catch (Exception e) {
-                        // @todo Handle this shit: https://www.baeldung.com/java-lambda-exceptions, 3.2
-                        throw new RuntimeException();
-                    }
-                }
-            );
+            this.validatables.stream()
+                .map((current) -> new ValidatableThrowingUncheckedException<>(current))
+                .map((current) -> current.result());
 
-        Object[] arguments =
+        List<String> errors = new ArrayList<>();
+
+        Object[] validatableValues =
             results.map(
                 result -> {
                     try {
+                        // @todo Introduce Result throwing unchecked exception
+//                        if () {
+//
+//                        }
                         return result.value();
                     } catch (Exception e) {
                         throw new RuntimeException();
@@ -53,7 +54,7 @@ public class Bloc<T> implements Validatable<T>
             new Named<>(
                 "vasya",
                 Either.right(
-                    this.clazzObjectWithCorrectNumberOfArguments(arguments)
+                    this.clazzObjectWithCorrectNumberOfArguments(validatableValues)
                 )
             );
     }
