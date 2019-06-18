@@ -5,9 +5,9 @@ import com.spencerwi.either.Either;
 public class Named<T> implements Result<T>
 {
     private String name;
-    private Either<String, T> value;
+    private Either<Object, T> value;
 
-    public Named(String name, Either<String, T> value)
+    public Named(String name, Either<Object, T> value)
     {
         this.name = name;
         this.value = value;
@@ -30,7 +30,7 @@ public class Named<T> implements Result<T>
     }
 
     @Override
-    public String error() throws Exception {
+    public Object error() throws Exception {
         if (this.isSuccessful()) {
             throw new Exception("No error exists on a successful element");
         }

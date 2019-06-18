@@ -27,19 +27,59 @@ public class Bloc<T> implements Validatable<T>
 
 
         // @todo: validate all validatables!
+        // @todo: replace List of error with Map of errors, so that we output field names
 
         Stream<Result<?>> results =
             this.validatables.stream()
                 .map((current) -> new ValidatableThrowingUncheckedException<>(current))
                 .map((current) -> current.result());
 
-        List<String> errors = new ArrayList<>();
+        List<List<Object>> initialValuesAndErrors = List.of(new ArrayList<>(), new ArrayList<>());
+
+        List<List<Object>> valuesOrErrors =
+                results.reduce(
+                        initialValuesAndErrors,
+                        (currentValuesAndErrors, currentResult) -> {
+                            try {
+                                if (!currentResult.isSuccessful()) {
+                                    List<Object> newErrors = new ArrayList<>();
+                                    newErrors.addAll(currentValuesAndErrors.get(1));
+                                    newErrors.addAll(List.of(currentResult.error()));
+                                    return List.of(List.of(), newErrors);
+                                } else {
+                                    List<Object> newValues = new ArrayList<>();
+                                    newValues.addAll(currentValuesAndErrors.get(0));
+                                    newValues.addAll(List.of(currentResult.value()));
+
+                                    return List.of(newValues, List.of());
+                                }
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                                throw new RuntimeException(e);
+                            }
+                        },
+                        (accumulativeValuesAndErrors, currentValuesAndErrors) -> {
+                            List<Object> values = new ArrayList<>();
+                            values.addAll(accumulativeValuesAndErrors.get(0));
+                            values.addAll(currentValuesAndErrors.get(0));
+                            accumulativeValuesAndErrors.set(0, values);
+
+                            List<Object> errors = new ArrayList<>();
+                            errors.addAll(accumulativeValuesAndErrors.get(1));
+                            errors.addAll(currentValuesAndErrors.get(1));
+                            accumulativeValuesAndErrors.set(1, errors);
+
+                            return accumulativeValuesAndErrors;
+                        }
+                );
+
+        System.out.println(valuesOrErrors);
 
         Object[] validatableValues =
             results.map(
                 result -> {
                     try {
-                        // @todo Introduce Result throwing unchecked exception
+                        // @todo Introduce Result wrapper throwing unchecked exception
 //                        if () {
 //
 //                        }

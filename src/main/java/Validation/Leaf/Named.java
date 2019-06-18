@@ -7,9 +7,9 @@ import com.spencerwi.either.Either;
 public class Named<T> implements Validatable<T>
 {
     private String name;
-    private Either<String, T> value;
+    private Either<Object, T> value;
 
-    public Named(String name, Either<String, T> value)
+    public Named(String name, Either<Object, T> value)
     {
         this.name = name;
         this.value = value;

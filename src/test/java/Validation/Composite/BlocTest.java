@@ -28,4 +28,23 @@ public class BlocTest
         assertEquals(Integer.valueOf(7), result.value().fedya());
         assertEquals(false, result.value().jenya());
     }
+
+    @Test
+    public void someFieldsFailed() throws Exception {
+        Result<Team> result =
+            new Bloc<>(
+                List.of(
+                    () -> new Named<>("vasya", Either.right("belov")),
+                    () -> new Named<>("fedya", Either.left("Ooops")),
+                    () -> new Named<>("jenya", Either.right(false))
+                ),
+                Team.class
+            )
+                .result();
+
+        assertFalse(result.isSuccessful());
+        assertEquals("belov", result.value().vasya());
+        assertEquals(Integer.valueOf(7), result.value().fedya());
+        assertEquals(false, result.value().jenya());
+    }
 }
