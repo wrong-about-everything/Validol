@@ -45,13 +45,13 @@ public class Bloc<T> implements Validatable<T>
                                     List<Object> newErrors = new ArrayList<>();
                                     newErrors.addAll(currentValuesAndErrors.get(1));
                                     newErrors.addAll(List.of(currentResult.error()));
-                                    return List.of(List.of(), newErrors);
+                                    return List.of(currentValuesAndErrors.get(0), newErrors);
                                 } else {
                                     List<Object> newValues = new ArrayList<>();
                                     newValues.addAll(currentValuesAndErrors.get(0));
                                     newValues.addAll(List.of(currentResult.value()));
 
-                                    return List.of(newValues, List.of());
+                                    return List.of(newValues, currentValuesAndErrors.get(1));
                                 }
                             } catch (Exception e) {
                                 e.printStackTrace();
@@ -73,28 +73,15 @@ public class Bloc<T> implements Validatable<T>
                         }
                 );
 
-        System.out.println(valuesOrErrors);
-
-        Object[] validatableValues =
-            results.map(
-                result -> {
-                    try {
-                        // @todo Introduce Result wrapper throwing unchecked exception
-//                        if () {
-//
-//                        }
-                        return result.value();
-                    } catch (Exception e) {
-                        throw new RuntimeException();
-                    }
-                }
-            ).toArray();
+        if (valuesOrErrors.get(1).size() > 0) {
+            return new Named<>("vasya", Either.left(valuesOrErrors.get(1)));
+        }
 
         return
             new Named<>(
                 "vasya",
                 Either.right(
-                    this.clazzObjectWithCorrectNumberOfArguments(validatableValues)
+                    this.clazzObjectWithCorrectNumberOfArguments(valuesOrErrors.get(0).toArray())
                 )
             );
     }

@@ -19,6 +19,10 @@ public class AsString implements Validatable<String>
     {
         Result<JsonElement> result = this.validatable.result();
 
+        if (!result.isSuccessful()) {
+            return new Named<>(result.name(), Either.left(result.error()));
+        }
+
         if (!result.value().isJsonPrimitive()) {
             // @todo: informative message
             throw new Exception();

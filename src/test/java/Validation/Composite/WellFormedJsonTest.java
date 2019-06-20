@@ -102,6 +102,15 @@ public class WellFormedJsonTest
                 .result();
 
         assertFalse(result.isSuccessful());
+        assertEquals(
+                Map.ofEntries(
+                        Map.entry(
+                                "guest",
+                                Map.entry("email", "This one is obligatory")
+                        )
+                ),
+                result.error()
+        );
     }
 
     @Test

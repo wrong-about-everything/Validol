@@ -43,8 +43,6 @@ public class BlocTest
                 .result();
 
         assertFalse(result.isSuccessful());
-        assertEquals("belov", result.value().vasya());
-        assertEquals(Integer.valueOf(7), result.value().fedya());
-        assertEquals(false, result.value().jenya());
+        assertEquals(List.of("Ooops"), result.error());
     }
 }
