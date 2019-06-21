@@ -4,9 +4,12 @@ import Validation.Result.Named;
 import Validation.Result.Result;
 import Validation.Validatable;
 import com.spencerwi.either.Either;
+import org.javatuples.Pair;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Bloc<T> implements Validatable<T>
@@ -34,24 +37,33 @@ public class Bloc<T> implements Validatable<T>
                 .map((current) -> new ValidatableThrowingUncheckedException<>(current))
                 .map((current) -> current.result());
 
-        List<List<Object>> initialValuesAndErrors = List.of(new ArrayList<>(), new ArrayList<>());
+        Pair<List<Object>, Map<String, Object>> initialValuesAndErrors = Pair.with(List.of(), Map.of());
 
-        List<List<Object>> valuesOrErrors =
+        Pair<List<Object>, Map<String, Object>> valuesOrErrors =
                 results.reduce(
                         initialValuesAndErrors,
+                        // @todo Replace with array_map
                         (currentValuesAndErrors, currentResult) -> {
                             try {
                                 if (!currentResult.isSuccessful()) {
-                                    List<Object> newErrors = new ArrayList<>();
-                                    newErrors.addAll(currentValuesAndErrors.get(1));
-                                    newErrors.addAll(List.of(currentResult.error()));
-                                    return List.of(currentValuesAndErrors.get(0), newErrors);
+                                    Map.Entry<String, Object> result =
+                                        Stream.concat(
+                                            currentValuesAndErrors.getValue1().entrySet().stream(),
+                                            Map.of(currentResult.name(), currentResult.error()).entrySet().stream()
+                                        )
+                                            .collect(
+                                                Collectors.toMap(
+                                                    currentMapEntry -> currentMapEntry.getKey(),
+                                                    currentMapEntry -> currentMapEntry.getValue()
+                                                )
+                                            );
+                                    return Pair.with(currentValuesAndErrors.getValue0(), newErrors);
                                 } else {
                                     List<Object> newValues = new ArrayList<>();
-                                    newValues.addAll(currentValuesAndErrors.get(0));
+                                    newValues.addAll(currentValuesAndErrors.getValue0());
                                     newValues.addAll(List.of(currentResult.value()));
 
-                                    return List.of(newValues, currentValuesAndErrors.get(1));
+                                    return Pair.with(newValues, currentValuesAndErrors.getValue1());
                                 }
                             } catch (Exception e) {
                                 e.printStackTrace();
@@ -60,28 +72,26 @@ public class Bloc<T> implements Validatable<T>
                         },
                         (accumulativeValuesAndErrors, currentValuesAndErrors) -> {
                             List<Object> values = new ArrayList<>();
-                            values.addAll(accumulativeValuesAndErrors.get(0));
-                            values.addAll(currentValuesAndErrors.get(0));
-                            accumulativeValuesAndErrors.set(0, values);
+                            values.addAll(accumulativeValuesAndErrors.getValue0());
+                            values.addAll(currentValuesAndErrors.getValue0());
 
-                            List<Object> errors = new ArrayList<>();
-                            errors.addAll(accumulativeValuesAndErrors.get(1));
-                            errors.addAll(currentValuesAndErrors.get(1));
-                            accumulativeValuesAndErrors.set(1, errors);
+                            Map<String, Object> errors = Map.of();
+                            errors.putAll(accumulativeValuesAndErrors.getValue1());
+                            errors.putAll(currentValuesAndErrors.getValue1());
 
-                            return accumulativeValuesAndErrors;
+                            return Pair.with(values, errors);
                         }
                 );
 
-        if (valuesOrErrors.get(1).size() > 0) {
-            return new Named<>("vasya", Either.left(valuesOrErrors.get(1)));
+        if (valuesOrErrors.getValue1().size() > 0) {
+            return new Named<>("vasya", Either.left(valuesOrErrors.getValue1()));
         }
 
         return
             new Named<>(
                 "vasya",
                 Either.right(
-                    this.clazzObjectWithCorrectNumberOfArguments(valuesOrErrors.get(0).toArray())
+                    this.clazzObjectWithCorrectNumberOfArguments(valuesOrErrors.getValue0().toArray())
                 )
             );
     }
