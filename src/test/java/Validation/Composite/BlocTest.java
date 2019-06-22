@@ -14,6 +14,7 @@ public class BlocTest
     public void success() throws Exception {
         Result<Team> result =
             new Bloc<>(
+                "team",
                 List.of(
                     () -> new Named<>("vasya", Either.right("belov")),
                     () -> new Named<>("fedya", Either.right(7)),
@@ -33,6 +34,7 @@ public class BlocTest
     public void someFieldsFailed() throws Exception {
         Result<Team> result =
             new Bloc<>(
+                "team",
                 List.of(
                     () -> new Named<>("vasya", Either.right("belov")),
                     () -> new Named<>("fedya", Either.left("Ooops")),
@@ -43,6 +45,6 @@ public class BlocTest
                 .result();
 
         assertFalse(result.isSuccessful());
-        assertEquals(List.of("Ooops"), result.error());
+        assertEquals(Map.of("fedya", "Ooops"), result.error());
     }
 }

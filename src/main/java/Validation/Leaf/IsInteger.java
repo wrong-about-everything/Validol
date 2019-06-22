@@ -27,10 +27,8 @@ public class IsInteger implements Validatable<Integer>
                 new Named<>(
                     prevResult.name(),
                     Either.right(
-                        Integer.valueOf(
-                            Integer.parseInt(
-                                prevResult.value().toString()
-                            )
+                        Integer.parseInt(
+                            prevResult.value().toString()
                         )
                     )
                 );

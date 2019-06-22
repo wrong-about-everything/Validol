@@ -25,7 +25,7 @@ public class Required implements Validatable<JsonElement>
         }
 
         if (result.value().isJsonNull()) {
-            return new Named<>(result.name(), Either.left(String.format("Key %s is required, but it does not exist", result.name())));
+            return new Named<>(result.name(), Either.left("This one is obligatory"));
         }
 
         return result;

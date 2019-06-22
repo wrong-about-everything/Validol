@@ -1,9 +1,6 @@
 package Validation.Composite;
 
-import Validation.Leaf.AsString;
-import Validation.Leaf.IndexedValue;
-import Validation.Leaf.Named;
-import Validation.Leaf.Required;
+import Validation.Leaf.*;
 import Validation.Result.Result;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -22,17 +19,21 @@ public class WellFormedJsonTest
         Result<OrderRegistrationRequest> result =
             (new FastFail<>(
                 new WellFormedJson(
-                    new Named<>("request string", Either.right(this.json()))
+                    new Named<>("request body", Either.right(this.validJsonRequest()))
                 ),
                 requestJsonObject ->
                     (new Bloc<>(
+                        "request body",
                         List.of(
                             new FastFail<>(
-                                new Required(
-                                    new IndexedValue("guest", requestJsonObject)
+                                new IsMap(
+                                    new Required(
+                                        new IndexedValue("guest", requestJsonObject)
+                                    )
                                 ),
                                 guestJsonObject ->
                                         (new Bloc<>(
+                                            "guest",
                                             List.of(
                                                 new AsString(
                                                     new Required(
@@ -48,6 +49,35 @@ public class WellFormedJsonTest
                                             Guest.class
                                         ))
                                             .result()
+                            ),
+                            new FastFail<>(
+                                new IsArray(
+                                    new Required(
+                                        new IndexedValue("items", requestJsonObject)
+                                    )
+                                ),
+                                itemsJsonObject ->
+                                    (new Bloc<>(
+                                        "items",
+                                        new Mapped(
+                                            itemsJsonObject,
+                                            item ->
+                                                new UnnamedBlock(
+                                                    new IsInteger(
+                                                        new Required(
+                                                            new IndexedValue("id", item)
+                                                        )
+                                                    )
+                                                )
+                                        ),
+                                        Items.class
+                                    ))
+                                        .result()
+                            ),
+                            new IsInteger(
+                                new Required(
+                                    new IndexedValue("source", requestJsonObject)
+                                )
                             )
                         ),
                         OrderRegistrationRequest.class
@@ -59,6 +89,7 @@ public class WellFormedJsonTest
         assertTrue(result.isSuccessful());
         assertEquals("samokhinvadim@gmail.com", result.value().guest().email());
         assertEquals("Vadim Samokhin", result.value().guest().name());
+        assertEquals(Integer.valueOf(1), result.value().source());
     }
 
     @Test
@@ -67,17 +98,21 @@ public class WellFormedJsonTest
         Result<OrderRegistrationRequest> result =
             (new FastFail<>(
                 new WellFormedJson(
-                    new Named<>("request string", Either.right(this.jsonWithAbsentGuestEmail()))
+                    new Named<>("parsed request body", Either.right(this.invalidJsonRequest()))
                 ),
                 requestJsonObject ->
                     (new Bloc<>(
+                        "parsed request body",
                         List.of(
                             new FastFail<>(
-                                new Required(
-                                    new IndexedValue("guest", requestJsonObject)
+                                new IsMap(
+                                    new Required(
+                                        new IndexedValue("guest", requestJsonObject)
+                                    )
                                 ),
                                 guestJsonObject ->
                                     (new Bloc<>(
+                                        "guest",
                                         List.of(
                                             new AsString(
                                                 new Required(
@@ -90,9 +125,15 @@ public class WellFormedJsonTest
                                                 )
                                             )
                                         ),
+                                        // @todo One can get an info about the class name from type parameter.
                                         Guest.class
                                     ))
                                         .result()
+                            ),
+                            new IsInteger(
+                                new Required(
+                                    new IndexedValue("source", requestJsonObject)
+                                )
                             )
                         ),
                         OrderRegistrationRequest.class
@@ -103,13 +144,13 @@ public class WellFormedJsonTest
 
         assertFalse(result.isSuccessful());
         assertEquals(
-                Map.ofEntries(
-                        Map.entry(
-                                "guest",
-                                Map.entry("email", "This one is obligatory")
-                        )
-                ),
-                result.error()
+            Map.of(
+                "guest",
+                Map.of("email", "This one is obligatory"),
+                "source",
+                "This value must be an integer."
+            ),
+            result.error()
         );
     }
 
@@ -118,7 +159,7 @@ public class WellFormedJsonTest
     {
         Result<JsonObject> result =
             (new WellFormedJson(
-                new Named<>("vasya", Either.right("invalid json"))
+                new Named<>("vasya", Either.right("invalid json azaza"))
             ))
                 .result();
 
@@ -131,34 +172,36 @@ public class WellFormedJsonTest
     {
         Result<JsonObject> result =
             (new WellFormedJson(
-                new Named<>("vasya", Either.right(this.json()))
+                new Named<>("vasya", Either.right(this.validJsonRequest()))
             ))
                 .result();
 
         assertTrue(result.isSuccessful());
-        assertEquals("{\"guest\":{\"name\":\"Vadim Samokhin\",\"email\":\"samokhinvadim@gmail.com\"}}", result.value().toString());
+        assertEquals(this.validJsonRequest(), result.value().toString());
         assertEquals("{\"name\":\"Vadim Samokhin\",\"email\":\"samokhinvadim@gmail.com\"}", result.value().get("guest").toString());
         assertEquals("Vadim Samokhin", result.value().get("guest").getAsJsonObject().get("name").getAsString());
         assertEquals("samokhinvadim@gmail.com", result.value().get("guest").getAsJsonObject().get("email").getAsString());
     }
 
-    private String json()
+    private String validJsonRequest()
     {
         HashMap<String, Object> target = new HashMap<>();
         HashMap<String, Object> inner = new HashMap<>();
         inner.put("email", "samokhinvadim@gmail.com");
         inner.put("name", "Vadim Samokhin");
         target.put("guest", inner);
+        target.put("source", 1);
 
         return new Gson().toJson(target, new TypeToken<HashMap<String, Object>>() {}.getType());
     }
 
-    private String jsonWithAbsentGuestEmail()
+    private String invalidJsonRequest()
     {
         HashMap<String, Object> target = new HashMap<>();
         HashMap<String, Object> inner = new HashMap<>();
         inner.put("name", "Vadim Samokhin");
         target.put("guest", inner);
+        target.put("source", "vasya");
 
         return new Gson().toJson(target, new TypeToken<HashMap<String, Object>>() {}.getType());
     }

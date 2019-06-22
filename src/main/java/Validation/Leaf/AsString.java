@@ -24,8 +24,7 @@ public class AsString implements Validatable<String>
         }
 
         if (!result.value().isJsonPrimitive()) {
-            // @todo: informative message
-            throw new Exception();
+            throw new Exception("Use IsString validatable to make sure that underlying value is a string");
         }
 
         return new Named<>(result.name(), Either.right(result.value().getAsJsonPrimitive().getAsString()));

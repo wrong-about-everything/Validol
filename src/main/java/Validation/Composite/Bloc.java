@@ -14,82 +14,90 @@ import java.util.stream.Stream;
 
 public class Bloc<T> implements Validatable<T>
 {
+    private String name;
     private List<Validatable<?>> validatables;
     private final Class<? extends T> clazz;
 
-    public Bloc(List<Validatable<?>> validatables, Class<? extends T> clazz)
+    public Bloc(String name, List<Validatable<?>> validatables, Class<? extends T> clazz)
     {
+        this.name = name;
         this.validatables = validatables;
         this.clazz = clazz;
     }
 
     public Result<T> result() throws Exception
     {
-        // @todo: think about https://www.baeldung.com/gson-deserialization-guide
         // @todo: create non-strictly-type version of Bloc, returning Map<String, Object>
 
-
-        // @todo: validate all validatables!
-        // @todo: replace List of error with Map of errors, so that we output field names
-
-        Stream<Result<?>> results =
+        Pair<List<Object>, Map<String, Object>> valuesOrErrors =
             this.validatables.stream()
                 .map((current) -> new ValidatableThrowingUncheckedException<>(current))
-                .map((current) -> current.result());
-
-        Pair<List<Object>, Map<String, Object>> initialValuesAndErrors = Pair.with(List.of(), Map.of());
-
-        Pair<List<Object>, Map<String, Object>> valuesOrErrors =
-                results.reduce(
-                        initialValuesAndErrors,
-                        // @todo Replace with array_map
-                        (currentValuesAndErrors, currentResult) -> {
-                            try {
-                                if (!currentResult.isSuccessful()) {
-                                    Map.Entry<String, Object> result =
-                                        Stream.concat(
-                                            currentValuesAndErrors.getValue1().entrySet().stream(),
-                                            Map.of(currentResult.name(), currentResult.error()).entrySet().stream()
-                                        )
-                                            .collect(
-                                                Collectors.toMap(
-                                                    currentMapEntry -> currentMapEntry.getKey(),
-                                                    currentMapEntry -> currentMapEntry.getValue()
+                .map((current) -> current.result())
+                .reduce(
+                    Pair.with(List.of(), Map.of()),
+                    (currentValuesAndErrors, currentResult) -> {
+                        try {
+                            return
+                                !currentResult.isSuccessful()
+                                    ?
+                                        Pair.with(
+                                            currentValuesAndErrors.getValue0(),
+                                            Stream.concat(
+                                                currentValuesAndErrors.getValue1().entrySet().stream(),
+                                                Map.of(currentResult.name(), currentResult.error()).entrySet().stream()
+                                            )
+                                                .collect(
+                                                    Collectors.toMap(
+                                                        currentMapEntry -> currentMapEntry.getKey(),
+                                                        currentMapEntry -> currentMapEntry.getValue()
+                                                    )
                                                 )
-                                            );
-                                    return Pair.with(currentValuesAndErrors.getValue0(), newErrors);
-                                } else {
-                                    List<Object> newValues = new ArrayList<>();
-                                    newValues.addAll(currentValuesAndErrors.getValue0());
-                                    newValues.addAll(List.of(currentResult.value()));
-
-                                    return Pair.with(newValues, currentValuesAndErrors.getValue1());
-                                }
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                                throw new RuntimeException(e);
-                            }
-                        },
-                        (accumulativeValuesAndErrors, currentValuesAndErrors) -> {
-                            List<Object> values = new ArrayList<>();
-                            values.addAll(accumulativeValuesAndErrors.getValue0());
-                            values.addAll(currentValuesAndErrors.getValue0());
-
-                            Map<String, Object> errors = Map.of();
-                            errors.putAll(accumulativeValuesAndErrors.getValue1());
-                            errors.putAll(currentValuesAndErrors.getValue1());
-
-                            return Pair.with(values, errors);
+                                        )
+                                    :
+                                        Pair.with(
+                                            Stream.concat(
+                                                currentValuesAndErrors.getValue0().stream(),
+                                                List.of(currentResult.value()).stream()
+                                            )
+                                                .collect(Collectors.toUnmodifiableList())
+                                            ,
+                                            currentValuesAndErrors.getValue1()
+                                        )
+                                ;
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            throw new RuntimeException(e);
                         }
-                );
+                    },
+                    (accumulativeValuesAndErrors, currentValuesAndErrors) ->
+                        Pair.with(
+                            Stream.concat(
+                                accumulativeValuesAndErrors.getValue0().stream(),
+                                currentValuesAndErrors.getValue0().stream()
+                            )
+                                .collect(
+                                    Collectors.toUnmodifiableList()
+                                ),
+                            Stream.concat(
+                                accumulativeValuesAndErrors.getValue1().entrySet().stream(),
+                                currentValuesAndErrors.getValue1().entrySet().stream()
+                            )
+                                .collect(
+                                    Collectors.toUnmodifiableMap(
+                                        entrySet -> entrySet.getKey(),
+                                        entrySet -> entrySet.getValue()
+                                    )
+                                )
+                        )
+            );
 
         if (valuesOrErrors.getValue1().size() > 0) {
-            return new Named<>("vasya", Either.left(valuesOrErrors.getValue1()));
+            return new Named<>(this.name, Either.left(valuesOrErrors.getValue1()));
         }
 
         return
             new Named<>(
-                "vasya",
+                this.name,
                 Either.right(
                     this.clazzObjectWithCorrectNumberOfArguments(valuesOrErrors.getValue0().toArray())
                 )
