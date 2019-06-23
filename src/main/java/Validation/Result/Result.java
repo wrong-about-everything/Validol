@@ -1,14 +1,16 @@
 package Validation.Result;
 
+import Validation.Value.Value;
+
 public interface Result<T>
 {
     public Boolean isSuccessful();
 
-    public T value() throws Exception;
+    public Value<T> value() throws Exception;
 
     /**
      * It could be String, like in Required class.
-     * In case of Bloc class, it can return List<String>, List<List<String>>, or mixed.
+     * In case of NamedBloc class, it can return List<String>, List<List<String>>, or mixed.
      * Hence, return type is just Object, which is just enough:
      * everything that is supposed to do in case of error is turn it to json and output.
      */

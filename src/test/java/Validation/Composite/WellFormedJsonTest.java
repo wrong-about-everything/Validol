@@ -2,7 +2,9 @@ package Validation.Composite;
 
 import Validation.Leaf.*;
 import Validation.Result.Result;
+import Validation.Value.Present;
 import com.google.gson.Gson;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import com.spencerwi.either.Either;
@@ -14,94 +16,106 @@ import static org.junit.Assert.*;
 public class WellFormedJsonTest
 {
     @Test
-    public void successfulComplexRequest() throws Exception
+    public void successfulComplexRequest() throws Throwable
     {
         Result<OrderRegistrationRequest> result =
-            (new FastFail<>(
-                new WellFormedJson(
-                    new Named<>("request body", Either.right(this.validJsonRequest()))
-                ),
-                requestJsonObject ->
-                    (new Bloc<>(
+            new FastFail<>(
+                // Если сделать тут AsMap, то внутри следующих AsMap будет уже не JsonElement, а Map<String, Object>.
+                // А AsMap принимает Validatable<JsonElement>!
+//                new AsMap(
+                    new WellFormedJson(
+                        new Named<>("request body", Either.right(new Present<>(this.validJsonRequest())))
+                    )
+//                )
+                ,
+                requestJsonMap ->
+                    new NamedBloc<>(
                         "request body",
                         List.of(
                             new FastFail<>(
-                                new IsMap(
-                                    new Required(
-                                        new IndexedValue("guest", requestJsonObject)
+//                                new AsMap(
+                                    new IsMap(
+                                        new Required(
+                                            new IndexedValue("guest", requestJsonMap)
+                                        )
                                     )
-                                ),
+//                                )
+                                ,
                                 guestJsonObject ->
-                                        (new Bloc<>(
-                                            "guest",
-                                            List.of(
-                                                new AsString(
-                                                    new Required(
-                                                        new IndexedValue("email", guestJsonObject)
-                                                    )
-                                                ),
-                                                new AsString(
-                                                    new Required(
-                                                        new IndexedValue("name", guestJsonObject)
-                                                    )
+                                    new NamedBloc<>(
+                                        "guest",
+                                        List.of(
+                                            new AsString(
+                                                new Required(
+                                                    new IndexedValue("email", guestJsonObject)
                                                 )
                                             ),
-                                            Guest.class
-                                        ))
-                                            .result()
+                                            new AsString(
+                                                new Required(
+                                                    new IndexedValue("name", guestJsonObject)
+                                                )
+                                            )
+                                        ),
+                                        Guest.class
+                                    )
                             ),
                             new FastFail<>(
-                                new IsArray(
-                                    new Required(
-                                        new IndexedValue("items", requestJsonObject)
-                                    )
-                                ),
-                                itemsJsonObject ->
-                                    (new Bloc<>(
+//                                new AsList(
+//                                    new IsArrayOfArrays(
+                                        new Required(
+                                            new IndexedValue("items", requestJsonMap)
+                                        )
+//                                    )
+//                                )
+                                ,
+                                itemsJsonElement ->
+                                    new NamedBloc<>(
                                         "items",
-                                        new Mapped(
-                                            itemsJsonObject,
+                                        new Mapped<UnnamedBloc<Item>>(
+                                            itemsJsonElement,
                                             item ->
-                                                new UnnamedBlock(
-                                                    new IsInteger(
-                                                        new Required(
-                                                            new IndexedValue("id", item)
+                                                new UnnamedBloc<Item>(
+                                                    List.of(
+                                                        new IsInteger(
+                                                            new Required(
+                                                                new IndexedValue("id", item)
+                                                            )
                                                         )
-                                                    )
+                                                    ),
+                                                    Item.class
                                                 )
-                                        ),
+                                        )
+                                            .result(),
                                         Items.class
-                                    ))
-                                        .result()
+                                    )
                             ),
                             new IsInteger(
                                 new Required(
-                                    new IndexedValue("source", requestJsonObject)
+                                    new IndexedValue("source", requestJsonMap)
                                 )
                             )
                         ),
                         OrderRegistrationRequest.class
-                    ))
-                        .result()
-            ))
+                    )
+            )
                 .result();
 
         assertTrue(result.isSuccessful());
-        assertEquals("samokhinvadim@gmail.com", result.value().guest().email());
-        assertEquals("Vadim Samokhin", result.value().guest().name());
-        assertEquals(Integer.valueOf(1), result.value().source());
+        assertEquals("samokhinvadim@gmail.com", result.value().raw().guest().email());
+        assertEquals("Vadim Samokhin", result.value().raw().guest().name());
+        assertEquals(Integer.valueOf(1), result.value().raw().source());
     }
 
     @Test
-    public void nonSuccessfulComplexRequest() throws Exception
+    public void nonSuccessfulComplexRequest() throws Throwable
     {
         Result<OrderRegistrationRequest> result =
-            (new FastFail<>(
+            new FastFail<>(
                 new WellFormedJson(
-                    new Named<>("parsed request body", Either.right(this.invalidJsonRequest()))
+                    new Named<>("parsed request body", Either.right(new Present<>(this.invalidJsonRequest())))
                 ),
                 requestJsonObject ->
-                    (new Bloc<>(
+                    new NamedBloc<>(
                         "parsed request body",
                         List.of(
                             new FastFail<>(
@@ -111,7 +125,7 @@ public class WellFormedJsonTest
                                     )
                                 ),
                                 guestJsonObject ->
-                                    (new Bloc<>(
+                                    new NamedBloc<>(
                                         "guest",
                                         List.of(
                                             new AsString(
@@ -127,8 +141,7 @@ public class WellFormedJsonTest
                                         ),
                                         // @todo One can get an info about the class name from type parameter.
                                         Guest.class
-                                    ))
-                                        .result()
+                                    )
                             ),
                             new IsInteger(
                                 new Required(
@@ -137,9 +150,8 @@ public class WellFormedJsonTest
                             )
                         ),
                         OrderRegistrationRequest.class
-                    ))
-                        .result()
-            ))
+                    )
+            )
                 .result();
 
         assertFalse(result.isSuccessful());
@@ -155,11 +167,11 @@ public class WellFormedJsonTest
     }
 
     @Test
-    public void invalidJson() throws Exception
+    public void invalidJson() throws Throwable
     {
-        Result<JsonObject> result =
+        Result<JsonElement> result =
             (new WellFormedJson(
-                new Named<>("vasya", Either.right("invalid json azaza"))
+                new Named<>("vasya", Either.right(new Present<>("invalid json azaza")))
             ))
                 .result();
 
@@ -168,19 +180,19 @@ public class WellFormedJsonTest
     }
 
     @Test
-    public void wellFormedJson() throws Exception
+    public void wellFormedJson() throws Throwable
     {
-        Result<JsonObject> result =
+        Result<JsonElement> result =
             (new WellFormedJson(
-                new Named<>("vasya", Either.right(this.validJsonRequest()))
+                new Named<>("vasya", Either.right(new Present<>(this.validJsonRequest())))
             ))
                 .result();
 
         assertTrue(result.isSuccessful());
-        assertEquals(this.validJsonRequest(), result.value().toString());
-        assertEquals("{\"name\":\"Vadim Samokhin\",\"email\":\"samokhinvadim@gmail.com\"}", result.value().get("guest").toString());
-        assertEquals("Vadim Samokhin", result.value().get("guest").getAsJsonObject().get("name").getAsString());
-        assertEquals("samokhinvadim@gmail.com", result.value().get("guest").getAsJsonObject().get("email").getAsString());
+        assertEquals(this.validJsonRequest(), result.value().raw().toString());
+        assertEquals("{\"name\":\"Vadim Samokhin\",\"email\":\"samokhinvadim@gmail.com\"}", result.value().raw().getAsJsonObject().get("guest").toString());
+        assertEquals("Vadim Samokhin", result.value().raw().getAsJsonObject().get("guest").getAsJsonObject().get("name").getAsString());
+        assertEquals("samokhinvadim@gmail.com", result.value().raw().getAsJsonObject().get("guest").getAsJsonObject().get("email").getAsString());
     }
 
     private String validJsonRequest()

@@ -4,14 +4,12 @@ import Validation.Value.Present;
 import Validation.Value.Value;
 import com.spencerwi.either.Either;
 
-public class Named<T> implements Result<T>
+public class Unnamed<T> implements Result<T>
 {
-    private String name;
     private Either<Object, Value<T>> value;
 
-    public Named(String name, Either<Object, Value<T>> value)
+    public Unnamed(Either<Object, Value<T>> value)
     {
-        this.name = name;
         this.value = value;
     }
 
@@ -43,12 +41,12 @@ public class Named<T> implements Result<T>
     @Override
     public Boolean isNamed()
     {
-        return true;
+        return false;
     }
 
     @Override
     public String name() throws Exception
     {
-        return this.name;
+        throw new Exception("Unnamed result does not have a name");
     }
 }

@@ -1,5 +1,6 @@
 package Validation.Leaf;
 
+import Validation.Value.Present;
 import com.spencerwi.either.Either;
 import org.junit.Test;
 
@@ -8,9 +9,17 @@ import static org.junit.Assert.*;
 public class IsIntegerTest
 {
     @Test
-    public void nonSuccessful() throws Exception
+    public void nonSuccessful() throws Throwable
     {
-        IsInteger named = new IsInteger(new Named<String>("vasya", Either.right("miliy")));
+        IsInteger named =
+            new IsInteger(
+                new Named<>(
+                    "vasya",
+                    Either.right(
+                        new Present<>("miliy")
+                    )
+                )
+            );
 
         assertFalse(named.result().isSuccessful());
         assertEquals("vasya", named.result().name());
@@ -18,12 +27,12 @@ public class IsIntegerTest
     }
 
     @Test
-    public void successful() throws Exception
+    public void successful() throws Throwable
     {
-        IsInteger named = new IsInteger(new Named<>("vasya", Either.right(666)));
+        IsInteger named = new IsInteger(new Named<>("vasya", Either.right(new Present<>(666))));
 
         assertTrue(named.result().isSuccessful());
         assertEquals("vasya", named.result().name());
-        assertEquals(Integer.valueOf(666), named.result().value());
+        assertEquals(Integer.valueOf(666), named.result().value().raw());
     }
 }

@@ -3,6 +3,7 @@ package Validation.Leaf;
 import Validation.Result.Named;
 import Validation.Result.Result;
 import Validation.Validatable;
+import Validation.Value.Present;
 import com.google.gson.JsonElement;
 import com.spencerwi.either.Either;
 
@@ -15,7 +16,7 @@ public class AsString implements Validatable<String>
         this.validatable = validatable;
     }
 
-    public Result<String> result() throws Exception
+    public Result<String> result() throws Throwable
     {
         Result<JsonElement> result = this.validatable.result();
 
@@ -23,10 +24,18 @@ public class AsString implements Validatable<String>
             return new Named<>(result.name(), Either.left(result.error()));
         }
 
-        if (!result.value().isJsonPrimitive()) {
-            throw new Exception("Use IsString validatable to make sure that underlying value is a string");
+        if (!result.value().raw().isJsonPrimitive()) {
+            throw new Exception("Use IsString validatable to make sure that underlying raw is a string");
         }
 
-        return new Named<>(result.name(), Either.right(result.value().getAsJsonPrimitive().getAsString()));
+        return
+            new Named<>(
+                result.name(),
+                Either.right(
+                    new Present<>(
+                        result.value().raw().getAsJsonPrimitive().getAsString()
+                    )
+                )
+            );
     }
 }

@@ -13,15 +13,15 @@ import java.util.function.Function;
 public class FastFail<T, R> implements Validatable<R>
 {
     private Validatable<T> original;
-    private VFunction<T, Result<R>> closure;
+    private VFunction<T, Validatable<R>> closure;
 
-    public FastFail(Validatable<T> validatable, VFunction<T, Result<R>> closure)
+    public FastFail(Validatable<T> validatable, VFunction<T, Validatable<R>> closure)
     {
         this.original = validatable;
         this.closure = closure;
     }
 
-    public Result<R> result() throws Exception
+    public Result<R> result() throws Throwable
     {
         Result<T> originalResult = this.original.result();
 
@@ -29,6 +29,6 @@ public class FastFail<T, R> implements Validatable<R>
             return new Named<>(originalResult.name(), Either.left(originalResult.error()));
         }
 
-        return closure.apply(originalResult.value());
+        return closure.apply(originalResult.value().raw()).result();
     }
 }

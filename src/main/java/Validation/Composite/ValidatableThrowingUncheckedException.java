@@ -16,7 +16,8 @@ public class ValidatableThrowingUncheckedException<T> implements Validatable<T>
     {
         try {
             return this.original.result();
-        } catch (Exception e) {
+        } catch (Throwable e) {
+            e.printStackTrace();
             throw new RuntimeException(e);
         }
     }

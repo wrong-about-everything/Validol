@@ -3,9 +3,10 @@ package Validation.Leaf;
 import Validation.Result.Named;
 import Validation.Result.Result;
 import Validation.Validatable;
+import Validation.Value.Absent;
+import Validation.Value.Present;
+import Validation.Value.Value;
 import com.google.gson.JsonElement;
-import com.google.gson.JsonNull;
-import com.google.gson.JsonObject;
 import com.spencerwi.either.Either;
 
 public class IndexedValue implements Validatable<JsonElement>
@@ -22,14 +23,21 @@ public class IndexedValue implements Validatable<JsonElement>
     public Result<JsonElement> result()
     {
         if (!this.json.isJsonObject()) {
-            // @todo Introduce JsonElement null object somehow. Returning JsonNull is semantically wrong
-            return new Named<>(this.name, Either.right(JsonNull.INSTANCE));
+            return new Named<>(this.name, Either.left("IndexedValue class is used on an inappropriate data structure"));
         }
 
         if (!this.json.getAsJsonObject().has(this.name)) {
-            return new Named<>(this.name, Either.right(JsonNull.INSTANCE));
+            return new Named<>(this.name, Either.right(new Absent<>()));
         }
 
-        return new Named<>(this.name, Either.right(this.json.getAsJsonObject().get(this.name)));
+        return
+            new Named<>(
+                this.name,
+                Either.right(
+                    new Present<>(
+                        this.json.getAsJsonObject().get(this.name)
+                    )
+                )
+            );
     }
 }

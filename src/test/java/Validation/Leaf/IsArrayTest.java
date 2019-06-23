@@ -1,7 +1,10 @@
 package Validation.Leaf;
 
 import Validation.Value.Present;
-import com.google.gson.*;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonParser;
+import com.google.gson.JsonPrimitive;
 import com.google.gson.reflect.TypeToken;
 import com.spencerwi.either.Either;
 import org.junit.Test;
@@ -10,7 +13,7 @@ import java.util.HashMap;
 
 import static org.junit.Assert.*;
 
-public class IsMapTest
+public class IsArrayTest
 {
     @Test
     public void jsonPrimitive() throws Throwable

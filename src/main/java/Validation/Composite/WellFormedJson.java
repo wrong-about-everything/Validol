@@ -3,12 +3,14 @@ package Validation.Composite;
 import Validation.Result.Named;
 import Validation.Result.Result;
 import Validation.Validatable;
+import Validation.Value.Present;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
 import com.spencerwi.either.Either;
 
-public class WellFormedJson implements Validatable<JsonObject>
+public class WellFormedJson implements Validatable<JsonElement>
 {
     private Validatable<String> original;
 
@@ -17,7 +19,7 @@ public class WellFormedJson implements Validatable<JsonObject>
         this.original = validatable;
     }
 
-    public Result<JsonObject> result() throws Exception
+    public Result<JsonElement> result() throws Throwable
     {
         Result<String> originalResult = this.original.result();
 
@@ -30,8 +32,10 @@ public class WellFormedJson implements Validatable<JsonObject>
                 new Named<>(
                     originalResult.name(),
                     Either.right(
-                        new JsonParser().parse(originalResult.value())
-                            .getAsJsonObject()
+                        new Present<>(
+                            new JsonParser().parse(originalResult.value().raw())
+                                .getAsJsonObject()
+                        )
                     )
                 );
         } catch(JsonSyntaxException ex) {

@@ -3,6 +3,8 @@ package Validation.Leaf;
 import Validation.Result.Named;
 import Validation.Result.Result;
 import Validation.Validatable;
+import Validation.Value.Present;
+import Validation.Value.Value;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.spencerwi.either.Either;
@@ -16,7 +18,7 @@ public class Required implements Validatable<JsonElement>
         this.validatable = validatable;
     }
 
-    public Result<JsonElement> result() throws Exception
+    public Result<JsonElement> result() throws Throwable
     {
         Result<JsonElement> result = this.validatable.result();
 
@@ -24,7 +26,7 @@ public class Required implements Validatable<JsonElement>
             return result;
         }
 
-        if (result.value().isJsonNull()) {
+        if (!result.value().isPresent()) {
             return new Named<>(result.name(), Either.left("This one is obligatory"));
         }
 

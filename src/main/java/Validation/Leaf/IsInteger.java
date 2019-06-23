@@ -3,6 +3,7 @@ package Validation.Leaf;
 import Validation.Result.Result;
 import Validation.Result.Named;
 import Validation.Validatable;
+import Validation.Value.Present;
 import com.spencerwi.either.Either;
 
 public class IsInteger implements Validatable<Integer>
@@ -14,7 +15,7 @@ public class IsInteger implements Validatable<Integer>
         this.original = original;
     }
 
-    public Result<Integer> result() throws Exception
+    public Result<Integer> result() throws Throwable
     {
         Result<?> prevResult = this.original.result();
 
@@ -27,8 +28,11 @@ public class IsInteger implements Validatable<Integer>
                 new Named<>(
                     prevResult.name(),
                     Either.right(
-                        Integer.parseInt(
-                            prevResult.value().toString()
+                        // TODO: 6/23/19 Check whether a value is present or not
+                        new Present<>(
+                            Integer.parseInt(
+                                prevResult.value().raw().toString()
+                            )
                         )
                     )
                 );

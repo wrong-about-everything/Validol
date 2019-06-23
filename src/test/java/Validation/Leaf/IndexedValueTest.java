@@ -14,23 +14,23 @@ import static org.junit.Assert.*;
 public class IndexedValueTest
 {
     @Test
-    public void nonSuccessful() throws Exception
+    public void nonSuccessful() throws Throwable
     {
         IndexedValue named = new IndexedValue("vasya", this.emptyJson());
 
         assertTrue(named.result().isSuccessful());
         assertEquals("vasya", named.result().name());
-        assertEquals(JsonNull.INSTANCE, named.result().value());
+        assertFalse(named.result().value().isPresent());
     }
 
     @Test
-    public void successful() throws Exception
+    public void successful() throws Throwable
     {
         IndexedValue named = new IndexedValue("vasya", this.json());
 
         assertTrue(named.result().isSuccessful());
         assertEquals("vasya", named.result().name());
-        assertEquals(1, named.result().value().getAsInt());
+        assertEquals(1, named.result().value().raw().getAsInt());
     }
 
     private JsonObject emptyJson()
