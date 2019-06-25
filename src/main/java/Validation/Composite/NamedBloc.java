@@ -79,6 +79,8 @@ public class NamedBloc<T> implements Validatable<T>
 
     private T objectWithOneArgument(Object[] arguments) throws Exception
     {
+        System.out.println("Clazz is " + this.clazz);
+        System.out.println("Argument[0] is " + ((Value) arguments[0]).raw());
         return
             this.clazz.getDeclaredConstructor(
                 this.clazz.getDeclaredConstructors()[0].getParameterTypes()

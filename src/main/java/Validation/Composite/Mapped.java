@@ -5,7 +5,6 @@ import Validation.Result.Unnamed;
 import Validation.Validatable;
 import Validation.Value.Present;
 import com.google.gson.JsonElement;
-import com.google.gson.internal.Streams;
 import com.spencerwi.either.Either;
 
 import java.util.List;
@@ -13,18 +12,18 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-public class Mapped<R> implements Validatable<List<UnnamedBloc<R>>>
+public class Mapped<UNNAMED_BLOC_RESULT_TYPE> implements Validatable<List<UnnamedBloc<UNNAMED_BLOC_RESULT_TYPE>>>
 {
     private JsonElement jsonElement;
-    private Function<JsonElement, Validatable<JsonElement>> returnsValidatable;
+    private Function<JsonElement, UnnamedBloc<UNNAMED_BLOC_RESULT_TYPE>> returnsValidatable;
 
-    public Mapped(JsonElement jsonElement, Function<JsonElement, Validatable<UnnamedBloc<R>>> returnsValidatable)
+    public Mapped(JsonElement jsonElement, Function<JsonElement, UnnamedBloc<UNNAMED_BLOC_RESULT_TYPE>> returnsValidatable)
     {
         this.jsonElement = jsonElement;
         this.returnsValidatable = returnsValidatable;
     }
 
-    public Result<List<Validatable<E>>> result() throws Exception
+    public Result<List<UnnamedBloc<UNNAMED_BLOC_RESULT_TYPE>>> result() throws Exception
     {
         return
             new Unnamed<>(

@@ -3,12 +3,14 @@ package Validation.Composite;
 class OrderRegistrationRequest
 {
     private Guest guest;
+    private Items items;
     private Integer source;
 //    private Bag bag;
 //    private Delivery delivery;
 
     public OrderRegistrationRequest(
         Guest guest,
+        Items items,
         Integer source
 //        ,
 //        Bag bag,
@@ -16,6 +18,7 @@ class OrderRegistrationRequest
     )
     {
         this.guest = guest;
+        this.items = items;
         this.source = source;
 //        this.bag = bag;
 //        this.delivery = delivery;
@@ -24,6 +27,11 @@ class OrderRegistrationRequest
     public Guest guest()
     {
         return this.guest;
+    }
+
+    public Items items()
+    {
+        return this.items;
     }
 
     public Integer source()

@@ -59,7 +59,7 @@ public class WellFormedJsonTest
                                         Guest.class
                                     )
                             ),
-                            new FastFail<>(
+                            new FastFail<JsonElement, Items>(
 //                                new AsList(
 //                                    new IsArrayOfArrays(
                                         new Required(
@@ -71,21 +71,32 @@ public class WellFormedJsonTest
                                 itemsJsonElement ->
                                     new NamedBloc<>(
                                         "items",
-                                        new Mapped<UnnamedBloc<Item>>(
-                                            itemsJsonElement,
-                                            item ->
-                                                new UnnamedBloc<Item>(
+                                            List.of(
+                                                new UnnamedBloc<>(
                                                     List.of(
-                                                        new IsInteger(
-                                                            new Required(
-                                                                new IndexedValue("id", item)
-                                                            )
-                                                        )
+                                                        new Named<>("id", Either.right(new Present<>(1488)))
                                                     ),
                                                     Item.class
                                                 )
-                                        )
-                                            .result(),
+                                            )
+//                                        new Mapped<Item>(
+//                                            itemsJsonElement,
+//                                            item ->
+//                                                new UnnamedBloc<>(
+//                                                    List.of(
+//                                                        new IsInteger(
+//                                                            new Required(
+//                                                                new IndexedValue("id", item)
+//                                                            )
+//                                                        )
+//                                                    ),
+//                                                    Item.class
+//                                                )
+//                                        )
+//                                            .result()
+//                                            .value()
+//                                            .raw()
+                                            ,
                                         Items.class
                                     )
                             ),
@@ -100,6 +111,7 @@ public class WellFormedJsonTest
             )
                 .result();
 
+        System.out.println(result.error());
         assertTrue(result.isSuccessful());
         assertEquals("samokhinvadim@gmail.com", result.value().raw().guest().email());
         assertEquals("Vadim Samokhin", result.value().raw().guest().name());
@@ -202,6 +214,7 @@ public class WellFormedJsonTest
         inner.put("email", "samokhinvadim@gmail.com");
         inner.put("name", "Vadim Samokhin");
         target.put("guest", inner);
+        target.put("items", List.of(Map.of("id", 1488)));
         target.put("source", 1);
 
         return new Gson().toJson(target, new TypeToken<HashMap<String, Object>>() {}.getType());
