@@ -47,7 +47,7 @@ public class ValuesAndErrors
                                     Pair.with(
                                         Stream.concat(
                                             currentValuesAndErrors.getValue0().stream(),
-                                            List.of(currentResult.value()).stream()
+                                            List.of(currentResult.value().raw()).stream()
                                         )
                                             .collect(Collectors.toUnmodifiableList())
                                         ,

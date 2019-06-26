@@ -79,13 +79,11 @@ public class NamedBloc<T> implements Validatable<T>
 
     private T objectWithOneArgument(Object[] arguments) throws Exception
     {
-        System.out.println("Clazz is " + this.clazz);
-        System.out.println("Argument[0] is " + ((Value) arguments[0]).raw());
         return
             this.clazz.getDeclaredConstructor(
                 this.clazz.getDeclaredConstructors()[0].getParameterTypes()
             )
-                .newInstance(((Value) arguments[0]).raw())
+                .newInstance(arguments[0])
             ;
     }
 
@@ -95,10 +93,7 @@ public class NamedBloc<T> implements Validatable<T>
             this.clazz.getDeclaredConstructor(
                 this.clazz.getDeclaredConstructors()[0].getParameterTypes()
             )
-                .newInstance(
-                    ((Value) arguments[0]).raw(),
-                    ((Value) arguments[1]).raw()
-                );
+                .newInstance(arguments[0], arguments[1]);
     }
 
     private T objectWithThreeArguments(Object[] arguments) throws Exception
@@ -107,10 +102,6 @@ public class NamedBloc<T> implements Validatable<T>
             this.clazz.getDeclaredConstructor(
                 this.clazz.getDeclaredConstructors()[0].getParameterTypes()
             )
-                .newInstance(
-                    ((Value) arguments[0]).raw(),
-                    ((Value) arguments[1]).raw(),
-                    ((Value) arguments[2]).raw()
-                );
+                .newInstance(arguments[0], arguments[1], arguments[2]);
     }
 }

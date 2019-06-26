@@ -77,9 +77,7 @@ public class UnnamedBloc<T> implements Validatable<T>
             this.clazz.getDeclaredConstructor(
                 this.clazz.getDeclaredConstructors()[0].getParameterTypes()
             )
-                .newInstance(
-                    ((Value) arguments[0]).raw()
-                );
+                .newInstance(arguments[0]);
     }
 
     private T objectWithTwoArguments(Object[] arguments) throws Exception
@@ -88,10 +86,7 @@ public class UnnamedBloc<T> implements Validatable<T>
             this.clazz.getDeclaredConstructor(
                 this.clazz.getDeclaredConstructors()[0].getParameterTypes()
             )
-                .newInstance(
-                    ((Value) arguments[0]).raw(),
-                    ((Value) arguments[1]).raw()
-                )
+                .newInstance(arguments[0], arguments[1])
             ;
     }
 
@@ -101,10 +96,6 @@ public class UnnamedBloc<T> implements Validatable<T>
             this.clazz.getDeclaredConstructor(
                 this.clazz.getDeclaredConstructors()[0].getParameterTypes()
             )
-                .newInstance(
-                    ((Value) arguments[0]).raw(),
-                    ((Value) arguments[1]).raw(),
-                    ((Value) arguments[2]).raw()
-                );
+                .newInstance(arguments[0], arguments[1], arguments[2]);
     }
 }
