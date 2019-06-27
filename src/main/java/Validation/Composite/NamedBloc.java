@@ -15,6 +15,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 // TODO: 6/23/19 Create non-strictly-type version of NamedBloc, returning Map<String, Object>
+// TODO: use UnnamedBloc class here, thus removing duplication
 public class NamedBloc<T> implements Validatable<T>
 {
     private String name;

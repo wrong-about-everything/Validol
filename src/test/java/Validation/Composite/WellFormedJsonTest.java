@@ -6,6 +6,7 @@ import Validation.Result.Unnamed;
 import Validation.Validatable;
 import Validation.Value.Present;
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
@@ -62,7 +63,8 @@ public class WellFormedJsonTest
                                         Guest.class
                                     )
                             ),
-                            new FastFail<JsonElement, Items>(
+                            // TODO: move this check into NamedBloc class (a la Block class in Validatable)
+                            new FastFail<>(
 //                                new AsList(
 //                                    new IsArrayOfArrays(
                                         new Required(
@@ -73,72 +75,23 @@ public class WellFormedJsonTest
                                 ,
                                 itemsJsonElement ->
                                     new NamedBloc<>(
-                                        "items",
-                                            List.of(
-                                                    // TODO: Extract this fucntionality to Mapped class, add list iteration there
-                                                    new Validatable<List<Item>>() {
-                                                        @Override
-                                                        public Result<List<Item>> result() throws Throwable
-                                                        {
-                                                            Pair<List<Object>, Map<String, Object>> valuesAndErrors =
-                                                                    new ValuesAndErrors(
-                                                                            List.of(
-                                                                                    // TODO: form UnnamedBlocs dynamically, as many as there are in json
-                                                                                    new UnnamedBloc<>(
-                                                                                            List.of(
-                                                                                                    new Named<>("id", Either.right(new Present<>(1488)))
-                                                                                            ),
-                                                                                            Item.class
-                                                                                    )
-                                                                            )
-                                                                    )
-                                                                            .value();
-
-                                                            if (valuesAndErrors.getValue1().size() > 0) {
-                                                                return
-                                                                        new Validation.Result.Named<>(
-                                                                                "vasya",
-                                                                                Either.left(
-                                                                                    List.of(
-                                                                                            valuesAndErrors.getValue1()
-                                                                                    )
-                                                                                )
-                                                                        );
-                                                            }
-
-                                                            return
-                                                                    new Validation.Result.Named<>(
-                                                                            "vasya",
-                                                                            Either.right(
-                                                                                    new Present<>(
-                                                                                            List.of(
-                                                                                                    // TODO: pass through values and cast them  to Item
-                                                                                                    (Item) valuesAndErrors.getValue0().get(0)
-                                                                                            )
-                                                                                    )
-                                                                            )
-                                                                    );
-                                                        }
-                                                    }
+                                    "items",
+                                        List.of(
+                                            new Mapped<>(
+                                                itemsJsonElement,
+                                                item ->
+                                                    new UnnamedBloc<>(
+                                                        List.of(
+                                                            new AsInteger(
+                                                                new Required(
+                                                                    new IndexedValue("id", item)
+                                                                )
+                                                            )
+                                                        ),
+                                                        Item.class
+                                                    )
                                             )
-//                                        new Mapped<Item>(
-//                                            itemsJsonElement,
-//                                            item ->
-//                                                new UnnamedBloc<>(
-//                                                    List.of(
-//                                                        new IsInteger(
-//                                                            new Required(
-//                                                                new IndexedValue("id", item)
-//                                                            )
-//                                                        )
-//                                                    ),
-//                                                    Item.class
-//                                                )
-//                                        )
-//                                            .result()
-//                                            .value()
-//                                            .raw()
-                                            ,
+                                        ),
                                         Items.class
                                     )
                             ),
@@ -157,6 +110,7 @@ public class WellFormedJsonTest
         assertEquals("samokhinvadim@gmail.com", result.value().raw().guest().email());
         assertEquals("Vadim Samokhin", result.value().raw().guest().name());
         assertEquals(1488, result.value().raw().items().list().get(0).id().intValue());
+        assertEquals(666, result.value().raw().items().list().get(1).id().intValue());
         assertEquals(Integer.valueOf(1), result.value().raw().source());
     }
 
@@ -256,7 +210,13 @@ public class WellFormedJsonTest
         inner.put("email", "samokhinvadim@gmail.com");
         inner.put("name", "Vadim Samokhin");
         target.put("guest", inner);
-        target.put("items", List.of(Map.of("id", 1488)));
+        target.put(
+            "items",
+            List.of(
+                Map.of("id", 1488),
+                Map.of("id", 666)
+            )
+        );
         target.put("source", 1);
 
         return new Gson().toJson(target, new TypeToken<HashMap<String, Object>>() {}.getType());
