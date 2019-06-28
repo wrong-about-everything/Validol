@@ -78,6 +78,7 @@ public class WellFormedJsonTest
                                     "items",
                                         List.of(
                                             new Mapped<>(
+                                                "items",
                                                 itemsJsonElement,
                                                 item ->
                                                     new UnnamedBloc<>(
@@ -151,6 +152,29 @@ public class WellFormedJsonTest
                                         Guest.class
                                     )
                             ),
+                            new FastFail<>(
+                                new IsArray(
+                                    new Required(
+                                        new IndexedValue("items", requestJsonObject)
+                                    )
+                                ),
+                                itemsJsonArray ->
+                                    new Mapped<>(
+                                        "items",
+                                        itemsJsonArray,
+                                        item ->
+                                            new UnnamedBloc<>(
+                                                List.of(
+                                                    new IsInteger(
+                                                        new Required(
+                                                            new IndexedValue("id", item)
+                                                        )
+                                                    )
+                                                ),
+                                                Item.class
+                                            )
+                                    )
+                            ),
                             new IsInteger(
                                 new Required(
                                     new IndexedValue("source", requestJsonObject)
@@ -165,10 +189,9 @@ public class WellFormedJsonTest
         assertFalse(result.isSuccessful());
         assertEquals(
             Map.of(
-                "guest",
-                Map.of("email", "This one is obligatory"),
-                "source",
-                "This value must be an integer."
+                "guest", Map.of("email", "This one is obligatory"),
+                "items", List.of(Map.of("id", "This value must be an integer."), Map.of("id", "This value must be an integer.")),
+                "source", "This value must be an integer."
             ),
             result.error()
         );
@@ -224,12 +247,14 @@ public class WellFormedJsonTest
 
     private String invalidJsonRequest()
     {
-        HashMap<String, Object> target = new HashMap<>();
-        HashMap<String, Object> inner = new HashMap<>();
-        inner.put("name", "Vadim Samokhin");
-        target.put("guest", inner);
-        target.put("source", "vasya");
-
-        return new Gson().toJson(target, new TypeToken<HashMap<String, Object>>() {}.getType());
+        return
+            new Gson().toJson(
+                Map.of(
+                    "guest", Map.of("name", "Vadim Samokhin"),
+                    "source", "vasya",
+                    "items", List.of(Map.of("id", "vasya"), Map.of("id", false))
+                ),
+                new TypeToken<HashMap<String, Object>>() {}.getType()
+            );
     }
 }

@@ -1,10 +1,6 @@
 package Validation.Composite;
 
-import Validation.Leaf.AsInteger;
-import Validation.Leaf.IndexedValue;
-import Validation.Leaf.Named;
 import Validation.Result.Result;
-import Validation.Result.Unnamed;
 import Validation.Validatable;
 import Validation.Value.Present;
 import com.google.gson.JsonElement;
@@ -19,25 +15,26 @@ import java.util.stream.StreamSupport;
 
 public class Mapped<T> implements Validatable<List<T>>
 {
+    private String name;
     private JsonElement jsonElement;
     private Function<JsonElement, UnnamedBloc<T>> innerBlock;
 
-    public Mapped(JsonElement jsonElement, Function<JsonElement, UnnamedBloc<T>> innerBlock)
+    public Mapped(String name, JsonElement jsonElement, Function<JsonElement, UnnamedBloc<T>> innerBlock)
     {
+        this.name = name;
         this.jsonElement = jsonElement;
         this.innerBlock = innerBlock;
     }
 
     public Result<List<T>> result() throws Throwable
     {
-        Pair<List<Object>, Map<String, Object>> valuesAndErrors =
-            new ValuesAndErrors(
+        Pair<List<Object>, List<Map<String, Object>>> valuesAndErrors =
+            new ValuesAndErrorsOfUnnamedBlocs(
                 StreamSupport.stream(
                     this.jsonElement.getAsJsonArray().spliterator(),
                     false
                 )
                     .map(
-                        // TODO: seems that one should pass this function as `Mapped` constructor parameter
                         list -> this.innerBlock.apply(list)
                     )
                     .collect(
@@ -49,18 +46,16 @@ public class Mapped<T> implements Validatable<List<T>>
         if (valuesAndErrors.getValue1().size() > 0) {
             return
                 new Validation.Result.Named<>(
-                    "vasya",
+                    this.name,
                     Either.left(
-                        List.of(
-                            valuesAndErrors.getValue1()
-                        )
+                        valuesAndErrors.getValue1()
                     )
                 );
         }
 
         return
             new Validation.Result.Named<>(
-                "vasya",
+                this.name,
                 Either.right(
                     new Present<>(
                         valuesAndErrors.getValue0().stream()

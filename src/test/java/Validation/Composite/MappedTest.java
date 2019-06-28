@@ -23,6 +23,7 @@ public class MappedTest
     {
         Result<List<Item>> result =
             new Mapped<>(
+                "vasya",
                 this.jsonArrayOfMaps(),
                 jsonMapElement ->
                     new UnnamedBloc<>(
@@ -49,6 +50,7 @@ public class MappedTest
     {
         Result<List<Item>> result =
             new Mapped<>(
+                "vasya",
                 this.jsonArrayOfMaps(),
                 jsonMapElement ->
                     new UnnamedBloc<>(
@@ -58,18 +60,20 @@ public class MappedTest
                                 Either.left(
                                     "Wooooooops"
                                 )
-                        )
+                            )
                         ),
                         Item.class
                     )
             )
                 .result();
 
-        assertTrue(result.isSuccessful());
+        assertFalse(result.isSuccessful());
         assertEquals(
-            Map.of("id", "Wooooooops"),
+            List.of(
+                Map.of("id", "Wooooooops"),
+                Map.of("id", "Wooooooops")
+            ),
             result.error()
-
         );
     }
 
@@ -87,7 +91,7 @@ public class MappedTest
                     Map.of("id", 1488),
                     Map.of("id", 666)
                 ),
-                new TypeToken<List<HashMap<String, Object>>>() {}.getType()
+                new TypeToken<List<Map<String, Object>>>() {}.getType()
             );
     }
 }
