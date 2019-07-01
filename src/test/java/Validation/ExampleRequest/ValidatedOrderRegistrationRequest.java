@@ -1,8 +1,6 @@
 package Validation.ExampleRequest;
 
-import Validation.Composite.FastFail;
-import Validation.Composite.NamedBloc;
-import Validation.Composite.WellFormedJson;
+import Validation.Composite.*;
 import Validation.Leaf.*;
 import Validation.Result.Result;
 import Validation.Validatable;
@@ -11,6 +9,7 @@ import com.spencerwi.either.Either;
 
 import java.util.List;
 
+// TODO: 7/1/19 Create another class representing the same validatable request, but with nested blocks. That would be a more concise version with improved readbility.
 public class ValidatedOrderRegistrationRequest implements Validatable<OrderRegistrationRequest>
 {
     private String jsonRequestString;
@@ -55,6 +54,37 @@ public class ValidatedOrderRegistrationRequest implements Validatable<OrderRegis
                                         ),
                                         // @todo One can get an info about the class name from type parameter.
                                         Guest.class
+                                    )
+                            ),
+                            new FastFail<>(
+//                                new AsList(
+//                                    new IsArrayOfArrays(
+                                new Required(
+                                    new IndexedValue("items", requestJsonObject)
+                                )
+//                                    )
+//                                )
+                                ,
+                                itemsJsonElement ->
+                                    new NamedBloc<>(
+                                        "items",
+                                        List.of(
+                                            new Mapped<>(
+                                                itemsJsonElement,
+                                                item ->
+                                                    new UnnamedBloc<>(
+                                                        List.of(
+                                                            new AsInteger(
+                                                                new Required(
+                                                                    new IndexedValue("id", item)
+                                                                )
+                                                            )
+                                                        ),
+                                                        Item.class
+                                                    )
+                                            )
+                                        ),
+                                        Items.class
                                     )
                             ),
                             new IsInteger(

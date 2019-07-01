@@ -25,7 +25,7 @@ public class UnnamedBloc<T> implements Validatable<T>
     {
         // @todo: create non-strictly-type version of NamedBloc, returning Map<String, Object>
 
-        Pair<List<Object>, Map<String, Object>> valuesOrErrors = new ValuesAndErrors(this.validatables).value();
+        Pair<List<Object>, Map<String, Object>> valuesOrErrors = new ValuesAndErrorsOfNamedValidatabales(this.validatables).value();
 
         if (valuesOrErrors.getValue1().size() > 0) {
             return new Unnamed<>(Either.left(valuesOrErrors.getValue1()));

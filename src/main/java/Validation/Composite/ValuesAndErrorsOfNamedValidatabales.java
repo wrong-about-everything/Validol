@@ -8,11 +8,11 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class ValuesAndErrors
+public class ValuesAndErrorsOfNamedValidatabales
 {
     private List<Validatable<?>> validatables;
 
-    public ValuesAndErrors(List<Validatable<?>> validatables)
+    public ValuesAndErrorsOfNamedValidatabales(List<Validatable<?>> validatables)
     {
         this.validatables = validatables;
     }
@@ -31,7 +31,7 @@ public class ValuesAndErrors
                                 !currentResult.isSuccessful()
                                     ?
                                     Pair.with(
-                                        currentValuesAndErrors.getValue0(),
+                                        List.of(),
                                         Stream.concat(
                                             currentValuesAndErrors.getValue1().entrySet().stream(),
                                             Map.of(currentResult.name(), currentResult.error()).entrySet().stream()
@@ -49,8 +49,7 @@ public class ValuesAndErrors
                                             currentValuesAndErrors.getValue0().stream(),
                                             List.of(currentResult.value().raw()).stream()
                                         )
-                                            .collect(Collectors.toUnmodifiableList())
-                                        ,
+                                            .collect(Collectors.toUnmodifiableList()),
                                         currentValuesAndErrors.getValue1()
                                     )
                                 ;

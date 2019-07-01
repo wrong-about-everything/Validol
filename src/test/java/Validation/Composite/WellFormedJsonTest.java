@@ -6,6 +6,7 @@ import Validation.Result.Unnamed;
 import Validation.Validatable;
 import Validation.Value.Present;
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
@@ -54,19 +55,14 @@ public class WellFormedJsonTest
         inner.put("email", "samokhinvadim@gmail.com");
         inner.put("name", "Vadim Samokhin");
         target.put("guest", inner);
-        target.put("items", List.of(Map.of("id", 1488)));
+        target.put(
+            "items",
+            List.of(
+                Map.of("id", 1488),
+                Map.of("id", 666)
+            )
+        );
         target.put("source", 1);
-
-        return new Gson().toJson(target, new TypeToken<HashMap<String, Object>>() {}.getType());
-    }
-
-    private String invalidJsonRequest()
-    {
-        HashMap<String, Object> target = new HashMap<>();
-        HashMap<String, Object> inner = new HashMap<>();
-        inner.put("name", "Vadim Samokhin");
-        target.put("guest", inner);
-        target.put("source", "vasya");
 
         return new Gson().toJson(target, new TypeToken<HashMap<String, Object>>() {}.getType());
     }

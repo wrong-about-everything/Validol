@@ -4,17 +4,15 @@ import Validation.Result.Named;
 import Validation.Result.Result;
 import Validation.Validatable;
 import Validation.Value.Present;
-import Validation.Value.Value;
 import com.spencerwi.either.Either;
 import org.javatuples.Pair;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 // TODO: 6/23/19 Create non-strictly-type version of NamedBloc, returning Map<String, Object>
+// TODO: use UnnamedBloc class here, thus removing duplication
+// TODO: introduce a separate class for ListOfUnnamedBlocs
 public class NamedBloc<T> implements Validatable<T>
 {
     private String name;
@@ -30,7 +28,7 @@ public class NamedBloc<T> implements Validatable<T>
 
     public Result<T> result() throws Throwable
     {
-        Pair<List<Object>, Map<String, Object>> valuesAndErrors = new ValuesAndErrors(this.validatables).value();
+        Pair<List<Object>, Map<String, Object>> valuesAndErrors = new ValuesAndErrorsOfNamedValidatabales(this.validatables).value();
 
         if (valuesAndErrors.getValue1().size() > 0) {
             return new Named<>(this.name, Either.left(valuesAndErrors.getValue1()));
