@@ -1,6 +1,6 @@
-package Validation.Composite;
+package Validation.ExampleRequest;
 
-class OrderRegistrationRequest
+public class OrderRegistrationRequest
 {
     private Guest guest;
     private Items items;

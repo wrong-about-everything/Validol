@@ -1,6 +1,6 @@
-package Validation.Composite;
+package Validation.ExampleRequest;
 
-class Item
+public class Item
 {
     private Integer id;
 

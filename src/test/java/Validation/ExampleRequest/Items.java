@@ -1,8 +1,8 @@
-package Validation.Composite;
+package Validation.ExampleRequest;
 
 import java.util.List;
 
-class Items
+public class Items
 {
     private List<Item> list;
 

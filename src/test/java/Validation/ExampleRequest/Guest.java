@@ -1,6 +1,6 @@
-package Validation.Composite;
+package Validation.ExampleRequest;
 
-class Guest
+public class Guest
 {
     private String email;
     private String name;

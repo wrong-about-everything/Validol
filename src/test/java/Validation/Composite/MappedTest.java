@@ -89,3 +89,18 @@ public class MappedTest
         return new Gson().toJsonTree(target, new TypeToken<List<HashMap<String, Object>>>() {}.getType());
     }
 }
+
+class Item
+{
+    private Integer id;
+
+    public Item(Integer id)
+    {
+        this.id = id;
+    }
+
+    public Integer id()
+    {
+        return this.id;
+    }
+}

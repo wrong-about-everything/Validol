@@ -4,7 +4,6 @@ import Validation.Result.Result;
 import Validation.Result.Unnamed;
 import Validation.Validatable;
 import Validation.Value.Present;
-import Validation.Value.Value;
 import com.spencerwi.either.Either;
 import org.javatuples.Pair;
 
