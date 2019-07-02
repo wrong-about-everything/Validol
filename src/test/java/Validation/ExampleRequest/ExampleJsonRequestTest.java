@@ -43,47 +43,47 @@ public class ExampleJsonRequestTest
     {
         return
             new Object[][] {
-//                {
-//                    new Gson().toJson(
-//                        Map.of(
-//                            "guest", Map.of("name", "Vadim Samokhin"),
-//                            "source", "vasya"
-//                        ),
-//                        new TypeToken<HashMap<String, Object>>() {}.getType()
-//                    ),
-//                    Map.of(
-//                        "guest",
-//                        Map.of("email", "This one is obligatory"),
-//                        "source",
-//                        "This value must be an integer.",
-//                        "items", "This one is obligatory"
-//                    )
-//                },
-//                {
-//                    new Gson().toJson(
-//                        Map.of(
-//                            "source", "vasya"
-//                        ),
-//                        new TypeToken<HashMap<String, Object>>() {}.getType()
-//                    ),
-//                    Map.of(
-//                        "guest", "This one is obligatory",
-//                        "source", "This value must be an integer.",
-//                        "items", "This one is obligatory"
-//                    )
-//                },
-//                {
-//                    new Gson().toJson(
-//                        Map.of(
-//                            "source", 1
-//                        ),
-//                        new TypeToken<HashMap<String, Object>>() {}.getType()
-//                    ),
-//                    Map.of(
-//                        "guest", "This one is obligatory",
-//                        "items", "This one is obligatory"
-//                    )
-//                },
+                {
+                    new Gson().toJson(
+                        Map.of(
+                            "guest", Map.of("name", "Vadim Samokhin"),
+                            "source", "vasya"
+                        ),
+                        new TypeToken<HashMap<String, Object>>() {}.getType()
+                    ),
+                    Map.of(
+                        "guest",
+                        Map.of("email", "This one is obligatory"),
+                        "source",
+                        "This value must be an integer.",
+                        "items", "This one is obligatory"
+                    )
+                },
+                {
+                    new Gson().toJson(
+                        Map.of(
+                            "source", "vasya"
+                        ),
+                        new TypeToken<HashMap<String, Object>>() {}.getType()
+                    ),
+                    Map.of(
+                        "guest", "This one is obligatory",
+                        "source", "This value must be an integer.",
+                        "items", "This one is obligatory"
+                    )
+                },
+                {
+                    new Gson().toJson(
+                        Map.of(
+                            "source", 1
+                        ),
+                        new TypeToken<HashMap<String, Object>>() {}.getType()
+                    ),
+                    Map.of(
+                        "guest", "This one is obligatory",
+                        "items", "This one is obligatory"
+                    )
+                },
                 {
                     new Gson().toJson(
                         Map.of(

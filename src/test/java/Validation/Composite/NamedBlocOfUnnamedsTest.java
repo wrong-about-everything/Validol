@@ -1,5 +1,6 @@
 package Validation.Composite;
 
+import Validation.Leaf.Named;
 import Validation.Result.Result;
 import Validation.Value.Present;
 import com.google.gson.Gson;
@@ -8,34 +9,36 @@ import com.google.gson.reflect.TypeToken;
 import com.spencerwi.either.Either;
 import org.junit.Ignore;
 import org.junit.Test;
-import Validation.Leaf.Named;
 
 import java.util.List;
 import java.util.Map;
 
 import static org.junit.Assert.*;
 
-public class UnnamedBlocOfUnnamedsTest
+public class NamedBlocOfUnnamedsTest
 {
     @Test
     public void success() throws Throwable
     {
         Result<Items> result =
-            new UnnamedBlocOfUnnameds<>(
-                this.jsonArrayOfMaps(),
-                jsonMapElement ->
-                    new UnnamedBlocOfNameds<>(
-                        List.of(
-                            new Named<>(
-                                "id",
-                                Either.right(
-                                    new Present<>(jsonMapElement.getAsJsonObject().get("id").getAsInt())
+            new NamedBlocOfUnnameds<>(
+                "items",
+                new UnnamedBlocOfUnnameds<>(
+                    this.jsonArrayOfMaps(),
+                    jsonMapElement ->
+                        new UnnamedBlocOfNameds<>(
+                            List.of(
+                                new Named<>(
+                                    "id",
+                                    Either.right(
+                                        new Present<>(jsonMapElement.getAsJsonObject().get("id").getAsInt())
+                                    )
                                 )
-                            )
+                            ),
+                            Item.class
                         ),
-                        Item.class
-                    ),
-                Items.class
+                    Items.class
+                )
             )
                 .result();
 
@@ -48,19 +51,22 @@ public class UnnamedBlocOfUnnamedsTest
     public void fail() throws Throwable
     {
         Result<Items> result =
-            new UnnamedBlocOfUnnameds<>(
-                this.jsonArrayOfMaps(),
-                jsonMapElement ->
-                    new UnnamedBlocOfNameds<>(
-                        List.of(
-                            new Named<>(
-                                "id",
-                                Either.left("Wooooooops")
-                            )
+            new NamedBlocOfUnnameds<>(
+                "items",
+                new UnnamedBlocOfUnnameds<>(
+                    this.jsonArrayOfMaps(),
+                    jsonMapElement ->
+                        new UnnamedBlocOfNameds<>(
+                            List.of(
+                                new Named<>(
+                                    "id",
+                                    Either.left("Wooooooops")
+                                )
+                            ),
+                            Item.class
                         ),
-                        Item.class
-                    ),
-                Items.class
+                    Items.class
+                )
             )
                 .result();
 
@@ -92,3 +98,5 @@ public class UnnamedBlocOfUnnamedsTest
             );
     }
 }
+
+

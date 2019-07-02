@@ -8,11 +8,11 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class ValuesAndErrorsOfUnnamedBlocs
+public class ValuesAndErrorsOfUnnameds
 {
     private List<Validatable<?>> validatables;
 
-    public ValuesAndErrorsOfUnnamedBlocs(List<Validatable<?>> validatables)
+    public ValuesAndErrorsOfUnnameds(List<Validatable<?>> validatables)
     {
         this.validatables = validatables;
     }

@@ -55,7 +55,8 @@ public class ValidatedOrderRegistrationRequest implements Validatable<OrderRegis
                                         // @todo One can get an info about the class name from type parameter.
                                         Guest.class
                                     )
-                            ),
+                            )
+                            ,
                             new FastFail<>(
 //                                new AsList(
 //                                    new IsArrayOfArrays(
@@ -66,7 +67,7 @@ public class ValidatedOrderRegistrationRequest implements Validatable<OrderRegis
 //                                )
                                 ,
                                 itemsJsonElement ->
-                                    new NamedBlocOfNameds<>(
+                                    new NamedBlocOfUnnameds<>(
                                         "items",
                                         new UnnamedBlocOfUnnameds<>(
                                             itemsJsonElement,

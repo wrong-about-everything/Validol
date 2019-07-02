@@ -25,7 +25,7 @@ public class UnnamedBlocOfNameds<T> implements Validatable<T>
     {
         // @todo: create non-strictly-type version of NamedBlocOfNameds, returning Map<String, Object>
 
-        Pair<List<Object>, Map<String, Object>> valuesOrErrors = new ValuesAndErrorsOfNamedValidatabales(this.validatables).value();
+        Pair<List<Object>, Map<String, Object>> valuesOrErrors = new ValuesAndErrorsOfNameds(this.validatables).value();
 
         if (valuesOrErrors.getValue1().size() > 0) {
             return new Unnamed<>(Either.left(valuesOrErrors.getValue1()));
@@ -60,7 +60,7 @@ public class UnnamedBlocOfNameds<T> implements Validatable<T>
                 return this.objectWithFourArguments(arguments);
 
             default:
-                throw new Exception("Fix NamedBlocOfNameds class to support more T constructor parameters");
+                throw new Exception("Fix UnnamedBlocOfNameds class to support more T constructor parameters");
         }
     }
 

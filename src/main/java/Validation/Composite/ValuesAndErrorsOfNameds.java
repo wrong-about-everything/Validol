@@ -8,11 +8,11 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class ValuesAndErrorsOfNamedValidatabales
+public class ValuesAndErrorsOfNameds
 {
     private List<Validatable<?>> validatables;
 
-    public ValuesAndErrorsOfNamedValidatabales(List<Validatable<?>> validatables)
+    public ValuesAndErrorsOfNameds(List<Validatable<?>> validatables)
     {
         this.validatables = validatables;
     }
