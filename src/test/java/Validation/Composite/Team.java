@@ -1,15 +1,19 @@
 package Validation.Composite;
 
+import java.util.Map;
+
 public class Team
 {
     private String vasya;
     private Integer fedya;
+    private Map<String, Object> tolya;
     private Boolean jenya;
 
-    public Team(String vasya, Integer fedya, Boolean jenya)
+    public Team(String vasya, Integer fedya, Map<String, Object> tolya, Boolean jenya)
     {
         this.vasya = vasya;
         this.fedya = fedya;
+        this.tolya = tolya;
         this.jenya = jenya;
     }
 
@@ -21,6 +25,11 @@ public class Team
     public Integer fedya()
     {
         return this.fedya;
+    }
+
+    public Map<String, Object> tolya()
+    {
+        return this.tolya;
     }
 
     public Boolean jenya()

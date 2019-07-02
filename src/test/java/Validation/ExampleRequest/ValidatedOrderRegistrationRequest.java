@@ -28,7 +28,7 @@ public class ValidatedOrderRegistrationRequest implements Validatable<OrderRegis
                     new Named<>("parsed request body", Either.right(new Present<>(this.jsonRequestString)))
                 ),
                 requestJsonObject ->
-                    new NamedBloc<>(
+                    new NamedBlocOfNameds<>(
                         "parsed request body",
                         List.of(
                             new FastFail<>(
@@ -38,7 +38,7 @@ public class ValidatedOrderRegistrationRequest implements Validatable<OrderRegis
                                     )
                                 ),
                                 guestJsonObject ->
-                                    new NamedBloc<>(
+                                    new NamedBlocOfNameds<>(
                                         "guest",
                                         List.of(
                                             new AsString(
@@ -66,25 +66,23 @@ public class ValidatedOrderRegistrationRequest implements Validatable<OrderRegis
 //                                )
                                 ,
                                 itemsJsonElement ->
-                                    new NamedBloc<>(
+                                    new NamedBlocOfNameds<>(
                                         "items",
-                                        List.of(
-                                            new Mapped<>(
-                                                itemsJsonElement,
-                                                item ->
-                                                    new UnnamedBloc<>(
-                                                        List.of(
-                                                            new AsInteger(
-                                                                new Required(
-                                                                    new IndexedValue("id", item)
-                                                                )
+                                        new UnnamedBlocOfUnnameds<>(
+                                            itemsJsonElement,
+                                            item ->
+                                                new UnnamedBlocOfNameds<>(
+                                                    List.of(
+                                                        new AsInteger(
+                                                            new Required(
+                                                                new IndexedValue("id", item)
                                                             )
-                                                        ),
-                                                        Item.class
-                                                    )
-                                            )
-                                        ),
-                                        Items.class
+                                                        )
+                                                    ),
+                                                    Item.class
+                                                ),
+                                            Items.class
+                                        )
                                     )
                             ),
                             new IsInteger(

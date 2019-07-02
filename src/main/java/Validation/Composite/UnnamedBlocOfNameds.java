@@ -10,12 +10,12 @@ import org.javatuples.Pair;
 import java.util.List;
 import java.util.Map;
 
-public class UnnamedBloc<T> implements Validatable<T>
+public class UnnamedBlocOfNameds<T> implements Validatable<T>
 {
     private List<Validatable<?>> validatables;
     private final Class<? extends T> clazz;
 
-    public UnnamedBloc(List<Validatable<?>> validatables, Class<? extends T> clazz)
+    public UnnamedBlocOfNameds(List<Validatable<?>> validatables, Class<? extends T> clazz)
     {
         this.validatables = validatables;
         this.clazz = clazz;
@@ -23,7 +23,7 @@ public class UnnamedBloc<T> implements Validatable<T>
 
     public Result<T> result() throws Throwable
     {
-        // @todo: create non-strictly-type version of NamedBloc, returning Map<String, Object>
+        // @todo: create non-strictly-type version of NamedBlocOfNameds, returning Map<String, Object>
 
         Pair<List<Object>, Map<String, Object>> valuesOrErrors = new ValuesAndErrorsOfNamedValidatabales(this.validatables).value();
 
@@ -56,8 +56,11 @@ public class UnnamedBloc<T> implements Validatable<T>
             case 3:
                 return this.objectWithThreeArguments(arguments);
 
+            case 4:
+                return this.objectWithFourArguments(arguments);
+
             default:
-                throw new Exception("Fix NamedBloc class to support more T constructor parameters");
+                throw new Exception("Fix NamedBlocOfNameds class to support more T constructor parameters");
         }
     }
 
@@ -96,5 +99,14 @@ public class UnnamedBloc<T> implements Validatable<T>
                 this.clazz.getDeclaredConstructors()[0].getParameterTypes()
             )
                 .newInstance(arguments[0], arguments[1], arguments[2]);
+    }
+
+    private T objectWithFourArguments(Object[] arguments) throws Exception
+    {
+        return
+            this.clazz.getDeclaredConstructor(
+                this.clazz.getDeclaredConstructors()[0].getParameterTypes()
+            )
+                .newInstance(arguments[0], arguments[1], arguments[2], arguments[3]);
     }
 }

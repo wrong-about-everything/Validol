@@ -16,8 +16,14 @@ public class Named<T> implements Validatable<T>
         this.value = value;
     }
 
-    public Result<T> result()
+    public Result<T> result() throws Throwable
     {
-        return new Validation.Result.Named<>(this.name, this.value);
+        Result<T> result = new Unnamed<>(this.value).result();
+
+        if (!result.isSuccessful()) {
+            return new Validation.Result.Named<>(this.name, Either.left(result.error()));
+        }
+
+        return new Validation.Result.Named<>(this.name, Either.right(result.value()));
     }
 }

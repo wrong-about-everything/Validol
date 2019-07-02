@@ -10,25 +10,21 @@ import org.javatuples.Pair;
 import java.util.List;
 import java.util.Map;
 
-// TODO: 6/23/19 Create non-strictly-type version of NamedBloc, returning Map<String, Object>
-// TODO: use UnnamedBloc class here, thus removing duplication
-// TODO: introduce a separate class for ListOfUnnamedBlocs
-public class NamedBloc<T> implements Validatable<T>
+// TODO: NamedBlocOfUnnameds to UnnamedBlocOfUnnameds is like NamedBlocOfNameds to UnnamedBlocOfNameds. Implement the former using the latter.
+public class UnnamedBlocOfUnnameds<T> implements Validatable<T>
 {
-    private String name;
-    private List<Validatable<?>> validatables;
+    private Validatable<List<?>> validatables;
     private final Class<? extends T> clazz;
 
-    public NamedBloc(String name, List<Validatable<?>> validatables, Class<? extends T> clazz)
+    public UnnamedBlocOfUnnameds(Validatable<List<?>> validatables, Class<? extends T> clazz)
     {
-        this.name = name;
         this.validatables = validatables;
         this.clazz = clazz;
     }
 
     public Result<T> result() throws Throwable
     {
-        Pair<List<Object>, Map<String, Object>> valuesAndErrors = new ValuesAndErrorsOfNamedValidatabales(this.validatables).value();
+        Pair<List<Object>, List<Map<String, Object>>> valuesAndErrors = new ValuesAndErrorsOfUnnamedBlocs(List.of(this.validatables)).value();
 
         if (valuesAndErrors.getValue1().size() > 0) {
             return new Named<>(this.name, Either.left(valuesAndErrors.getValue1()));
@@ -62,7 +58,7 @@ public class NamedBloc<T> implements Validatable<T>
                 return this.objectWithThreeArguments(arguments);
 
             default:
-                throw new Exception("Fix NamedBloc class to support more T constructor parameters");
+                throw new Exception("Fix NamedBlocOfNameds class to support more T constructor parameters");
         }
     }
 

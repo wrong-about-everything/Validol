@@ -1,5 +1,6 @@
 package Validation.Composite;
 
+import Validation.ExampleRequest.Items;
 import Validation.Result.Result;
 import Validation.Value.Present;
 import com.google.gson.Gson;
@@ -15,16 +16,16 @@ import java.util.Map;
 
 import static org.junit.Assert.*;
 
-public class MappedTest
+public class UnnamedBlocOfUnnamedsTest
 {
     @Test
     public void success() throws Throwable
     {
-        Result<List<Item>> result =
-            new Mapped<>(
+        Result<Items> result =
+            new UnnamedBlocOfUnnameds<>(
                 this.jsonArrayOfMaps(),
                 jsonMapElement ->
-                    new UnnamedBloc<>(
+                    new UnnamedBlocOfNameds<>(
                         List.of(
                             new Named<>(
                                 "id",
@@ -34,7 +35,8 @@ public class MappedTest
                             )
                         ),
                         Item.class
-                    )
+                    ),
+                Items.class
             )
                 .result();
 
@@ -47,10 +49,10 @@ public class MappedTest
     public void fail() throws Throwable
     {
         Result<List<Item>> result =
-            new Mapped<>(
+            new UnnamedBlocOfUnnameds<>(
                 this.jsonArrayOfMaps(),
                 jsonMapElement ->
-                    new UnnamedBloc<>(
+                    new UnnamedBlocOfNameds<>(
                         List.of(
                             new Named<>(
                                 "id",
@@ -58,7 +60,8 @@ public class MappedTest
                             )
                         ),
                         Item.class
-                    )
+                    ),
+                Items.class
             )
                 .result();
 
