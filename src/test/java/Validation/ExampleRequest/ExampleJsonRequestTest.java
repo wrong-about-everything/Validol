@@ -53,8 +53,7 @@ public class ExampleJsonRequestTest
                     ),
                     Map.of(
                         "guest",
-                        Map.of("email", "This one is obligatory"),
-                        "source",
+                        Map.of("email", "This one is obligatory"),                        "source",
                         "This value must be an integer.",
                         "items", "This one is obligatory"
                     )

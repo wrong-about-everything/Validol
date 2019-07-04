@@ -17,7 +17,7 @@ public class ValuesAndErrorsOfUnnameds
         this.validatables = validatables;
     }
 
-    public Pair<List<Object>, List<Map<String, Object>>> value() throws Throwable
+    public Pair<List<Object>, List<Object>> value() throws Throwable
     {
         return
             this.validatables.stream()
@@ -34,7 +34,7 @@ public class ValuesAndErrorsOfUnnameds
                                         List.of(),
                                         Stream.concat(
                                             currentValuesAndErrors.getValue1().stream(),
-                                            List.of(((Map<String, Object>) currentResult.error())).stream()
+                                            List.of((currentResult.error())).stream()
                                         )
                                             .collect(
                                                 Collectors.toUnmodifiableList()
@@ -51,6 +51,7 @@ public class ValuesAndErrorsOfUnnameds
                                     )
                                 ;
                         } catch (Exception e) {
+                            // TODO: решить что делать с исключениями
                             e.printStackTrace();
                             throw new RuntimeException(e);
                         }

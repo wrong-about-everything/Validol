@@ -11,8 +11,6 @@ import java.util.List;
 import java.util.Map;
 
 // TODO: 6/23/19 Create non-strictly-type version of NamedBlocOfNameds, returning Map<String, Object>
-// TODO: use UnnamedBlocOfNameds class here, thus removing duplication
-// TODO: introduce a separate class for UnnamedBlocOfUnnameds
 public class NamedBlocOfNameds<T> implements Validatable<T>
 {
     private String name;

@@ -1,5 +1,7 @@
 package Validation.Composite;
 
+import Validation.Leaf.IsInteger;
+import Validation.Leaf.Unnamed;
 import Validation.Result.Result;
 import Validation.Value.Present;
 import com.google.gson.Gson;
@@ -18,7 +20,56 @@ import static org.junit.Assert.*;
 public class UnnamedBlocOfUnnamedsTest
 {
     @Test
-    public void success() throws Throwable
+    public void successfulValidationOfPlainUnnamed() throws Throwable
+    {
+        Result<Integers> result =
+            new UnnamedBlocOfUnnameds<>(
+                this.jsonArrayOfIntegers(),
+                jsonElement ->
+                    new IsInteger(
+                        new Unnamed<>(
+                            Either.right(
+                                new Present<>(
+                                    jsonElement.toString()
+                                )
+                            )
+                        )
+                    ),
+                Integers.class
+            )
+                .result();
+
+        assertTrue(result.isSuccessful());
+        assertEquals(Integer.valueOf(1488), result.value().raw().list().get(0));
+        assertEquals(Integer.valueOf(666), result.value().raw().list().get(1));
+    }
+
+    @Test
+    public void failedValidationOfPlainUnnameds() throws Throwable
+    {
+        Result<Integers> result =
+            new UnnamedBlocOfUnnameds<>(
+                this.jsonArrayOfStrings(),
+                jsonElement ->
+                    new IsInteger(
+                        new Unnamed<>(
+                            Either.right(
+                                new Present<>(
+                                    jsonElement.toString()
+                                )
+                            )
+                        )
+                    ),
+                Integers.class
+            )
+                .result();
+
+        assertFalse(result.isSuccessful());
+        assertEquals(List.of("This value must be an integer.", "This value must be an integer."), result.error());
+    }
+
+    @Test
+    public void successfulValidationOfUnnamedBlocks() throws Throwable
     {
         Result<Items> result =
             new UnnamedBlocOfUnnameds<>(
@@ -89,6 +140,24 @@ public class UnnamedBlocOfUnnamedsTest
                     Map.of("id", 666)
                 ),
                 new TypeToken<List<Map<String, Object>>>() {}.getType()
+            );
+    }
+
+    private JsonElement jsonArrayOfIntegers()
+    {
+        return
+            new Gson().toJsonTree(
+                List.of(1488, 666),
+                new TypeToken<List<Integer>>() {}.getType()
+            );
+    }
+
+    private JsonElement jsonArrayOfStrings()
+    {
+        return
+            new Gson().toJsonTree(
+                List.of("vasya", "fedya"),
+                new TypeToken<List<Integer>>() {}.getType()
             );
     }
 }

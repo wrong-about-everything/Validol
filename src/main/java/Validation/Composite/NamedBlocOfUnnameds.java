@@ -14,20 +14,24 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-public class NamedBlocOfUnnameds<T> implements Validatable<T>
+public class NamedBlocOfUnnameds<T, R> implements Validatable<R>
 {
     private String name;
-    private Validatable<T> validatable;
+    private JsonElement jsonElement;
+    private Function<JsonElement, Validatable<T>> unnamed;
+    private Class<? extends R> clazz;
 
-    public NamedBlocOfUnnameds(String name, Validatable<T> validatable)
+    public NamedBlocOfUnnameds(String name, JsonElement jsonElement, Function<JsonElement, Validatable<T>> unnamed, Class<? extends R> clazz)
     {
         this.name = name;
-        this.validatable = validatable;
+        this.jsonElement = jsonElement;
+        this.unnamed = unnamed;
+        this.clazz = clazz;
     }
 
-    public Result<T> result() throws Throwable
+    public Result<R> result() throws Throwable
     {
-        Result<T> result = this.validatable.result();
+        Result<R> result = new UnnamedBlocOfUnnameds<T, R>(this.jsonElement, this.unnamed, this.clazz).result();
 
         if (!result.isSuccessful()) {
             return new Named<>(this.name, Either.left(result.error()));

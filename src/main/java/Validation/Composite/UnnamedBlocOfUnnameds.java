@@ -13,7 +13,6 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-// TODO: extract jsonElement and function into its own class? Kindda Mapped?
 public class UnnamedBlocOfUnnameds<T, R> implements Validatable<R>
 {
     private JsonElement jsonElement;
@@ -29,7 +28,7 @@ public class UnnamedBlocOfUnnameds<T, R> implements Validatable<R>
 
     public Result<R> result() throws Throwable
     {
-        Pair<List<Object>, List<Map<String, Object>>> valuesAndErrors =
+        Pair<List<Object>, List<Object>> valuesAndErrors =
             new ValuesAndErrorsOfUnnameds(
                 StreamSupport.stream(
                     this.jsonElement.getAsJsonArray().spliterator(),
@@ -44,7 +43,7 @@ public class UnnamedBlocOfUnnameds<T, R> implements Validatable<R>
             )
                 .value();
 
-        if (valuesAndErrors.getValue1().size() > 0) {
+        if (!valuesAndErrors.getValue1().isEmpty()) {
             return
                 new Validation.Result.Unnamed<>(
                     Either.left(

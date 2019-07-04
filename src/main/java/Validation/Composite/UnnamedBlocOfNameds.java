@@ -23,8 +23,6 @@ public class UnnamedBlocOfNameds<T> implements Validatable<T>
 
     public Result<T> result() throws Throwable
     {
-        // @todo: create non-strictly-type version of NamedBlocOfNameds, returning Map<String, Object>
-
         Pair<List<Object>, Map<String, Object>> valuesOrErrors = new ValuesAndErrorsOfNameds(this.validatables).value();
 
         if (valuesOrErrors.getValue1().size() > 0) {

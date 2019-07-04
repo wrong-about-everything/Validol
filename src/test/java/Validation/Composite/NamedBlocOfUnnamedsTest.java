@@ -23,22 +23,20 @@ public class NamedBlocOfUnnamedsTest
         Result<Items> result =
             new NamedBlocOfUnnameds<>(
                 "items",
-                new UnnamedBlocOfUnnameds<>(
-                    this.jsonArrayOfMaps(),
-                    jsonMapElement ->
-                        new UnnamedBlocOfNameds<>(
-                            List.of(
-                                new Named<>(
-                                    "id",
-                                    Either.right(
-                                        new Present<>(jsonMapElement.getAsJsonObject().get("id").getAsInt())
-                                    )
+                this.jsonArrayOfMaps(),
+                jsonMapElement ->
+                    new UnnamedBlocOfNameds<>(
+                        List.of(
+                            new Named<>(
+                                "id",
+                                Either.right(
+                                    new Present<>(jsonMapElement.getAsJsonObject().get("id").getAsInt())
                                 )
-                            ),
-                            Item.class
+                            )
                         ),
-                    Items.class
-                )
+                        Item.class
+                    ),
+                Items.class
             )
                 .result();
 
@@ -53,20 +51,18 @@ public class NamedBlocOfUnnamedsTest
         Result<Items> result =
             new NamedBlocOfUnnameds<>(
                 "items",
-                new UnnamedBlocOfUnnameds<>(
-                    this.jsonArrayOfMaps(),
-                    jsonMapElement ->
-                        new UnnamedBlocOfNameds<>(
-                            List.of(
-                                new Named<>(
-                                    "id",
-                                    Either.left("Wooooooops")
-                                )
-                            ),
-                            Item.class
+                this.jsonArrayOfMaps(),
+                jsonMapElement ->
+                    new UnnamedBlocOfNameds<>(
+                        List.of(
+                            new Named<>(
+                                "id",
+                                Either.left("Wooooooops")
+                            )
                         ),
-                    Items.class
-                )
+                        Item.class
+                    ),
+                Items.class
             )
                 .result();
 

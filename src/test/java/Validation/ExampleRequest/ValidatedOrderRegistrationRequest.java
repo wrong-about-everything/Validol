@@ -55,8 +55,7 @@ public class ValidatedOrderRegistrationRequest implements Validatable<OrderRegis
                                         // @todo One can get an info about the class name from type parameter.
                                         Guest.class
                                     )
-                            )
-                            ,
+                            ),
                             new FastFail<>(
 //                                new AsList(
 //                                    new IsArrayOfArrays(
@@ -69,21 +68,53 @@ public class ValidatedOrderRegistrationRequest implements Validatable<OrderRegis
                                 itemsJsonElement ->
                                     new NamedBlocOfUnnameds<>(
                                         "items",
-                                        new UnnamedBlocOfUnnameds<>(
-                                            itemsJsonElement,
-                                            item ->
-                                                new UnnamedBlocOfNameds<>(
-                                                    List.of(
-                                                        new AsInteger(
-                                                            new Required(
-                                                                new IndexedValue("id", item)
-                                                            )
+                                        itemsJsonElement,
+                                        item ->
+                                            new UnnamedBlocOfNameds<>(
+                                                List.of(
+                                                    new AsInteger(
+                                                        new Required(
+                                                            new IndexedValue("id", item)
                                                         )
-                                                    ),
-                                                    Item.class
+                                                    )
                                                 ),
-                                            Items.class
-                                        )
+                                                Item.class
+                                            ),
+                                        Items.class
+                                    )
+                            ),
+                            // TODO: Подумать как спрятать FastFail, чтобы сделать код более кратким
+                            new FastFail<>(
+                                new IndexedValue("delivery", requestJsonObject),
+                                deliveryJsonElement ->
+                                    new NamedBlocOfNameds<>(
+                                        "delivery",
+                                        new SwitchTrue(
+                                            new Case(
+                                                new IsCourierDelivery(),
+                                                new FastFail<>(
+                                                    new IndexedValue("where", deliveryJsonElement),
+                                                    whereJsonElement ->
+                                                        new NamedBlocOfNameds<>(
+                                                            "where",
+                                                            List.of(
+                                                                new AsString(
+                                                                    new Required(
+                                                                        new IndexedValue("street", whereJsonElement)
+                                                                    )
+                                                                ),
+                                                                new AsString(
+                                                                    new Required(
+                                                                        new IndexedValue("building", whereJsonElement)
+                                                                    )
+                                                                )
+                                                            ),
+                                                            Where.class
+                                                        )
+                                                )
+                                            )
+                                        ),
+                                        Delivery.class
                                     )
                             ),
                             new IsInteger(
