@@ -22,6 +22,7 @@ public class ValidatedOrderRegistrationRequest implements Validatable<OrderRegis
     @Override
     public Result<OrderRegistrationRequest> result() throws Throwable
     {
+        // todo: Обработать случаи, когда классы используются неверно. Например, NamedBlocOfNameds используется с неименованными элементами валидации.
         return
             new FastFail<>(
                 new WellFormedJson(
@@ -57,13 +58,9 @@ public class ValidatedOrderRegistrationRequest implements Validatable<OrderRegis
                                     )
                             ),
                             new FastFail<>(
-//                                new AsList(
-//                                    new IsArrayOfArrays(
                                 new Required(
                                     new IndexedValue("items", requestJsonObject)
                                 )
-//                                    )
-//                                )
                                 ,
                                 itemsJsonElement ->
                                     new NamedBlocOfUnnameds<>(
@@ -84,37 +81,60 @@ public class ValidatedOrderRegistrationRequest implements Validatable<OrderRegis
                                     )
                             ),
                             // TODO: Подумать как спрятать FastFail, чтобы сделать код более кратким
+                            // TODO: Подумать как обработать кейс, когда в FastFail блок необязательный. Например, когда delivery необязательный.
                             new FastFail<>(
-                                new IndexedValue("delivery", requestJsonObject),
+                                new Required(
+                                    new IndexedValue("delivery", requestJsonObject)
+                                ),
                                 deliveryJsonElement ->
-                                    new NamedBlocOfNameds<>(
+                                    new SwitchTrue<>(
                                         "delivery",
-                                        new SwitchTrue(
-                                            new Case(
-                                                new IsCourierDelivery(),
-                                                new FastFail<>(
-                                                    new IndexedValue("where", deliveryJsonElement),
-                                                    whereJsonElement ->
-                                                        new NamedBlocOfNameds<>(
-                                                            "where",
-                                                            List.of(
-                                                                new AsString(
-                                                                    new Required(
-                                                                        new IndexedValue("street", whereJsonElement)
-                                                                    )
-                                                                ),
-                                                                new AsString(
-                                                                    new Required(
-                                                                        new IndexedValue("building", whereJsonElement)
-                                                                    )
+                                        List.of(
+                                            new Case<>(
+                                                () -> true,
+                                                new UnnamedBlocOfNameds<>(
+                                                    List.of(
+                                                        new FastFail<>(
+                                                            new IndexedValue("where", deliveryJsonElement),
+                                                            whereJsonElement ->
+                                                                new NamedBlocOfNameds<>(
+                                                                    "where",
+                                                                    List.of(
+                                                                        new AsString(
+                                                                            new Required(
+                                                                                new IndexedValue("street", whereJsonElement)
+                                                                            )
+                                                                        ),
+                                                                        new IsInteger(
+                                                                            new Required(
+                                                                                new IndexedValue("building", whereJsonElement)
+                                                                            )
+                                                                        )
+                                                                    ),
+                                                                    Where.class
                                                                 )
-                                                            ),
-                                                            Where.class
                                                         )
+//                                                        ,
+//                                                        new FastFail<>(
+//                                                            new IndexedValue("when", deliveryJsonElement),
+//                                                            whenJsonElement ->
+//                                                                new NamedBlocOfNameds<>(
+//                                                                    "when",
+//                                                                    List.of(
+//                                                                        new AsString(
+//                                                                            new Required(
+//                                                                                new IndexedValue("datetime", whenJsonElement)
+//                                                                            )
+//                                                                        )
+//                                                                    ),
+//                                                                    When.class
+//                                                                )
+//                                                        )
+                                                    ),
+                                                    CourierDelivery.class
                                                 )
                                             )
-                                        ),
-                                        Delivery.class
+                                        )
                                     )
                             ),
                             new IsInteger(

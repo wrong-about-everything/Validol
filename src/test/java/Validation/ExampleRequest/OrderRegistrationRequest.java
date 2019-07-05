@@ -4,24 +4,20 @@ public class OrderRegistrationRequest
 {
     private Guest guest;
     private Items items;
+    private Delivery delivery;
     private Integer source;
-//    private Bag bag;
-//    private Delivery delivery;
 
     public OrderRegistrationRequest(
         Guest guest,
         Items items,
+        Delivery delivery,
         Integer source
-//        ,
-//        Bag bag,
-//        Delivery delivery
     )
     {
         this.guest = guest;
         this.items = items;
+        this.delivery = delivery;
         this.source = source;
-//        this.bag = bag;
-//        this.delivery = delivery;
     }
 
     public Guest guest()
@@ -34,18 +30,13 @@ public class OrderRegistrationRequest
         return this.items;
     }
 
+    public Delivery delivery()
+    {
+        return this.delivery;
+    }
+
     public Integer source()
     {
         return this.source;
     }
-
-//    public Bag bag()
-//    {
-//        return this.bag;
-//    }
-//
-//    public Delivery delivery()
-//    {
-//        return this.delivery;
-//    }
 }

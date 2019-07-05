@@ -5,7 +5,7 @@ public class Absent<T> implements Value<T>
     @Override
     public T raw() throws Exception
     {
-        throw new Exception("Absent raw does not have a, uhm, raw.");
+        throw new Exception("Value is absent.");
     }
 
     @Override

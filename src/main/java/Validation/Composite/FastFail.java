@@ -3,6 +3,7 @@ package Validation.Composite;
 import Validation.Result.Named;
 import Validation.Result.Result;
 import Validation.Validatable;
+import Validation.Value.Absent;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
@@ -27,6 +28,10 @@ public class FastFail<T, R> implements Validatable<R>
 
         if (!originalResult.isSuccessful()) {
             return new Named<>(originalResult.name(), Either.left(originalResult.error()));
+        }
+
+        if (!originalResult.value().isPresent()) {
+            return new Named<>(originalResult.name(), Either.right(new Absent<>()));
         }
 
         return closure.apply(originalResult.value().raw()).result();

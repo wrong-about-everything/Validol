@@ -21,10 +21,16 @@ public class ExampleJsonRequestTest
     {
         Result<OrderRegistrationRequest> result = new ValidatedOrderRegistrationRequest(this.validJsonRequest()).result();
 
+        // TODO: write test for case when data types declared in validatable don't conform to types in data bags (Item, Delivery),
+        // for example when I declare building as `IsInteger`, while corresponding data type in Where block is, say, String.
+        // Throw human-readable exception in this case.
+
         assertTrue(result.isSuccessful());
         assertEquals("samokhinvadim@gmail.com", result.value().raw().guest().email());
         assertEquals("Vadim Samokhin", result.value().raw().guest().name());
         assertEquals(1488, result.value().raw().items().list().get(0).id().intValue());
+        assertEquals("Red Square", result.value().raw().delivery().where().street());
+        assertEquals(Integer.valueOf(1), result.value().raw().delivery().where().building());
         assertEquals(Integer.valueOf(1), result.value().raw().source());
     }
 
@@ -53,23 +59,35 @@ public class ExampleJsonRequestTest
                     ),
                     Map.of(
                         "guest",
-                        Map.of("email", "This one is obligatory"),                        "source",
-                        "This value must be an integer.",
-                        "items", "This one is obligatory"
-                    )
+                        Map.of("email", "This one is obligatory"),
+                        "items", "This one is obligatory",
+                        "delivery","This one is obligatory",
+                        "source","This value must be an integer."
+                        )
                 },
                 {
                     new Gson().toJson(
                         Map.of(
+                            "delivery", Map.of(
+                                "where", Map.of(
+                                    "building", true
+                                )
+                            ),
                             "source", "vasya"
                         ),
                         new TypeToken<HashMap<String, Object>>() {}.getType()
                     ),
                     Map.of(
                         "guest", "This one is obligatory",
-                        "source", "This value must be an integer.",
-                        "items", "This one is obligatory"
-                    )
+                        "items", "This one is obligatory",
+                        "delivery", Map.of(
+                            "where", Map.of(
+                                "street", "This one is obligatory",
+                                "building", "This value must be an integer."
+                            )
+                        ),
+                        "source", "This value must be an integer."
+                        )
                 },
                 {
                     new Gson().toJson(
@@ -80,7 +98,8 @@ public class ExampleJsonRequestTest
                     ),
                     Map.of(
                         "guest", "This one is obligatory",
-                        "items", "This one is obligatory"
+                        "items", "This one is obligatory",
+                        "delivery", "This one is obligatory"
                     )
                 },
                 {
@@ -93,6 +112,11 @@ public class ExampleJsonRequestTest
                             "items", List.of(
                                 Map.of("id", 'r')
                             ),
+                            "delivery",
+                                Map.of("where", Map.of(
+                                    "street", "Res Square",
+                                    "building", 2
+                                )),
                             "source", 1
                         ),
                         new TypeToken<HashMap<String, Object>>() {}.getType()
@@ -106,14 +130,23 @@ public class ExampleJsonRequestTest
 
     private String validJsonRequest()
     {
-        HashMap<String, Object> target = new HashMap<>();
-        HashMap<String, Object> inner = new HashMap<>();
-        inner.put("email", "samokhinvadim@gmail.com");
-        inner.put("name", "Vadim Samokhin");
-        target.put("guest", inner);
-        target.put("items", List.of(Map.of("id", 1488)));
-        target.put("source", 1);
-
-        return new Gson().toJson(target, new TypeToken<HashMap<String, Object>>() {}.getType());
+        return
+            new Gson().toJson(
+                Map.of(
+                    "guest", Map.of(
+                        "email", "samokhinvadim@gmail.com",
+                        "name", "Vadim Samokhin"
+                    ),
+                    "items", List.of(Map.of("id", 1488)),
+                    "delivery", Map.of(
+                        "where", Map.of(
+                            "street", "Red Square",
+                            "building", 1
+                        )
+                    ),
+                    "source", 1
+                ),
+                new TypeToken<HashMap<String, Object>>() {}.getType()
+            );
     }
 }
