@@ -1,5 +1,6 @@
 package Validation.Leaf;
 
+import Validation.Leaf.Is.IsMap;
 import Validation.Value.Present;
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;

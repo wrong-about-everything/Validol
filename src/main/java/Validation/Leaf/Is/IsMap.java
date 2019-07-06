@@ -1,16 +1,17 @@
-package Validation.Leaf;
+package Validation.Leaf.Is;
 
 import Validation.Result.Named;
 import Validation.Result.Result;
 import Validation.Validatable;
+import Validation.Value.Value;
 import com.google.gson.JsonElement;
 import com.spencerwi.either.Either;
 
-public class IsArray implements Validatable<JsonElement>
+public class IsMap implements Validatable<JsonElement>
 {
     private Validatable<JsonElement> original;
 
-    public IsArray(Validatable<JsonElement> original)
+    public IsMap(Validatable<JsonElement> original)
     {
         this.original = original;
     }
@@ -20,13 +21,13 @@ public class IsArray implements Validatable<JsonElement>
         Result<JsonElement> prevResult = this.original.result();
 
         if (!prevResult.isSuccessful()) {
-            return new Named<>(prevResult.name(), Either.left(prevResult.error()));
+            return prevResult;
         }
 
         try {
-            prevResult.value().raw().getAsJsonArray();
+            prevResult.value().raw().getAsJsonObject().entrySet();
         } catch (IllegalStateException e) {
-            return new Named<>(prevResult.name(), Either.left("This element should represent an array"));
+            return new Named<>(prevResult.name(), Either.left("This element should represent a map"));
         }
 
         return prevResult;

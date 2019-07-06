@@ -1,6 +1,6 @@
 package Validation.Composite;
 
-import Validation.Leaf.IsInteger;
+import Validation.Leaf.Is.IsInteger;
 import Validation.Leaf.Unnamed;
 import Validation.Result.Result;
 import Validation.Value.Present;

@@ -1,5 +1,6 @@
 package Validation.Leaf;
 
+import Validation.Leaf.Is.IsInteger;
 import Validation.Value.Present;
 import com.spencerwi.either.Either;
 import org.junit.Test;

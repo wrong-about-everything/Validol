@@ -47,7 +47,10 @@ public class ValuesAndErrorsOfNameds
                                     Pair.with(
                                         Stream.concat(
                                             currentValuesAndErrors.getValue0().stream(),
-                                            List.of(currentResult.value().raw()).stream()
+                                            currentResult.value().isPresent()
+                                                ? List.of(currentResult.value().raw()).stream()
+                                                : List.of().stream()
+
                                         )
                                             .collect(Collectors.toUnmodifiableList()),
                                         currentValuesAndErrors.getValue1()

@@ -71,6 +71,9 @@ public class ExampleJsonRequestTest
                             "delivery", Map.of(
                                 "where", Map.of(
                                     "building", true
+                                ),
+                                "when", Map.of(
+                                    "date", "2019-07-06 09:52:48"
                                 )
                             ),
                             "source", "vasya"
@@ -113,16 +116,22 @@ public class ExampleJsonRequestTest
                                 Map.of("id", 'r')
                             ),
                             "delivery",
-                                Map.of("where", Map.of(
-                                    "street", "Res Square",
-                                    "building", 2
-                                )),
+                                Map.of(
+                                    "where", Map.of(
+                                            "street", "Res Square",
+                                            "building", 2
+                                        ),
+                                    "when", Map.of(
+                                            "date", "vasya"
+                                        )
+                                ),
                             "source", 1
                         ),
                         new TypeToken<HashMap<String, Object>>() {}.getType()
                     ),
                     Map.of(
-                        "items", List.of(Map.of("id", "This should be an integer"))
+                        "items", List.of(Map.of("id", "This should be an integer")),
+                        "delivery", Map.of("when", Map.of("date", "This element should represent a date"))
                     )
                 },
             };

@@ -5,4 +5,6 @@ public interface Delivery
     public Boolean isByCourier();
 
     public Where where() throws Throwable;
+
+    public When when() throws Throwable;
 }

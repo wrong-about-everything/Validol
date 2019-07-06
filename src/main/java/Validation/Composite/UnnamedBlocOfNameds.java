@@ -7,6 +7,8 @@ import Validation.Value.Present;
 import com.spencerwi.either.Either;
 import org.javatuples.Pair;
 
+import java.lang.reflect.Constructor;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -49,6 +51,8 @@ public class UnnamedBlocOfNameds<T> implements Validatable<T>
                 return this.objectWithOneArgument(arguments);
 
             case 2:
+                // todo: Test when there are more then one constructor with two arguments,
+                // and argument list order differs from the one of the actual parameters (`arguments` parameter)
                 return this.objectWithTwoArguments(arguments);
 
             case 3:
@@ -73,11 +77,17 @@ public class UnnamedBlocOfNameds<T> implements Validatable<T>
 
     private T objectWithOneArgument(Object[] arguments) throws Exception
     {
-        return
-            this.clazz.getDeclaredConstructor(
-                this.clazz.getDeclaredConstructors()[0].getParameterTypes()
-            )
-                .newInstance(arguments[0]);
+        for (Constructor<?> constructor : this.clazz.getDeclaredConstructors()) {
+            try {
+                return
+                    this.clazz.getDeclaredConstructor(
+                        constructor.getParameterTypes()
+                    )
+                        .newInstance(arguments[0]);
+            } catch (IllegalArgumentException e) {}
+        }
+
+        throw new Exception("No constructor found");
     }
 
     private T objectWithTwoArguments(Object[] arguments) throws Exception

@@ -1,4 +1,4 @@
-package Validation.Leaf;
+package Validation.Leaf.Is;
 
 import Validation.Result.Result;
 import Validation.Result.Named;

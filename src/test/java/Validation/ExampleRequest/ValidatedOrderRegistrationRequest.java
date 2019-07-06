@@ -2,11 +2,18 @@ package Validation.ExampleRequest;
 
 import Validation.Composite.*;
 import Validation.Leaf.*;
+import Validation.Leaf.As.AsDate;
+import Validation.Leaf.As.AsInteger;
+import Validation.Leaf.As.AsString;
+import Validation.Leaf.Is.IsDate;
+import Validation.Leaf.Is.IsInteger;
+import Validation.Leaf.Is.IsMap;
 import Validation.Result.Result;
 import Validation.Validatable;
 import Validation.Value.Present;
 import com.spencerwi.either.Either;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 // TODO: 7/1/19 Create another class representing the same validatable request, but with nested blocks. That would be a more concise version with improved readbility.
@@ -113,23 +120,23 @@ public class ValidatedOrderRegistrationRequest implements Validatable<OrderRegis
                                                                     ),
                                                                     Where.class
                                                                 )
+                                                        ),
+                                                        new FastFail<>(
+                                                            new IndexedValue("when", deliveryJsonElement),
+                                                            whenJsonElement ->
+                                                                new NamedBlocOfNameds<>(
+                                                                    "when",
+                                                                    List.of(
+                                                                        new AsDate(
+                                                                            new Required(
+                                                                                new IndexedValue("date", whenJsonElement)
+                                                                            ),
+                                                                            new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+                                                                        )
+                                                                    ),
+                                                                    DefaultWhen.class
+                                                                )
                                                         )
-//                                                        ,
-//                                                        new FastFail<>(
-//                                                            new IndexedValue("when", deliveryJsonElement),
-//                                                            whenJsonElement ->
-//                                                                new NamedBlocOfNameds<>(
-//                                                                    "when",
-//                                                                    List.of(
-//                                                                        new AsString(
-//                                                                            new Required(
-//                                                                                new IndexedValue("datetime", whenJsonElement)
-//                                                                            )
-//                                                                        )
-//                                                                    ),
-//                                                                    When.class
-//                                                                )
-//                                                        )
                                                     ),
                                                     CourierDelivery.class
                                                 )
