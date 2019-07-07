@@ -1,6 +1,6 @@
 package Validation.Value;
 
-public class Absent<T> implements Value<T>
+final public class Absent<T> implements Value<T>
 {
     @Override
     public T raw() throws Exception

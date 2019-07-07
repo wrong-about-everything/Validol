@@ -3,11 +3,10 @@ package Validation.Leaf.Is;
 import Validation.Result.Named;
 import Validation.Result.Result;
 import Validation.Validatable;
-import Validation.Value.Value;
 import com.google.gson.JsonElement;
 import com.spencerwi.either.Either;
 
-public class IsMap implements Validatable<JsonElement>
+final public class IsMap implements Validatable<JsonElement>
 {
     private Validatable<JsonElement> original;
 

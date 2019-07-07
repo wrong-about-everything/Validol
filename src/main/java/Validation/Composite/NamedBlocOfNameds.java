@@ -3,15 +3,11 @@ package Validation.Composite;
 import Validation.Result.Named;
 import Validation.Result.Result;
 import Validation.Validatable;
-import Validation.Value.Present;
 import com.spencerwi.either.Either;
-import org.javatuples.Pair;
-
 import java.util.List;
-import java.util.Map;
 
 // TODO: 6/23/19 Create non-strictly-type version of NamedBlocOfNameds, returning Map<String, Object>
-public class NamedBlocOfNameds<T> implements Validatable<T>
+final public class NamedBlocOfNameds<T> implements Validatable<T>
 {
     private String name;
     private List<Validatable<?>> validatables;

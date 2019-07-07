@@ -1,5 +1,6 @@
 package Validation.Composite;
 
+import Validation.Leaf.Unnamed;
 import Validation.Result.Named;
 import Validation.Result.Result;
 import Validation.Value.Present;
@@ -14,13 +15,13 @@ import static org.junit.Assert.*;
 public class SwitchTrueTest
 {
     @Test
-    public void success() throws Throwable
+    public void firstCaseIsSatisfiedAndIsSuccessful() throws Throwable
     {
         Result<Team> result =
             new SwitchTrue<>(
                 "team",
                 List.of(
-                    new Case<>(
+                    new Specific<>(
                         () -> true,
                         new UnnamedBlocOfNameds<>(
                             List.of(
@@ -51,13 +52,88 @@ public class SwitchTrueTest
     }
 
     @Test
+    public void secondCaseIsSatisfiedAndIsSuccessful() throws Throwable
+    {
+        Result<String> result =
+            new SwitchTrue<>(
+                "team",
+                List.of(
+                    new Specific<>(
+                        () -> false,
+                        new Unnamed<>(Either.right(new Present<>("hello")))
+                    ),
+                    new Specific<>(
+                        () -> true,
+                        new Unnamed<>(Either.right(new Present<>("world")))
+                    )
+                )
+            )
+                .result();
+
+        assertTrue(result.isSuccessful());
+        assertEquals("world", result.value().raw());
+    }
+
+    @Test
+    public void noneOfTheCasesAreSatisfiedAndDefaultCaseIsAbsent() throws Throwable
+    {
+        try {
+            new SwitchTrue<>(
+                "team",
+                List.of(
+                    new Specific<>(
+                        () -> false,
+                        new Unnamed<>(Either.right(new Present<>("hello")))
+                    ),
+                    new Specific<>(
+                        () -> false,
+                        new Unnamed<>(Either.right(new Present<>("world")))
+                    )
+                )
+            )
+                .result();
+        } catch (Throwable e) {
+            assertTrue(true);
+            return;
+        }
+
+        fail("SwitchTrue with no satisfied cases requires a DefaultCase");
+    }
+
+    @Test
+    public void noneOfTheCasesAreSatisfiedAndDefaultCaseIsPresent() throws Throwable
+    {
+        Result<String> result =
+            new SwitchTrue<>(
+                "team",
+                List.of(
+                    new Specific<>(
+                        () -> false,
+                        new Unnamed<>(Either.right(new Present<>("hello")))
+                    ),
+                    new Specific<>(
+                        () -> false,
+                        new Unnamed<>(Either.right(new Present<>("world")))
+                    ),
+                    new Default<>(
+                        new Unnamed<>(Either.right(new Present<>("!")))
+                    )
+                )
+            )
+                .result();
+
+        assertTrue(result.isSuccessful());
+        assertEquals("!", result.value().raw());
+    }
+
+    @Test
     public void someFieldsFailed() throws Throwable
     {
         Result<Team> result =
             new SwitchTrue<>(
                 "team",
                 List.of(
-                    new Case<>(
+                    new Specific<>(
                         () -> true,
                         new UnnamedBlocOfNameds<>(
                             List.of(

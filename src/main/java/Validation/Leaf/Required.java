@@ -9,7 +9,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.spencerwi.either.Either;
 
-public class Required implements Validatable<JsonElement>
+final public class Required implements Validatable<JsonElement>
 {
     private Validatable<JsonElement> validatable;
 

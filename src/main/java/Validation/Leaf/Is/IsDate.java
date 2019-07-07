@@ -9,7 +9,7 @@ import com.spencerwi.either.Either;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
-public class IsDate implements Validatable<JsonElement>
+final public class IsDate implements Validatable<JsonElement>
 {
     private Validatable<JsonElement> original;
     private SimpleDateFormat format;

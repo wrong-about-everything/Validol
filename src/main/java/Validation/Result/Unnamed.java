@@ -1,10 +1,9 @@
 package Validation.Result;
 
-import Validation.Value.Present;
 import Validation.Value.Value;
 import com.spencerwi.either.Either;
 
-public class Unnamed<T> implements Result<T>
+final public class Unnamed<T> implements Result<T>
 {
     private Either<Object, Value<T>> value;
 

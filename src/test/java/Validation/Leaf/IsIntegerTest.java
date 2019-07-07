@@ -1,6 +1,7 @@
 package Validation.Leaf;
 
 import Validation.Leaf.Is.IsInteger;
+import Validation.Value.Absent;
 import Validation.Value.Present;
 import com.spencerwi.either.Either;
 import org.junit.Test;
@@ -28,12 +29,21 @@ public class IsIntegerTest
     }
 
     @Test
-    public void successful() throws Throwable
+    public void successfulWithPresentValue() throws Throwable
     {
         IsInteger named = new IsInteger(new Named<>("vasya", Either.right(new Present<>(666))));
 
         assertTrue(named.result().isSuccessful());
         assertEquals("vasya", named.result().name());
         assertEquals(Integer.valueOf(666), named.result().value().raw());
+    }
+
+    @Test
+    public void successfulWithAbsentValue() throws Throwable
+    {
+        IsInteger named = new IsInteger(new Named<>("vasya", Either.right(new Absent<>())));
+
+        assertTrue(named.result().isSuccessful());
+        assertFalse(named.result().value().isPresent());
     }
 }

@@ -5,7 +5,7 @@ import Validation.Validatable;
 import Validation.Value.Value;
 import com.spencerwi.either.Either;
 
-public class Unnamed<T> implements Validatable<T>
+final public class Unnamed<T> implements Validatable<T>
 {
     private Either<Object, Value<T>> value;
 

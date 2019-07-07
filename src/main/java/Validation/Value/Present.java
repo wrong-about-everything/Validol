@@ -1,6 +1,6 @@
 package Validation.Value;
 
-public class Present<T> implements Value<T>
+final public class Present<T> implements Value<T>
 {
     private T value;
 

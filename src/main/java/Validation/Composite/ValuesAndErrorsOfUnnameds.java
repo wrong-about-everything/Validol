@@ -8,7 +8,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class ValuesAndErrorsOfUnnameds
+final public class ValuesAndErrorsOfUnnameds
 {
     private List<Validatable<?>> validatables;
 

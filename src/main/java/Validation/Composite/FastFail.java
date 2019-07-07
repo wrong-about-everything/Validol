@@ -11,7 +11,7 @@ import com.spencerwi.either.Either;
 
 import java.util.function.Function;
 
-public class FastFail<T, R> implements Validatable<R>
+final public class FastFail<T, R> implements Validatable<R>
 {
     private Validatable<T> original;
     private VFunction<T, Validatable<R>> closure;

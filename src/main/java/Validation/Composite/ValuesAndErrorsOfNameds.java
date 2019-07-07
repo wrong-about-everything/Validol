@@ -8,7 +8,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class ValuesAndErrorsOfNameds
+final public class ValuesAndErrorsOfNameds
 {
     private List<Validatable<?>> validatables;
 

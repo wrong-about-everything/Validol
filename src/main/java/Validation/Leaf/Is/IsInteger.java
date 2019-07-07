@@ -4,11 +4,12 @@ import Validation.Result.Result;
 import Validation.Result.Named;
 import Validation.Result.Unnamed;
 import Validation.Validatable;
+import Validation.Value.Absent;
 import Validation.Value.Present;
 import Validation.Value.Value;
 import com.spencerwi.either.Either;
 
-public class IsInteger implements Validatable<Integer>
+final public class IsInteger implements Validatable<Integer>
 {
     private Validatable<?> original;
 
@@ -46,9 +47,12 @@ public class IsInteger implements Validatable<Integer>
 
     private Either<Object, Value<Integer>> value(Result<?> prevResult) throws Throwable
     {
+        if (!prevResult.value().isPresent()) {
+            return Either.right(new Absent<>());
+        }
+
         return
             Either.right(
-                // TODO: 6/23/19 Check whether a value is present or not
                 new Present<>(
                     Integer.parseInt(prevResult.value().raw().toString())
                 )

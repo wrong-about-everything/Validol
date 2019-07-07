@@ -6,7 +6,7 @@ import Validation.Validatable;
 import com.google.gson.JsonElement;
 import com.spencerwi.either.Either;
 
-public class IsArray implements Validatable<JsonElement>
+final public class IsArray implements Validatable<JsonElement>
 {
     private Validatable<JsonElement> original;
 

@@ -11,7 +11,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class AsDate implements Validatable<Date>
+final public class AsDate implements Validatable<Date>
 {
     private Validatable<JsonElement> original;
     private SimpleDateFormat format;

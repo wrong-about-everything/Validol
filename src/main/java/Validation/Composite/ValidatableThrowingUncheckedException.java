@@ -3,7 +3,7 @@ package Validation.Composite;
 import Validation.Result.Result;
 import Validation.Validatable;
 
-public class ValidatableThrowingUncheckedException<T> implements Validatable<T>
+final public class ValidatableThrowingUncheckedException<T> implements Validatable<T>
 {
     private Validatable<T> original;
 

@@ -9,7 +9,7 @@ import Validation.Value.Value;
 import com.google.gson.JsonElement;
 import com.spencerwi.either.Either;
 
-public class IndexedValue implements Validatable<JsonElement>
+final public class IndexedValue implements Validatable<JsonElement>
 {
     private String name;
     private JsonElement json;

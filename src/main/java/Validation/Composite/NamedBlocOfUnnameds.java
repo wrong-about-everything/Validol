@@ -14,7 +14,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-public class NamedBlocOfUnnameds<T, R> implements Validatable<R>
+final public class NamedBlocOfUnnameds<T, R> implements Validatable<R>
 {
     private String name;
     private JsonElement jsonElement;

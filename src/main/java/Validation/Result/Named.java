@@ -4,7 +4,7 @@ import Validation.Value.Present;
 import Validation.Value.Value;
 import com.spencerwi.either.Either;
 
-public class Named<T> implements Result<T>
+final public class Named<T> implements Result<T>
 {
     private String name;
     private Either<Object, Value<T>> value;

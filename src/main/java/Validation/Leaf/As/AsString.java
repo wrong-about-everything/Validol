@@ -7,7 +7,7 @@ import Validation.Value.Present;
 import com.google.gson.JsonElement;
 import com.spencerwi.either.Either;
 
-public class AsString implements Validatable<String>
+final public class AsString implements Validatable<String>
 {
     private Validatable<JsonElement> validatable;
 

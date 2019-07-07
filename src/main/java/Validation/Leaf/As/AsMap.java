@@ -12,7 +12,7 @@ import com.spencerwi.either.Either;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class AsMap implements Validatable<Map<String, Object>>
+final public class AsMap implements Validatable<Map<String, Object>>
 {
     private Validatable<JsonElement> original;
 

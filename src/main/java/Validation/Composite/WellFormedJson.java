@@ -10,7 +10,7 @@ import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
 import com.spencerwi.either.Either;
 
-public class WellFormedJson implements Validatable<JsonElement>
+final public class WellFormedJson implements Validatable<JsonElement>
 {
     private Validatable<String> original;
 

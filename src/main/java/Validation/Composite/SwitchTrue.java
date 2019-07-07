@@ -8,7 +8,7 @@ import com.spencerwi.either.Either;
 import java.util.List;
 
 // SwitchTrue ... Case currently supports only named variation
-public class SwitchTrue<T> implements Validatable<T>
+final public class SwitchTrue<T> implements Validatable<T>
 {
     private String name;
     private List<Case<T>> cases;

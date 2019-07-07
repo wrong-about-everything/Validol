@@ -5,7 +5,6 @@ import Validation.Leaf.*;
 import Validation.Leaf.As.AsDate;
 import Validation.Leaf.As.AsInteger;
 import Validation.Leaf.As.AsString;
-import Validation.Leaf.Is.IsDate;
 import Validation.Leaf.Is.IsInteger;
 import Validation.Leaf.Is.IsMap;
 import Validation.Result.Result;
@@ -16,7 +15,7 @@ import com.spencerwi.either.Either;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
-// TODO: 7/1/19 Create another class representing the same validatable request, but with nested blocks. That would be a more concise version with improved readbility.
+// TODO: 7/1/19 Create another class representing the same validatable request, but with nested blocks. That would be a more concise version with improved readability.
 public class ValidatedOrderRegistrationRequest implements Validatable<OrderRegistrationRequest>
 {
     private String jsonRequestString;
@@ -88,7 +87,6 @@ public class ValidatedOrderRegistrationRequest implements Validatable<OrderRegis
                                     )
                             ),
                             // TODO: Подумать как спрятать FastFail, чтобы сделать код более кратким
-                            // TODO: Подумать как обработать кейс, когда в FastFail блок необязательный. Например, когда delivery необязательный.
                             new FastFail<>(
                                 new Required(
                                     new IndexedValue("delivery", requestJsonObject)
@@ -97,7 +95,7 @@ public class ValidatedOrderRegistrationRequest implements Validatable<OrderRegis
                                     new SwitchTrue<>(
                                         "delivery",
                                         List.of(
-                                            new Case<>(
+                                            new Specific<>(
                                                 () -> true,
                                                 new UnnamedBlocOfNameds<>(
                                                     List.of(
