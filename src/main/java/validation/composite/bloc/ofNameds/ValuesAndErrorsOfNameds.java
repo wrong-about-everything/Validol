@@ -9,6 +9,8 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+// TODO: learn coding conventions
+// TODO: IsPresent, IsAbsent instead of Xor
 final public class ValuesAndErrorsOfNameds
 {
     private List<Validatable<?>> validatables;
