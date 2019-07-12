@@ -28,6 +28,13 @@ final public class UnnamedBlocOfUnnameds<T, R> implements Validatable<R>
 
     public Result<R> result() throws Throwable
     {
+        if (!this.jsonElement.isJsonArray()) {
+            return
+                new Unnamed<>(
+                    Either.left("This block must be an array.")
+                );
+        }
+
         Pair<List<Object>, List<Object>> valuesAndErrors =
             new ValuesAndErrorsOfUnnameds(
                 StreamSupport.stream(
@@ -57,6 +64,7 @@ final public class UnnamedBlocOfUnnameds<T, R> implements Validatable<R>
                 Either.right(
                     new Present<>(
                         this.clazz.getDeclaredConstructor(
+                            // TODOC: There should be a single constructor accepting a single parameter of List type
                             this.clazz.getDeclaredConstructors()[0].getParameterTypes()
                         )
                             .newInstance(

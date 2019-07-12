@@ -80,9 +80,31 @@ public class NamedBlocOfUnnamedsTest
     }
 
     @Test
-    @Ignore
     public void wrongStructure() throws Throwable
     {
+        Result<Items> result =
+            new NamedBlocOfUnnameds<>(
+                "items",
+                this.messyJson(),
+                jsonMapElement ->
+                    new UnnamedBlocOfNameds<>(
+                        List.of(
+                            new Named<>(
+                                "id",
+                                Either.left("Wooooooops")
+                            )
+                        ),
+                        Item.class
+                    ),
+                Items.class
+            )
+                .result();
+
+        assertFalse(result.isSuccessful());
+        assertEquals(
+            "This block must be an array.",
+            result.error()
+        );
     }
 
     private JsonElement jsonArrayOfMaps()
@@ -94,6 +116,18 @@ public class NamedBlocOfUnnamedsTest
                     Map.of("id", 666)
                 ),
                 new TypeToken<List<Map<String, Object>>>() {}.getType()
+            );
+    }
+
+    private JsonElement messyJson()
+    {
+        return
+            new Gson().toJsonTree(
+                Map.of(
+                    "id", 666,
+                    "vasya", "belov"
+                ),
+                new TypeToken<Object>() {}.getType()
             );
     }
 }

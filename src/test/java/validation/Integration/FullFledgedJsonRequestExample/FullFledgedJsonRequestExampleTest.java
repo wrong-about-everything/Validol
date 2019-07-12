@@ -47,7 +47,7 @@ public class FullFledgedJsonRequestExampleTest
     public static Object[][] validRequests() throws Throwable
     {
         return
-            new Object[][]{
+            new Object[][] {
                 {
                     new Gson().toJson(
                         Map.of(

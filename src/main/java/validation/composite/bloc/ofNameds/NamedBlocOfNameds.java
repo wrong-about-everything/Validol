@@ -6,7 +6,6 @@ import validation.Validatable;
 import com.spencerwi.either.Either;
 import java.util.List;
 
-// TODO: 6/23/19 Create non-strictly-type version of NamedBlocOfNameds, returning Map<String, Object>
 final public class NamedBlocOfNameds<T> implements Validatable<T>
 {
     private String name;
