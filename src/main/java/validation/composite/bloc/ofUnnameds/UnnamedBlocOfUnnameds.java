@@ -35,8 +35,8 @@ final public class UnnamedBlocOfUnnameds<T, R> implements Validatable<R>
                 );
         }
 
-        Pair<List<Object>, List<Object>> valuesAndErrors =
-            new ValuesAndErrorsOfUnnameds(
+        Pair<List<T>, List<Object>> valuesAndErrors =
+            new ValuesAndErrorsOfUnnameds<>(
                 StreamSupport.stream(
                     this.jsonElement.getAsJsonArray().spliterator(),
                     false
@@ -64,14 +64,11 @@ final public class UnnamedBlocOfUnnameds<T, R> implements Validatable<R>
                 Either.right(
                     new Present<>(
                         this.clazz.getDeclaredConstructor(
-                            // TODOC: There should be a single constructor accepting a single parameter of List type
+                            // TODO todoc: There should be a single constructor accepting a single parameter of List type
                             this.clazz.getDeclaredConstructors()[0].getParameterTypes()
                         )
                             .newInstance(
                                 valuesAndErrors.getValue0().stream()
-                                    .map(
-                                        nonCastedObject -> (T) nonCastedObject
-                                    )
                                     .collect(
                                         Collectors.toUnmodifiableList()
                                     )

@@ -8,16 +8,16 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-final public class ValuesAndErrorsOfUnnameds
+final public class ValuesAndErrorsOfUnnameds<T>
 {
-    private List<Validatable<?>> validatables;
+    private List<Validatable<T>> validatables;
 
-    public ValuesAndErrorsOfUnnameds(List<Validatable<?>> validatables)
+    public ValuesAndErrorsOfUnnameds(List<Validatable<T>> validatables)
     {
         this.validatables = validatables;
     }
 
-    public Pair<List<Object>, List<Object>> value() throws Throwable
+    public Pair<List<T>, List<Object>> value() throws Throwable
     {
         return
             this.validatables.stream()
