@@ -47,19 +47,21 @@ final public class ValuesAndErrorsOfNameds
                                     )
                                     :
                                     Pair.with(
-                                        Stream.concat(
-                                            currentValuesAndErrors.getValue0().stream(),
-                                            currentResult.value().isPresent()
-                                                ? List.of(currentResult.value().raw()).stream()
-                                                : List.of().stream()
+                                        currentValuesAndErrors.getValue1().isEmpty()
+                                            ?
+                                                Stream.concat(
+                                                    currentValuesAndErrors.getValue0().stream(),
+                                                    currentResult.value().isPresent()
+                                                        ? List.of(currentResult.value().raw()).stream()
+                                                        : List.of().stream()
 
-                                        )
-                                            .collect(Collectors.toUnmodifiableList()),
+                                                )
+                                                    .collect(Collectors.toUnmodifiableList())
+                                            : List.of(),
                                         currentValuesAndErrors.getValue1()
                                     )
                                 ;
                         } catch (Exception e) {
-                            e.printStackTrace();
                             throw new RuntimeException(e);
                         }
                     },

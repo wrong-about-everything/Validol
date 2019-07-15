@@ -1,7 +1,8 @@
-package validation.leaf;
+package validation.leaf.is;
 
 import com.spencerwi.either.Either;
 import org.junit.Test;
+import validation.leaf.Named;
 import validation.leaf.is.IsAbsent;
 import validation.value.Absent;
 import validation.value.Present;

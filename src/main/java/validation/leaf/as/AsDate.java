@@ -22,12 +22,18 @@ final public class AsDate implements Validatable<Date>
         this.format = format;
     }
 
+    // TODO: IsLeaf and IsComposite? Two classes can be used to check the structure. After that, Is<Something> and As<Something>.
+    // Probably IsSomething is too verbose... ASSomething can be enough,checking all the stuff.
     public Result<Date> result() throws Throwable
     {
         Result<JsonElement> prevResult = this.original.result();
 
         if (!prevResult.isSuccessful()) {
             return new Named<>(prevResult.name(), Either.left(prevResult.error()));
+        }
+
+        if (!prevResult.value().raw().isJsonPrimitive()) {
+            throw new Exception("Use IsDate validatable to make sure that underlying raw is a date");
         }
 
         try {

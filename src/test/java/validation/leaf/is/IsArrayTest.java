@@ -1,5 +1,6 @@
-package validation.leaf;
+package validation.leaf.is;
 
+import validation.leaf.Named;
 import validation.leaf.is.IsMap;
 import validation.value.Present;
 import com.google.gson.Gson;

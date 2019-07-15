@@ -1,5 +1,6 @@
-package validation.leaf;
+package validation.leaf.is;
 
+import validation.leaf.Named;
 import validation.leaf.is.IsInteger;
 import validation.value.Absent;
 import validation.value.Present;

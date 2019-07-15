@@ -49,8 +49,9 @@ public class ValuesAndErrorsOfNamedsTest
                 List.of(
                     () -> new Named<>("vasya", Either.right(new Present<>("belov"))),
                     () -> new Named<>("fedya", Either.left("Ooops")),
+                    () -> new Named<>("jenya", Either.right(new Present<>(false))),
                     () -> new Named<>("tolya", Either.left("Woooooooops")),
-                    () -> new Named<>("jenya", Either.right(new Present<>(false)))
+                    () -> new Named<>("misha", Either.right(new Present<>(true)))
                 )
             )
                 .value();
