@@ -1,7 +1,6 @@
 package validation.leaf.is;
 
 import validation.leaf.Named;
-import validation.leaf.is.IsMap;
 import validation.value.Present;
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
@@ -12,13 +11,13 @@ import java.util.HashMap;
 
 import static org.junit.Assert.*;
 
-public class IsMapTest
+public class IsJsonObjectTest
 {
     @Test
-    public void jsonPrimitive() throws Throwable
+    public void failsWithJsonPrimitive() throws Throwable
     {
-        IsMap named =
-            new IsMap(
+        IsJsonObject named =
+            new IsJsonObject(
                 new Named<>(
                     "delivery_by",
                     Either.right(
@@ -34,16 +33,16 @@ public class IsMapTest
     }
 
     @Test
-    public void jsonList() throws Throwable
+    public void failsWithJsonList() throws Throwable
     {
-        IsMap named =
-            new IsMap(
+        IsJsonObject named =
+            new IsJsonObject(
                 new Named<>(
                     "delivery_by",
                     Either.right(
                         new Present<>(
                             new JsonParser()
-                                .parse(this.listJson())
+                                .parse(this.jsonArray())
                                     .getAsJsonArray()
                         )
                     )
@@ -55,15 +54,15 @@ public class IsMapTest
     }
 
     @Test
-    public void successful() throws Throwable
+    public void successfulWithJsonObject() throws Throwable
     {
-        IsMap named =
-            new IsMap(
+        IsJsonObject named =
+            new IsJsonObject(
                 new Named<>(
-                    "json",
+                    "jsonObject",
                     Either.right(
                         new Present<>(
-                            new JsonParser().parse(this.json())
+                            new JsonParser().parse(this.jsonObject())
                                 .getAsJsonObject()
                         )
                     )
@@ -71,10 +70,10 @@ public class IsMapTest
             );
 
         assertTrue(named.result().isSuccessful());
-        assertEquals(this.json(), named.result().value().raw().toString());
+        assertEquals(this.jsonObject(), named.result().value().raw().toString());
     }
 
-    private String json()
+    private String jsonObject()
     {
         HashMap<String, Object> target = new HashMap<>();
         HashMap<String, Object> inner = new HashMap<>();
@@ -86,7 +85,7 @@ public class IsMapTest
         return new Gson().toJson(target, new TypeToken<HashMap<String, Object>>() {}.getType());
     }
 
-    private String listJson()
+    private String jsonArray()
     {
         JsonArray jsonArray = new JsonArray(2);
         jsonArray.add(Boolean.TRUE);

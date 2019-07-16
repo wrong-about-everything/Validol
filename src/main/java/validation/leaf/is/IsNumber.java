@@ -1,20 +1,19 @@
 package validation.leaf.is;
 
-import validation.result.Result;
-import validation.result.Named;
-import validation.result.Unnamed;
+import com.spencerwi.either.Either;
 import validation.Validatable;
+import validation.result.Named;
+import validation.result.Result;
+import validation.result.Unnamed;
 import validation.value.Absent;
 import validation.value.Present;
 import validation.value.Value;
-import com.spencerwi.either.Either;
 
-// todo: refactor a la IsString
-final public class IsInteger implements Validatable<Integer>
+final public class IsNumber implements Validatable<Integer>
 {
     private Validatable<?> original;
 
-    public IsInteger(Validatable<?> original)
+    public IsNumber(Validatable<?> original)
     {
         this.original = original;
     }

@@ -18,7 +18,7 @@ import validation.leaf.as.AsInteger;
 import validation.leaf.as.AsString;
 import validation.leaf.IndexedValue;
 import validation.leaf.is.IsInteger;
-import validation.leaf.is.IsMap;
+import validation.leaf.is.IsJsonObject;
 import validation.result.Result;
 import validation.Validatable;
 import validation.value.Present;
@@ -53,7 +53,7 @@ public class ValidatedOrderRegistrationRequest implements Validatable<OrderRegis
                         "parsed request body",
                         List.of(
                             new FastFail<>(
-                                new IsMap(
+                                new IsJsonObject(
                                     new Required(
                                         new IndexedValue("guest", requestJsonObject)
                                     )

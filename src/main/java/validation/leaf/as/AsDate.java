@@ -22,8 +22,8 @@ final public class AsDate implements Validatable<Date>
         this.format = format;
     }
 
-    // TODO: IsLeaf and IsComposite? Two classes can be used to check the structure. After that, Is<Something> and As<Something>.
-    // Probably IsSomething is too verbose... ASSomething can be enough,checking all the stuff.
+    // TODO: IsLeaf and IsArray, IsJsonObject? Three classes can be used to check the structure. After that, Is<Something> and As<Something>.
+    // TODO: todoc: Sometimes one need just to make sure that underlying data is of a specific type,without casting it. That's when Is... validatables come in handy.
     public Result<Date> result() throws Throwable
     {
         Result<JsonElement> prevResult = this.original.result();

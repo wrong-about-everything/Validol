@@ -1,7 +1,6 @@
 package validation.leaf.is;
 
 import validation.leaf.Named;
-import validation.leaf.is.IsMap;
 import validation.value.Present;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -12,16 +11,17 @@ import com.spencerwi.either.Either;
 import org.junit.Test;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import static org.junit.Assert.*;
 
 public class IsArrayTest
 {
     @Test
-    public void jsonPrimitive() throws Throwable
+    public void failedWithJsonPrimitive() throws Throwable
     {
-        IsMap named =
-            new IsMap(
+        IsArray named =
+            new IsArray(
                 new Named<>(
                     "delivery_by",
                     Either.right(
@@ -33,35 +33,14 @@ public class IsArrayTest
             );
 
         assertFalse(named.result().isSuccessful());
-        assertEquals("This element should represent a map", named.result().error());
+        assertEquals("This element should represent an array", named.result().error());
     }
 
     @Test
-    public void jsonList() throws Throwable
+    public void failedWithJsonObject() throws Throwable
     {
-        IsMap named =
-            new IsMap(
-                new Named<>(
-                    "delivery_by",
-                    Either.right(
-                        new Present<>(
-                            new JsonParser()
-                                .parse(this.listJson())
-                                    .getAsJsonArray()
-                        )
-                    )
-                )
-            );
-
-        assertFalse(named.result().isSuccessful());
-        assertEquals("This element should represent a map", named.result().error());
-    }
-
-    @Test
-    public void successful() throws Throwable
-    {
-        IsMap named =
-            new IsMap(
+        IsArray named =
+            new IsArray(
                 new Named<>(
                     "json",
                     Either.right(
@@ -73,23 +52,46 @@ public class IsArrayTest
                 )
             );
 
+        assertFalse(named.result().isSuccessful());
+        assertEquals("This element should represent an array", named.result().error());
+    }
+
+    @Test
+    public void successfulWithJsonArray() throws Throwable
+    {
+        IsArray named =
+            new IsArray(
+                new Named<>(
+                    "delivery_by",
+                    Either.right(
+                        new Present<>(
+                            new JsonParser().parse(this.jsonArray())
+                                .getAsJsonArray()
+                        )
+                    )
+                )
+            );
+
         assertTrue(named.result().isSuccessful());
-        assertEquals(this.json(), named.result().value().raw().toString());
+        assertEquals("[true,\"vasya\",[]]", named.result().value().raw().toString());
     }
 
     private String json()
     {
-        HashMap<String, Object> target = new HashMap<>();
-        HashMap<String, Object> inner = new HashMap<>();
-        inner.put("email", "samokhinvadim@gmail.com");
-        inner.put("name", "Vadim Samokhin");
-        target.put("guest", inner);
-        target.put("delivery_by","vasya");
-
-        return new Gson().toJson(target, new TypeToken<HashMap<String, Object>>() {}.getType());
+        return
+            new Gson().toJson(
+                Map.of(
+                    "guest", Map.of(
+                        "email", "samokhinvadim@gmail.com",
+                        "name", "Vadim Samokhin"
+                    ),
+                    "delivery_by","vasya"
+                ),
+                new TypeToken<HashMap<String, Object>>() {}.getType()
+            );
     }
 
-    private String listJson()
+    private String jsonArray()
     {
         JsonArray jsonArray = new JsonArray(2);
         jsonArray.add(Boolean.TRUE);
