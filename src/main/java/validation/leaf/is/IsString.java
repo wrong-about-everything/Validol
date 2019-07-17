@@ -31,6 +31,14 @@ final public class IsString implements Validatable<String>
                 ;
         }
 
+        if (!prevResult.value().isPresent()) {
+            return
+                prevResult.isNamed()
+                    ? new Named<>(prevResult.name(), Either.right(new Absent<>()))
+                    : new Unnamed<>(Either.right(new Absent<>()))
+                ;
+        }
+
         if (!new IsJsonPrimitive(this.original).result().isSuccessful()) {
             return
                 prevResult.isNamed()

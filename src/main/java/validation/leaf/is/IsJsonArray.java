@@ -6,11 +6,11 @@ import validation.Validatable;
 import com.google.gson.JsonElement;
 import com.spencerwi.either.Either;
 
-final public class IsArray implements Validatable<JsonElement>
+final public class IsJsonArray implements Validatable<JsonElement>
 {
     private Validatable<JsonElement> original;
 
-    public IsArray(Validatable<JsonElement> original)
+    public IsJsonArray(Validatable<JsonElement> original)
     {
         this.original = original;
     }

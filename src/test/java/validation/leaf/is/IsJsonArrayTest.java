@@ -15,13 +15,13 @@ import java.util.Map;
 
 import static org.junit.Assert.*;
 
-public class IsArrayTest
+public class IsJsonArrayTest
 {
     @Test
     public void failedWithJsonPrimitive() throws Throwable
     {
-        IsArray named =
-            new IsArray(
+        IsJsonArray named =
+            new IsJsonArray(
                 new Named<>(
                     "delivery_by",
                     Either.right(
@@ -39,8 +39,8 @@ public class IsArrayTest
     @Test
     public void failedWithJsonObject() throws Throwable
     {
-        IsArray named =
-            new IsArray(
+        IsJsonArray named =
+            new IsJsonArray(
                 new Named<>(
                     "json",
                     Either.right(
@@ -59,8 +59,8 @@ public class IsArrayTest
     @Test
     public void successfulWithJsonArray() throws Throwable
     {
-        IsArray named =
-            new IsArray(
+        IsJsonArray named =
+            new IsJsonArray(
                 new Named<>(
                     "delivery_by",
                     Either.right(

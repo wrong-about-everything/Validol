@@ -1,5 +1,6 @@
 package validation.leaf.is;
 
+import com.google.gson.JsonPrimitive;
 import validation.leaf.Named;
 import validation.leaf.is.IsInteger;
 import validation.value.Absent;
@@ -19,7 +20,7 @@ public class IsIntegerTest
                 new Named<>(
                     "vasya",
                     Either.right(
-                        new Present<>("miliy")
+                        new Present<>(new JsonPrimitive("vasya"))
                     )
                 )
             );
@@ -32,7 +33,7 @@ public class IsIntegerTest
     @Test
     public void successfulWithPresentValue() throws Throwable
     {
-        IsInteger named = new IsInteger(new Named<>("vasya", Either.right(new Present<>(666))));
+        IsInteger named = new IsInteger(new Named<>("vasya", Either.right(new Present<>(new JsonPrimitive(666)))));
 
         assertTrue(named.result().isSuccessful());
         assertEquals("vasya", named.result().name());

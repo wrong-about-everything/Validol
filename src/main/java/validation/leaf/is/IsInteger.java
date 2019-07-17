@@ -1,5 +1,6 @@
 package validation.leaf.is;
 
+import com.google.gson.JsonElement;
 import validation.result.Result;
 import validation.result.Named;
 import validation.result.Unnamed;
@@ -12,22 +13,38 @@ import com.spencerwi.either.Either;
 // todo: refactor a la IsString
 final public class IsInteger implements Validatable<Integer>
 {
-    private Validatable<?> original;
+    private Validatable<JsonElement> original;
 
-    public IsInteger(Validatable<?> original)
+    public IsInteger(Validatable<JsonElement> original)
     {
         this.original = original;
     }
 
     public Result<Integer> result() throws Throwable
     {
-        Result<?> prevResult = this.original.result();
+        Result<JsonElement> prevResult = this.original.result();
 
         if (!prevResult.isSuccessful()) {
             return
                 prevResult.isNamed()
                     ? new Named<>(prevResult.name(), Either.left(prevResult.error()))
                     : new Unnamed<>(Either.left(prevResult.error()))
+                ;
+        }
+
+        if (!prevResult.value().isPresent()) {
+            return
+                prevResult.isNamed()
+                    ? new Named<>(prevResult.name(), Either.right(new Absent<>()))
+                    : new Unnamed<>(Either.right(new Absent<>()))
+                ;
+        }
+
+        if (!new IsJsonPrimitive(this.original).result().isSuccessful()) {
+            return
+                prevResult.isNamed()
+                    ? new Named<>(prevResult.name(), this.error())
+                    : new Unnamed<>(this.error())
                 ;
         }
 

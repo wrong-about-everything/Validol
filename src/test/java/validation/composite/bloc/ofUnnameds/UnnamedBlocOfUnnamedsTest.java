@@ -34,7 +34,7 @@ public class UnnamedBlocOfUnnamedsTest
                         new Unnamed<>(
                             Either.right(
                                 new Present<>(
-                                    jsonElement.toString()
+                                    jsonElement
                                 )
                             )
                         )
@@ -59,7 +59,7 @@ public class UnnamedBlocOfUnnamedsTest
                         new Unnamed<>(
                             Either.right(
                                 new Present<>(
-                                    jsonElement.toString()
+                                    jsonElement
                                 )
                             )
                         )
