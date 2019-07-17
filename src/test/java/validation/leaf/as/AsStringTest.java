@@ -47,14 +47,14 @@ public class AsStringTest
                 )
             );
 
-        assertTrue(named.result().isSuccessful());
-        assertEquals("true", named.result().value().raw());
+        assertFalse(named.result().isSuccessful());
+        assertEquals("This is not a string", named.result().error());
     }
 
     @Test
     public void isNotAJsonPrimitive() throws Throwable
     {
-        try {
+        AsString named =
             new AsString(
                 new IndexedValue(
                     "delivery_by",
@@ -62,13 +62,9 @@ public class AsStringTest
                         Map.of("delivery_by", List.of(1, 2, 3))
                     )
                 )
-            )
-                .result();
-        } catch (Throwable e) {
-            assertEquals("Use IsString validatable to make sure that underlying raw is a string", e.getMessage());
-            return;
-        }
+            );
 
-        fail("An exception should have been thrown");
+        assertFalse(named.result().isSuccessful());
+        assertEquals("This is not a string", named.result().error());
     }
 }

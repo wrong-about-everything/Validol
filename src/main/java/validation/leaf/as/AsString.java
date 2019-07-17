@@ -1,6 +1,5 @@
 package validation.leaf.as;
 
-import validation.leaf.is.IsJsonPrimitive;
 import validation.leaf.is.IsString;
 import validation.result.Named;
 import validation.result.Result;
@@ -26,9 +25,8 @@ final public class AsString implements Validatable<String>
             return new Named<>(result.name(), Either.left(result.error()));
         }
 
-        if (new IsString(this.validatable).result().isSuccessful()) {
-            // !result.value().raw().getAsJsonPrimitive().isString()
-            throw new Exception("Use IsString validatable to make sure that underlying raw is a string");
+        if (!new IsString(this.validatable).result().isSuccessful()) {
+            return new Named<>(result.name(), Either.left("This is not a string"));
         }
 
         return

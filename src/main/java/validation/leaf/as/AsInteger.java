@@ -24,6 +24,10 @@ final public class AsInteger implements Validatable<Integer>
             return new Named<>(result.name(), Either.left(result.error()));
         }
 
+        if (!result.value().raw().isJsonPrimitive()) {
+            return this.errorResult(result.name());
+        }
+
         try {
             return
                 new Named<>(
@@ -37,12 +41,16 @@ final public class AsInteger implements Validatable<Integer>
                     )
                 );
         } catch (NumberFormatException e) {
-            return
-                new Named<>(
-                    result.name(),
-                    Either.left("This should be an integer")
-                );
-
+            return this.errorResult(result.name());
         }
+    }
+
+    private Result<Integer> errorResult(String name)
+    {
+        return
+            new Named<>(
+                name,
+                Either.left("This should be an integer")
+            );
     }
 }

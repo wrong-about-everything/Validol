@@ -32,7 +32,11 @@ final public class IsString implements Validatable<String>
         }
 
         if (!new IsJsonPrimitive(this.original).result().isSuccessful()) {
-            throw new Exception("Use IsLeaf validatable to make sure that underlying structure is a primitive");
+            return
+                prevResult.isNamed()
+                    ? new Named<>(prevResult.name(), this.error())
+                    : new Unnamed<>(this.error())
+                ;
         }
 
         if (!prevResult.value().raw().getAsJsonPrimitive().isString()) {
