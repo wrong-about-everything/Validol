@@ -22,8 +22,6 @@ final public class AsDate implements Validatable<Date>
         this.format = format;
     }
 
-    // TODO: IsLeaf and IsJsonArray, IsJsonObject? Three classes can be used to check the structure. After that, Is<Something> and As<Something>.
-    // TODO: todoc: Sometimes one need just to make sure that underlying data is of a specific type,without casting it. That's when Is... validatables come in handy.
     public Result<Date> result() throws Throwable
     {
         Result<JsonElement> prevResult = this.original.result();
@@ -32,6 +30,7 @@ final public class AsDate implements Validatable<Date>
             return new Named<>(prevResult.name(), Either.left(prevResult.error()));
         }
 
+        // todo: replace with a la IsDate, or place appropriate checks here
         if (!prevResult.value().raw().isJsonPrimitive()) {
             throw new Exception("Use IsDate validatable to make sure that underlying raw is a date");
         }
@@ -49,7 +48,7 @@ final public class AsDate implements Validatable<Date>
                     )
                 );
         } catch (ParseException e) {
-            return new Named<>(prevResult.name(), Either.left("This element should represent a date"));
+            return new Named<>(prevResult.name(), Either.left("This value should represent a date"));
         }
     }
 }

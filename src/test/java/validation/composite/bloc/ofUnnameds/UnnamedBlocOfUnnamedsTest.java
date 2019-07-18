@@ -4,6 +4,7 @@ import validation.composite.bloc.ofNameds.UnnamedBlocOfNameds;
 import validation.composite.bloc.ofUnnameds.dataClass.Integers;
 import validation.composite.bloc.ofUnnameds.dataClass.Item;
 import validation.composite.bloc.ofUnnameds.dataClass.Items;
+import validation.leaf.as.AsInteger;
 import validation.leaf.is.IsInteger;
 import validation.leaf.Unnamed;
 import validation.result.Result;
@@ -30,7 +31,7 @@ public class UnnamedBlocOfUnnamedsTest
             new UnnamedBlocOfUnnameds<>(
                 this.jsonArrayOfIntegers(),
                 jsonElement ->
-                    new IsInteger(
+                    new AsInteger(
                         new Unnamed<>(
                             Either.right(
                                 new Present<>(
@@ -44,8 +45,8 @@ public class UnnamedBlocOfUnnamedsTest
                 .result();
 
         assertTrue(result.isSuccessful());
-        assertEquals(Integer.valueOf(1488), result.value().raw().list().get(0));
-        assertEquals(Integer.valueOf(666), result.value().raw().list().get(1));
+        assertEquals(Integer.valueOf(1900), result.value().raw().list().get(0));
+        assertEquals(Integer.valueOf(777), result.value().raw().list().get(1));
     }
 
     @Test
@@ -95,8 +96,8 @@ public class UnnamedBlocOfUnnamedsTest
                 .result();
 
         assertTrue(result.isSuccessful());
-        assertEquals(Integer.valueOf(1488), result.value().raw().list().get(0).id());
-        assertEquals(Integer.valueOf(666), result.value().raw().list().get(1).id());
+        assertEquals(Integer.valueOf(1900), result.value().raw().list().get(0).id());
+        assertEquals(Integer.valueOf(777), result.value().raw().list().get(1).id());
     }
 
     @Test
@@ -161,8 +162,8 @@ public class UnnamedBlocOfUnnamedsTest
         return
             new Gson().toJsonTree(
                 List.of(
-                    Map.of("id", 1488),
-                    Map.of("id", 666)
+                    Map.of("id", 1900),
+                    Map.of("id", 777)
                 ),
                 new TypeToken<List<Map<String, Object>>>() {}.getType()
             );
@@ -172,7 +173,7 @@ public class UnnamedBlocOfUnnamedsTest
     {
         return
             new Gson().toJsonTree(
-                List.of(1488, 666),
+                List.of(1900, 777),
                 new TypeToken<List<Integer>>() {}.getType()
             );
     }
@@ -191,7 +192,7 @@ public class UnnamedBlocOfUnnamedsTest
         return
             new Gson().toJsonTree(
                 Map.of(
-                    "id", 666,
+                    "id", 777,
                     "vasya", "belov"
                 ),
                 new TypeToken<Object>() {}.getType()

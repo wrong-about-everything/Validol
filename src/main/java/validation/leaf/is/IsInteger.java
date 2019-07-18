@@ -10,8 +10,7 @@ import validation.value.Present;
 import validation.value.Value;
 import com.spencerwi.either.Either;
 
-// todo: refactor a la IsString
-final public class IsInteger implements Validatable<Integer>
+final public class IsInteger implements Validatable<JsonElement>
 {
     private Validatable<JsonElement> original;
 
@@ -20,7 +19,7 @@ final public class IsInteger implements Validatable<Integer>
         this.original = original;
     }
 
-    public Result<Integer> result() throws Throwable
+    public Result<JsonElement> result() throws Throwable
     {
         Result<JsonElement> prevResult = this.original.result();
 
@@ -48,37 +47,44 @@ final public class IsInteger implements Validatable<Integer>
                 ;
         }
 
-        try {
-            return
-                prevResult.isNamed()
-                    ? new Named<>(prevResult.name(), this.value(prevResult))
-                    : new Unnamed<>(this.value(prevResult))
-                ;
-        } catch (NumberFormatException e) {
+        if (!this.isInteger(prevResult)) {
             return
                 prevResult.isNamed()
                     ? new Named<>(prevResult.name(), this.error())
                     : new Unnamed<>(this.error())
                 ;
         }
+
+        return
+            prevResult.isNamed()
+                ? new Named<>(prevResult.name(), this.value(prevResult))
+                : new Unnamed<>(this.value(prevResult))
+            ;
     }
 
-    private Either<Object, Value<Integer>> value(Result<?> prevResult) throws Throwable
+    private Either<Object, Value<JsonElement>> value(Result<JsonElement> prevResult) throws Throwable
     {
-        if (!prevResult.value().isPresent()) {
-            return Either.right(new Absent<>());
-        }
-
         return
             Either.right(
                 new Present<>(
-                    Integer.parseInt(prevResult.value().raw().toString())
+                    prevResult.value().raw()
                 )
             );
     }
 
-    private Either<Object, Value<Integer>> error()
+    private Either<Object, Value<JsonElement>> error()
     {
         return Either.left("This value must be an integer.");
+    }
+
+    private Boolean isInteger(Result<JsonElement> prevResult) throws Throwable
+    {
+        try {
+            Integer.parseInt(prevResult.value().raw().toString());
+        } catch (NumberFormatException e) {
+            return false;
+        }
+
+        return true;
     }
 }

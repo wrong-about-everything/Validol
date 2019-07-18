@@ -45,7 +45,7 @@ public class AsDateTest
             );
 
         assertFalse(named.result().isSuccessful());
-        assertEquals("This element should represent a date", named.result().error());
+        assertEquals("This value should represent a date", named.result().error());
     }
 
     @Test

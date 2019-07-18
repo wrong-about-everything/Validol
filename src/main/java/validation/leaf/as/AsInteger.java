@@ -3,9 +3,11 @@ package validation.leaf.as;
 import validation.result.Named;
 import validation.result.Result;
 import validation.Validatable;
+import validation.result.Unnamed;
 import validation.value.Present;
 import com.google.gson.JsonElement;
 import com.spencerwi.either.Either;
+import validation.value.Value;
 
 final public class AsInteger implements Validatable<Integer>
 {
@@ -21,36 +23,60 @@ final public class AsInteger implements Validatable<Integer>
         Result<JsonElement> result = this.validatable.result();
 
         if (!result.isSuccessful()) {
-            return new Named<>(result.name(), Either.left(result.error()));
+            // todo: Extract into some class
+            return
+                result.isNamed()
+                    ? new Named<>(result.name(), Either.left(result.error()))
+                    : new Unnamed<>(Either.left(result.error()))
+                ;
         }
 
         if (!result.value().raw().isJsonPrimitive()) {
-            return this.errorResult(result.name());
+            return this.errorResult(result);
         }
 
         try {
             return
-                new Named<>(
-                    result.name(),
-                    Either.right(
-                        new Present<>(
-                            Integer.parseInt(
-                                result.value().raw().toString()
+                result.isNamed()
+                    ?
+                        new Named<>(
+                            result.name(),
+                            this.value(result)
+                        )
+                    :
+                        new Unnamed<>(
+                            Either.right(
+                                new Present<>(
+                                    Integer.parseInt(
+                                        result.value().raw().toString()
+                                    )
+                                )
                             )
                         )
-                    )
-                );
+                ;
         } catch (NumberFormatException e) {
-            return this.errorResult(result.name());
+            return this.errorResult(result);
         }
     }
 
-    private Result<Integer> errorResult(String name)
+    private Result<Integer> errorResult(Result<JsonElement> result) throws Throwable
     {
         return
-            new Named<>(
-                name,
-                Either.left("This should be an integer")
+            result.isNamed()
+                ? new Named<>(result.name(), Either.left("This value must be an integer."))
+                : new Unnamed<>(Either.left("This value must be an integer."))
+            ;
+    }
+
+    private Either<Object, Value<Integer>> value(Result<JsonElement> result) throws Throwable
+    {
+        return
+            Either.right(
+                new Present<>(
+                    Integer.parseInt(
+                        result.value().raw().toString()
+                    )
+                )
             );
     }
 }

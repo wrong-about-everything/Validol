@@ -14,13 +14,13 @@ import java.util.Map;
 
 import static org.junit.Assert.*;
 
-public class IsStringTest
+public class IsBooleanTest
 {
     @Test
     public void failedWithFailedOriginalValidatable() throws Throwable
     {
-        IsString named =
-            new IsString(
+        IsBoolean named =
+            new IsBoolean(
                 new Named<>(
                     "vasya",
                     Either.left("Wooops")
@@ -35,8 +35,8 @@ public class IsStringTest
     @Test
     public void failedWithIncorrectStructure() throws Throwable
     {
-        IsString named =
-            new IsString(
+        IsBoolean named =
+            new IsBoolean(
                 new Named<>(
                     "vasya",
                     Either.right(
@@ -55,41 +55,41 @@ public class IsStringTest
 
         assertFalse(named.result().isSuccessful());
         assertEquals("vasya", named.result().name());
-        assertEquals("This value must be a string.", named.result().error());
+        assertEquals("This value must be a boolean.", named.result().error());
     }
 
     @Test
-    public void failedWithNonString() throws Throwable
+    public void failedWithNonBoolean() throws Throwable
     {
-        IsString named =
-            new IsString(
+        IsBoolean named =
+            new IsBoolean(
                 new Named<>(
                     "vasya",
                     Either.right(
-                        new Present<>(new JsonPrimitive(777))
+                        new Present<>(new JsonPrimitive("vasya"))
                     )
                 )
             );
 
         assertFalse(named.result().isSuccessful());
         assertEquals("vasya", named.result().name());
-        assertEquals("This value must be a string.", named.result().error());
+        assertEquals("This value must be a boolean.", named.result().error());
     }
 
     @Test
     public void successfulWithPresentValue() throws Throwable
     {
-        IsString named = new IsString(new Named<>("vasya", Either.right(new Present<>(new JsonPrimitive("hello, vasya")))));
+        IsBoolean named = new IsBoolean(new Named<>("vasya", Either.right(new Present<>(new JsonPrimitive(false)))));
 
         assertTrue(named.result().isSuccessful());
         assertEquals("vasya", named.result().name());
-        assertEquals(new JsonPrimitive("hello, vasya"), named.result().value().raw());
+        assertEquals(new JsonPrimitive(false), named.result().value().raw());
     }
 
     @Test
     public void successfulWithAbsentValue() throws Throwable
     {
-        IsString named = new IsString(new Named<>("vasya", Either.right(new Absent<>())));
+        IsBoolean named = new IsBoolean(new Named<>("vasya", Either.right(new Absent<>())));
 
         assertTrue(named.result().isSuccessful());
         assertFalse(named.result().value().isPresent());

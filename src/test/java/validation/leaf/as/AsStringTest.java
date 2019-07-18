@@ -48,7 +48,7 @@ public class AsStringTest
             );
 
         assertFalse(named.result().isSuccessful());
-        assertEquals("This is not a string", named.result().error());
+        assertEquals("This value must be a string.", named.result().error());
     }
 
     @Test
@@ -65,6 +65,6 @@ public class AsStringTest
             );
 
         assertFalse(named.result().isSuccessful());
-        assertEquals("This is not a string", named.result().error());
+        assertEquals("This value must be a string.", named.result().error());
     }
 }

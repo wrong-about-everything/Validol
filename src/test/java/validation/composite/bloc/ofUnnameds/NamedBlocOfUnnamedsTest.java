@@ -44,8 +44,8 @@ public class NamedBlocOfUnnamedsTest
                 .result();
 
         assertTrue(result.isSuccessful());
-        assertEquals(Integer.valueOf(1488), result.value().raw().list().get(0).id());
-        assertEquals(Integer.valueOf(666), result.value().raw().list().get(1).id());
+        assertEquals(Integer.valueOf(1900), result.value().raw().list().get(0).id());
+        assertEquals(Integer.valueOf(777), result.value().raw().list().get(1).id());
     }
 
     @Test
@@ -112,8 +112,8 @@ public class NamedBlocOfUnnamedsTest
         return
             new Gson().toJsonTree(
                 List.of(
-                    Map.of("id", 1488),
-                    Map.of("id", 666)
+                    Map.of("id", 1900),
+                    Map.of("id", 777)
                 ),
                 new TypeToken<List<Map<String, Object>>>() {}.getType()
             );
@@ -124,7 +124,7 @@ public class NamedBlocOfUnnamedsTest
         return
             new Gson().toJsonTree(
                 Map.of(
-                    "id", 666,
+                    "id", 777,
                     "vasya", "belov"
                 ),
                 new TypeToken<Object>() {}.getType()

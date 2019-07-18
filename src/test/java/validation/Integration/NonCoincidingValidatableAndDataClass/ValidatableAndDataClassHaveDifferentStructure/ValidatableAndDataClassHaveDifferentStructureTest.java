@@ -20,7 +20,7 @@ public class ValidatableAndDataClassHaveDifferentStructureTest
             new ValidatedSampleRequest(
                 new Gson().toJson(
                     Map.of(
-                        "key1", 666,
+                        "key1", 777,
                         "key2", "vasya"
                     ),
                     new TypeToken<Map<String, Object>>() {}.getType()

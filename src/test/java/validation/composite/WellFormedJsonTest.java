@@ -53,8 +53,8 @@ public class WellFormedJsonTest
         target.put(
             "items",
             List.of(
-                Map.of("id", 1488),
-                Map.of("id", 666)
+                Map.of("id", 1900),
+                Map.of("id", 777)
             )
         );
         target.put("source", 1);

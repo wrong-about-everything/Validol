@@ -55,7 +55,7 @@ public class FullFledgedJsonRequestExampleTest
                                 "email", "vasya1988@gmail.com",
                                 "name", "Vasily Belov"
                             ),
-                            "items", List.of(Map.of("id", 1488)),
+                            "items", List.of(Map.of("id", 1900)),
                             "delivery", Map.of(
                                 "where", Map.of(
                                     "street", "Red Square",
@@ -72,7 +72,7 @@ public class FullFledgedJsonRequestExampleTest
                     new OrderRegistrationRequestData(
                         new GuestData("vasya1988@gmail.com", "Vasily Belov"),
                         new ItemsData(
-                            List.of(new ItemData(1488))
+                            List.of(new ItemData(1900))
                         ),
                         new CourierDeliveryData(
                             new WhereData("Red Square", 1),
@@ -94,7 +94,7 @@ public class FullFledgedJsonRequestExampleTest
                                 "email", "samokhinvadim@gmail.com",
                                 "name", "Vadim Samokhin"
                             ),
-                            "items", List.of(Map.of("id", 1488)),
+                            "items", List.of(Map.of("id", 1900)),
                             "source", 1
                         ),
                         new TypeToken<Map<String, Object>>() {}.getType()
@@ -102,7 +102,7 @@ public class FullFledgedJsonRequestExampleTest
                     new OrderRegistrationRequestData(
                         new GuestData("samokhinvadim@gmail.com", "Vadim Samokhin"),
                         new ItemsData(
-                            List.of(new ItemData(1488))
+                            List.of(new ItemData(1900))
                         ),
                         new CourierDeliveryData(
                             new WhereData("Red Square", 1)
@@ -209,8 +209,8 @@ public class FullFledgedJsonRequestExampleTest
                         new TypeToken<Map<String, Object>>() {}.getType()
                     ),
                     Map.of(
-                        "items", List.of(Map.of("id", "This should be an integer")),
-                        "delivery", Map.of("when", Map.of("date", "This element should represent a date"))
+                        "items", List.of(Map.of("id", "This value must be an integer.")),
+                        "delivery", Map.of("when", Map.of("date", "This value should represent a date"))
                     )
                 },
             };

@@ -26,7 +26,7 @@ final public class AsString implements Validatable<String>
         }
 
         if (!new IsString(this.validatable).result().isSuccessful()) {
-            return new Named<>(result.name(), Either.left("This is not a string"));
+            return new Named<>(result.name(), Either.left("This value must be a string."));
         }
 
         return

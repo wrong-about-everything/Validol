@@ -10,11 +10,11 @@ import validation.value.Absent;
 import validation.value.Present;
 import validation.value.Value;
 
-final public class IsString implements Validatable<JsonElement>
+final public class IsBoolean implements Validatable<JsonElement>
 {
     private Validatable<JsonElement> original;
 
-    public IsString(Validatable<JsonElement> original)
+    public IsBoolean(Validatable<JsonElement> original)
     {
         this.original = original;
     }
@@ -47,7 +47,7 @@ final public class IsString implements Validatable<JsonElement>
                 ;
         }
 
-        if (!prevResult.value().raw().getAsJsonPrimitive().isString()) {
+        if (!this.isBoolean(prevResult)) {
             return
                 prevResult.isNamed()
                     ? new Named<>(prevResult.name(), this.error())
@@ -74,6 +74,15 @@ final public class IsString implements Validatable<JsonElement>
 
     private Either<Object, Value<JsonElement>> error()
     {
-        return Either.left("This value must be a string.");
+        return Either.left("This value must be a boolean.");
+    }
+
+    private Boolean isBoolean(Result<JsonElement> prevResult) throws Throwable
+    {
+        return
+            prevResult.value().raw().toString()
+                .equals(
+                    String.valueOf(prevResult.value().raw().getAsBoolean())
+                );
     }
 }

@@ -123,7 +123,7 @@ public class ValidatedOrderRegistrationRequest implements Validatable<OrderRegis
                                                                                 new IndexedValue("street", whereJsonElement)
                                                                             )
                                                                         ),
-                                                                        new IsInteger(
+                                                                        new AsInteger(
                                                                             new Required(
                                                                                 new IndexedValue("building", whereJsonElement)
                                                                             )
@@ -155,7 +155,7 @@ public class ValidatedOrderRegistrationRequest implements Validatable<OrderRegis
                                         )
                                     )
                             ),
-                            new IsInteger(
+                            new AsInteger(
                                 new Required(
                                     new IndexedValue("source", requestJsonObject)
                                 )
