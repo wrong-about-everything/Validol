@@ -5,7 +5,7 @@ import com.spencerwi.either.Either;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-class NamedTest
+public class NamedTest
 {
     @Test
     public void successful() throws Exception

@@ -2,6 +2,7 @@ package validation.leaf.as;
 
 import validation.leaf.is.IsString;
 import validation.result.Named;
+import validation.result.FromNonSuccessful;
 import validation.result.Result;
 import validation.Validatable;
 import validation.value.Present;
@@ -22,7 +23,7 @@ final public class AsString implements Validatable<String>
         Result<JsonElement> result = this.validatable.result();
 
         if (!result.isSuccessful()) {
-            return new Named<>(result.name(), Either.left(result.error()));
+            return new FromNonSuccessful<>(result);
         }
 
         if (!new IsString(this.validatable).result().isSuccessful()) {

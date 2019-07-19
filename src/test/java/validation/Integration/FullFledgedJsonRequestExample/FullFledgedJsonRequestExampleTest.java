@@ -210,7 +210,7 @@ public class FullFledgedJsonRequestExampleTest
                     ),
                     Map.of(
                         "items", List.of(Map.of("id", "This value must be an integer.")),
-                        "delivery", Map.of("when", Map.of("date", "This value should represent a date"))
+                        "delivery", Map.of("when", Map.of("date", "This value must be a date of a certain format."))
                     )
                 },
             };

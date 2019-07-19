@@ -1,10 +1,12 @@
 package validation.leaf.is;
 
-import validation.result.Named;
-import validation.result.Result;
+import validation.result.*;
 import validation.Validatable;
 import com.google.gson.JsonElement;
 import com.spencerwi.either.Either;
+import validation.value.Absent;
+import validation.value.Present;
+import validation.value.Value;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -25,16 +27,55 @@ final public class IsDate implements Validatable<JsonElement>
         Result<JsonElement> prevResult = this.original.result();
 
         if (!prevResult.isSuccessful()) {
-            return new Named<>(prevResult.name(), Either.left(prevResult.error()));
+            return new FromNonSuccessful<>(prevResult);
         }
 
+        if (!prevResult.value().isPresent()) {
+            return
+                prevResult.isNamed()
+                    ? new Named<>(prevResult.name(), Either.right(new Absent<>()))
+                    : new Unnamed<>(Either.right(new Absent<>()))
+                ;
+        }
+
+        if (!new IsJsonPrimitive(this.original).result().isSuccessful()) {
+            return new NonSuccessfulWithCustomError<>(prevResult, this.error().getLeft());
+        }
+
+        if (!this.isValidDate(prevResult)) {
+            return new NonSuccessfulWithCustomError<>(prevResult, this.error().getLeft());
+        }
+
+        return
+            prevResult.isNamed()
+                ? new Named<>(prevResult.name(), this.value(prevResult))
+                : new Unnamed<>(this.value(prevResult))
+            ;
+    }
+
+    private Boolean isValidDate(Result<JsonElement> prevResult) throws Throwable
+    {
         try {
             this.format.setLenient(false);
             this.format.parse(prevResult.value().raw().getAsString().trim());
+            return true;
         } catch (ParseException e) {
-            return new Named<>(prevResult.name(), Either.left("This element should represent a date"));
+            return false;
         }
+    }
 
-        return prevResult;
+    private Either<Object, Value<JsonElement>> value(Result<JsonElement> prevResult) throws Throwable
+    {
+        return
+            Either.right(
+                new Present<>(
+                    prevResult.value().raw()
+                )
+            );
+    }
+
+    private Either<Object, Value<JsonElement>> error()
+    {
+        return Either.left("This value must be a date of a certain format.");
     }
 }

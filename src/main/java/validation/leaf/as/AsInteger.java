@@ -1,9 +1,7 @@
 package validation.leaf.as;
 
-import validation.result.Named;
-import validation.result.Result;
+import validation.result.*;
 import validation.Validatable;
-import validation.result.Unnamed;
 import validation.value.Present;
 import com.google.gson.JsonElement;
 import com.spencerwi.either.Either;
@@ -23,12 +21,7 @@ final public class AsInteger implements Validatable<Integer>
         Result<JsonElement> result = this.validatable.result();
 
         if (!result.isSuccessful()) {
-            // todo: Extract into some class
-            return
-                result.isNamed()
-                    ? new Named<>(result.name(), Either.left(result.error()))
-                    : new Unnamed<>(Either.left(result.error()))
-                ;
+            return new FromNonSuccessful<>(result);
         }
 
         if (!result.value().raw().isJsonPrimitive()) {
@@ -61,11 +54,7 @@ final public class AsInteger implements Validatable<Integer>
 
     private Result<Integer> errorResult(Result<JsonElement> result) throws Throwable
     {
-        return
-            result.isNamed()
-                ? new Named<>(result.name(), Either.left("This value must be an integer."))
-                : new Unnamed<>(Either.left("This value must be an integer."))
-            ;
+        return new NonSuccessfulWithCustomError<>(result, "This value must be an integer.");
     }
 
     private Either<Object, Value<Integer>> value(Result<JsonElement> result) throws Throwable

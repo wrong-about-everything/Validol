@@ -2,6 +2,7 @@ package validation.leaf.is;
 
 import com.spencerwi.either.Either;
 import validation.Validatable;
+import validation.result.FromNonSuccessful;
 import validation.result.Named;
 import validation.result.Result;
 import validation.result.Unnamed;
@@ -23,11 +24,7 @@ final public class IsAbsent<T> implements Validatable<T>
         Result<T> prevResult = this.original.result();
 
         if (!prevResult.isSuccessful()) {
-            return
-                prevResult.isNamed()
-                    ? new Named<>(prevResult.name(), Either.left(prevResult.error()))
-                    : new Unnamed<>(Either.left(prevResult.error()))
-                ;
+            return new FromNonSuccessful<>(prevResult);
         }
 
         return

@@ -1,5 +1,7 @@
 package validation.leaf.as;
 
+import validation.leaf.is.IsBoolean;
+import validation.leaf.is.IsDate;
 import validation.result.Named;
 import validation.result.Result;
 import validation.Validatable;
@@ -30,9 +32,8 @@ final public class AsDate implements Validatable<Date>
             return new Named<>(prevResult.name(), Either.left(prevResult.error()));
         }
 
-        // todo: replace with a la IsDate, or place appropriate checks here
-        if (!prevResult.value().raw().isJsonPrimitive()) {
-            throw new Exception("Use IsDate validatable to make sure that underlying raw is a date");
+        if (!new IsDate(this.original, this.format).result().isSuccessful()) {
+            return new Named<>(prevResult.name(), Either.left("This value must be a date of a certain format."));
         }
 
         try {
@@ -48,7 +49,7 @@ final public class AsDate implements Validatable<Date>
                     )
                 );
         } catch (ParseException e) {
-            return new Named<>(prevResult.name(), Either.left("This value should represent a date"));
+            return new Named<>(prevResult.name(), Either.left("This value must be a date of a certain format."));
         }
     }
 }

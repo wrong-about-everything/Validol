@@ -45,13 +45,13 @@ public class AsDateTest
             );
 
         assertFalse(named.result().isSuccessful());
-        assertEquals("This value should represent a date", named.result().error());
+        assertEquals("This value must be a date of a certain format.", named.result().error());
     }
 
     @Test
     public void isNotAJsonPrimitive() throws Throwable
     {
-        try {
+        AsDate named =
             new AsDate(
                 new IndexedValue(
                     "delivery_by",
@@ -60,13 +60,9 @@ public class AsDateTest
                     )
                 ),
                 new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
-            )
-                .result();
-        } catch (Throwable e) {
-            assertEquals("Use IsDate validatable to make sure that underlying raw is a date", e.getMessage());
-            return;
-        }
+            );
 
-        fail("An exception should have been thrown");
+        assertFalse(named.result().isSuccessful());
+        assertEquals("This value must be a date of a certain format.", named.result().error());
     }
 }

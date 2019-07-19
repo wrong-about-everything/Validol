@@ -7,7 +7,6 @@ import com.spencerwi.either.Either;
 
 import java.util.List;
 
-// SwitchTrue ... Case currently supports only named variation
 final public class SwitchTrue<T> implements Validatable<T>
 {
     private String name;
@@ -23,7 +22,6 @@ final public class SwitchTrue<T> implements Validatable<T>
     {
         Result<T> result = this.caseResult();
 
-        // TODO: remove copy-paste
         if (!result.isSuccessful()) {
             return new Named<>(this.name, Either.left(result.error()));
         }
@@ -39,6 +37,6 @@ final public class SwitchTrue<T> implements Validatable<T>
             }
         }
 
-        throw new Exception("None of the cases are satisfied. Specify a default one to prevent this from happening again,");
+        throw new Exception("None of the cases are satisfied. Specify a default one to prevent this exception from happening again,");
     }
 }
