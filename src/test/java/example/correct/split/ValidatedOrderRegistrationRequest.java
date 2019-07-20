@@ -2,6 +2,10 @@ package example.correct.split;
 
 import com.spencerwi.either.Either;
 import example.correct.bag.OrderRegistrationRequestData;
+import example.correct.split.delivery.Delivery;
+import example.correct.split.guest.Guest;
+import example.correct.split.items.Items;
+import example.correct.split.source.Source;
 import validation.Validatable;
 import validation.composite.FastFail;
 import validation.composite.WellFormedJson;

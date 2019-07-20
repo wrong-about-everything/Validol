@@ -1,4 +1,4 @@
-package example.correct.split;
+package example.correct.split.source;
 
 import com.google.gson.JsonElement;
 import validation.Validatable;

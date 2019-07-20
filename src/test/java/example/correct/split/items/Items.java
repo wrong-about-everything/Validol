@@ -1,4 +1,4 @@
-package example.correct.split;
+package example.correct.split.items;
 
 import com.google.gson.JsonElement;
 import example.correct.bag.items.item.Item;
