@@ -11,9 +11,9 @@ import validation.leaf.Required;
 import validation.result.Result;
 import java.util.List;
 
-public class Delivery implements Validatable<example.correct.bag.delivery.Delivery>
+public class Delivery implements Validatable<example.correct.bag.Delivery>
 {
-    private Validatable<example.correct.bag.delivery.Delivery> v;
+    private Validatable<example.correct.bag.Delivery> v;
 
     public Delivery(JsonElement requestJsonObject)
     {
@@ -36,7 +36,7 @@ public class Delivery implements Validatable<example.correct.bag.delivery.Delive
     }
 
     @Override
-    public Result<example.correct.bag.delivery.Delivery> result() throws Throwable
+    public Result<example.correct.bag.Delivery> result() throws Throwable
     {
         return this.v.result();
     }

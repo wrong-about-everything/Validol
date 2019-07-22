@@ -1,15 +1,16 @@
 package example.correct.bag.delivery.courier.when;
 
+import example.correct.bag.delivery.courier.When;
 import validation.value.Present;
 import validation.value.Value;
 
 import java.util.Date;
 
-public class DefaultWhenData implements WhenData
+public class DefaultWhen implements When
 {
     private Date date;
 
-    public DefaultWhenData(Date date)
+    public DefaultWhen(Date date)
     {
         this.date = date;
     }

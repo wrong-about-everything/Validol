@@ -1,9 +1,9 @@
 package example.correct.split.delivery.courier;
 
 import com.google.gson.JsonElement;
-import example.correct.bag.delivery.Delivery;
+import example.correct.bag.Delivery;
 import example.correct.bag.delivery.courier.CourierDelivery;
-import example.correct.bag.delivery.courier.when.DefaultWhenData;
+import example.correct.bag.delivery.courier.when.DefaultWhen;
 import example.correct.bag.delivery.courier.where.Where;
 import validation.Validatable;
 import validation.composite.FastFail;
@@ -61,7 +61,7 @@ public class Courier implements Validatable<Delivery>
                                         new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
                                     )
                                 ),
-                                DefaultWhenData.class
+                                DefaultWhen.class
                             )
                     )
                 ),

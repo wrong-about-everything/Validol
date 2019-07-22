@@ -65,11 +65,22 @@ final public class UnnamedBlocOfNameds<T> implements Validatable<T>
 
     private T objectWithNoArguments() throws Exception
     {
-        return
-            this.clazz.getDeclaredConstructor(
-                this.clazz.getDeclaredConstructors()[0].getParameterTypes()
+        for (Constructor<?> constructor : this.clazz.getDeclaredConstructors()) {
+            try {
+                return
+                    this.clazz.getDeclaredConstructor(
+                        constructor.getParameterTypes()
+                    )
+                        .newInstance();
+            } catch (IllegalArgumentException e) {}
+        }
+
+        throw new Exception(
+            String.format(
+                "You should create an empty constructor in class %s",
+                this.clazz.getName()
             )
-                .newInstance();
+        );
     }
 
     private T objectWithOneArgument(Object[] arguments) throws Exception

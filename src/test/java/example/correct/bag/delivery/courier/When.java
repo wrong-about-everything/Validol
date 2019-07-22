@@ -1,10 +1,10 @@
-package example.correct.bag.delivery.courier.when;
+package example.correct.bag.delivery.courier;
 
 import validation.value.Value;
 
 import java.util.Date;
 
-public interface WhenData
+public interface When
 {
     public Value<Date> date();
 }

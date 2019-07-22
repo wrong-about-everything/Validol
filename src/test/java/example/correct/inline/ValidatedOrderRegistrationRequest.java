@@ -1,7 +1,7 @@
 package example.correct.inline;
 
 import example.correct.bag.delivery.courier.CourierDelivery;
-import example.correct.bag.delivery.courier.when.DefaultWhenData;
+import example.correct.bag.delivery.courier.when.DefaultWhen;
 import example.correct.bag.delivery.courier.where.Where;
 import example.correct.bag.guest.Guest;
 import example.correct.bag.items.item.Item;
@@ -28,7 +28,6 @@ import validation.leaf.Required;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
-// TODO: 7/1/19 Create another class representing the same validatable request, but with nested blocks. That would be a more concise version with improved readability.
 public class ValidatedOrderRegistrationRequest implements Validatable<OrderRegistrationRequestData>
 {
     private String jsonRequestString;
@@ -143,7 +142,7 @@ public class ValidatedOrderRegistrationRequest implements Validatable<OrderRegis
                                                                             new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
                                                                         )
                                                                     ),
-                                                                    DefaultWhenData.class
+                                                                    DefaultWhen.class
                                                                 )
                                                         )
                                                     ),

@@ -1,7 +1,7 @@
 package example.correct.inline;
 
 import example.correct.bag.delivery.courier.CourierDelivery;
-import example.correct.bag.delivery.courier.when.DefaultWhenData;
+import example.correct.bag.delivery.courier.when.DefaultWhen;
 import example.correct.bag.delivery.courier.where.Where;
 import example.correct.bag.guest.Guest;
 import example.correct.bag.items.item.Item;
@@ -75,7 +75,7 @@ public class InlineValidatableExampleTest
                         ),
                         new CourierDelivery(
                             new Where("Red Square", 1),
-                            new DefaultWhenData(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse("2019-07-06 09:52:48"))
+                            new DefaultWhen(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse("2019-07-06 09:52:48"))
                         ),
                         1
                     )

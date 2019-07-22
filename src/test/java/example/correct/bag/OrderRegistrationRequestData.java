@@ -1,6 +1,5 @@
 package example.correct.bag;
 
-import example.correct.bag.delivery.Delivery;
 import example.correct.bag.guest.Guest;
 import example.correct.bag.items.Items;
 

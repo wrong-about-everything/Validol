@@ -1,24 +1,33 @@
 package example.correct.bag.delivery.courier;
 
-import example.correct.bag.delivery.courier.when.EmptyWhenData;
-import example.correct.bag.delivery.courier.when.WhenData;
-import example.correct.bag.delivery.Delivery;
-import example.correct.bag.delivery.courier.where.Where;
+import example.correct.bag.delivery.courier.when.EmptyWhen;
+import example.correct.bag.Delivery;
+import example.correct.bag.delivery.courier.where.EmptyWhere;
 
 public class CourierDelivery implements Delivery
 {
     private Where where;
-    private WhenData whenData;
+    private When when;
 
-    public CourierDelivery(Where where, WhenData whenData)
+    public CourierDelivery(Where where, When when)
     {
         this.where = where;
-        this.whenData = whenData;
+        this.when = when;
     }
 
     public CourierDelivery(Where where)
     {
-        this(where, new EmptyWhenData());
+        this(where, new EmptyWhen());
+    }
+
+    public CourierDelivery(When when)
+    {
+        this(new EmptyWhere(), when);
+    }
+
+    public CourierDelivery()
+    {
+        this(new EmptyWhere(), new EmptyWhen());
     }
 
     @Override
@@ -34,8 +43,8 @@ public class CourierDelivery implements Delivery
     }
 
     @Override
-    public WhenData when()
+    public When when()
     {
-        return this.whenData;
+        return this.when;
     }
 }
