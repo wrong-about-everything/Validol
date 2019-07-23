@@ -2,7 +2,8 @@ package example.correct.split;
 
 import com.spencerwi.either.Either;
 import example.correct.bag.OrderRegistrationRequestData;
-import example.correct.split.delivery.Delivery;
+import validation.composite.bloc.of.callback.RequiredNamedBlocOfCallback;
+import example.correct.split.delivery.courier.Courier;
 import example.correct.split.guest.Guest;
 import example.correct.split.items.Items;
 import example.correct.split.source.Source;
@@ -10,6 +11,8 @@ import validation.Validatable;
 import validation.composite.FastFail;
 import validation.composite.WellFormedJson;
 import validation.composite.bloc.of.nameds.NamedBlocOfNameds;
+import validation.composite.switcz.Specific;
+import validation.composite.switcz.SwitchTrue;
 import validation.leaf.Named;
 import validation.result.Result;
 import validation.value.Present;
@@ -38,7 +41,21 @@ public class ValidatedOrderRegistrationRequest implements Validatable<OrderRegis
                         List.of(
                             new Guest(requestJsonObject),
                             new Items(requestJsonObject),
-                            new Delivery(requestJsonObject),
+                            new RequiredNamedBlocOfCallback<>(
+                                "delivery",
+                                requestJsonObject,
+                                deliveryJsonElement ->
+                                    new SwitchTrue<>(
+                                        "delivery",
+                                        List.of(
+                                            new Specific<>(
+                                                // todo: add real condition
+                                                () -> true,
+                                                new Courier(deliveryJsonElement)
+                                            )
+                                        )
+                                    )
+                            ),
                             new Source(requestJsonObject)
                         ),
                         OrderRegistrationRequestData.class
