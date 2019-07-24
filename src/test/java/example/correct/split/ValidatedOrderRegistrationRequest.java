@@ -11,9 +11,11 @@ import validation.Validatable;
 import validation.composite.FastFail;
 import validation.composite.WellFormedJson;
 import validation.composite.bloc.of.nameds.NamedBlocOfNameds;
+import validation.composite.bloc.of.nameds.UnnamedBlocOfNameds;
 import validation.composite.switcz.Specific;
 import validation.composite.switcz.SwitchTrue;
 import validation.leaf.Named;
+import validation.leaf.Unnamed;
 import validation.result.Result;
 import validation.value.Present;
 import java.util.List;
@@ -33,11 +35,10 @@ public class ValidatedOrderRegistrationRequest implements Validatable<OrderRegis
         return
             new FastFail<>(
                 new WellFormedJson(
-                    new Named<>("parsed request body", Either.right(new Present<>(this.jsonRequestString)))
+                    new Unnamed<>(Either.right(new Present<>(this.jsonRequestString)))
                 ),
                 requestJsonObject ->
-                    new NamedBlocOfNameds<>(
-                        "parsed request body",
+                    new UnnamedBlocOfNameds<>(
                         List.of(
                             new Guest(requestJsonObject),
                             new Items(requestJsonObject),

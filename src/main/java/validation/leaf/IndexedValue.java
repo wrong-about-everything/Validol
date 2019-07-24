@@ -8,6 +8,7 @@ import validation.value.Present;
 import com.google.gson.JsonElement;
 import com.spencerwi.either.Either;
 
+// todo: https://symfony.com/doc/current/reference/constraints.html
 final public class IndexedValue implements Validatable<JsonElement>
 {
     private String name;

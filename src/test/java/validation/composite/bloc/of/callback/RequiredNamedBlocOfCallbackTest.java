@@ -1,7 +1,10 @@
 package validation.composite.bloc.of.callback;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonElement;
+import com.google.gson.reflect.TypeToken;
 import com.spencerwi.either.Either;
+import example.correct.bag.guest.Guest;
 import org.junit.Test;
 import validation.Validatable;
 import validation.composite.VFunction;
@@ -9,8 +12,10 @@ import validation.composite.bloc.of.named.Team;
 import validation.composite.bloc.of.nameds.NamedBlocOfNameds;
 import validation.result.Named;
 import validation.result.Result;
+import validation.result.Unnamed;
 import validation.value.Present;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -21,49 +26,44 @@ public class RequiredNamedBlocOfCallbackTest
     @Test
     public void success() throws Throwable
     {
-        Result<Team> result =
+        Result<Integer> result =
             new RequiredNamedBlocOfCallback<>(
-                "team",
+                "guest",
                 this.json(),
-                new VFunction<JsonElement, Validatable<T>>() {
-                    @Override
-                    public Validatable<T> apply(JsonElement argument) throws Throwable {
-                        return null;
-                    }
-                }
+                (element) -> () -> new Named<>("guest", Either.right(new Present<>(777)))
             )
                 .result();
 
         assertTrue(result.isSuccessful());
-        assertEquals("belov", result.value().raw().vasya());
-        assertEquals(Integer.valueOf(7), result.value().raw().fedya());
-        assertEquals(Map.of("id", 245), result.value().raw().tolya());
-        assertEquals(false, result.value().raw().jenya());
+        assertEquals(Integer.valueOf(777), result.value().raw());
     }
 
     @Test
     public void someFieldsFailed() throws Throwable
     {
-        Result<Team> result =
-            new NamedBlocOfNameds<>(
-                "team",
-                List.of(
-                    () -> new Named<>("vasya", Either.right(new Present<>("belov"))),
-                    () -> new Named<>("fedya", Either.left("Ooops")),
-                    () -> new Named<>("tolya", Either.left("Woooooooops")),
-                    () -> new Named<>("jenya", Either.right(new Present<>(false)))
-                ),
-                Team.class
+        Result<Object> result =
+            new RequiredNamedBlocOfCallback<>(
+                "guest",
+                this.json(),
+                (element) -> () -> new Named<>("guest", Either.left("An error occured"))
             )
                 .result();
 
         assertFalse(result.isSuccessful());
-        assertEquals(
-            Map.of(
-                "fedya", "Ooops",
-                "tolya", "Woooooooops"
-            ),
-            result.error()
-        );
+        assertEquals("An error occured", result.error());
+    }
+
+    private JsonElement json()
+    {
+        return
+            new Gson().toJsonTree(
+                Map.of(
+                    "guest", Map.of(
+                        "email", "samokhinvadim@gmail.com",
+                        "name", "Vadim Samokhin"
+                    )
+                ),
+                new TypeToken<HashMap<String, Object>>() {}.getType()
+            );
     }
 }

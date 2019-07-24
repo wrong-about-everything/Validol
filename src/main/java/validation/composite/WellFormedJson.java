@@ -3,6 +3,7 @@ package validation.composite;
 import validation.result.Named;
 import validation.result.Result;
 import validation.Validatable;
+import validation.result.Unnamed;
 import validation.value.Present;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
@@ -28,15 +29,27 @@ final public class WellFormedJson implements Validatable<JsonElement>
 
         try {
             return
-                new Named<>(
-                    originalResult.name(),
-                    Either.right(
-                        new Present<>(
-                            new JsonParser().parse(originalResult.value().raw())
-                                .getAsJsonObject()
+                originalResult.isNamed()
+                    ?
+                        new Named<>(
+                            originalResult.name(),
+                            Either.right(
+                                new Present<>(
+                                    new JsonParser().parse(originalResult.value().raw())
+                                        .getAsJsonObject()
+                                )
+                            )
                         )
-                    )
-                );
+                    :
+                        new Unnamed<>(
+                            Either.right(
+                                new Present<>(
+                                    new JsonParser().parse(originalResult.value().raw())
+                                        .getAsJsonObject()
+                                )
+                            )
+                        )
+                ;
         } catch(JsonSyntaxException ex) {
             return new Named<>(originalResult.name(), Either.left("This is an invalid json"));
         }
