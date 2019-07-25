@@ -1,6 +1,5 @@
 package validation.leaf.as;
 
-import validation.leaf.is.IsBoolean;
 import validation.leaf.is.IsDate;
 import validation.result.Named;
 import validation.result.Result;
@@ -8,8 +7,6 @@ import validation.Validatable;
 import validation.value.Present;
 import com.google.gson.JsonElement;
 import com.spencerwi.either.Either;
-
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -36,20 +33,16 @@ final public class AsDate implements Validatable<Date>
             return new Named<>(prevResult.name(), Either.left("This value must be a date of a certain format."));
         }
 
-        try {
-            this.format.setLenient(false);
+        this.format.setLenient(false);
 
-            return
-                new Named<>(
-                    prevResult.name(),
-                    Either.right(
-                        new Present<>(
-                            this.format.parse(prevResult.value().raw().getAsString().trim())
-                        )
+        return
+            new Named<>(
+                prevResult.name(),
+                Either.right(
+                    new Present<>(
+                        this.format.parse(prevResult.value().raw().getAsString().trim())
                     )
-                );
-        } catch (ParseException e) {
-            return new Named<>(prevResult.name(), Either.left("This value must be a date of a certain format."));
-        }
+                )
+            );
     }
 }

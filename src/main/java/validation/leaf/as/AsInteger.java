@@ -1,5 +1,6 @@
 package validation.leaf.as;
 
+import validation.leaf.is.IsInteger;
 import validation.result.*;
 import validation.Validatable;
 import validation.value.Present;
@@ -24,37 +25,28 @@ final public class AsInteger implements Validatable<Integer>
             return new FromNonSuccessful<>(result);
         }
 
-        if (!result.value().raw().isJsonPrimitive()) {
-            return this.errorResult(result);
+        if (!new IsInteger(this.validatable).result().isSuccessful()) {
+            return new NonSuccessfulWithCustomError<>(result, "This value must be an integer.");
         }
 
-        try {
-            return
-                result.isNamed()
-                    ?
-                        new Named<>(
-                            result.name(),
-                            this.value(result)
-                        )
-                    :
-                        new Unnamed<>(
-                            Either.right(
-                                new Present<>(
-                                    Integer.parseInt(
-                                        result.value().raw().toString()
-                                    )
+        return
+            result.isNamed()
+                ?
+                    new Named<>(
+                        result.name(),
+                        this.value(result)
+                    )
+                :
+                    new Unnamed<>(
+                        Either.right(
+                            new Present<>(
+                                Integer.parseInt(
+                                    result.value().raw().toString()
                                 )
                             )
                         )
-                ;
-        } catch (NumberFormatException e) {
-            return this.errorResult(result);
-        }
-    }
-
-    private Result<Integer> errorResult(Result<JsonElement> result) throws Throwable
-    {
-        return new NonSuccessfulWithCustomError<>(result, "This value must be an integer.");
+                    )
+            ;
     }
 
     private Either<Object, Value<Integer>> value(Result<JsonElement> result) throws Throwable
