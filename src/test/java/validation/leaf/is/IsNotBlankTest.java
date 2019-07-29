@@ -25,8 +25,8 @@ public class IsNotBlankTest
     @Test
     public void failedWithInvalidOriginalValidatable() throws Throwable
     {
-        IsBlank named =
-            new IsBlank(
+        IsNotBlank named =
+            new IsNotBlank(
                 new Named<>(
                     "vasya",
                     Either.left("Wooops")
@@ -41,8 +41,8 @@ public class IsNotBlankTest
     @Test
     public void failedWithIncorrectStructure() throws Throwable
     {
-        IsBlank named =
-            new IsBlank(
+        IsNotBlank named =
+            new IsNotBlank(
                 new Named<>(
                     "vasya",
                     Either.right(
@@ -61,14 +61,14 @@ public class IsNotBlankTest
 
         assertFalse(named.result().isSuccessful());
         assertEquals("vasya", named.result().name());
-        assertEquals("This value must be blank.", named.result().error());
+        assertEquals("This value must be a string.", named.result().error());
     }
 
     @Test
     public void successWithNonExistentField() throws Throwable
     {
-        IsBlank named =
-            new IsBlank(
+        IsNotBlank named =
+            new IsNotBlank(
                 new Named<>(
                     "vasya",
                     Either.right(
@@ -86,9 +86,9 @@ public class IsNotBlankTest
     @UseDataProvider("nonBlankData")
     public void failedWithNonBlankData(JsonElement json) throws Throwable
     {
-        IsBlank named = new IsBlank(new Named<>("vasya", Either.right(new Present<>(json))));
+        IsNotBlank named = new IsNotBlank(new Named<>("vasya", Either.right(new Present<>(json))));
 
-        assertFalse(named.result().isSuccessful());
+        assertTrue(named.result().isSuccessful());
         assertEquals("vasya", named.result().name());
     }
 
@@ -98,9 +98,7 @@ public class IsNotBlankTest
         return
             new Object[][] {
                 {new JsonPrimitive("Woooops")},
-                {new JsonPrimitive(777)},
                 {new JsonPrimitive('b')},
-                {new JsonPrimitive(true)},
             };
     }
 }
