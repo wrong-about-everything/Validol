@@ -8,6 +8,7 @@ import validation.value.Absent;
 import validation.value.Present;
 import static org.junit.Assert.*;
 
+// TODO: todoc: makes sure no such field exists
 public class IsAbsentTest
 {
     @Test
