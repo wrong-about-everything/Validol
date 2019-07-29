@@ -20,7 +20,7 @@ import java.util.Map;
 import static org.junit.Assert.*;
 
 @RunWith(DataProviderRunner.class)
-public class IsBlankTest
+public class IsNotBlankTest
 {
     @Test
     public void failedWithInvalidOriginalValidatable() throws Throwable
@@ -102,27 +102,5 @@ public class IsBlankTest
                 {new JsonPrimitive('b')},
                 {new JsonPrimitive(true)},
             };
-    }
-
-    @Test
-    public void successfulWithBlankValue() throws Throwable
-    {
-        IsBlank named =
-            new IsBlank(
-                new Named<>(
-                    "vasya",
-                    Either.right(
-                        new Present<>(
-                            new Gson().toJsonTree(
-                                Map.of("id", null),
-                                new TypeToken<List<Map<String, Object>>>() {}.getType()
-                            )
-                        )
-                    )
-                )
-            );
-
-        assertTrue(named.result().isSuccessful());
-        assertFalse(named.result().value().isPresent());
     }
 }

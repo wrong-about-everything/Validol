@@ -11,6 +11,7 @@ import java.lang.reflect.Constructor;
 import java.util.List;
 import java.util.Map;
 
+// TODO: use gson.fromJson(reader, Staff.class); instead
 final public class UnnamedBlocOfNameds<T> implements Validatable<T>
 {
     private List<Validatable<?>> validatables;

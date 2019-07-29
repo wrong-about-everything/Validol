@@ -6,6 +6,7 @@ import validation.Validatable;
 import com.google.gson.JsonElement;
 import com.spencerwi.either.Either;
 
+// TODO: TODOC: the field itself must be present, it might be empty though
 final public class Required implements Validatable<JsonElement>
 {
     private Validatable<JsonElement> validatable;

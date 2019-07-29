@@ -38,7 +38,7 @@ final public class IsBlank implements Validatable<JsonElement>
             return new NonSuccessfulWithCustomError<>(prevResult, this.error());
         }
 
-        if (!prevResult.value().raw().getAsJsonPrimitive().isString()) {
+        if (!prevResult.value().raw().getAsJsonPrimitive().isJsonNull()) {
             return new NonSuccessfulWithCustomError<>(prevResult, this.error());
         }
 
@@ -61,6 +61,6 @@ final public class IsBlank implements Validatable<JsonElement>
 
     private String error()
     {
-        return "This value must be a string.";
+        return "This value must be blank.";
     }
 }
