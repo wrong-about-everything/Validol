@@ -24,7 +24,7 @@ final public class Named<T> implements Result<T>
     public Value<T> value() throws Exception
     {
         if (!this.isSuccessful()) {
-            throw new Exception("No raw exists on a non-successful element");
+            throw new Exception("No value exists on a non-successful element");
         }
 
         return this.value.getRight();

@@ -1,18 +1,18 @@
-package validation.leaf.is;
+package validation.leaf.is.of.type;
 
 import com.google.gson.JsonElement;
-import validation.result.*;
+import com.spencerwi.either.Either;
 import validation.Validatable;
-import validation.value.Absent;
+import validation.leaf.is.of.structure.IsJsonPrimitive;
+import validation.result.*;
 import validation.value.Present;
 import validation.value.Value;
-import com.spencerwi.either.Either;
 
-final public class IsInteger implements Validatable<JsonElement>
+final public class IsString implements Validatable<JsonElement>
 {
     private Validatable<JsonElement> original;
 
-    public IsInteger(Validatable<JsonElement> original)
+    public IsString(Validatable<JsonElement> original)
     {
         this.original = original;
     }
@@ -26,19 +26,15 @@ final public class IsInteger implements Validatable<JsonElement>
         }
 
         if (!prevResult.value().isPresent()) {
-            return
-                prevResult.isNamed()
-                    ? new Named<>(prevResult.name(), Either.right(new Absent<>()))
-                    : new Unnamed<>(Either.right(new Absent<>()))
-                ;
+            return new AbsentField<>(prevResult);
         }
 
         if (!new IsJsonPrimitive(this.original).result().isSuccessful()) {
-            return new NonSuccessfulWithCustomError<>(prevResult, this.error().getLeft());
+            return new NonSuccessfulWithCustomError<>(prevResult, this.error());
         }
 
-        if (!this.isInteger(prevResult)) {
-            return new NonSuccessfulWithCustomError<>(prevResult, this.error().getLeft());
+        if (!prevResult.value().raw().getAsJsonPrimitive().isString()) {
+            return new NonSuccessfulWithCustomError<>(prevResult, this.error());
         }
 
         return
@@ -58,19 +54,8 @@ final public class IsInteger implements Validatable<JsonElement>
             );
     }
 
-    private Either<Object, Value<JsonElement>> error()
+    private String error()
     {
-        return Either.left("This value must be an integer.");
-    }
-
-    private Boolean isInteger(Result<JsonElement> prevResult) throws Throwable
-    {
-        try {
-            Integer.parseInt(prevResult.value().raw().toString());
-        } catch (NumberFormatException e) {
-            return false;
-        }
-
-        return true;
+        return "This value must be a string.";
     }
 }

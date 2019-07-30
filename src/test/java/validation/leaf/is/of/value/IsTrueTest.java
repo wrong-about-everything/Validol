@@ -1,15 +1,10 @@
-package validation.leaf.is;
+package validation.leaf.is.of.value;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonPrimitive;
 import com.google.gson.reflect.TypeToken;
 import com.spencerwi.either.Either;
-import com.tngtech.java.junit.dataprovider.DataProvider;
-import com.tngtech.java.junit.dataprovider.DataProviderRunner;
-import com.tngtech.java.junit.dataprovider.UseDataProvider;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import validation.leaf.Named;
 import validation.value.Absent;
 import validation.value.Present;
@@ -19,14 +14,13 @@ import java.util.Map;
 
 import static org.junit.Assert.*;
 
-@RunWith(DataProviderRunner.class)
-public class IsNotBlankTest
+public class IsTrueTest
 {
     @Test
-    public void failedWithInvalidOriginalValidatable() throws Throwable
+    public void failedWithFailedOriginalValidatable() throws Throwable
     {
-        IsNotBlank named =
-            new IsNotBlank(
+        IsTrue named =
+            new IsTrue(
                 new Named<>(
                     "vasya",
                     Either.left("Wooops")
@@ -41,8 +35,8 @@ public class IsNotBlankTest
     @Test
     public void failedWithIncorrectStructure() throws Throwable
     {
-        IsNotBlank named =
-            new IsNotBlank(
+        IsTrue named =
+            new IsTrue(
                 new Named<>(
                     "vasya",
                     Either.right(
@@ -61,44 +55,43 @@ public class IsNotBlankTest
 
         assertFalse(named.result().isSuccessful());
         assertEquals("vasya", named.result().name());
-        assertEquals("This value must be a string.", named.result().error());
+        assertEquals("This value must be a boolean.", named.result().error());
     }
 
     @Test
-    public void successWithNonExistentField() throws Throwable
+    public void failedWithNonBoolean() throws Throwable
     {
-        IsNotBlank named =
-            new IsNotBlank(
+        IsTrue named =
+            new IsTrue(
                 new Named<>(
                     "vasya",
                     Either.right(
-                        new Absent<>()
+                        new Present<>(new JsonPrimitive("vasya"))
                     )
                 )
             );
 
-        assertTrue(named.result().isSuccessful());
+        assertFalse(named.result().isSuccessful());
         assertEquals("vasya", named.result().name());
-        assertFalse(named.result().value().isPresent());
+        assertEquals("This value must be a boolean.", named.result().error());
     }
 
     @Test
-    @UseDataProvider("nonBlankData")
-    public void failedWithNonBlankData(JsonElement json) throws Throwable
+    public void successfulWithPresentValue() throws Throwable
     {
-        IsNotBlank named = new IsNotBlank(new Named<>("vasya", Either.right(new Present<>(json))));
+        IsTrue named = new IsTrue(new Named<>("vasya", Either.right(new Present<>(new JsonPrimitive(false)))));
 
         assertTrue(named.result().isSuccessful());
         assertEquals("vasya", named.result().name());
+        assertEquals(new JsonPrimitive(false), named.result().value().raw());
     }
 
-    @DataProvider
-    public static Object[][] nonBlankData()
+    @Test
+    public void successfulWithAbsentValue() throws Throwable
     {
-        return
-            new Object[][] {
-                {new JsonPrimitive("Woooops")},
-                {new JsonPrimitive('b')},
-            };
+        IsTrue named = new IsTrue(new Named<>("vasya", Either.right(new Absent<>())));
+
+        assertTrue(named.result().isSuccessful());
+        assertFalse(named.result().value().isPresent());
     }
 }

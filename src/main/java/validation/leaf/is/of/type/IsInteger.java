@@ -1,25 +1,20 @@
-package validation.leaf.is;
+package validation.leaf.is.of.type;
 
+import com.google.gson.JsonElement;
+import validation.leaf.is.of.structure.IsJsonPrimitive;
 import validation.result.*;
 import validation.Validatable;
-import com.google.gson.JsonElement;
-import com.spencerwi.either.Either;
-import validation.value.Absent;
 import validation.value.Present;
 import validation.value.Value;
+import com.spencerwi.either.Either;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-
-final public class IsDate implements Validatable<JsonElement>
+final public class IsInteger implements Validatable<JsonElement>
 {
     private Validatable<JsonElement> original;
-    private SimpleDateFormat format;
 
-    public IsDate(Validatable<JsonElement> original, SimpleDateFormat format)
+    public IsInteger(Validatable<JsonElement> original)
     {
         this.original = original;
-        this.format = format;
     }
 
     public Result<JsonElement> result() throws Throwable
@@ -31,18 +26,14 @@ final public class IsDate implements Validatable<JsonElement>
         }
 
         if (!prevResult.value().isPresent()) {
-            return
-                prevResult.isNamed()
-                    ? new Named<>(prevResult.name(), Either.right(new Absent<>()))
-                    : new Unnamed<>(Either.right(new Absent<>()))
-                ;
+            return new AbsentField<>(prevResult);
         }
 
         if (!new IsJsonPrimitive(this.original).result().isSuccessful()) {
             return new NonSuccessfulWithCustomError<>(prevResult, this.error().getLeft());
         }
 
-        if (!this.isValidDate(prevResult)) {
+        if (!this.isInteger(prevResult)) {
             return new NonSuccessfulWithCustomError<>(prevResult, this.error().getLeft());
         }
 
@@ -51,17 +42,6 @@ final public class IsDate implements Validatable<JsonElement>
                 ? new Named<>(prevResult.name(), this.value(prevResult))
                 : new Unnamed<>(this.value(prevResult))
             ;
-    }
-
-    private Boolean isValidDate(Result<JsonElement> prevResult) throws Throwable
-    {
-        try {
-            this.format.setLenient(false);
-            this.format.parse(prevResult.value().raw().getAsString().trim());
-            return true;
-        } catch (ParseException e) {
-            return false;
-        }
     }
 
     private Either<Object, Value<JsonElement>> value(Result<JsonElement> prevResult) throws Throwable
@@ -76,6 +56,17 @@ final public class IsDate implements Validatable<JsonElement>
 
     private Either<Object, Value<JsonElement>> error()
     {
-        return Either.left("This value must be a date of a certain format.");
+        return Either.left("This value must be an integer.");
+    }
+
+    private Boolean isInteger(Result<JsonElement> prevResult) throws Throwable
+    {
+        try {
+            Integer.parseInt(prevResult.value().raw().toString());
+        } catch (NumberFormatException e) {
+            return false;
+        }
+
+        return true;
     }
 }

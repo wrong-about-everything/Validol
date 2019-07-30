@@ -1,6 +1,6 @@
 package validation.leaf.as;
 
-import validation.leaf.is.IsInteger;
+import validation.leaf.is.of.type.IsInteger;
 import validation.result.*;
 import validation.Validatable;
 import validation.value.Present;

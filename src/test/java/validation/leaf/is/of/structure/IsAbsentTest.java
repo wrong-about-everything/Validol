@@ -1,4 +1,4 @@
-package validation.leaf.is;
+package validation.leaf.is.of.structure;
 
 import com.spencerwi.either.Either;
 import org.junit.Test;
@@ -8,7 +8,7 @@ import validation.value.Absent;
 import validation.value.Present;
 import static org.junit.Assert.*;
 
-// TODO: todoc: makes sure no such field exists
+// doc: makes sure no such field exists
 public class IsAbsentTest
 {
     @Test

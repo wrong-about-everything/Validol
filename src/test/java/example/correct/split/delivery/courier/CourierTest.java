@@ -32,11 +32,11 @@ public class CourierTest
 
         assertTrue(result.isSuccessful());
         assertEquals(value.when().date().isPresent(), result.value().raw().when().date().isPresent());
-        // todo: todoc: two ways to deal with empty values. Either with Value monad ...
+        // doc: two ways to deal with empty values. Either with Value monad ...
         if (value.when().date().isPresent()) {
             assertEquals(value.when().date().raw(), result.value().raw().when().date().raw());
         }
-        // todo: todoc: ... or with isAbsent method on bloc level
+        // doc: ... or with isAbsent method on bloc level
         if (!value.where().isAbsent()) {
             assertEquals(value.where().street(), result.value().raw().where().street());
             assertEquals(value.where().building(), result.value().raw().where().building());

@@ -3,7 +3,7 @@ package validation.leaf.as;
 import com.google.gson.JsonElement;
 import com.spencerwi.either.Either;
 import validation.Validatable;
-import validation.leaf.is.IsBoolean;
+import validation.leaf.is.of.type.IsBoolean;
 import validation.result.Named;
 import validation.result.FromNonSuccessful;
 import validation.result.Result;
@@ -22,12 +22,9 @@ final public class AsBoolean implements Validatable<Boolean>
     {
         Result<JsonElement> result = this.validatable.result();
 
-        if (!result.isSuccessful()) {
-            return new FromNonSuccessful<>(result);
-        }
-
-        if (!new IsBoolean(this.validatable).result().isSuccessful()) {
-            return new Named<>(result.name(), Either.left("This value must be a boolean."));
+        Result<JsonElement> isBoolean = new IsBoolean(this.validatable).result();
+        if (!isBoolean.isSuccessful()) {
+            return new FromNonSuccessful<>(isBoolean);
         }
 
         return

@@ -1,4 +1,4 @@
-package validation.leaf.is;
+package validation.leaf.is.of.structure;
 
 import validation.leaf.Named;
 import validation.value.Present;

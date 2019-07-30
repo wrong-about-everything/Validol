@@ -1,5 +1,6 @@
 package validation.composite;
 
+import validation.result.AbsentField;
 import validation.result.Named;
 import validation.result.Result;
 import validation.Validatable;
@@ -26,7 +27,7 @@ final public class FastFail<T, R> implements Validatable<R>
         }
 
         if (!originalResult.value().isPresent()) {
-            return new Named<>(originalResult.name(), Either.right(new Absent<>()));
+            return new AbsentField<>(originalResult);
         }
 
         return closure.apply(originalResult.value().raw()).result();

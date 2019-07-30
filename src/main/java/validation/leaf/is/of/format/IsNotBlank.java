@@ -1,4 +1,4 @@
-package validation.leaf.is;
+package validation.leaf.is.of.format;
 
 import com.google.gson.JsonElement;
 import com.spencerwi.either.Either;
@@ -9,8 +9,8 @@ import validation.value.Absent;
 import validation.value.Present;
 import validation.value.Value;
 
-// todo: todoc: fields exists, but its value is blank. When value is absent, it means no such field exists
-// todo: todoc: This one is used only with strings
+// doc: fields exists, but its value is blank. When value is absent, it means no such field exists
+// doc: This one is used only with strings
 final public class IsNotBlank implements Validatable<String>
 {
     private Validatable<JsonElement> original;
@@ -29,22 +29,7 @@ final public class IsNotBlank implements Validatable<String>
         }
 
         if (!prevResult.value().isPresent()) {
-            return
-                prevResult.isNamed()
-                    ?
-                    new Named<>(
-                        prevResult.name(),
-                        Either.right(
-                            new Absent<>()
-                        )
-                    )
-                    :
-                    new Unnamed<>(
-                        Either.right(
-                            new Absent<>()
-                        )
-                    )
-                ;
+            return new AbsentField<>(prevResult);
         }
 
         if (prevResult.value().raw().length() == 0) {

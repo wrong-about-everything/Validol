@@ -1,26 +1,26 @@
-package validation.leaf.is;
+package validation.leaf.is.of.type;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonPrimitive;
 import com.google.gson.reflect.TypeToken;
-import com.spencerwi.either.Either;
-import org.junit.Test;
 import validation.leaf.Named;
 import validation.value.Absent;
 import validation.value.Present;
+import com.spencerwi.either.Either;
+import org.junit.Test;
 
 import java.util.List;
 import java.util.Map;
 
 import static org.junit.Assert.*;
 
-public class IsBooleanTest
+public class IsIntegerTest
 {
     @Test
     public void failedWithFailedOriginalValidatable() throws Throwable
     {
-        IsBoolean named =
-            new IsBoolean(
+        IsInteger named =
+            new IsInteger(
                 new Named<>(
                     "vasya",
                     Either.left("Wooops")
@@ -35,8 +35,8 @@ public class IsBooleanTest
     @Test
     public void failedWithIncorrectStructure() throws Throwable
     {
-        IsBoolean named =
-            new IsBoolean(
+        IsInteger named =
+            new IsInteger(
                 new Named<>(
                     "vasya",
                     Either.right(
@@ -55,14 +55,14 @@ public class IsBooleanTest
 
         assertFalse(named.result().isSuccessful());
         assertEquals("vasya", named.result().name());
-        assertEquals("This value must be a boolean.", named.result().error());
+        assertEquals("This value must be an integer.", named.result().error());
     }
 
     @Test
-    public void failedWithNonBoolean() throws Throwable
+    public void failedWithNonInteger() throws Throwable
     {
-        IsBoolean named =
-            new IsBoolean(
+        IsInteger named =
+            new IsInteger(
                 new Named<>(
                     "vasya",
                     Either.right(
@@ -73,23 +73,23 @@ public class IsBooleanTest
 
         assertFalse(named.result().isSuccessful());
         assertEquals("vasya", named.result().name());
-        assertEquals("This value must be a boolean.", named.result().error());
+        assertEquals("This value must be an integer.", named.result().error());
     }
 
     @Test
     public void successfulWithPresentValue() throws Throwable
     {
-        IsBoolean named = new IsBoolean(new Named<>("vasya", Either.right(new Present<>(new JsonPrimitive(false)))));
+        IsInteger named = new IsInteger(new Named<>("vasya", Either.right(new Present<>(new JsonPrimitive(777)))));
 
         assertTrue(named.result().isSuccessful());
         assertEquals("vasya", named.result().name());
-        assertEquals(new JsonPrimitive(false), named.result().value().raw());
+        assertEquals(new JsonPrimitive(777), named.result().value().raw());
     }
 
     @Test
     public void successfulWithAbsentValue() throws Throwable
     {
-        IsBoolean named = new IsBoolean(new Named<>("vasya", Either.right(new Absent<>())));
+        IsInteger named = new IsInteger(new Named<>("vasya", Either.right(new Absent<>())));
 
         assertTrue(named.result().isSuccessful());
         assertFalse(named.result().value().isPresent());

@@ -1,26 +1,23 @@
-package validation.leaf.is;
+package validation.leaf.is.of.structure;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonParser;
-import com.google.gson.JsonPrimitive;
+import validation.leaf.Named;
+import validation.value.Present;
+import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
 import com.spencerwi.either.Either;
 import org.junit.Test;
-import validation.leaf.Named;
-import validation.value.Present;
 
 import java.util.HashMap;
 
 import static org.junit.Assert.*;
 
-public class IsJsonPrimitiveTest
+public class IsJsonObjectTest
 {
     @Test
-    public void successfulWithJsonPrimitive() throws Throwable
+    public void failsWithJsonPrimitive() throws Throwable
     {
-        IsJsonPrimitive named =
-            new IsJsonPrimitive(
+        IsJsonObject named =
+            new IsJsonObject(
                 new Named<>(
                     "delivery_by",
                     Either.right(
@@ -31,15 +28,15 @@ public class IsJsonPrimitiveTest
                 )
             );
 
-        assertTrue(named.result().isSuccessful());
-        assertEquals("vasya", named.result().value().raw().getAsString());
+        assertFalse(named.result().isSuccessful());
+        assertEquals("This element should represent a map", named.result().error());
     }
 
     @Test
     public void failsWithJsonList() throws Throwable
     {
-        IsJsonPrimitive named =
-            new IsJsonPrimitive(
+        IsJsonObject named =
+            new IsJsonObject(
                 new Named<>(
                     "delivery_by",
                     Either.right(
@@ -53,14 +50,14 @@ public class IsJsonPrimitiveTest
             );
 
         assertFalse(named.result().isSuccessful());
-        assertEquals("This element should represent a primitive", named.result().error());
+        assertEquals("This element should represent a map", named.result().error());
     }
 
     @Test
-    public void failsWithJsonObject() throws Throwable
+    public void successfulWithJsonObject() throws Throwable
     {
-        IsJsonPrimitive named =
-            new IsJsonPrimitive(
+        IsJsonObject named =
+            new IsJsonObject(
                 new Named<>(
                     "jsonObject",
                     Either.right(
@@ -72,8 +69,8 @@ public class IsJsonPrimitiveTest
                 )
             );
 
-        assertFalse(named.result().isSuccessful());
-        assertEquals("This element should represent a primitive", named.result().error());
+        assertTrue(named.result().isSuccessful());
+        assertEquals(this.jsonObject(), named.result().value().raw().toString());
     }
 
     private String jsonObject()

@@ -1,7 +1,6 @@
-package validation.leaf.is;
+package validation.leaf.is.of.format;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import com.google.gson.reflect.TypeToken;
 import com.spencerwi.either.Either;
@@ -15,7 +14,6 @@ import validation.value.Absent;
 import validation.value.Present;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import static org.junit.Assert.*;

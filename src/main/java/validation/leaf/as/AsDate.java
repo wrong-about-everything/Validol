@@ -1,6 +1,6 @@
 package validation.leaf.as;
 
-import validation.leaf.is.IsDate;
+import validation.leaf.is.of.format.IsDate;
 import validation.result.Named;
 import validation.result.Result;
 import validation.Validatable;
