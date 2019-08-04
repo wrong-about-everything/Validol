@@ -14,13 +14,13 @@ import java.util.Map;
 
 import static org.junit.Assert.*;
 
-public class IsTrueTest
+public class IsFalseTest
 {
     @Test
     public void failedWithFailedOriginalValidatable() throws Throwable
     {
-        IsTrue named =
-            new IsTrue(
+        IsFalse named =
+            new IsFalse(
                 new Named<>(
                     "vasya",
                     Either.left("Wooops")
@@ -35,8 +35,8 @@ public class IsTrueTest
     @Test
     public void failedWithIncorrectStructure() throws Throwable
     {
-        IsTrue named =
-            new IsTrue(
+        IsFalse named =
+            new IsFalse(
                 new Named<>(
                     "vasya",
                     Either.right(
@@ -61,8 +61,8 @@ public class IsTrueTest
     @Test
     public void failedWithNonBoolean() throws Throwable
     {
-        IsTrue named =
-            new IsTrue(
+        IsFalse named =
+            new IsFalse(
                 new Named<>(
                     "vasya",
                     Either.right(
@@ -79,28 +79,28 @@ public class IsTrueTest
     @Test
     public void successfulWithAbsentValue() throws Throwable
     {
-        IsTrue named = new IsTrue(new Named<>("vasya", Either.right(new Absent<>())));
+        IsFalse named = new IsFalse(new Named<>("vasya", Either.right(new Absent<>())));
 
         assertTrue(named.result().isSuccessful());
         assertFalse(named.result().value().isPresent());
     }
 
     @Test
-    public void failedWithPresentFalseValue() throws Throwable
+    public void successfulWithPresentFalseValue() throws Throwable
     {
-        IsTrue named = new IsTrue(new Named<>("vasya", Either.right(new Present<>(new JsonPrimitive(false)))));
-
-        assertFalse(named.result().isSuccessful());
-        assertEquals("vasya", named.result().name());
-    }
-
-    @Test
-    public void successfulWithPresentTrueValue() throws Throwable
-    {
-        IsTrue named = new IsTrue(new Named<>("vasya", Either.right(new Present<>(new JsonPrimitive(true)))));
+        IsFalse named = new IsFalse(new Named<>("vasya", Either.right(new Present<>(new JsonPrimitive(false)))));
 
         assertTrue(named.result().isSuccessful());
         assertEquals("vasya", named.result().name());
-        assertEquals(true, named.result().value().raw());
+        assertEquals(false, named.result().value().raw());
+    }
+
+    @Test
+    public void failedWithPresentTrueValue() throws Throwable
+    {
+        IsFalse named = new IsFalse(new Named<>("vasya", Either.right(new Present<>(new JsonPrimitive(true)))));
+
+        assertFalse(named.result().isSuccessful());
+        assertEquals("vasya", named.result().name());
     }
 }

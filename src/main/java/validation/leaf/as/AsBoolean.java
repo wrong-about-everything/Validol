@@ -7,7 +7,9 @@ import validation.leaf.is.of.type.IsBoolean;
 import validation.result.Named;
 import validation.result.FromNonSuccessful;
 import validation.result.Result;
+import validation.value.Absent;
 import validation.value.Present;
+import validation.value.Value;
 
 final public class AsBoolean implements Validatable<Boolean>
 {
@@ -30,11 +32,20 @@ final public class AsBoolean implements Validatable<Boolean>
         return
             new Named<>(
                 result.name(),
-                Either.right(
-                    new Present<>(
-                        result.value().raw().getAsJsonPrimitive().getAsBoolean()
-                    )
-                )
+                this.value(result)
+            );
+    }
+
+    private Either<Object, Value<Boolean>> value(Result<JsonElement> result) throws Throwable
+    {
+        return
+            Either.right(
+                result.value().isPresent()
+                    ?
+                        new Present<>(
+                            result.value().raw().getAsJsonPrimitive().getAsBoolean()
+                        )
+                    : new Absent<>()
             );
     }
 }

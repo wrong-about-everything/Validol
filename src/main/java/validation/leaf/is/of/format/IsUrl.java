@@ -4,46 +4,39 @@ import com.google.gson.JsonElement;
 import com.spencerwi.either.Either;
 import org.apache.commons.validator.routines.EmailValidator;
 import validation.Validatable;
+import validation.leaf.as.AsString;
 import validation.leaf.is.of.structure.IsJsonPrimitive;
 import validation.result.*;
 import validation.value.Present;
 import validation.value.Value;
 
-final public class IsEmail implements Validatable<JsonElement>
+// TODO: Should "Is" validatables return Result<String> or Result<JsonElement>?
+final public class IsUrl implements Validatable<String>
 {
     private Validatable<JsonElement> original;
 
-    public IsEmail(Validatable<JsonElement> original)
+    public IsUrl(Validatable<JsonElement> original)
     {
         this.original = original;
     }
 
     public Result<JsonElement> result() throws Throwable
     {
-        // TODO: replace with AsString
-        Result<JsonElement> prevResult = this.original.result();
+        Result<String> result = new AsString(this.original).result();
 
-        if (!prevResult.isSuccessful()) {
-            return new FromNonSuccessful<>(prevResult);
+        if (!result.isSuccessful()) {
+            return new FromNonSuccessful<>(result);
         }
 
-        if (!prevResult.value().isPresent()) {
-            return new AbsentField<>(prevResult);
+        if (!result.value().isPresent()) {
+            return result;
         }
 
-        if (!new IsJsonPrimitive(this.original).result().isSuccessful()) {
-            return new NonSuccessfulWithCustomError<>(prevResult, this.error().getLeft());
+        if (result.value().raw().length() < min || result.value().raw().length() > max) {
+            return new NonSuccessfulWithCustomError<>(result, this.error().getLeft());
         }
 
-        if (!this.isValidEmail(prevResult)) {
-            return new NonSuccessfulWithCustomError<>(prevResult, this.error().getLeft());
-        }
-
-        return
-            prevResult.isNamed()
-                ? new Named<>(prevResult.name(), this.value(prevResult))
-                : new Unnamed<>(this.value(prevResult))
-            ;
+        return result;
     }
 
     private Boolean isValidEmail(Result<JsonElement> prevResult) throws Throwable

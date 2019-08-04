@@ -4,41 +4,39 @@ import com.google.gson.JsonElement;
 import com.spencerwi.either.Either;
 import validation.Validatable;
 import validation.leaf.as.AsBoolean;
-import validation.leaf.is.of.structure.IsJsonPrimitive;
-import validation.result.*;
+import validation.result.Named;
+import validation.result.NonSuccessfulWithCustomError;
+import validation.result.Result;
+import validation.result.Unnamed;
 import validation.value.Present;
 import validation.value.Value;
 
-// doc: all validatables are successful if the corresponding field is absent.
-// If you want it to be required, specify it explicitly.
-final public class IsTrue implements Validatable<Boolean>
+final public class IsFalse implements Validatable<Boolean>
 {
     private Validatable<JsonElement> original;
 
-    public IsTrue(Validatable<JsonElement> original)
+    public IsFalse(Validatable<JsonElement> original)
     {
         this.original = original;
     }
 
     public Result<Boolean> result() throws Throwable
     {
+        Result<JsonElement> prevResult = this.original.result();
+
         Result<Boolean> asBoolean = new AsBoolean(this.original).result();
 
         if (!asBoolean.isSuccessful() || !asBoolean.value().isPresent()) {
             return asBoolean;
         }
 
-        if (!asBoolean.value().raw().equals(true)) {
-            return
-                asBoolean.isNamed()
-                    ? new Named<>(asBoolean.name(), this.error())
-                    : new Unnamed<>(this.error())
-                ;
+        if (!asBoolean.value().raw().equals(false)) {
+            return new NonSuccessfulWithCustomError<>(prevResult, this.error());
         }
 
         return
-            asBoolean.isNamed()
-                ? new Named<>(asBoolean.name(), this.value(asBoolean))
+            prevResult.isNamed()
+                ? new Named<>(prevResult.name(), this.value(asBoolean))
                 : new Unnamed<>(this.value(asBoolean))
             ;
     }
@@ -55,6 +53,6 @@ final public class IsTrue implements Validatable<Boolean>
 
     private Either<Object, Value<Boolean>> error()
     {
-        return Either.left("This value must be true.");
+        return Either.left("This value must be false.");
     }
 }
