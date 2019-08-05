@@ -19,13 +19,13 @@ import java.util.Map;
 import static org.junit.Assert.*;
 
 @RunWith(DataProviderRunner.class)
-public class IsRegexpTest
+public class IsIpTest
 {
     @Test
     public void validationFailedWhenDecoratedElementIsInvalid() throws Throwable
     {
-        IsRegexp named =
-            new IsRegexp(
+        IsEmail named =
+            new IsEmail(
                 new Named<>(
                     "vasya",
                     Either.left("Wooops")
@@ -41,8 +41,8 @@ public class IsRegexpTest
     @UseDataProvider("invalidEmails")
     public void validationFailedWithInvalidEmail(String email) throws Throwable
     {
-        IsRegexp named =
-            new IsRegexp(
+        IsEmail named =
+            new IsEmail(
                 new Named<>(
                     "vasya",
                     Either.right(new Present<>(new JsonPrimitive(email)))
@@ -87,8 +87,8 @@ public class IsRegexpTest
     @UseDataProvider("validEmails")
     public void validationSucceededWithValidEmail(String email) throws Throwable
     {
-        IsRegexp named =
-            new IsRegexp(
+        IsEmail named =
+            new IsEmail(
                 new Named<>(
                     "vasya",
                     Either.right(new Present<>(new JsonPrimitive(email)))
@@ -124,8 +124,8 @@ public class IsRegexpTest
     @Test
     public void validationSucceededWithEmptyEmail() throws Throwable
     {
-        IsRegexp named =
-            new IsRegexp(
+        IsEmail named =
+            new IsEmail(
                 new Named<>(
                     "vasya",
                     Either.right(new Absent<>())
@@ -140,8 +140,8 @@ public class IsRegexpTest
     @Test
     public void validationFailedWithInvalidStructure() throws Throwable
     {
-        IsRegexp named =
-            new IsRegexp(
+        IsEmail named =
+            new IsEmail(
                 new Named<>(
                     "vasya",
                     Either.right(
