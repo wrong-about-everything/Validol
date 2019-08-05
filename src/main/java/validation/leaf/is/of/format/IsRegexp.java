@@ -2,10 +2,8 @@ package validation.leaf.is.of.format;
 
 import com.google.gson.JsonElement;
 import com.spencerwi.either.Either;
-import org.apache.commons.validator.routines.EmailValidator;
 import validation.Validatable;
 import validation.leaf.as.AsString;
-import validation.leaf.is.of.structure.IsJsonPrimitive;
 import validation.result.*;
 import validation.value.Present;
 import validation.value.Value;
@@ -15,11 +13,11 @@ import java.net.URL;
 
 // TODO: Should "Is" validatables return Result<String> or Result<JsonElement>?
 // Probably every time I use "Is" validatable that's implied to cast json type to a concrete, in reality I should've used an "As" validatable
-final public class IsUrl implements Validatable<URL>
+final public class IsRegexp implements Validatable<URL>
 {
     private Validatable<JsonElement> original;
 
-    public IsUrl(Validatable<JsonElement> original)
+    public IsRegexp(Validatable<JsonElement> original)
     {
         this.original = original;
     }

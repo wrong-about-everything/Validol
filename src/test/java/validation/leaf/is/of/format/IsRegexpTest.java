@@ -19,13 +19,13 @@ import java.util.Map;
 import static org.junit.Assert.*;
 
 @RunWith(DataProviderRunner.class)
-public class IsUrlTest
+public class IsRegexpTest
 {
     @Test
     public void validationFailedWhenDecoratedElementIsInvalid() throws Throwable
     {
-        IsUrl named =
-            new IsUrl(
+        IsRegexp named =
+            new IsRegexp(
                 new Named<>(
                     "vasya",
                     Either.left("Wooops")
@@ -38,11 +38,11 @@ public class IsUrlTest
     }
 
     @Test
-    @UseDataProvider("invalidUrls")
-    public void validationFailedWithInvalidUrl(String email) throws Throwable
+    @UseDataProvider("invalidEmails")
+    public void validationFailedWithInvalidEmail(String email) throws Throwable
     {
-        IsUrl named =
-            new IsUrl(
+        IsRegexp named =
+            new IsRegexp(
                 new Named<>(
                     "vasya",
                     Either.right(new Present<>(new JsonPrimitive(email)))
@@ -51,34 +51,44 @@ public class IsUrlTest
 
         assertFalse(named.result().isSuccessful());
         assertEquals("vasya", named.result().name());
-        assertEquals("This value must be a valid url.", named.result().error());
+        assertEquals("This value must be an email.", named.result().error());
     }
 
     @DataProvider
-    public static Object[][] invalidUrls()
+    public static Object[][] invalidEmails()
     {
         return
             new Object[][] {
                 {"Woooops"},
+                {"Woooops"},
+                {"plainaddress"},
                 {"#@%^%#$@#$@#.com"},
-                {":abc.com"},
-                {"abc/.com"},
-                {"abc#a.com"},
-                {"abc?.com"},
-                {"abc&.com"},
-                {"abc@.com"},
-                {"abc%+~.com"},
-                {"abc+~.com"},
-                {"abc~.com"},
+                {"@example.com"},
+                {"Joe Smith <email@example.com>"},
+                {"email.example.com"},
+                {"email@example@example.com"},
+                {".email@example.com"},
+                {"email.@example.com"},
+                {"email..email@example.com"},
+                {"email@example.com (Joe Smith)"},
+                {"email@example"},
+                {"email@-example.com"},
+                {"email@example.web"},
+                {"email@111.222.333.44444"},
+                {"email@example..com"},
+                {"Abc..123@example.com"},
+                {"”(),:;<>[\\]@example.com"},
+                {"this\\ is\"really\"not\\allowed@example.com"},
+                {"email@123.123.123.123"},
             };
     }
 
     @Test
-    @UseDataProvider("validUrls")
+    @UseDataProvider("validEmails")
     public void validationSucceededWithValidEmail(String email) throws Throwable
     {
-        IsUrl named =
-            new IsUrl(
+        IsRegexp named =
+            new IsRegexp(
                 new Named<>(
                     "vasya",
                     Either.right(new Present<>(new JsonPrimitive(email)))
@@ -87,25 +97,35 @@ public class IsUrlTest
 
         assertTrue(named.result().isSuccessful());
         assertEquals("vasya", named.result().name());
-        assertEquals(email, named.result().value().raw().toString());
+        assertEquals(email, named.result().value().raw().getAsString());
     }
 
     @DataProvider
-    public static Object[][] validUrls()
+    public static Object[][] validEmails()
     {
         return
             new Object[][] {
-                {"https://en.wikipedia.org/wiki/Möbius_strip"},
-                {"http://www.example.com/grave`accent"},
-                {"https://zh.wikipedia.org/wiki/%E5%8C%97%E4%BA%AC%E5%B8%82"},
+                {"email@example.com"},
+                {"firstname.lastname@example.com"},
+                {"email@subdomain.example.com"},
+                {"firstname+lastname@example.com"},
+                {"email@[123.123.123.123]"},
+                {"\"email\"@example.com"},
+                {"1234567890@example.com"},
+                {"email@example-one.com"},
+                {"_______@example.com"},
+                {"email@example.name"},
+                {"email@example.museum"},
+                {"email@example.co.jp"},
+                {"firstname-lastname@example.com"},
             };
     }
 
     @Test
     public void validationSucceededWithEmptyEmail() throws Throwable
     {
-        IsUrl named =
-            new IsUrl(
+        IsRegexp named =
+            new IsRegexp(
                 new Named<>(
                     "vasya",
                     Either.right(new Absent<>())
@@ -120,8 +140,8 @@ public class IsUrlTest
     @Test
     public void validationFailedWithInvalidStructure() throws Throwable
     {
-        IsUrl named =
-            new IsUrl(
+        IsRegexp named =
+            new IsRegexp(
                 new Named<>(
                     "vasya",
                     Either.right(
@@ -143,6 +163,6 @@ public class IsUrlTest
 
         assertFalse(named.result().isSuccessful());
         assertEquals("vasya", named.result().name());
-        assertEquals("This value must be a string.", named.result().error());
+        assertEquals("This value must be an email.", named.result().error());
     }
 }
