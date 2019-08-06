@@ -24,8 +24,8 @@ public class IsIpTest
     @Test
     public void validationFailedWhenDecoratedElementIsInvalid() throws Throwable
     {
-        IsEmail named =
-            new IsEmail(
+        IsIp named =
+            new IsIp(
                 new Named<>(
                     "vasya",
                     Either.left("Wooops")
@@ -38,94 +38,66 @@ public class IsIpTest
     }
 
     @Test
-    @UseDataProvider("invalidEmails")
-    public void validationFailedWithInvalidEmail(String email) throws Throwable
+    @UseDataProvider("invalidIps")
+    public void validationFailedWithInvalidIp(String ip) throws Throwable
     {
-        IsEmail named =
-            new IsEmail(
+        IsIp named =
+            new IsIp(
                 new Named<>(
                     "vasya",
-                    Either.right(new Present<>(new JsonPrimitive(email)))
+                    Either.right(new Present<>(new JsonPrimitive(ip)))
                 )
             );
 
         assertFalse(named.result().isSuccessful());
         assertEquals("vasya", named.result().name());
-        assertEquals("This value must be an email.", named.result().error());
+        assertEquals("This value must be a valid ip.", named.result().error());
     }
 
     @DataProvider
-    public static Object[][] invalidEmails()
+    public static Object[][] invalidIps()
     {
         return
             new Object[][] {
                 {"Woooops"},
-                {"Woooops"},
-                {"plainaddress"},
-                {"#@%^%#$@#$@#.com"},
-                {"@example.com"},
-                {"Joe Smith <email@example.com>"},
-                {"email.example.com"},
-                {"email@example@example.com"},
-                {".email@example.com"},
-                {"email.@example.com"},
-                {"email..email@example.com"},
-                {"email@example.com (Joe Smith)"},
-                {"email@example"},
-                {"email@-example.com"},
-                {"email@example.web"},
-                {"email@111.222.333.44444"},
-                {"email@example..com"},
-                {"Abc..123@example.com"},
-                {"”(),:;<>[\\]@example.com"},
-                {"this\\ is\"really\"not\\allowed@example.com"},
-                {"email@123.123.123.123"},
+                {"1272.1.2.3"},
+                {"1.1.2.1272"},
+                {"127.1.v.3"},
             };
     }
 
     @Test
-    @UseDataProvider("validEmails")
-    public void validationSucceededWithValidEmail(String email) throws Throwable
+    @UseDataProvider("validIps")
+    public void validationSucceededWithValidIp(String ip) throws Throwable
     {
-        IsEmail named =
-            new IsEmail(
+        IsIp named =
+            new IsIp(
                 new Named<>(
                     "vasya",
-                    Either.right(new Present<>(new JsonPrimitive(email)))
+                    Either.right(new Present<>(new JsonPrimitive(ip)))
                 )
             );
 
         assertTrue(named.result().isSuccessful());
         assertEquals("vasya", named.result().name());
-        assertEquals(email, named.result().value().raw().getAsString());
+        assertEquals(ip, named.result().value().raw().getHostAddress());
     }
 
     @DataProvider
-    public static Object[][] validEmails()
+    public static Object[][] validIps()
     {
         return
             new Object[][] {
-                {"email@example.com"},
-                {"firstname.lastname@example.com"},
-                {"email@subdomain.example.com"},
-                {"firstname+lastname@example.com"},
-                {"email@[123.123.123.123]"},
-                {"\"email\"@example.com"},
-                {"1234567890@example.com"},
-                {"email@example-one.com"},
-                {"_______@example.com"},
-                {"email@example.name"},
-                {"email@example.museum"},
-                {"email@example.co.jp"},
-                {"firstname-lastname@example.com"},
+                {"127.0.0.1"},
+                {"192.168.0.1"},
             };
     }
 
     @Test
-    public void validationSucceededWithEmptyEmail() throws Throwable
+    public void validationSucceededWithEmptyIp() throws Throwable
     {
-        IsEmail named =
-            new IsEmail(
+        IsIp named =
+            new IsIp(
                 new Named<>(
                     "vasya",
                     Either.right(new Absent<>())
@@ -140,8 +112,8 @@ public class IsIpTest
     @Test
     public void validationFailedWithInvalidStructure() throws Throwable
     {
-        IsEmail named =
-            new IsEmail(
+        IsIp named =
+            new IsIp(
                 new Named<>(
                     "vasya",
                     Either.right(
@@ -163,6 +135,6 @@ public class IsIpTest
 
         assertFalse(named.result().isSuccessful());
         assertEquals("vasya", named.result().name());
-        assertEquals("This value must be an email.", named.result().error());
+        assertEquals("This value must be a string.", named.result().error());
     }
 }

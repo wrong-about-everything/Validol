@@ -14,7 +14,7 @@ import java.net.URL;
 
 // TODO: Should "Is" validatables return Result<String> or Result<JsonElement>?
 // Probably every time I use "Is" validatable that's implied to cast json type to a concrete, in reality I should've used an "As" validatable
-final public class IsIp implements Validatable<InetAddress
+final public class IsIp implements Validatable<InetAddress>
 {
     private Validatable<JsonElement> original;
 
@@ -41,23 +41,23 @@ final public class IsIp implements Validatable<InetAddress
                     ? new Named<>(result.name(), this.value(result))
                     : new Unnamed<>(this.value(result))
                 ;
-        } catch (MalformedURLException e) {
+        } catch (Throwable e) {
             return new NonSuccessfulWithCustomError<>(result, this.error().getLeft());
         }
     }
 
-    private Either<Object, Value<URL>> value(Result<String> result) throws Throwable
+    private Either<Object, Value<InetAddress>> value(Result<String> result) throws Throwable
     {
         return
             Either.right(
                 new Present<>(
-                    new URL(result.value().raw())
+                    InetAddress.getByName(result.value().raw())
                 )
             );
     }
 
     private Either<Object, Value<JsonElement>> error()
     {
-        return Either.left("This value must be a valid url.");
+        return Either.left("This value must be a valid ip.");
     }
 }
