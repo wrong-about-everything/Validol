@@ -35,14 +35,18 @@ final public class IsUuid implements Validatable<UUID>
         }
 
         try {
-            return
-                result.isNamed()
-                    ? new Named<>(result.name(), this.value(result))
-                    : new Unnamed<>(this.value(result))
-                ;
+            if (!UUID.fromString(result.value().raw()).toString().equals(result.value().raw())) {
+                return new NonSuccessfulWithCustomError<>(result, this.error().getLeft());
+            }
         } catch (Throwable e) {
             return new NonSuccessfulWithCustomError<>(result, this.error().getLeft());
         }
+
+        return
+            result.isNamed()
+                ? new Named<>(result.name(), this.value(result))
+                : new Unnamed<>(this.value(result))
+            ;
     }
 
     private Either<Object, Value<UUID>> value(Result<String> result) throws Throwable

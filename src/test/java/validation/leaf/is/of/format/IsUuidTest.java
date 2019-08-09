@@ -61,7 +61,9 @@ public class IsUuidTest
             new Object[][] {
                 {"Woooops"},
                 {"#@%^%#$@#$@#.com"},
-                {"1116333f-9f87-416e-a18a-48375e9b20"},
+                {"1-9-4-a"},
+                {"1-9-4-a-4"},
+                {"11-9f-41-a1-48"},
                 {"1116333f-9f87-416e-a18a-48375e9b204"},
                 {"1116333f9f87-416e-a18a-48375e9b2042"},
                 {"1116333f9f87-416e-a18a--48375e9b2042"},
@@ -91,9 +93,8 @@ public class IsUuidTest
     {
         return
             new Object[][] {
-                {"https://en.wikipedia.org/wiki/Möbius_strip"},
-                {"http://www.example.com/grave`accent"},
-                {"https://zh.wikipedia.org/wiki/%E5%8C%97%E4%BA%AC%E5%B8%82"},
+                {"332cde59-3a67-4561-a60b-f8d93ae4e79b"},
+                {"e25d5d89-99f8-466e-8668-c3ee0b0a6cdd"},
             };
     }
 
