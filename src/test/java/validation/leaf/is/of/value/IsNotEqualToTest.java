@@ -1,27 +1,20 @@
 package validation.leaf.is.of.value;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonPrimitive;
-import com.google.gson.reflect.TypeToken;
 import com.spencerwi.either.Either;
 import org.junit.Test;
 import validation.leaf.Named;
-import validation.leaf.is.of.value.IsEqualTo;
 import validation.value.Absent;
 import validation.value.Present;
 
-import java.util.List;
-import java.util.Map;
-
 import static org.junit.Assert.*;
 
-public class IsEqualToTest
+public class IsNotEqualToTest
 {
     @Test
     public void failedWithFailedOriginalValidatable() throws Throwable
     {
-        IsEqualTo<?> named =
-            new IsEqualTo<>(
+        IsNotEqualTo<?> named =
+            new IsNotEqualTo<>(
                 new Named<>(
                     "vasya",
                     Either.left("Wooops")
@@ -37,8 +30,8 @@ public class IsEqualToTest
     @Test
     public void successfulWithAbsentValue() throws Throwable
     {
-        IsEqualTo<?> named =
-            new IsEqualTo<>(
+        IsNotEqualTo<?> named =
+            new IsNotEqualTo<>(
                 new Named<>("vasya", Either.right(new Absent<>())),
                 false
             );
@@ -48,44 +41,44 @@ public class IsEqualToTest
     }
 
     @Test
-    public void successfulWithPresentFalseValue() throws Throwable
+    public void failedWithPresentFalseValue() throws Throwable
     {
-        IsEqualTo<?> named =
-            new IsEqualTo<>(
+        IsNotEqualTo<?> named =
+            new IsNotEqualTo<>(
                 new Named<>("vasya", Either.right(new Present<>(false))),
                 false
             );
 
-        assertTrue(named.result().isSuccessful());
+        assertFalse(named.result().isSuccessful());
         assertEquals("vasya", named.result().name());
-        assertEquals(false, named.result().value().raw());
+        assertEquals("This value must not be equal to false.", named.result().error());
     }
 
     @Test
-    public void successfulWithPresentIntegerValue() throws Throwable
+    public void failedWithPresentIntegerValue() throws Throwable
     {
-        IsEqualTo<?> named =
-            new IsEqualTo<>(
+        IsNotEqualTo<?> named =
+            new IsNotEqualTo<>(
                 new Named<>("vasya", Either.right(new Present<>(777))),
                 777
             );
 
-        assertTrue(named.result().isSuccessful());
+        assertFalse(named.result().isSuccessful());
         assertEquals("vasya", named.result().name());
-        assertEquals(777, named.result().value().raw());
+        assertEquals("This value must not be equal to 777.", named.result().error());
     }
 
     @Test
-    public void failedWithPresentStringValue() throws Throwable
+    public void successfulWithPresentStringValue() throws Throwable
     {
-        IsEqualTo<?> named =
-            new IsEqualTo<>(
+        IsNotEqualTo<?> named =
+            new IsNotEqualTo<>(
                 new Named<>("vasya", Either.right(new Present<>("vasya"))),
                 "fedya"
             );
 
-        assertFalse(named.result().isSuccessful());
+        assertTrue(named.result().isSuccessful());
         assertEquals("vasya", named.result().name());
-        assertEquals("This value must be equal to fedya.", named.result().error());
+        assertEquals("vasya", named.result().value().raw());
     }
 }
