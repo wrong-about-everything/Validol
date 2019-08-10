@@ -1,4 +1,4 @@
-package validation.composite.switcz;
+package validation.composite.conditional.switcz;
 
 import validation.composite.bloc.of.nameds.UnnamedBlocOfNameds;
 import validation.leaf.Unnamed;

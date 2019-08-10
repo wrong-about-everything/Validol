@@ -1,4 +1,4 @@
-package validation.composite.switcz;
+package validation.composite.conditional.switcz;
 
 import validation.result.Named;
 import validation.result.Result;
