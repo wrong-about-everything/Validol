@@ -6,12 +6,12 @@ import validation.result.Result;
 import validation.result.Unnamed;
 import validation.value.Absent;
 
-public class And implements Validatable<Boolean>
+public class Or implements Validatable<Boolean>
 {
     private Validatable<Boolean> left;
     private Validatable<Boolean> right;
 
-    public And(Validatable<Boolean> left, Validatable<Boolean> right)
+    public Or(Validatable<Boolean> left, Validatable<Boolean> right)
     {
         this.left = left;
         this.right = right;
@@ -22,11 +22,17 @@ public class And implements Validatable<Boolean>
         Result<Boolean> leftResult = this.left.result();
         Result<Boolean> rightResult = this.right.result();
 
-        if (!leftResult.isSuccessful()) {
-            return leftResult;
-        }
-        if (!rightResult.isSuccessful()) {
-            return rightResult;
+        if (!leftResult.isSuccessful() && !rightResult.isSuccessful()) {
+            return
+                new Unnamed<>(
+                    Either.left(
+                        String.format(
+                            "Either %s or %s",
+                            leftResult.error(),
+                            rightResult.error()
+                        )
+                    )
+                );
         }
 
         return new Unnamed<>(Either.right(new Absent<>()));

@@ -56,6 +56,7 @@ final public class IsBoolean implements Validatable<JsonElement>
 
     private Either<Object, Value<JsonElement>> error()
     {
+        // TODO: specify all errors in the following format: Field <...> must be <...>
         return Either.left("This value must be a boolean.");
     }
 
