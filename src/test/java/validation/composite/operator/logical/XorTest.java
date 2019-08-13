@@ -60,6 +60,6 @@ public class XorTest
                 .result();
 
         assertFalse(result.isSuccessful());
-        assertEquals("Either vasya-vasya... or fedya-fedya...", result.error());
+        assertEquals("", result.error());
     }
 }
