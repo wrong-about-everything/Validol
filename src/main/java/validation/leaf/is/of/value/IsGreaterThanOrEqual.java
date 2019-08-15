@@ -40,6 +40,6 @@ final public class IsGreaterThanOrEqual<T extends Comparable<T>> implements Vali
 
     private Either<Object, Value<T>> error()
     {
-        return Either.left(String.format("This value must be equal to %s.", this.value));
+        return Either.left(String.format("This value must be greater than or equal to %s.", this.value));
     }
 }

@@ -8,12 +8,12 @@ import validation.result.NonSuccessfulWithCustomError;
 import validation.result.Result;
 import validation.value.Value;
 
-final public class IsGreaterThan<T extends Comparable<T>> implements Validatable<T>
+final public class IsLessThanOrEqual<T extends Comparable<T>> implements Validatable<T>
 {
     private Validatable<T> original;
     private T value;
 
-    public IsGreaterThan(Validatable<T> original, T value)
+    public IsLessThanOrEqual(Validatable<T> original, T value)
     {
         this.original = original;
         this.value = value;
@@ -31,7 +31,7 @@ final public class IsGreaterThan<T extends Comparable<T>> implements Validatable
             return new AbsentField<>(prevResult);
         }
 
-        if (prevResult.value().raw().compareTo(this.value) <= 0) {
+        if (prevResult.value().raw().compareTo(this.value) > 0) {
             return new NonSuccessfulWithCustomError<>(prevResult, this.error().getLeft());
         }
 
@@ -40,6 +40,6 @@ final public class IsGreaterThan<T extends Comparable<T>> implements Validatable
 
     private Either<Object, Value<T>> error()
     {
-        return Either.left(String.format("This value must be greater than %s.", this.value));
+        return Either.left(String.format("This value must be less than or equal to %s.", this.value));
     }
 }

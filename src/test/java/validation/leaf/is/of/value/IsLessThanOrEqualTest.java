@@ -13,13 +13,13 @@ import validation.value.Present;
 import static org.junit.Assert.*;
 
 @RunWith(DataProviderRunner.class)
-public class IsGreaterThanTest
+public class IsLessThanOrEqualTest
 {
     @Test
     public void failedWithFailedOriginalValidatable() throws Throwable
     {
-        IsGreaterThan<?> named =
-            new IsGreaterThan<>(
+        IsLessThanOrEqual<?> named =
+            new IsLessThanOrEqual<>(
                 new Named<>(
                     "vasya",
                     Either.left("Wooops")
@@ -35,8 +35,8 @@ public class IsGreaterThanTest
     @Test
     public void successfulWithAbsentValue() throws Throwable
     {
-        IsGreaterThan<?> named =
-            new IsGreaterThan<>(
+        IsLessThanOrEqual<?> named =
+            new IsLessThanOrEqual<>(
                 new Named<>("vasya", Either.right(new Absent<>())),
                 false
             );
@@ -46,11 +46,11 @@ public class IsGreaterThanTest
     }
 
     @Test
-    @UseDataProvider("greaterValues")
+    @UseDataProvider("lessOrEqualValues")
     public <T extends Comparable<T>> void successfulWithPresentValues(T compared, T against) throws Throwable
     {
-        IsGreaterThan<T> named =
-            new IsGreaterThan<>(
+        IsLessThanOrEqual<T> named =
+            new IsLessThanOrEqual<>(
                 new Named<>("vasya", Either.right(new Present<>(compared))),
                 against
             );
@@ -61,45 +61,45 @@ public class IsGreaterThanTest
     }
 
     @DataProvider
-    public static Object[][] greaterValues()
+    public static Object[][] lessOrEqualValues()
     {
         return
             new Object[][] {
-                {2, 1},
-                {"b", "a"},
-                {"vasya", "fedya"},
-                {true, false},
+                {1, 2},
+                {1, 1},
+                {"a", "a"},
+                {"a", "b"},
+                {"fedya", "fedya"},
+                {"fedya", "vasya"},
+                {false, false},
+                {false, true},
             };
     }
 
     @Test
-    @UseDataProvider("lessOrEqualValues")
+    @UseDataProvider("greaterValues")
     public <T extends Comparable<T>> void failedWithPresentValues(T compared, T against) throws Throwable
     {
-        IsGreaterThan<T> named =
-            new IsGreaterThan<>(
+        IsLessThanOrEqual<T> named =
+            new IsLessThanOrEqual<>(
                 new Named<>("vasya", Either.right(new Present<>(compared))),
                 against
             );
 
         assertFalse(named.result().isSuccessful());
         assertEquals("vasya", named.result().name());
-        assertEquals(String.format("This value must be greater than %s.", against), named.result().error());
+        assertEquals(String.format("This value must be less than or equal to %s.", against), named.result().error());
     }
 
     @DataProvider
-    public static Object[][] lessOrEqualValues()
+    public static Object[][] greaterValues()
     {
         return
             new Object[][] {
-                {2, 2},
-                {2, 3},
-                {'b', 'b'},
-                {'b', 'c'},
-                {"vasya", "vasya"},
-                {"vasya", "vasyaaaaa"},
-                {true, true},
-                {false, true},
+                {3, 2},
+                {'c', 'b'},
+                {"vasyaaaaa", "vasya"},
+                {true, false},
             };
     }
 }

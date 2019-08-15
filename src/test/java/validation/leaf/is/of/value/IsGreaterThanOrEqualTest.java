@@ -47,7 +47,7 @@ public class IsGreaterThanOrEqualTest
 
     @Test
     @UseDataProvider("greaterThanOrEqualValues")
-    public <T extends Comparable<T>> void successfulWithPresentBooleanValue(T compared, T against) throws Throwable
+    public <T extends Comparable<T>> void successfulWithPresentValues(T compared, T against) throws Throwable
     {
         IsGreaterThanOrEqual<T> named =
             new IsGreaterThanOrEqual<>(
@@ -72,6 +72,33 @@ public class IsGreaterThanOrEqualTest
                 {"vasya", "vasya"},
                 {true, true},
                 {true, false},
+            };
+    }
+
+    @Test
+    @UseDataProvider("lessValues")
+    public <T extends Comparable<T>> void failedWithPresentValues(T compared, T against) throws Throwable
+    {
+        IsGreaterThanOrEqual<T> named =
+            new IsGreaterThanOrEqual<>(
+                new Named<>("vasya", Either.right(new Present<>(compared))),
+                against
+            );
+
+        assertFalse(named.result().isSuccessful());
+        assertEquals("vasya", named.result().name());
+        assertEquals(String.format("This value must be greater than or equal to %s.", against), named.result().error());
+    }
+
+    @DataProvider
+    public static Object[][] lessValues()
+    {
+        return
+            new Object[][] {
+                {1, 2},
+                {"a", "b"},
+                {"fedya", "vasya"},
+                {false, true},
             };
     }
 }
