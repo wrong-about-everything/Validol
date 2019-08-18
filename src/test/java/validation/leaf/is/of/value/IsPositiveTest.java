@@ -55,7 +55,7 @@ public class IsPositiveTest
 
         assertFalse(named.result().isSuccessful());
         assertEquals("vasya", named.result().name());
-        assertEquals("This value must be a boolean.", named.result().error());
+        assertEquals("This value must be a number.", named.result().error());
     }
 
     @Test
@@ -73,7 +73,7 @@ public class IsPositiveTest
 
         assertFalse(named.result().isSuccessful());
         assertEquals("vasya", named.result().name());
-        assertEquals("This value must be a boolean.", named.result().error());
+        assertEquals("This value must be a number.", named.result().error());
     }
 
     @Test
@@ -95,12 +95,22 @@ public class IsPositiveTest
     }
 
     @Test
-    public void successfulWithPresentTrueValue() throws Throwable
+    public void successfulWithPresentPositiveValue() throws Throwable
     {
-        IsPositive named = new IsPositive(new Named<>("vasya", Either.right(new Present<>(new JsonPrimitive(true)))));
+        IsPositive named = new IsPositive(new Named<>("vasya", Either.right(new Present<>(new JsonPrimitive(2.5)))));
 
         assertTrue(named.result().isSuccessful());
         assertEquals("vasya", named.result().name());
-        assertEquals(true, named.result().value().raw());
+        assertEquals(2.5, named.result().value().raw());
+    }
+
+    @Test
+    public void failedWithPresentNegativeValue() throws Throwable
+    {
+        IsPositive named = new IsPositive(new Named<>("vasya", Either.right(new Present<>(new JsonPrimitive(-0.5)))));
+
+        assertFalse(named.result().isSuccessful());
+        assertEquals("vasya", named.result().name());
+        assertEquals("This value must be positive.", named.result().error());
     }
 }

@@ -2,6 +2,7 @@ package validation.leaf.is.of.value;
 
 import com.google.gson.JsonElement;
 import com.spencerwi.either.Either;
+import org.apache.commons.lang3.math.NumberUtils;
 import validation.Validatable;
 import validation.leaf.as.AsNumber;
 import validation.result.Named;
@@ -29,7 +30,7 @@ final public class IsPositive implements Validatable<Number>
             return asNumber;
         }
 
-        if (!asNumber.value().raw().equals(true)) {
+        if (asNumber.value().raw().intValue() <= 0) {
             return
                 asNumber.isNamed()
                     ? new Named<>(asNumber.name(), this.error())
@@ -56,6 +57,6 @@ final public class IsPositive implements Validatable<Number>
 
     private Either<Object, Value<Number>> error()
     {
-        return Either.left("This value must be true.");
+        return Either.left("This value must be positive.");
     }
 }

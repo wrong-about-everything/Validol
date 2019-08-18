@@ -1,7 +1,11 @@
 package validation.leaf.as;
 
 import com.google.gson.Gson;
+import com.tngtech.java.junit.dataprovider.DataProvider;
+import com.tngtech.java.junit.dataprovider.DataProviderRunner;
+import com.tngtech.java.junit.dataprovider.UseDataProvider;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import validation.leaf.IndexedValue;
 
 import java.util.List;
@@ -9,40 +13,65 @@ import java.util.Map;
 
 import static org.junit.Assert.*;
 
+@RunWith(DataProviderRunner.class)
 public class AsNumberTest
 {
     @Test
-    public void isNumber() throws Throwable
+    @UseDataProvider("validNumbers")
+    public void isNumber(Number number) throws Throwable
     {
         AsNumber named =
             new AsNumber(
                 new IndexedValue(
                     "quantity",
                     new Gson().toJsonTree(
-                        Map.of("quantity", 3)
+                        Map.of("quantity", number)
                     )
                 )
             );
 
         assertTrue(named.result().isSuccessful());
-        assertEquals(Number.valueOf(3), named.result().value().raw());
+        assertEquals(number, named.result().value().raw());
+    }
+
+    @DataProvider
+    public static Object[][] validNumbers()
+    {
+        return
+            new Object[][] {
+                {22},
+                {-23},
+                {2.2},
+            };
     }
 
     @Test
-    public void isNotAnNumber() throws Throwable
+    @UseDataProvider("invalidNumbers")
+    public void isNotANumber(Object notANumber) throws Throwable
     {
         AsNumber named =
             new AsNumber(
                 new IndexedValue(
                     "quantity",
                     new Gson().toJsonTree(
-                        Map.of("quantity", "vasya")
+                        Map.of("quantity", notANumber)
                     )
                 )
             );
 
         assertFalse(named.result().isSuccessful());
         assertEquals("This value must be a number.", named.result().error());
+    }
+
+    @DataProvider
+    public static Object[][] invalidNumbers()
+    {
+        return
+            new Object[][] {
+                {"vasya"},
+                {'f'},
+                {true},
+            };
     }
 
     @Test
@@ -59,6 +88,6 @@ public class AsNumberTest
             );
 
         assertFalse(named.result().isSuccessful());
-        assertEquals("This value must be an Number.", named.result().error());
+        assertEquals("This value must be a number.", named.result().error());
     }
 }
