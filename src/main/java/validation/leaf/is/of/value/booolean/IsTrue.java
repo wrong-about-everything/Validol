@@ -1,4 +1,4 @@
-package validation.leaf.is.of.value;
+package validation.leaf.is.of.value.booolean;
 
 import com.google.gson.JsonElement;
 import com.spencerwi.either.Either;

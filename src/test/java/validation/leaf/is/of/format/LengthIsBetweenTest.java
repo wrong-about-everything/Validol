@@ -1,7 +1,6 @@
 package validation.leaf.is.of.format;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonPrimitive;
 import com.google.gson.reflect.TypeToken;
 import com.spencerwi.either.Either;
@@ -11,7 +10,6 @@ import com.tngtech.java.junit.dataprovider.UseDataProvider;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import validation.leaf.Named;
-import validation.leaf.is.of.value.IsFalse;
 import validation.value.Absent;
 import validation.value.Present;
 

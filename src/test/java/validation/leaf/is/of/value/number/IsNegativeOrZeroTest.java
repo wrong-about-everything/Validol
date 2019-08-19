@@ -1,4 +1,4 @@
-package validation.leaf.is.of.value;
+package validation.leaf.is.of.value.number;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonPrimitive;
@@ -6,6 +6,7 @@ import com.google.gson.reflect.TypeToken;
 import com.spencerwi.either.Either;
 import org.junit.Test;
 import validation.leaf.Named;
+import validation.leaf.is.of.value.number.IsNegativeOrZero;
 import validation.value.Absent;
 import validation.value.Present;
 
@@ -14,13 +15,13 @@ import java.util.Map;
 
 import static org.junit.Assert.*;
 
-public class IsFalseTest
+public class IsNegativeOrZeroTest
 {
     @Test
     public void failedWithFailedOriginalValidatable() throws Throwable
     {
-        IsFalse named =
-            new IsFalse(
+        IsNegativeOrZero named =
+            new IsNegativeOrZero(
                 new Named<>(
                     "vasya",
                     Either.left("Wooops")
@@ -35,8 +36,8 @@ public class IsFalseTest
     @Test
     public void failedWithIncorrectStructure() throws Throwable
     {
-        IsFalse named =
-            new IsFalse(
+        IsNegativeOrZero named =
+            new IsNegativeOrZero(
                 new Named<>(
                     "vasya",
                     Either.right(
@@ -55,14 +56,14 @@ public class IsFalseTest
 
         assertFalse(named.result().isSuccessful());
         assertEquals("vasya", named.result().name());
-        assertEquals("This value must be a boolean.", named.result().error());
+        assertEquals("This value must be a number.", named.result().error());
     }
 
     @Test
-    public void failedWithNonBoolean() throws Throwable
+    public void failedWithNonNumber() throws Throwable
     {
-        IsFalse named =
-            new IsFalse(
+        IsNegativeOrZero named =
+            new IsNegativeOrZero(
                 new Named<>(
                     "vasya",
                     Either.right(
@@ -73,34 +74,45 @@ public class IsFalseTest
 
         assertFalse(named.result().isSuccessful());
         assertEquals("vasya", named.result().name());
-        assertEquals("This value must be a boolean.", named.result().error());
+        assertEquals("This value must be a number.", named.result().error());
     }
 
     @Test
     public void successfulWithAbsentValue() throws Throwable
     {
-        IsFalse named = new IsFalse(new Named<>("vasya", Either.right(new Absent<>())));
+        IsNegativeOrZero named = new IsNegativeOrZero(new Named<>("vasya", Either.right(new Absent<>())));
 
         assertTrue(named.result().isSuccessful());
         assertFalse(named.result().value().isPresent());
     }
 
     @Test
-    public void successfulWithPresentFalseValue() throws Throwable
+    public void failedWithPresentPositiveValue() throws Throwable
     {
-        IsFalse named = new IsFalse(new Named<>("vasya", Either.right(new Present<>(new JsonPrimitive(false)))));
-
-        assertTrue(named.result().isSuccessful());
-        assertEquals("vasya", named.result().name());
-        assertEquals(false, named.result().value().raw());
-    }
-
-    @Test
-    public void failedWithPresentTrueValue() throws Throwable
-    {
-        IsFalse named = new IsFalse(new Named<>("vasya", Either.right(new Present<>(new JsonPrimitive(true)))));
+        IsNegativeOrZero named = new IsNegativeOrZero(new Named<>("vasya", Either.right(new Present<>(new JsonPrimitive(0.05)))));
 
         assertFalse(named.result().isSuccessful());
         assertEquals("vasya", named.result().name());
+        assertEquals("This value must be negative or zero.", named.result().error());
+    }
+
+    @Test
+    public void successfulWithPresentZeroValue() throws Throwable
+    {
+        IsNegativeOrZero named = new IsNegativeOrZero(new Named<>("vasya", Either.right(new Present<>(new JsonPrimitive(0)))));
+
+        assertTrue(named.result().isSuccessful());
+        assertEquals("vasya", named.result().name());
+        assertEquals(0, named.result().value().raw());
+    }
+
+    @Test
+    public void successfulWithPresentNegativeValue() throws Throwable
+    {
+        IsNegativeOrZero named = new IsNegativeOrZero(new Named<>("vasya", Either.right(new Present<>(new JsonPrimitive(-0.4)))));
+
+        assertTrue(named.result().isSuccessful());
+        assertEquals("vasya", named.result().name());
+        assertEquals(-0.4, named.result().value().raw());
     }
 }
