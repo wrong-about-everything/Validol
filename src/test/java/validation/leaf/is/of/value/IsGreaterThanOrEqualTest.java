@@ -6,7 +6,6 @@ import org.junit.runner.RunWith;
 import validation.leaf.Named;
 import validation.value.Absent;
 import validation.value.Present;
-
 import static org.junit.Assert.*;
 import com.tngtech.java.junit.dataprovider.DataProvider;
 import com.tngtech.java.junit.dataprovider.DataProviderRunner;

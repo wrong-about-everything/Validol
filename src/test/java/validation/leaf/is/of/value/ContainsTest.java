@@ -5,20 +5,23 @@ import org.junit.Test;
 import validation.leaf.Named;
 import validation.value.Absent;
 import validation.value.Present;
+
+import java.util.List;
+
 import static org.junit.Assert.*;
 
-public class IsEqualToTest
+public class ContainsTest
 {
     @Test
     public void failedWithFailedOriginalValidatable() throws Throwable
     {
-        IsEqualTo<?> named =
-            new IsEqualTo<>(
+        Contains<?> named =
+            new Contains<>(
                 new Named<>(
                     "vasya",
                     Either.left("Wooops")
                 ),
-                1
+                List.of(1)
             );
 
         assertFalse(named.result().isSuccessful());
@@ -29,8 +32,8 @@ public class IsEqualToTest
     @Test
     public void successfulWithAbsentValue() throws Throwable
     {
-        IsEqualTo<?> named =
-            new IsEqualTo<>(
+        Contains<?> named =
+            new Contains<>(
                 new Named<>("vasya", Either.right(new Absent<>())),
                 false
             );
@@ -40,44 +43,44 @@ public class IsEqualToTest
     }
 
     @Test
-    public void successfulWithPresentFalseValue() throws Throwable
+    public void failedWithPresentFalseValue() throws Throwable
     {
-        IsEqualTo<?> named =
-            new IsEqualTo<>(
+        Contains<?> named =
+            new Contains<>(
                 new Named<>("vasya", Either.right(new Present<>(false))),
                 false
             );
 
-        assertTrue(named.result().isSuccessful());
+        assertFalse(named.result().isSuccessful());
         assertEquals("vasya", named.result().name());
-        assertEquals(false, named.result().value().raw());
+        assertEquals("This value must not be equal to false.", named.result().error());
     }
 
     @Test
-    public void successfulWithPresentIntegerValue() throws Throwable
+    public void failedWithPresentIntegerValue() throws Throwable
     {
-        IsEqualTo<?> named =
-            new IsEqualTo<>(
+        Contains<?> named =
+            new Contains<>(
                 new Named<>("vasya", Either.right(new Present<>(777))),
                 777
             );
 
-        assertTrue(named.result().isSuccessful());
+        assertFalse(named.result().isSuccessful());
         assertEquals("vasya", named.result().name());
-        assertEquals(777, named.result().value().raw());
+        assertEquals("This value must not be equal to 777.", named.result().error());
     }
 
     @Test
-    public void failedWithPresentStringValue() throws Throwable
+    public void successfulWithPresentStringValue() throws Throwable
     {
-        IsEqualTo<?> named =
-            new IsEqualTo<>(
+        Contains<?> named =
+            new Contains<>(
                 new Named<>("vasya", Either.right(new Present<>("vasya"))),
                 "fedya"
             );
 
-        assertFalse(named.result().isSuccessful());
+        assertTrue(named.result().isSuccessful());
         assertEquals("vasya", named.result().name());
-        assertEquals("This value must be equal to fedya.", named.result().error());
+        assertEquals("vasya", named.result().value().raw());
     }
 }
