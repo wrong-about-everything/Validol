@@ -76,7 +76,7 @@ public class GuestTest
                         Map.of(),
                         new TypeToken<Map<String, Object>>() {}.getType()
                     ),
-                    "This one is obligatory"
+                    "This field is obligatory"
                 },
                 {
                     new Gson().toJsonTree(
@@ -88,7 +88,7 @@ public class GuestTest
                         new TypeToken<Map<String, Object>>() {}.getType()
                     ),
                     Map.of(
-                        "name", "This one is obligatory"
+                        "name", "This field is obligatory"
                     )
                 },
                 {
@@ -101,7 +101,7 @@ public class GuestTest
                         new TypeToken<Map<String, Object>>() {}.getType()
                     ),
                     Map.of(
-                        "email", "This one is obligatory"
+                        "email", "This field is obligatory"
                     )
                 },
             };

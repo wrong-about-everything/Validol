@@ -26,7 +26,7 @@ final public class IsJsonArray implements Validatable<JsonElement>
         try {
             prevResult.value().raw().getAsJsonArray();
         } catch (IllegalStateException e) {
-            return new Named<>(prevResult.name(), Either.left("This element should represent an array"));
+            return new Named<>(prevResult.name(), Either.left("This value must be a json array"));
         }
 
         return prevResult;

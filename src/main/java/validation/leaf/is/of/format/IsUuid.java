@@ -7,12 +7,8 @@ import validation.leaf.as.AsString;
 import validation.result.*;
 import validation.value.Present;
 import validation.value.Value;
-
-import java.net.InetAddress;
 import java.util.UUID;
 
-// TODO: Should "Is" validatables return Result<String> or Result<JsonElement>?
-// Probably every time I use "Is" validatable that's implied to cast json type to a concrete, in reality I should've used an "As" validatable
 final public class IsUuid implements Validatable<UUID>
 {
     private Validatable<JsonElement> original;

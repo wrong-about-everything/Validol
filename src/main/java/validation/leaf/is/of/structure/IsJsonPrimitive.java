@@ -26,7 +26,7 @@ final public class IsJsonPrimitive implements Validatable<JsonElement>
         try {
             prevResult.value().raw().getAsJsonPrimitive();
         } catch (IllegalStateException e) {
-            return new Named<>(prevResult.name(), Either.left("This element should represent a primitive"));
+            return new Named<>(prevResult.name(), Either.left("This value must be a json primitive"));
         }
 
         return prevResult;

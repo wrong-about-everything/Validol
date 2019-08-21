@@ -53,7 +53,7 @@ public class IsJsonPrimitiveTest
             );
 
         assertFalse(named.result().isSuccessful());
-        assertEquals("This element should represent a primitive", named.result().error());
+        assertEquals("This value must be a json primitive", named.result().error());
     }
 
     @Test
@@ -73,7 +73,7 @@ public class IsJsonPrimitiveTest
             );
 
         assertFalse(named.result().isSuccessful());
-        assertEquals("This element should represent a primitive", named.result().error());
+        assertEquals("This value must be a json primitive", named.result().error());
     }
 
     private String jsonObject()

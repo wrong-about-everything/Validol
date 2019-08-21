@@ -26,7 +26,7 @@ final public class IsJsonObject implements Validatable<JsonElement>
         try {
             prevResult.value().raw().getAsJsonObject().entrySet();
         } catch (IllegalStateException e) {
-            return new Named<>(prevResult.name(), Either.left("This element should represent a map"));
+            return new Named<>(prevResult.name(), Either.left("This value must be a map"));
         }
 
         return prevResult;

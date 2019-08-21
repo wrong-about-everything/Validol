@@ -71,7 +71,7 @@ public class ItemsTest
                         Map.of(),
                         new TypeToken<Map<String, Object>>() {}.getType()
                     ),
-                    "This one is obligatory"
+                    "This field is obligatory"
                 },
                 {
                     new Gson().toJsonTree(
@@ -89,7 +89,7 @@ public class ItemsTest
                     ),
                     List.of(
                         Map.of("id", "This value must be an integer."),
-                        Map.of("id", "This one is obligatory")
+                        Map.of("id", "This field is obligatory")
                     )
                 },
             };

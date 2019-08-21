@@ -25,7 +25,7 @@ final public class Required implements Validatable<JsonElement>
         }
 
         if (!result.value().isPresent()) {
-            return new Named<>(result.name(), Either.left("This one is obligatory"));
+            return new Named<>(result.name(), Either.left("This field is obligatory"));
         }
 
         return result;

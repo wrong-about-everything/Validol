@@ -139,9 +139,9 @@ public class SplitValidatableExampleTest
                     ),
                     Map.of(
                         "guest",
-                        Map.of("email", "This one is obligatory"),
-                        "items", "This one is obligatory",
-                        "delivery","This one is obligatory",
+                        Map.of("email", "This field is obligatory"),
+                        "items", "This field is obligatory",
+                        "delivery","This field is obligatory",
                         "source","This value must be an integer."
                         )
                 },
@@ -161,11 +161,11 @@ public class SplitValidatableExampleTest
                         new TypeToken<Map<String, Object>>() {}.getType()
                     ),
                     Map.of(
-                        "guest", "This one is obligatory",
-                        "items", "This one is obligatory",
+                        "guest", "This field is obligatory",
+                        "items", "This field is obligatory",
                         "delivery", Map.of(
                             "where", Map.of(
-                                "street", "This one is obligatory",
+                                "street", "This field is obligatory",
                                 "building", "This value must be an integer."
                             )
                         ),
@@ -180,9 +180,9 @@ public class SplitValidatableExampleTest
                         new TypeToken<Map<String, Object>>() {}.getType()
                     ),
                     Map.of(
-                        "guest", "This one is obligatory",
-                        "items", "This one is obligatory",
-                        "delivery", "This one is obligatory"
+                        "guest", "This field is obligatory",
+                        "items", "This field is obligatory",
+                        "delivery", "This field is obligatory"
                     )
                 },
                 {

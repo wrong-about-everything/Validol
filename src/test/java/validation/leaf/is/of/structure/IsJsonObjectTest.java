@@ -29,7 +29,7 @@ public class IsJsonObjectTest
             );
 
         assertFalse(named.result().isSuccessful());
-        assertEquals("This element should represent a map", named.result().error());
+        assertEquals("This value must be a map", named.result().error());
     }
 
     @Test
@@ -50,7 +50,7 @@ public class IsJsonObjectTest
             );
 
         assertFalse(named.result().isSuccessful());
-        assertEquals("This element should represent a map", named.result().error());
+        assertEquals("This value must be a map", named.result().error());
     }
 
     @Test

@@ -121,7 +121,7 @@ public class CourierTest
                     ),
                     Map.of(
                         "where", Map.of(
-                            "street", "This one is obligatory",
+                            "street", "This field is obligatory",
                             "building", "This value must be an integer."
                         )
                     )

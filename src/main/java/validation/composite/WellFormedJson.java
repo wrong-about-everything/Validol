@@ -51,7 +51,7 @@ final public class WellFormedJson implements Validatable<JsonElement>
                         )
                 ;
         } catch(JsonSyntaxException ex) {
-            return new Named<>(originalResult.name(), Either.left("This is an invalid json"));
+            return new Named<>(originalResult.name(), Either.left("This must be a valid json"));
         }
     }
 }

@@ -68,7 +68,7 @@ public class SourceTest
                         Map.of(),
                         new TypeToken<Map<String, Object>>() {}.getType()
                     ),
-                    "This one is obligatory"
+                    "This field is obligatory"
                 },
                 {
                     new Gson().toJsonTree(
