@@ -10,13 +10,13 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 
-public class ContainsTest
+public class IsOneOfTest
 {
     @Test
     public void failedWithFailedOriginalValidatable() throws Throwable
     {
-        Contains<?> named =
-            new Contains<>(
+        IsOneOf<?> named =
+            new IsOneOf<>(
                 new Named<>(
                     "vasya",
                     Either.left("Wooops")
@@ -32,10 +32,10 @@ public class ContainsTest
     @Test
     public void successfulWithAbsentValue() throws Throwable
     {
-        Contains<?> named =
-            new Contains<>(
+        IsOneOf<?> named =
+            new IsOneOf<>(
                 new Named<>("vasya", Either.right(new Absent<>())),
-                false
+                List.of(25)
             );
 
         assertTrue(named.result().isSuccessful());
@@ -43,40 +43,26 @@ public class ContainsTest
     }
 
     @Test
-    public void failedWithPresentFalseValue() throws Throwable
+    public void failedWithIntegerValueAbsentInList() throws Throwable
     {
-        Contains<?> named =
-            new Contains<>(
-                new Named<>("vasya", Either.right(new Present<>(false))),
-                false
-            );
-
-        assertFalse(named.result().isSuccessful());
-        assertEquals("vasya", named.result().name());
-        assertEquals("This value must not be equal to false.", named.result().error());
-    }
-
-    @Test
-    public void failedWithPresentIntegerValue() throws Throwable
-    {
-        Contains<?> named =
-            new Contains<>(
+        IsOneOf<?> named =
+            new IsOneOf<>(
                 new Named<>("vasya", Either.right(new Present<>(777))),
-                777
+                List.of(888, 999)
             );
 
         assertFalse(named.result().isSuccessful());
         assertEquals("vasya", named.result().name());
-        assertEquals("This value must not be equal to 777.", named.result().error());
+        assertEquals("This value must be one of the following: 888, 999.", named.result().error());
     }
 
     @Test
-    public void successfulWithPresentStringValue() throws Throwable
+    public void successfulWithStringValuePresentInList() throws Throwable
     {
-        Contains<?> named =
-            new Contains<>(
+        IsOneOf<?> named =
+            new IsOneOf<>(
                 new Named<>("vasya", Either.right(new Present<>("vasya"))),
-                "fedya"
+                List.of("fedya", "vasya", "vitya")
             );
 
         assertTrue(named.result().isSuccessful());

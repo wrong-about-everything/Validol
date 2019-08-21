@@ -11,12 +11,12 @@ import validation.value.Value;
 import java.util.List;
 import java.util.stream.Collectors;
 
-final public class Contains<T> implements Validatable<T>
+final public class IsOneOf<T> implements Validatable<T>
 {
     private Validatable<T> original;
     private List<T> list;
 
-    public Contains(Validatable<T> original, List<T> list)
+    public IsOneOf(Validatable<T> original, List<T> list)
     {
         this.original = original;
         this.list = list;
