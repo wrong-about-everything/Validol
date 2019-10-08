@@ -6,7 +6,7 @@ import validation.composite.FastFail;
 import validation.composite.bloc.of.nameds.NamedBlocOfNameds;
 import validation.leaf.IndexedValue;
 import validation.leaf.Required;
-import validation.leaf.as.AsString;
+import validation.leaf.as.type.AsString;
 import validation.leaf.is.of.structure.IsJsonObject;
 import validation.result.Result;
 

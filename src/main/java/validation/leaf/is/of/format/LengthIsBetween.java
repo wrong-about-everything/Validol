@@ -2,13 +2,9 @@ package validation.leaf.is.of.format;
 
 import com.google.gson.JsonElement;
 import com.spencerwi.either.Either;
-import org.apache.commons.validator.routines.EmailValidator;
 import validation.Validatable;
-import validation.leaf.as.AsString;
-import validation.leaf.is.of.structure.IsJsonPrimitive;
-import validation.leaf.is.of.type.IsString;
+import validation.leaf.as.type.AsString;
 import validation.result.*;
-import validation.value.Present;
 import validation.value.Value;
 
 final public class LengthIsBetween implements Validatable<String>

@@ -1,6 +1,6 @@
 package example.incorrect.parameters.type;
 
-import validation.leaf.as.AsString;
+import validation.leaf.as.type.AsString;
 import validation.leaf.IndexedValue;
 import validation.leaf.is.of.type.IsInteger;
 import validation.leaf.Named;

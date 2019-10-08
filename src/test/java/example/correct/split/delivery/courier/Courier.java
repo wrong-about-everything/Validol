@@ -11,9 +11,9 @@ import validation.composite.bloc.of.nameds.NamedBlocOfNameds;
 import validation.composite.bloc.of.nameds.UnnamedBlocOfNameds;
 import validation.leaf.IndexedValue;
 import validation.leaf.Required;
-import validation.leaf.as.AsDate;
-import validation.leaf.as.AsInteger;
-import validation.leaf.as.AsString;
+import validation.leaf.as.type.AsInteger;
+import validation.leaf.as.type.AsString;
+import validation.leaf.is.of.format.IsDate;
 import validation.result.Result;
 
 import java.text.SimpleDateFormat;
@@ -54,9 +54,11 @@ public class Courier implements Validatable<Delivery>
                             new NamedBlocOfNameds<>(
                                 "when",
                                 List.of(
-                                    new AsDate(
-                                        new Required(
-                                            new IndexedValue("date", whenJsonElement)
+                                    new IsDate(
+                                        new AsString(
+                                            new Required(
+                                                new IndexedValue("date", whenJsonElement)
+                                            )
                                         ),
                                         new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
                                     )

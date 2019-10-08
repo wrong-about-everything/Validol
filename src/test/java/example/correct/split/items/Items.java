@@ -8,7 +8,7 @@ import validation.composite.bloc.of.nameds.UnnamedBlocOfNameds;
 import validation.composite.bloc.of.unnameds.NamedBlocOfUnnameds;
 import validation.leaf.IndexedValue;
 import validation.leaf.Required;
-import validation.leaf.as.AsInteger;
+import validation.leaf.as.type.AsInteger;
 import validation.result.Result;
 
 import java.util.List;

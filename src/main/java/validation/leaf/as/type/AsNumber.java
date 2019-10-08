@@ -1,4 +1,4 @@
-package validation.leaf.as;
+package validation.leaf.as.type;
 
 import com.google.gson.JsonElement;
 import com.spencerwi.either.Either;

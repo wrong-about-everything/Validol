@@ -1,4 +1,4 @@
-package validation.leaf.as;
+package validation.leaf.as.type;
 
 import com.google.gson.Gson;
 import com.tngtech.java.junit.dataprovider.DataProvider;
@@ -7,6 +7,7 @@ import com.tngtech.java.junit.dataprovider.UseDataProvider;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import validation.leaf.IndexedValue;
+import validation.leaf.as.type.AsNumber;
 
 import java.util.List;
 import java.util.Map;

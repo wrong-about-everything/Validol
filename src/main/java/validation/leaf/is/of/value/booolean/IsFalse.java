@@ -3,7 +3,7 @@ package validation.leaf.is.of.value.booolean;
 import com.google.gson.JsonElement;
 import com.spencerwi.either.Either;
 import validation.Validatable;
-import validation.leaf.as.AsBoolean;
+import validation.leaf.as.type.AsBoolean;
 import validation.result.Named;
 import validation.result.NonSuccessfulWithCustomError;
 import validation.result.Result;

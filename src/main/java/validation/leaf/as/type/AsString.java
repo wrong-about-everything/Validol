@@ -1,4 +1,4 @@
-package validation.leaf.as;
+package validation.leaf.as.type;
 
 import validation.leaf.is.of.type.IsString;
 import validation.result.*;

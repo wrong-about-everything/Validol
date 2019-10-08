@@ -39,13 +39,13 @@ public class IsUrlTest
 
     @Test
     @UseDataProvider("invalidUrls")
-    public void validationFailedWithInvalidUrl(String email) throws Throwable
+    public void validationFailedWithInvalidUrl(String url) throws Throwable
     {
         IsUrl named =
             new IsUrl(
                 new Named<>(
                     "vasya",
-                    Either.right(new Present<>(new JsonPrimitive(email)))
+                    Either.right(new Present<>(new JsonPrimitive(url)))
                 )
             );
 
@@ -75,19 +75,19 @@ public class IsUrlTest
 
     @Test
     @UseDataProvider("validUrls")
-    public void validationSucceededWithValidEmail(String email) throws Throwable
+    public void validationSucceededWithValidUrl(String url) throws Throwable
     {
         IsUrl named =
             new IsUrl(
                 new Named<>(
                     "vasya",
-                    Either.right(new Present<>(new JsonPrimitive(email)))
+                    Either.right(new Present<>(new JsonPrimitive(url)))
                 )
             );
 
         assertTrue(named.result().isSuccessful());
         assertEquals("vasya", named.result().name());
-        assertEquals(email, named.result().value().raw().toString());
+        assertEquals(url, named.result().value().raw().getAsString());
     }
 
     @DataProvider
@@ -102,7 +102,7 @@ public class IsUrlTest
     }
 
     @Test
-    public void validationSucceededWithEmptyEmail() throws Throwable
+    public void validationSucceededWithEmptyUrl() throws Throwable
     {
         IsUrl named =
             new IsUrl(
@@ -143,6 +143,6 @@ public class IsUrlTest
 
         assertFalse(named.result().isSuccessful());
         assertEquals("vasya", named.result().name());
-        assertEquals("This value must be a string.", named.result().error());
+        assertEquals("This value must be a json primitive.", named.result().error());
     }
 }

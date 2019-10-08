@@ -13,10 +13,10 @@ import validation.composite.conditional.switcz.SwitchTrue;
 import validation.composite.bloc.of.nameds.NamedBlocOfNameds;
 import validation.composite.bloc.of.nameds.UnnamedBlocOfNameds;
 import validation.composite.bloc.of.unnameds.NamedBlocOfUnnameds;
-import validation.leaf.as.AsDate;
-import validation.leaf.as.AsInteger;
-import validation.leaf.as.AsString;
+import validation.leaf.as.type.AsInteger;
+import validation.leaf.as.type.AsString;
 import validation.leaf.IndexedValue;
+import validation.leaf.is.of.format.IsDate;
 import validation.leaf.is.of.structure.IsJsonObject;
 import validation.result.Result;
 import validation.Validatable;
@@ -135,9 +135,11 @@ public class ValidatedOrderRegistrationRequest implements Validatable<OrderRegis
                                                                 new NamedBlocOfNameds<>(
                                                                     "when",
                                                                     List.of(
-                                                                        new AsDate(
-                                                                            new Required(
-                                                                                new IndexedValue("date", whenJsonElement)
+                                                                        new IsDate(
+                                                                            new AsString(
+                                                                                new Required(
+                                                                                    new IndexedValue("date", whenJsonElement)
+                                                                                )
                                                                             ),
                                                                             new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
                                                                         )

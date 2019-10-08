@@ -1,55 +1,56 @@
-package validation.leaf.as;
+package validation.leaf.as.type;
 
 import com.google.gson.Gson;
 import org.junit.Test;
 import validation.leaf.IndexedValue;
+import validation.leaf.as.type.AsString;
 
 import java.util.List;
 import java.util.Map;
 
 import static org.junit.Assert.*;
 
-public class AsIntegerTest
+public class AsStringTest
 {
     @Test
-    public void isInteger() throws Throwable
+    public void isString() throws Throwable
     {
-        AsInteger named =
-            new AsInteger(
+        AsString named =
+            new AsString(
                 new IndexedValue(
-                    "quantity",
+                    "delivery_by",
                     new Gson().toJsonTree(
-                        Map.of("quantity", 3)
+                        Map.of("delivery_by", "today")
                     )
                 )
             );
 
         assertTrue(named.result().isSuccessful());
-        assertEquals(Integer.valueOf(3), named.result().value().raw());
+        assertEquals("today", named.result().value().raw());
     }
 
     @Test
-    public void isNotAnInteger() throws Throwable
+    public void isNotAString() throws Throwable
     {
-        AsInteger named =
-            new AsInteger(
+        AsString named =
+            new AsString(
                 new IndexedValue(
-                    "quantity",
+                    "delivery_by",
                     new Gson().toJsonTree(
-                        Map.of("quantity", "vasya")
+                        Map.of("delivery_by", true)
                     )
                 )
             );
 
         assertFalse(named.result().isSuccessful());
-        assertEquals("This value must be an integer.", named.result().error());
+        assertEquals("This value must be a string.", named.result().error());
     }
 
     @Test
     public void isNotAJsonPrimitive() throws Throwable
     {
-        AsInteger named =
-            new AsInteger(
+        AsString named =
+            new AsString(
                 new IndexedValue(
                     "delivery_by",
                     new Gson().toJsonTree(
@@ -59,6 +60,6 @@ public class AsIntegerTest
             );
 
         assertFalse(named.result().isSuccessful());
-        assertEquals("This value must be an integer.", named.result().error());
+        assertEquals("This value must be a string.", named.result().error());
     }
 }

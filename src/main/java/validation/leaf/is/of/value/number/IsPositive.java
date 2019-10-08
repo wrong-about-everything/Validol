@@ -2,9 +2,8 @@ package validation.leaf.is.of.value.number;
 
 import com.google.gson.JsonElement;
 import com.spencerwi.either.Either;
-import org.apache.commons.lang3.math.NumberUtils;
 import validation.Validatable;
-import validation.leaf.as.AsNumber;
+import validation.leaf.as.type.AsNumber;
 import validation.result.Named;
 import validation.result.Result;
 import validation.result.Unnamed;

@@ -1,9 +1,10 @@
-package validation.leaf.as;
+package validation.leaf.as.type;
 
 import com.google.gson.Gson;
 import com.spencerwi.either.Either;
 import org.junit.Test;
 import validation.leaf.IndexedValue;
+import validation.leaf.as.type.AsBoolean;
 import validation.result.Named;
 import validation.value.Absent;
 

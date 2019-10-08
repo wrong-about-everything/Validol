@@ -2,9 +2,8 @@ package validation.leaf.is.of.format;
 
 import com.google.gson.JsonElement;
 import com.spencerwi.either.Either;
-import org.apache.commons.validator.routines.EmailValidator;
 import validation.Validatable;
-import validation.leaf.as.AsString;
+import validation.leaf.as.type.AsString;
 import validation.leaf.is.of.structure.IsJsonPrimitive;
 import validation.result.*;
 import validation.value.Present;
@@ -12,10 +11,9 @@ import validation.value.Value;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.ParseException;
 
-// TODO: Should "Is" validatables return Result<String> or Result<JsonElement>?
-// Probably every time I use "Is" validatable that's implied to cast json type to a concrete, in reality I should've used an "As" validatable
-final public class IsUrl implements Validatable<URL>
+final public class IsUrl implements Validatable<JsonElement>
 {
     private Validatable<JsonElement> original;
 
@@ -24,37 +22,33 @@ final public class IsUrl implements Validatable<URL>
         this.original = original;
     }
 
-    public Result<URL> result() throws Throwable
+    public Result<JsonElement> result() throws Throwable
     {
-        Result<String> result = new AsString(this.original).result();
+        Result<JsonElement> result = new IsJsonPrimitive(this.original).result();
 
         if (!result.isSuccessful()) {
-            return new FromNonSuccessful<>(result);
+            return result;
         }
 
         if (!result.value().isPresent()) {
             return new AbsentField<>(result);
         }
 
-        try {
-            return
-                result.isNamed()
-                    ? new Named<>(result.name(), this.value(result))
-                    : new Unnamed<>(this.value(result))
-                ;
-        } catch (MalformedURLException e) {
+        if (!this.isValidUrl(result)) {
             return new NonSuccessfulWithCustomError<>(result, this.error().getLeft());
         }
+
+        return result;
     }
 
-    private Either<Object, Value<URL>> value(Result<String> result) throws Throwable
+    private Boolean isValidUrl(Result<JsonElement> result) throws Throwable
     {
-        return
-            Either.right(
-                new Present<>(
-                    new URL(result.value().raw())
-                )
-            );
+        try {
+            new URL(result.value().raw().getAsString());
+            return true;
+        } catch (MalformedURLException e) {
+            return false;
+        }
     }
 
     private Either<Object, Value<JsonElement>> error()

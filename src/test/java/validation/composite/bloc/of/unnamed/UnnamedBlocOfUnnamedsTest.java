@@ -5,7 +5,7 @@ import validation.composite.bloc.of.unnameds.UnnamedBlocOfUnnameds;
 import validation.composite.bloc.of.unnamed.bag.Integers;
 import validation.composite.bloc.of.unnamed.bag.Item;
 import validation.composite.bloc.of.unnamed.bag.Items;
-import validation.leaf.as.AsInteger;
+import validation.leaf.as.type.AsInteger;
 import validation.leaf.is.of.type.IsInteger;
 import validation.leaf.Unnamed;
 import validation.result.Result;
