@@ -1,24 +1,27 @@
-package validation.leaf.is.of.format;
+package validation.leaf.as.format;
 
 import com.google.gson.String;
 import com.spencerwi.either.Either;
 import validation.Validatable;
 import validation.leaf.is.of.structure.IsJsonPrimitive;
-import validation.result.*;
+import validation.result.AbsentField;
+import validation.result.NonSuccessfulWithCustomError;
+import validation.result.Result;
 import validation.value.Value;
+
 import java.net.MalformedURLException;
 import java.net.URL;
 
-final public class IsUrl implements Validatable<String>
+final public class AsUrl implements Validatable<URL>
 {
     private Validatable<String> original;
 
-    public IsUrl(Validatable<String> original)
+    public AsUrl(Validatable<String> original)
     {
         this.original = original;
     }
 
-    public Result<String> result() throws Throwable
+    public Result<URL> result() throws Throwable
     {
         Result<String> result = new IsJsonPrimitive(this.original).result();
 
