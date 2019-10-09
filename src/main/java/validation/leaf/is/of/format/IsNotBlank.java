@@ -3,14 +3,13 @@ package validation.leaf.is.of.format;
 import com.google.gson.JsonElement;
 import com.spencerwi.either.Either;
 import validation.Validatable;
-import validation.leaf.as.type.AsString;
+import validation.leaf.is.of.structure.IsJsonPrimitive;
 import validation.result.*;
 import validation.value.Present;
 import validation.value.Value;
 
 // doc: fields exists, but its value is blank. When value is absent, it means no such field exists
-// doc: This one is used only with strings
-final public class IsNotBlank implements Validatable<String>
+final public class IsNotBlank implements Validatable<JsonElement>
 {
     private Validatable<JsonElement> original;
 
@@ -19,34 +18,26 @@ final public class IsNotBlank implements Validatable<String>
         this.original = original;
     }
 
-    public Result<String> result() throws Throwable
+    public Result<JsonElement> result() throws Throwable
     {
-        Result<String> prevResult = new AsString(this.original).result();
+        Result<JsonElement> prevResult = new IsJsonPrimitive(this.original).result();
 
         if (!prevResult.isSuccessful()) {
-            return new FromNonSuccessful<>(prevResult);
+            return prevResult;
         }
 
         if (!prevResult.value().isPresent()) {
             return new AbsentField<>(prevResult);
         }
 
-        if (prevResult.value().raw().length() == 0) {
-            return
-                prevResult.isNamed()
-                    ? new Named<>(prevResult.name(), this.error())
-                    : new Unnamed<>(this.error())
-                ;
+        if (prevResult.value().raw().getAsString().length() == 0) {
+            return new NonSuccessfulWithCustomError<>(prevResult, this.error());
         }
 
-        return
-            prevResult.isNamed()
-                ? new Named<>(prevResult.name(), this.value(prevResult))
-                : new Unnamed<>(this.value(prevResult))
-            ;
+        return prevResult;
     }
 
-    private Either<Object, Value<String>> value(Result<String> prevResult) throws Throwable
+    private Either<Object, Value<JsonElement>> value(Result<JsonElement> prevResult) throws Throwable
     {
         return
             Either.right(
@@ -56,7 +47,7 @@ final public class IsNotBlank implements Validatable<String>
             );
     }
 
-    private Either<Object, Value<String>> error()
+    private Either<Object, Value<JsonElement>> error()
     {
         return Either.left("This value must not be blank.");
     }

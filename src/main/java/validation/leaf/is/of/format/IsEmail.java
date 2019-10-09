@@ -1,26 +1,23 @@
 package validation.leaf.is.of.format;
 
-import com.google.gson.JsonElement;
 import com.spencerwi.either.Either;
 import org.apache.commons.validator.routines.EmailValidator;
 import validation.Validatable;
-import validation.leaf.is.of.structure.IsJsonPrimitive;
 import validation.result.*;
-import validation.value.Present;
 import validation.value.Value;
 
-final public class IsEmail implements Validatable<JsonElement>
+final public class IsEmail implements Validatable<String>
 {
-    private Validatable<JsonElement> original;
+    private Validatable<String> original;
 
-    public IsEmail(Validatable<JsonElement> original)
+    public IsEmail(Validatable<String> original)
     {
         this.original = original;
     }
 
-    public Result<JsonElement> result() throws Throwable
+    public Result<String> result() throws Throwable
     {
-        Result<JsonElement> prevResult = new IsJsonPrimitive(this.original).result();
+        Result<String> prevResult = this.original.result();
 
         if (!prevResult.isSuccessful()) {
             return prevResult;
@@ -34,29 +31,15 @@ final public class IsEmail implements Validatable<JsonElement>
             return new NonSuccessfulWithCustomError<>(prevResult, this.error().getLeft());
         }
 
-        return
-            prevResult.isNamed()
-                ? new Named<>(prevResult.name(), this.value(prevResult))
-                : new Unnamed<>(this.value(prevResult))
-            ;
+        return prevResult;
     }
 
-    private Boolean isValidEmail(Result<JsonElement> prevResult) throws Throwable
+    private Boolean isValidEmail(Result<String> prevResult) throws Throwable
     {
-        return EmailValidator.getInstance().isValid(prevResult.value().raw().getAsString().trim());
+        return EmailValidator.getInstance().isValid(prevResult.value().raw().trim());
     }
 
-    private Either<Object, Value<JsonElement>> value(Result<JsonElement> prevResult) throws Throwable
-    {
-        return
-            Either.right(
-                new Present<>(
-                    prevResult.value().raw()
-                )
-            );
-    }
-
-    private Either<Object, Value<JsonElement>> error()
+    private Either<Object, Value<String>> error()
     {
         return Either.left("This value must be an email.");
     }

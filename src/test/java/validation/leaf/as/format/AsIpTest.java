@@ -1,4 +1,4 @@
-package validation.leaf.is.of.format;
+package validation.leaf.as.format;
 
 import com.spencerwi.either.Either;
 import com.tngtech.java.junit.dataprovider.DataProvider;
@@ -9,17 +9,16 @@ import org.junit.runner.RunWith;
 import validation.leaf.Named;
 import validation.value.Absent;
 import validation.value.Present;
-
 import static org.junit.Assert.*;
 
 @RunWith(DataProviderRunner.class)
-public class IsIpTest
+public class AsIpTest
 {
     @Test
     public void validationFailedWhenDecoratedElementIsInvalid() throws Throwable
     {
-        IsIp named =
-            new IsIp(
+        AsIp named =
+            new AsIp(
                 new Named<>(
                     "vasya",
                     Either.left("Wooops")
@@ -35,8 +34,8 @@ public class IsIpTest
     @UseDataProvider("invalidIps")
     public void validationFailedWithInvalidIp(String ip) throws Throwable
     {
-        IsIp named =
-            new IsIp(
+        AsIp named =
+            new AsIp(
                 new Named<>(
                     "vasya",
                     Either.right(new Present<>(ip))
@@ -64,8 +63,8 @@ public class IsIpTest
     @UseDataProvider("validIps")
     public void validationSucceededWithValidIp(String ip) throws Throwable
     {
-        IsIp named =
-            new IsIp(
+        AsIp named =
+            new AsIp(
                 new Named<>(
                     "vasya",
                     Either.right(new Present<>(ip))
@@ -74,7 +73,7 @@ public class IsIpTest
 
         assertTrue(named.result().isSuccessful());
         assertEquals("vasya", named.result().name());
-        assertEquals(ip, named.result().value().raw());
+        assertEquals(ip, named.result().value().raw().getHostAddress());
     }
 
     @DataProvider
@@ -90,8 +89,8 @@ public class IsIpTest
     @Test
     public void validationSucceededWithEmptyIp() throws Throwable
     {
-        IsIp named =
-            new IsIp(
+        AsIp named =
+            new AsIp(
                 new Named<>(
                     "vasya",
                     Either.right(new Absent<>())

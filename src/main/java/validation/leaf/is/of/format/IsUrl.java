@@ -3,15 +3,11 @@ package validation.leaf.is.of.format;
 import com.google.gson.JsonElement;
 import com.spencerwi.either.Either;
 import validation.Validatable;
-import validation.leaf.as.type.AsString;
 import validation.leaf.is.of.structure.IsJsonPrimitive;
 import validation.result.*;
-import validation.value.Present;
 import validation.value.Value;
-
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.text.ParseException;
 
 final public class IsUrl implements Validatable<JsonElement>
 {

@@ -1,57 +1,51 @@
 package validation.leaf.is.of.format;
 
-import com.google.gson.JsonElement;
 import com.spencerwi.either.Either;
 import validation.Validatable;
-import validation.leaf.as.type.AsString;
 import validation.result.*;
-import validation.value.Present;
 import validation.value.Value;
 import java.net.InetAddress;
+import java.net.UnknownHostException;
 
-final public class IsIp implements Validatable<InetAddress>
+final public class IsIp implements Validatable<String>
 {
-    private Validatable<JsonElement> original;
+    private Validatable<String> original;
 
-    public IsIp(Validatable<JsonElement> original)
+    public IsIp(Validatable<String> original)
     {
         this.original = original;
     }
 
-    public Result<InetAddress> result() throws Throwable
+    public Result<String> result() throws Throwable
     {
-        Result<String> result = new AsString(this.original).result();
+        Result<String> prevResult = this.original.result();
 
-        if (!result.isSuccessful()) {
-            return new FromNonSuccessful<>(result);
+        if (!prevResult.isSuccessful()) {
+            return prevResult;
         }
 
-        if (!result.value().isPresent()) {
-            return new AbsentField<>(result);
+        if (!prevResult.value().isPresent()) {
+            return new AbsentField<>(prevResult);
         }
 
+        if (!this.isValidIp(prevResult)) {
+            return new NonSuccessfulWithCustomError<>(prevResult, this.error().getLeft());
+        }
+
+        return prevResult;
+    }
+
+    private Boolean isValidIp(Result<String> result) throws Throwable
+    {
         try {
-            return
-                result.isNamed()
-                    ? new Named<>(result.name(), this.value(result))
-                    : new Unnamed<>(this.value(result))
-                ;
-        } catch (Throwable e) {
-            return new NonSuccessfulWithCustomError<>(result, this.error().getLeft());
+            InetAddress.getByName(result.value().raw());
+            return true;
+        }  catch (UnknownHostException e) {
+            return false;
         }
     }
 
-    private Either<Object, Value<InetAddress>> value(Result<String> result) throws Throwable
-    {
-        return
-            Either.right(
-                new Present<>(
-                    InetAddress.getByName(result.value().raw())
-                )
-            );
-    }
-
-    private Either<Object, Value<JsonElement>> error()
+    private Either<Object, Value<String>> error()
     {
         return Either.left("This value must be a valid ip.");
     }

@@ -36,11 +36,7 @@ final public class IsDate implements Validatable<String>
             return new NonSuccessfulWithCustomError<>(prevResult, this.error().getLeft());
         }
 
-        return
-            prevResult.isNamed()
-                ? new Named<>(prevResult.name(), this.value(prevResult))
-                : new Unnamed<>(this.value(prevResult))
-            ;
+        return prevResult;
     }
 
     private Boolean isValidDate(Result<String> prevResult) throws Throwable
@@ -52,16 +48,6 @@ final public class IsDate implements Validatable<String>
         } catch (ParseException e) {
             return false;
         }
-    }
-
-    private Either<Object, Value<String>> value(Result<String> prevResult) throws Throwable
-    {
-        return
-            Either.right(
-                new Present<>(
-                    prevResult.value().raw()
-                )
-            );
     }
 
     private Either<Object, Value<String>> error()

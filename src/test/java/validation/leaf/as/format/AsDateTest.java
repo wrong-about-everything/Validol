@@ -1,4 +1,4 @@
-package validation.leaf.is.of.format;
+package validation.leaf.as.format;
 
 import com.spencerwi.either.Either;
 import com.tngtech.java.junit.dataprovider.DataProviderRunner;
@@ -9,16 +9,17 @@ import validation.value.Absent;
 import validation.value.Present;
 
 import java.text.SimpleDateFormat;
+
 import static org.junit.Assert.*;
 
 @RunWith(DataProviderRunner.class)
-public class IsDateTest
+public class AsDateTest
 {
     @Test
     public void nonSuccessfulPreviousResult() throws Throwable
     {
-        IsDate named =
-            new IsDate(
+        AsDate named =
+            new AsDate(
                 () -> new Unnamed<>(Either.left("hey there")),
                 new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
             );
@@ -28,10 +29,23 @@ public class IsDateTest
     }
 
     @Test
+    public void nonSuccessfulWithNotADate() throws Throwable
+    {
+        AsDate named =
+            new AsDate(
+                () -> new Unnamed<>(Either.right(new Present<>("hello vasya"))),
+                new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+            );
+
+        assertFalse(named.result().isSuccessful());
+        assertEquals("This value must be a date of a certain format.", named.result().error());
+    }
+
+    @Test
     public void successfulWithAbsentField() throws Throwable
     {
-        IsDate named =
-            new IsDate(
+        AsDate named =
+            new AsDate(
                 () -> new Unnamed<>(Either.right(new Absent<>())),
                 new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
             );
@@ -41,28 +55,15 @@ public class IsDateTest
     }
 
     @Test
-    public void isDate() throws Throwable
+    public void successfulWithValidDate() throws Throwable
     {
-        IsDate named =
-            new IsDate(
+        AsDate named =
+            new AsDate(
                 () -> new Unnamed<>(Either.right(new Present<>("2019-05-25 08:07:54"))),
                 new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
             );
 
         assertTrue(named.result().isSuccessful());
-        assertEquals("2019-05-25 08:07:54", named.result().value().raw());
-    }
-
-    @Test
-    public void isNotADate() throws Throwable
-    {
-        IsDate named =
-            new IsDate(
-                () -> new Unnamed<>(Either.right(new Present<>("hello vasya"))),
-                new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
-            );
-
-        assertFalse(named.result().isSuccessful());
-        assertEquals("This value must be a date of a certain format.", named.result().error());
+        assertEquals(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse("2019-05-25 08:07:54"), named.result().value().raw());
     }
 }

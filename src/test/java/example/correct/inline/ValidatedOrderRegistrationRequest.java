@@ -13,6 +13,7 @@ import validation.composite.conditional.switcz.SwitchTrue;
 import validation.composite.bloc.of.nameds.NamedBlocOfNameds;
 import validation.composite.bloc.of.nameds.UnnamedBlocOfNameds;
 import validation.composite.bloc.of.unnameds.NamedBlocOfUnnameds;
+import validation.leaf.as.format.AsDate;
 import validation.leaf.as.type.AsInteger;
 import validation.leaf.as.type.AsString;
 import validation.leaf.IndexedValue;
@@ -135,7 +136,7 @@ public class ValidatedOrderRegistrationRequest implements Validatable<OrderRegis
                                                                 new NamedBlocOfNameds<>(
                                                                     "when",
                                                                     List.of(
-                                                                        new IsDate(
+                                                                        new AsDate(
                                                                             new AsString(
                                                                                 new Required(
                                                                                     new IndexedValue("date", whenJsonElement)

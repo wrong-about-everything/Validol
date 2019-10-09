@@ -61,7 +61,7 @@ public class IsNotBlankTest
 
         assertFalse(named.result().isSuccessful());
         assertEquals("vasya", named.result().name());
-        assertEquals("This value must be a string.", named.result().error());
+        assertEquals("This value must be a json primitive.", named.result().error());
     }
 
     @Test
@@ -84,7 +84,7 @@ public class IsNotBlankTest
 
     @Test
     @UseDataProvider("nonBlankData")
-    public void failedWithNonBlankData(JsonElement json) throws Throwable
+    public void successfulWithNonBlankData(JsonElement json) throws Throwable
     {
         IsNotBlank named = new IsNotBlank(new Named<>("vasya", Either.right(new Present<>(json))));
 
@@ -99,6 +99,10 @@ public class IsNotBlankTest
             new Object[][] {
                 {new JsonPrimitive("Woooops")},
                 {new JsonPrimitive('b')},
+                {new JsonPrimitive(5)},
+                {new JsonPrimitive(3.1416)},
+                {new JsonPrimitive(true)},
+                {new JsonPrimitive(false)},
             };
     }
 }
