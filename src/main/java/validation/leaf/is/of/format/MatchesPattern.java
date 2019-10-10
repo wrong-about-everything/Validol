@@ -7,14 +7,12 @@ import validation.result.*;
 
 import java.util.regex.Pattern;
 
-// TODO: Should "Is" validatables return Result<String> or Result<JsonElement>?
-// Probably every time I use "Is" validatable that's implied to cast json type to a concrete, in reality I should've used an "As" validatable
 final public class MatchesPattern implements Validatable<String>
 {
-    private Validatable<JsonElement> original;
+    private Validatable<String> original;
     private Pattern pattern;
 
-    public MatchesPattern(Validatable<JsonElement> original, Pattern pattern)
+    public MatchesPattern(Validatable<String> original, Pattern pattern)
     {
         this.original = original;
         this.pattern = pattern;

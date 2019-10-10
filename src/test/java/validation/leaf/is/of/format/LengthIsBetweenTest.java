@@ -1,8 +1,5 @@
 package validation.leaf.is.of.format;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonPrimitive;
-import com.google.gson.reflect.TypeToken;
 import com.spencerwi.either.Either;
 import com.tngtech.java.junit.dataprovider.DataProvider;
 import com.tngtech.java.junit.dataprovider.DataProviderRunner;
@@ -12,10 +9,6 @@ import org.junit.runner.RunWith;
 import validation.leaf.Named;
 import validation.value.Absent;
 import validation.value.Present;
-
-import java.util.List;
-import java.util.Map;
-
 import static org.junit.Assert.*;
 
 @RunWith(DataProviderRunner.class)
@@ -37,54 +30,6 @@ public class LengthIsBetweenTest
         assertFalse(named.result().isSuccessful());
         assertEquals("vasya", named.result().name());
         assertEquals("Wooops", named.result().error());
-    }
-
-    @Test
-    public void failedWithIncorrectStructure() throws Throwable
-    {
-        LengthIsBetween named =
-            new LengthIsBetween(
-                new Named<>(
-                    "vasya",
-                    Either.right(
-                        new Present<>(
-                            new Gson().toJsonTree(
-                                List.of(
-                                    Map.of("id", 1900),
-                                    Map.of("id", 777)
-                                ),
-                                new TypeToken<List<Map<String, Object>>>() {}.getType()
-                            )
-                        )
-                    )
-                ),
-                0,
-                1
-            );
-
-        assertFalse(named.result().isSuccessful());
-        assertEquals("vasya", named.result().name());
-        assertEquals("This value must be a string.", named.result().error());
-    }
-
-    @Test
-    public void failedWithNonString() throws Throwable
-    {
-        LengthIsBetween named =
-            new LengthIsBetween(
-                new Named<>(
-                    "vasya",
-                    Either.right(
-                        new Present<>(new JsonPrimitive(777))
-                    )
-                ),
-                0,
-                2
-            );
-
-        assertFalse(named.result().isSuccessful());
-        assertEquals("vasya", named.result().name());
-        assertEquals("This value must be a string.", named.result().error());
     }
 
     @Test
@@ -115,7 +60,7 @@ public class LengthIsBetweenTest
             new LengthIsBetween(
                 new Named<>(
                     "vasya",
-                    Either.right(new Present<>(new JsonPrimitive(value)))
+                    Either.right(new Present<>(value))
                 ),
                 min,
                 max
@@ -146,7 +91,7 @@ public class LengthIsBetweenTest
             new LengthIsBetween(
                 new Named<>(
                     "vasya",
-                    Either.right(new Present<>(new JsonPrimitive(value)))
+                    Either.right(new Present<>(value))
                 ),
                 min,
                 max
