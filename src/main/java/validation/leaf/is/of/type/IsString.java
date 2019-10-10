@@ -37,21 +37,12 @@ final public class IsString implements Validatable<JsonElement>
             return new NonSuccessfulWithCustomError<>(prevResult, this.error());
         }
 
-        return
-            prevResult.isNamed()
-                ? new Named<>(prevResult.name(), this.value(prevResult))
-                : new Unnamed<>(this.value(prevResult))
-            ;
+        return new SuccessfulWithCustomValue<>(prevResult, this.value(prevResult));
     }
 
-    private Either<Object, Value<JsonElement>> value(Result<JsonElement> prevResult) throws Throwable
+    private JsonElement value(Result<JsonElement> prevResult) throws Throwable
     {
-        return
-            Either.right(
-                new Present<>(
-                    prevResult.value().raw()
-                )
-            );
+        return prevResult.value().raw();
     }
 
     private String error()

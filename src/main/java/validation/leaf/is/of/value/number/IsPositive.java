@@ -1,14 +1,9 @@
 package validation.leaf.is.of.value.number;
 
 import com.google.gson.JsonElement;
-import com.spencerwi.either.Either;
 import validation.Validatable;
 import validation.leaf.as.type.AsNumber;
-import validation.result.Named;
-import validation.result.Result;
-import validation.result.Unnamed;
-import validation.value.Present;
-import validation.value.Value;
+import validation.result.*;
 
 // doc: all validatables are successful if the corresponding field is absent.
 // If you want it to be required, specify it explicitly.
@@ -30,32 +25,19 @@ final public class IsPositive implements Validatable<Number>
         }
 
         if (asNumber.value().raw().doubleValue() <= 0) {
-            return
-                asNumber.isNamed()
-                    ? new Named<>(asNumber.name(), this.error())
-                    : new Unnamed<>(this.error())
-                ;
+            return new NonSuccessfulWithCustomError<>(asNumber, this.error());
         }
 
-        return
-            asNumber.isNamed()
-                ? new Named<>(asNumber.name(), this.value(asNumber))
-                : new Unnamed<>(this.value(asNumber))
-            ;
+        return new SuccessfulWithCustomValue<>(asNumber, this.value(asNumber));
     }
 
-    private Either<Object, Value<Number>> value(Result<Number> prevResult) throws Throwable
+    private Number value(Result<Number> prevResult) throws Throwable
     {
-        return
-            Either.right(
-                new Present<>(
-                    prevResult.value().raw()
-                )
-            );
+        return prevResult.value().raw();
     }
 
-    private Either<Object, Value<Number>> error()
+    private String error()
     {
-        return Either.left("This value must be positive.");
+        return "This value must be positive.";
     }
 }

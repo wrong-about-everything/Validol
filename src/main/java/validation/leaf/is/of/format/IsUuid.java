@@ -1,61 +1,49 @@
 package validation.leaf.is.of.format;
 
-import com.google.gson.JsonElement;
 import com.spencerwi.either.Either;
 import validation.Validatable;
-import validation.leaf.as.type.AsString;
 import validation.result.*;
-import validation.value.Present;
 import validation.value.Value;
 import java.util.UUID;
 
-final public class IsUuid implements Validatable<UUID>
+final public class IsUuid implements Validatable<String>
 {
-    private Validatable<JsonElement> original;
+    private Validatable<String> original;
 
-    public IsUuid(Validatable<JsonElement> original)
+    public IsUuid(Validatable<String> original)
     {
         this.original = original;
     }
 
-    public Result<UUID> result() throws Throwable
+    public Result<String> result() throws Throwable
     {
-        Result<String> result = new AsString(this.original).result();
+        Result<String> prevResult = this.original.result();
 
-        if (!result.isSuccessful()) {
-            return new FromNonSuccessful<>(result);
+        if (!prevResult.isSuccessful()) {
+            return prevResult;
         }
 
-        if (!result.value().isPresent()) {
-            return new AbsentField<>(result);
+        if (!prevResult.value().isPresent()) {
+            return new AbsentField<>(prevResult);
         }
 
+        if (!this.isValidUuid(prevResult)) {
+            return new NonSuccessfulWithCustomError<>(prevResult, this.error().getLeft());
+        }
+
+        return prevResult;
+    }
+
+    private Boolean isValidUuid(Result<String> result) throws Throwable
+    {
         try {
-            if (!UUID.fromString(result.value().raw()).toString().equals(result.value().raw())) {
-                return new NonSuccessfulWithCustomError<>(result, this.error().getLeft());
-            }
+            return UUID.fromString(result.value().raw()).toString().equals(result.value().raw());
         } catch (Throwable e) {
-            return new NonSuccessfulWithCustomError<>(result, this.error().getLeft());
+            return false;
         }
-
-        return
-            result.isNamed()
-                ? new Named<>(result.name(), this.value(result))
-                : new Unnamed<>(this.value(result))
-            ;
     }
 
-    private Either<Object, Value<UUID>> value(Result<String> result) throws Throwable
-    {
-        return
-            Either.right(
-                new Present<>(
-                    UUID.fromString(result.value().raw())
-                )
-            );
-    }
-
-    private Either<Object, Value<JsonElement>> error()
+    private Either<Object, Value<String>> error()
     {
         return Either.left("This value must be a valid uuid.");
     }

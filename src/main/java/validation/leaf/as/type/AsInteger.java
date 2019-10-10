@@ -29,35 +29,11 @@ final public class AsInteger implements Validatable<Integer>
             return new NonSuccessfulWithCustomError<>(result, "This value must be an integer.");
         }
 
-        return
-            result.isNamed()
-                ?
-                    new Named<>(
-                        result.name(),
-                        this.value(result)
-                    )
-                :
-                    new Unnamed<>(
-                        Either.right(
-                            new Present<>(
-                                Integer.parseInt(
-                                    result.value().raw().toString()
-                                )
-                            )
-                        )
-                    )
-            ;
+        return new SuccessfulWithCustomValue<>(result, this.value(result));
     }
 
-    private Either<Object, Value<Integer>> value(Result<JsonElement> result) throws Throwable
+    private Integer value(Result<JsonElement> result) throws Throwable
     {
-        return
-            Either.right(
-                new Present<>(
-                    Integer.parseInt(
-                        result.value().raw().toString()
-                    )
-                )
-            );
+        return Integer.parseInt(result.value().raw().toString());
     }
 }

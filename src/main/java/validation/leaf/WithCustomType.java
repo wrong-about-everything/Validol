@@ -2,10 +2,8 @@ package validation.leaf;
 
 import com.spencerwi.either.Either;
 import validation.Validatable;
-import validation.result.AbsentField;
-import validation.result.FromNonSuccessful;
+import validation.result.*;
 import validation.result.Named;
-import validation.result.Result;
 import validation.result.Unnamed;
 import validation.value.Present;
 import validation.value.Value;
@@ -37,26 +35,18 @@ final public class WithCustomType<T, R> implements Validatable<R>
             return new AbsentField<>(result);
         }
 
-        return
-            result.isNamed()
-                ? new Named<R>(result.name(), this.object(result.value().raw()))
-                : new Unnamed<R>(this.object(result.value().raw()))
-            ;
+        return new SuccessfulWithCustomValue<>(result, this.object(result.value().raw()));
     }
 
-    private Either<Object, Value<R>> object(T argument) throws Exception
+    private R object(T argument) throws Exception
     {
         for (Constructor<?> constructor : this.clazz.getDeclaredConstructors()) {
             try {
                 return
-                    Either.right(
-                        new Present<>(
-                            this.clazz.getDeclaredConstructor(
-                                constructor.getParameterTypes()
-                            )
-                                .newInstance(argument)
-                        )
-                    );
+                    this.clazz.getDeclaredConstructor(
+                        constructor.getParameterTypes()
+                    )
+                        .newInstance(argument);
             } catch (IllegalArgumentException e) {}
         }
 

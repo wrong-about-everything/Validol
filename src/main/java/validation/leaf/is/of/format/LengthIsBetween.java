@@ -1,19 +1,15 @@
 package validation.leaf.is.of.format;
 
-import com.google.gson.JsonElement;
-import com.spencerwi.either.Either;
 import validation.Validatable;
-import validation.leaf.as.type.AsString;
 import validation.result.*;
-import validation.value.Value;
 
 final public class LengthIsBetween implements Validatable<String>
 {
-    private Validatable<JsonElement> original;
+    private Validatable<String> original;
     private Integer min;
     private Integer max;
 
-    public LengthIsBetween(Validatable<JsonElement> original, Integer min, Integer max)
+    public LengthIsBetween(Validatable<String> original, Integer min, Integer max)
     {
         this.original = original;
         this.min = min;
@@ -22,7 +18,7 @@ final public class LengthIsBetween implements Validatable<String>
 
     public Result<String> result() throws Throwable
     {
-        Result<String> result = new AsString(this.original).result();
+        Result<String> result = this.original.result();
 
         if (!result.isSuccessful()) {
             return new FromNonSuccessful<>(result);
@@ -33,21 +29,19 @@ final public class LengthIsBetween implements Validatable<String>
         }
 
         if (result.value().raw().length() < min || result.value().raw().length() > max) {
-            return new NonSuccessfulWithCustomError<>(result, this.error().getLeft());
+            return new NonSuccessfulWithCustomError<>(result, this.error());
         }
 
         return result;
     }
 
-    private Either<Object, Value<JsonElement>> error()
+    private String error()
     {
         return
-            Either.left(
-                String.format(
-                    "The length of this value must be between %d and %d, inclusively.",
-                    this.min,
-                    this.max
-                )
+            String.format(
+                "The length of this value must be between %d and %d, inclusively.",
+                this.min,
+                this.max
             );
     }
 }

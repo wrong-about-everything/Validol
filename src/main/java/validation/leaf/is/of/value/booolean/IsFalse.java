@@ -4,10 +4,7 @@ import com.google.gson.JsonElement;
 import com.spencerwi.either.Either;
 import validation.Validatable;
 import validation.leaf.as.type.AsBoolean;
-import validation.result.Named;
-import validation.result.NonSuccessfulWithCustomError;
-import validation.result.Result;
-import validation.result.Unnamed;
+import validation.result.*;
 import validation.value.Present;
 import validation.value.Value;
 
@@ -34,21 +31,12 @@ final public class IsFalse implements Validatable<Boolean>
             return new NonSuccessfulWithCustomError<>(prevResult, this.error());
         }
 
-        return
-            prevResult.isNamed()
-                ? new Named<>(prevResult.name(), this.value(asBoolean))
-                : new Unnamed<>(this.value(asBoolean))
-            ;
+        return new SuccessfulWithCustomValue<>(prevResult, this.value(asBoolean));
     }
 
-    private Either<Object, Value<Boolean>> value(Result<Boolean> prevResult) throws Throwable
+    private Boolean value(Result<Boolean> prevResult) throws Throwable
     {
-        return
-            Either.right(
-                new Present<>(
-                    prevResult.value().raw()
-                )
-            );
+        return prevResult.value().raw();
     }
 
     private Either<Object, Value<Boolean>> error()

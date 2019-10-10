@@ -1,9 +1,7 @@
 package validation.leaf.is.of.format;
 
-import com.google.gson.String;
 import com.spencerwi.either.Either;
 import validation.Validatable;
-import validation.leaf.is.of.structure.IsJsonPrimitive;
 import validation.result.*;
 import validation.value.Value;
 import java.net.MalformedURLException;
@@ -20,27 +18,27 @@ final public class IsUrl implements Validatable<String>
 
     public Result<String> result() throws Throwable
     {
-        Result<String> result = new IsJsonPrimitive(this.original).result();
+        Result<String> prevResult = this.original.result();
 
-        if (!result.isSuccessful()) {
-            return result;
+        if (!prevResult.isSuccessful()) {
+            return prevResult;
         }
 
-        if (!result.value().isPresent()) {
-            return new AbsentField<>(result);
+        if (!prevResult.value().isPresent()) {
+            return new AbsentField<>(prevResult);
         }
 
-        if (!this.isValidUrl(result)) {
-            return new NonSuccessfulWithCustomError<>(result, this.error().getLeft());
+        if (!this.isValidUrl(prevResult)) {
+            return new NonSuccessfulWithCustomError<>(prevResult, this.error().getLeft());
         }
 
-        return result;
+        return prevResult;
     }
 
     private Boolean isValidUrl(Result<String> result) throws Throwable
     {
         try {
-            new URL(result.value().raw().getAsString());
+            new URL(result.value().raw());
             return true;
         } catch (MalformedURLException e) {
             return false;

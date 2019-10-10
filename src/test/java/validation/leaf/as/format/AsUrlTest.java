@@ -1,8 +1,5 @@
 package validation.leaf.as.format;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonPrimitive;
-import com.google.gson.reflect.TypeToken;
 import com.spencerwi.either.Either;
 import com.tngtech.java.junit.dataprovider.DataProvider;
 import com.tngtech.java.junit.dataprovider.DataProviderRunner;
@@ -10,12 +7,10 @@ import com.tngtech.java.junit.dataprovider.UseDataProvider;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import validation.leaf.Named;
-import validation.leaf.is.of.format.AsUrl;
 import validation.value.Absent;
 import validation.value.Present;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.net.URL;
 
 import static org.junit.Assert.*;
 
@@ -46,7 +41,7 @@ public class AsUrlTest
             new AsUrl(
                 new Named<>(
                     "vasya",
-                    Either.right(new Present<>(new JsonPrimitive(url)))
+                    Either.right(new Present<>(url))
                 )
             );
 
@@ -82,13 +77,13 @@ public class AsUrlTest
             new AsUrl(
                 new Named<>(
                     "vasya",
-                    Either.right(new Present<>(new JsonPrimitive(url)))
+                    Either.right(new Present<>(url))
                 )
             );
 
         assertTrue(named.result().isSuccessful());
         assertEquals("vasya", named.result().name());
-        assertEquals(url, named.result().value().raw().getAsString());
+        assertEquals(new URL(url), named.result().value().raw());
     }
 
     @DataProvider
@@ -103,7 +98,7 @@ public class AsUrlTest
     }
 
     @Test
-    public void validationSucceededWithEmptyUrl() throws Throwable
+    public void validationSucceededWithEmptyField() throws Throwable
     {
         AsUrl named =
             new AsUrl(
@@ -116,34 +111,5 @@ public class AsUrlTest
         assertTrue(named.result().isSuccessful());
         assertEquals("vasya", named.result().name());
         assertFalse(named.result().value().isPresent());
-    }
-
-    @Test
-    public void validationFailedWithInvalidStructure() throws Throwable
-    {
-        AsUrl named =
-            new AsUrl(
-                new Named<>(
-                    "vasya",
-                    Either.right(
-                        new Present<>(
-                            new Gson().toJsonTree(
-                                Map.of(
-                                    "guest", Map.of(
-                                        "email", "samokhinvadim@gmail.com",
-                                        "name", "Vadim Samokhin"
-                                    ),
-                                    "delivery_by","vasya"
-                                ),
-                                new TypeToken<HashMap<String, Object>>() {}.getType()
-                            )
-                        )
-                    )
-                )
-            );
-
-        assertFalse(named.result().isSuccessful());
-        assertEquals("vasya", named.result().name());
-        assertEquals("This value must be a json primitive.", named.result().error());
     }
 }

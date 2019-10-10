@@ -3,7 +3,6 @@ package validation.leaf.is.of.format;
 import validation.result.*;
 import validation.Validatable;
 import com.spencerwi.either.Either;
-import validation.value.Present;
 import validation.value.Value;
 
 import java.text.ParseException;

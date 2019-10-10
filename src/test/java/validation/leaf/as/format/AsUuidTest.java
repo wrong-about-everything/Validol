@@ -1,4 +1,4 @@
-package validation.leaf.is.of.format;
+package validation.leaf.as.format;
 
 import com.spencerwi.either.Either;
 import com.tngtech.java.junit.dataprovider.DataProvider;
@@ -13,13 +13,13 @@ import validation.value.Present;
 import static org.junit.Assert.*;
 
 @RunWith(DataProviderRunner.class)
-public class IsUuidTest
+public class AsUuidTest
 {
     @Test
     public void validationFailedWhenDecoratedElementIsInvalid() throws Throwable
     {
-        IsUuid named =
-            new IsUuid(
+        AsUuid named =
+            new AsUuid(
                 new Named<>(
                     "vasya",
                     Either.left("Wooops")
@@ -35,8 +35,8 @@ public class IsUuidTest
     @UseDataProvider("invalidUuids")
     public void validationFailedWithInvalidUuid(String uuid) throws Throwable
     {
-        IsUuid named =
-            new IsUuid(
+        AsUuid named =
+            new AsUuid(
                 new Named<>(
                     "vasya",
                     Either.right(new Present<>(uuid))
@@ -67,19 +67,19 @@ public class IsUuidTest
 
     @Test
     @UseDataProvider("validUuids")
-    public void validationSucceededWithValidUuid(String Uuid) throws Throwable
+    public void validationSucceededWithValidUuid(String uuid) throws Throwable
     {
-        IsUuid named =
-            new IsUuid(
+        AsUuid named =
+            new AsUuid(
                 new Named<>(
                     "vasya",
-                    Either.right(new Present<>(Uuid))
+                    Either.right(new Present<>(uuid))
                 )
             );
 
         assertTrue(named.result().isSuccessful());
         assertEquals("vasya", named.result().name());
-        assertEquals(Uuid, named.result().value().raw().toString());
+        assertEquals(uuid, named.result().value().raw().toString());
     }
 
     @DataProvider
@@ -95,8 +95,8 @@ public class IsUuidTest
     @Test
     public void validationSucceededWithEmptyUuid() throws Throwable
     {
-        IsUuid named =
-            new IsUuid(
+        AsUuid named =
+            new AsUuid(
                 new Named<>(
                     "vasya",
                     Either.right(new Absent<>())

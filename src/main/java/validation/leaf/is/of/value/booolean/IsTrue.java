@@ -28,28 +28,15 @@ final public class IsTrue implements Validatable<Boolean>
         }
 
         if (!asBoolean.value().raw().equals(true)) {
-            return
-                asBoolean.isNamed()
-                    ? new Named<>(asBoolean.name(), this.error())
-                    : new Unnamed<>(this.error())
-                ;
+            return new NonSuccessfulWithCustomError<>(asBoolean, this.error());
         }
 
-        return
-            asBoolean.isNamed()
-                ? new Named<>(asBoolean.name(), this.value(asBoolean))
-                : new Unnamed<>(this.value(asBoolean))
-            ;
+        return new SuccessfulWithCustomValue<>(asBoolean, this.value(asBoolean));
     }
 
-    private Either<Object, Value<Boolean>> value(Result<Boolean> prevResult) throws Throwable
+    private Boolean value(Result<Boolean> prevResult) throws Throwable
     {
-        return
-            Either.right(
-                new Present<>(
-                    prevResult.value().raw()
-                )
-            );
+        return prevResult.value().raw();
     }
 
     private Either<Object, Value<Boolean>> error()

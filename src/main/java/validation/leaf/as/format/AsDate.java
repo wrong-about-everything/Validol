@@ -34,18 +34,12 @@ final public class AsDate implements Validatable<Date>
             return new AbsentField<>(isDateResult);
         }
 
-        return
-            isDateResult.isNamed()
-                ? new Named<>(isDateResult.name(), this.value(isDateResult))
-                : new Unnamed<>(this.value(isDateResult))
-            ;
+        return new SuccessfulWithCustomValue<>(isDateResult, this.value(isDateResult));
     }
 
-    private Either<Object, Value<Date>> value(Result<String> prevResult) throws Throwable
+    private Date value(Result<String> prevResult) throws Throwable
     {
         this.format.setLenient(false);
-        Date date = this.format.parse(prevResult.value().raw().trim());
-
-        return Either.right(new Present<>(date));
+        return this.format.parse(prevResult.value().raw().trim());
     }
 }

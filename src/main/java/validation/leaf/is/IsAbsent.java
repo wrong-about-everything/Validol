@@ -2,12 +2,7 @@ package validation.leaf.is;
 
 import com.spencerwi.either.Either;
 import validation.Validatable;
-import validation.result.FromNonSuccessful;
-import validation.result.Named;
-import validation.result.Result;
-import validation.result.Unnamed;
-import validation.value.Absent;
-import validation.value.Present;
+import validation.result.*;
 import validation.value.Value;
 
 final public class IsAbsent<T> implements Validatable<T>
