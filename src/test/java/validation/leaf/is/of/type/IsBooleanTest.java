@@ -55,7 +55,7 @@ public class IsBooleanTest
 
         assertFalse(named.result().isSuccessful());
         assertEquals("vasya", named.result().name());
-        assertEquals("This value must be a boolean.", named.result().error());
+        assertEquals("This value must be a json primitive.", named.result().error());
     }
 
     @Test

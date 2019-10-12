@@ -60,7 +60,7 @@ public class IsNumberTest
 
         assertFalse(named.result().isSuccessful());
         assertEquals("vasya", named.result().name());
-        assertEquals("This value must be a number.", named.result().error());
+        assertEquals("This value must be a json primitive.", named.result().error());
     }
 
     @Test

@@ -18,7 +18,7 @@ final public class IsInteger implements Validatable<JsonElement>
 
     public Result<JsonElement> result() throws Throwable
     {
-        Result<JsonElement> prevResult = this.original.result();
+        Result<JsonElement> prevResult = new IsJsonPrimitive(this.original).result();
 
         if (!prevResult.isSuccessful()) {
             return new FromNonSuccessful<>(prevResult);
@@ -26,10 +26,6 @@ final public class IsInteger implements Validatable<JsonElement>
 
         if (!prevResult.value().isPresent()) {
             return new AbsentField<>(prevResult);
-        }
-
-        if (!new IsJsonPrimitive(this.original).result().isSuccessful()) {
-            return new NonSuccessfulWithCustomError<>(prevResult, this.error().getLeft());
         }
 
         if (!this.isInteger(prevResult)) {

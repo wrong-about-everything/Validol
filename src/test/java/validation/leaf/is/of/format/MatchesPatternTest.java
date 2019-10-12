@@ -1,19 +1,12 @@
 package validation.leaf.is.of.format;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonPrimitive;
-import com.google.gson.reflect.TypeToken;
 import com.spencerwi.either.Either;
-import com.tngtech.java.junit.dataprovider.DataProvider;
 import com.tngtech.java.junit.dataprovider.DataProviderRunner;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import validation.leaf.Named;
 import validation.value.Absent;
 import validation.value.Present;
-
-import java.util.HashMap;
-import java.util.Map;
 import java.util.regex.Pattern;
 
 import static org.junit.Assert.*;
@@ -37,42 +30,12 @@ public class MatchesPatternTest {
     }
 
     @Test
-    public void validationFailedWithInvalidStructure() throws Throwable {
-        MatchesPattern named =
-            new MatchesPattern(
-                new Named<>(
-                    "vasya",
-                    Either.right(
-                        new Present<>(
-                            new Gson().toJsonTree(
-                                Map.of(
-                                    "guest", Map.of(
-                                        "email", "samokhinvadim@gmail.com",
-                                        "name", "Vadim Samokhin"
-                                    ),
-                                    "delivery_by", "vasya"
-                                ),
-                                new TypeToken<HashMap<String, Object>>() {
-                                }.getType()
-                            )
-                        )
-                    )
-                ),
-                Pattern.compile(".*")
-            );
-
-        assertFalse(named.result().isSuccessful());
-        assertEquals("vasya", named.result().name());
-        assertEquals("This value must be a string.", named.result().error());
-    }
-
-    @Test
     public void validationFailedWithNonMatchedPattern() throws Throwable {
         MatchesPattern named =
             new MatchesPattern(
                 new Named<>(
                     "vasya",
-                    Either.right(new Present<>(new JsonPrimitive("hello")))
+                    Either.right(new Present<>("hello"))
                 ),
                 Pattern.compile("\\d{2}")
             );
@@ -104,7 +67,7 @@ public class MatchesPatternTest {
             new MatchesPattern(
                 new Named<>(
                     "vasya",
-                    Either.right(new Present<>(new JsonPrimitive("abc")))
+                    Either.right(new Present<>("abc"))
                 ),
                 Pattern.compile(".*")
             );

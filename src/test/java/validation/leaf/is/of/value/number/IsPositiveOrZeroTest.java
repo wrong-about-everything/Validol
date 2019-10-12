@@ -34,50 +34,6 @@ public class IsPositiveOrZeroTest
     }
 
     @Test
-    public void failedWithIncorrectStructure() throws Throwable
-    {
-        IsPositiveOrZero named =
-            new IsPositiveOrZero(
-                new Named<>(
-                    "vasya",
-                    Either.right(
-                        new Present<>(
-                            new Gson().toJsonTree(
-                                List.of(
-                                    Map.of("id", 1900),
-                                    Map.of("id", 777)
-                                ),
-                                new TypeToken<List<Map<String, Object>>>() {}.getType()
-                            )
-                        )
-                    )
-                )
-            );
-
-        assertFalse(named.result().isSuccessful());
-        assertEquals("vasya", named.result().name());
-        assertEquals("This value must be a number.", named.result().error());
-    }
-
-    @Test
-    public void failedWithNonNumber() throws Throwable
-    {
-        IsPositiveOrZero named =
-            new IsPositiveOrZero(
-                new Named<>(
-                    "vasya",
-                    Either.right(
-                        new Present<>(new JsonPrimitive("vasya"))
-                    )
-                )
-            );
-
-        assertFalse(named.result().isSuccessful());
-        assertEquals("vasya", named.result().name());
-        assertEquals("This value must be a number.", named.result().error());
-    }
-
-    @Test
     public void successfulWithAbsentValue() throws Throwable
     {
         IsPositiveOrZero named = new IsPositiveOrZero(new Named<>("vasya", Either.right(new Absent<>())));
@@ -89,7 +45,7 @@ public class IsPositiveOrZeroTest
     @Test
     public void successfulWithPresentPositiveValue() throws Throwable
     {
-        IsPositiveOrZero named = new IsPositiveOrZero(new Named<>("vasya", Either.right(new Present<>(new JsonPrimitive(25)))));
+        IsPositiveOrZero named = new IsPositiveOrZero(new Named<>("vasya", Either.right(new Present<>(25))));
 
         assertTrue(named.result().isSuccessful());
         assertEquals("vasya", named.result().name());
@@ -99,7 +55,7 @@ public class IsPositiveOrZeroTest
     @Test
     public void successfulWithPresentZeroValue() throws Throwable
     {
-        IsPositiveOrZero named = new IsPositiveOrZero(new Named<>("vasya", Either.right(new Present<>(new JsonPrimitive(0)))));
+        IsPositiveOrZero named = new IsPositiveOrZero(new Named<>("vasya", Either.right(new Present<>(0))));
 
         assertTrue(named.result().isSuccessful());
         assertEquals("vasya", named.result().name());
@@ -109,7 +65,7 @@ public class IsPositiveOrZeroTest
     @Test
     public void failedWithPresentNegativeValue() throws Throwable
     {
-        IsPositiveOrZero named = new IsPositiveOrZero(new Named<>("vasya", Either.right(new Present<>(new JsonPrimitive(-0.4)))));
+        IsPositiveOrZero named = new IsPositiveOrZero(new Named<>("vasya", Either.right(new Present<>(-0.4))));
 
         assertFalse(named.result().isSuccessful());
         assertEquals("vasya", named.result().name());

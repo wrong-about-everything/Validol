@@ -1,6 +1,5 @@
 package validation.leaf.is.of.value.number;
 
-import com.google.gson.JsonElement;
 import validation.Validatable;
 import validation.leaf.as.type.AsNumber;
 import validation.result.*;
@@ -9,16 +8,16 @@ import validation.result.*;
 // If you want it to be required, specify it explicitly.
 final public class IsPositive implements Validatable<Number>
 {
-    private Validatable<JsonElement> original;
+    private Validatable<Number> original;
 
-    public IsPositive(Validatable<JsonElement> original)
+    public IsPositive(Validatable<Number> original)
     {
         this.original = original;
     }
 
     public Result<Number> result() throws Throwable
     {
-        Result<Number> asNumber = new AsNumber(this.original).result();
+        Result<Number> asNumber = this.original.result();
 
         if (!asNumber.isSuccessful() || !asNumber.value().isPresent()) {
             return asNumber;

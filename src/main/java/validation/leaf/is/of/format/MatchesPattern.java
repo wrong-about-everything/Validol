@@ -1,8 +1,6 @@
 package validation.leaf.is.of.format;
 
-import com.google.gson.JsonElement;
 import validation.Validatable;
-import validation.leaf.as.type.AsString;
 import validation.result.*;
 
 import java.util.regex.Pattern;
@@ -20,7 +18,7 @@ final public class MatchesPattern implements Validatable<String>
 
     public Result<String> result() throws Throwable
     {
-        Result<String> result = new AsString(this.original).result();
+        Result<String> result = this.original.result();
 
         if (!result.isSuccessful()) {
             return new FromNonSuccessful<>(result);

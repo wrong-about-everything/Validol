@@ -64,7 +64,7 @@ final public class UnnamedBlocOfUnnameds<T, R> implements Validatable<R>
                 Either.right(
                     new Present<>(
                         this.clazz.getDeclaredConstructor(
-                            // todoc: There should be a single constructor accepting a single parameter of List type
+                            // doc: There should be a single constructor accepting a single parameter of List type
                             this.clazz.getDeclaredConstructors()[0].getParameterTypes()
                         )
                             .newInstance(
