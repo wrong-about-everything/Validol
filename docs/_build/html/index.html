@@ -37,16 +37,24 @@
 <div class="toctree-wrapper compound">
 </div>
 </div>
-<div class="section" id="titles-are-targets-too">
-<h1>Titles are targets, too<a class="headerlink" href="#titles-are-targets-too" title="Permalink to this headline">¶</a></h1>
-<p>Implict references, like <a class="reference internal" href="#titles-are-targets-too">Titles are targets, too</a>.</p>
-<p>Doctest blocks are interactive
-Python sessions. They begin with
-“<code class="docutils literal notranslate"><span class="pre">&gt;&gt;&gt;</span></code>” and end with a blank line.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="s2">&quot;This is a doctest block.&quot;</span>
-<span class="go">This is a doctest block.</span>
-</pre></div>
+<div class="section" id="the-why">
+<h1>The Why<a class="headerlink" href="#the-why" title="Permalink to this headline">¶</a></h1>
+<p>There are quite a few libraries for data validation. Why another one?</p>
+<div class="section" id="it-s-declarative">
+<h2>It’s declarative<a class="headerlink" href="#it-s-declarative" title="Permalink to this headline">¶</a></h2>
+<p>That is, readable. Class names reflect what is validated.
+Their implementation doesn’t clutter the higher-level validation logic description.
+To get a feel of what it looks like, here is a quick example:</p>
+<p><cite>an example goes here</cite></p>
+<p>It’s especially convenient in case of complex json data structures. Your validation structure reflects the request structure.</p>
 </div>
+<div class="section" id="it-s-re-usable">
+<h2>It’s re-usable<a class="headerlink" href="#it-s-re-usable" title="Permalink to this headline">¶</a></h2>
+<p>Each piece of validation logic is an object which can decorate existing validatable elements.</p>
+</div>
+</div>
+<div class="section" id="the-how">
+<h1>The How<a class="headerlink" href="#the-how" title="Permalink to this headline">¶</a></h1>
 </div>
 <div class="section" id="indices-and-tables">
 <h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>

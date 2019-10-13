@@ -10,18 +10,27 @@ Welcome to Validol's documentation!
    :maxdepth: 2
    :caption: Contents:
 
-Titles are targets, too
-=======================
+The Why
+=========
 
-Implict references, like `Titles are targets, too`_.
+There are quite a few libraries for data validation. Why another one?
 
+It's declarative
+---------------------
+That is, readable. Class names reflect what is validated.
+Their implementation doesn't clutter the higher-level validation logic description.
+To get a feel of what it looks like, here is a quick example:
 
-Doctest blocks are interactive
-Python sessions. They begin with
-"``>>>``" and end with a blank line.
+`an example goes here`
 
->>> print "This is a doctest block."
-This is a doctest block.
+It's especially convenient in case of complex json data structures. Your validation structure reflects the request structure.
+
+It's re-usable
+---------------------
+Each piece of validation logic is an object which can decorate existing validatable elements.
+
+The How
+=========
 
 
 Indices and tables
