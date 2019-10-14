@@ -13,19 +13,17 @@ import validation.composite.conditional.switcz.SwitchTrue;
 import validation.composite.bloc.of.nameds.NamedBlocOfNameds;
 import validation.composite.bloc.of.nameds.UnnamedBlocOfNameds;
 import validation.composite.bloc.of.unnameds.NamedBlocOfUnnameds;
+import validation.leaf.Unnamed;
 import validation.leaf.as.format.AsDate;
 import validation.leaf.as.type.AsInteger;
 import validation.leaf.as.type.AsString;
 import validation.leaf.IndexedValue;
-import validation.leaf.is.of.format.IsDate;
 import validation.leaf.is.of.structure.IsJsonObject;
 import validation.result.Result;
 import validation.Validatable;
 import validation.value.Present;
 import com.spencerwi.either.Either;
-import validation.leaf.Named;
 import validation.leaf.Required;
-
 import java.text.SimpleDateFormat;
 import java.util.List;
 
@@ -45,11 +43,10 @@ public class ValidatedOrderRegistrationRequest implements Validatable<OrderRegis
         return
             new FastFail<>(
                 new WellFormedJson(
-                    new Named<>("parsed request body", Either.right(new Present<>(this.jsonRequestString)))
+                    new Unnamed<>(Either.right(new Present<>(this.jsonRequestString)))
                 ),
                 requestJsonObject ->
-                    new NamedBlocOfNameds<>(
-                        "parsed request body",
+                    new UnnamedBlocOfNameds<>(
                         List.of(
                             new FastFail<>(
                                 new IsJsonObject(

@@ -52,6 +52,91 @@ To get a feel of what it looks like, here is a quick example:</p>
 <h2>It’s re-usable<a class="headerlink" href="#it-s-re-usable" title="Permalink to this headline">¶</a></h2>
 <p>Each piece of validation logic is an object which can decorate existing validatable elements.</p>
 </div>
+<div class="section" id="context-specific-validation">
+<h2>Context-specific validation<a class="headerlink" href="#context-specific-validation" title="Permalink to this headline">¶</a></h2>
+<p>That is, independent of data-model.
+Most of current frameworks don’t see the distinction between data model scope and validating scope. At least, default mode for most of us
+is to bind validation to our data model.
+What’s wrong with this approach?
+Consider an example where a guest registers a new food delivery order. The company behind this service, which actually cooks the order, is called SuperFood.
+That’s how the whole user-story looks like: Vasya as a guest visits SuperFood’s site and registered an order there.
+SuperFood’s backend service must ensure several things before putting in a database. One of them is to ensure that either email or phone number is passed.</p>
+<p>Now suppose another user registers an order in SuperFood, but through some aggregator service. This order doesn’t differ much from the one registered on SuperFood site,
+though the constraints to be enforced are different. For example, passing a phone number is essential for that aggregator, while email is optional.</p>
+<p>Now, a third user registers an order in SuperFood, and she does it through some else aggregator service.
+And for that one, passing a phone number is totally useless, but email is a must.</p>
+<p>So we have the following situation. I have a single data-model for an order, but there are at least three contexts with different set of constraints.
+I can go traditional way: introduce an entity corresponding to a database row, and impose that constraints through annotations or whatever way I’m get used to.
+Each of them has to check somehow what concrete scenario it operates within. The most straightforward way to do that is the following:</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<p>class EitherPhoneOrEmailArePresent
+{</p>
+<blockquote>
+<div><p>public EitherPhoneOrEmailArePresent() {}</p>
+<p>public void check()
+{</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>if (/* it’s NOT order registration through site*/ ) {</dt>
+<dd>// do nothing</dd>
+</dl>
+<p>}</p>
+<p>// check that either phone or email are present</p>
+</div></blockquote>
+<p>}</p>
+</div></blockquote>
+<p>}</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<p>class PhoneIsMandatoryForAggregatorOne
+{</p>
+<blockquote>
+<div><p>public PhoneIsMandatoryForAggregatorOne() {}</p>
+<p>public void check()
+{</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>if (/* it’s NOT order registration through aggregator 1*/ ) {</dt>
+<dd>// do nothing</dd>
+</dl>
+<p>}</p>
+<p>// check that phone is present</p>
+</div></blockquote>
+<p>}</p>
+</div></blockquote>
+<p>}</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<p>class EmailIsMandatoryForAggregatorTwo
+{</p>
+<blockquote>
+<div><p>public PhoneIsMandatoryForAggregatorOne() {}</p>
+<p>public void check()
+{</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>if (/* it’s NOT order registration through aggregator 2*/ ) {</dt>
+<dd>// do nothing</dd>
+</dl>
+<p>}</p>
+<p>// check that email is present</p>
+</div></blockquote>
+<p>}</p>
+</div></blockquote>
+<p>}</p>
+</div>
+<div class="section" id="no-magic-and-hidden-dependencies">
+<h2>No magic and hidden dependencies<a class="headerlink" href="#no-magic-and-hidden-dependencies" title="Permalink to this headline">¶</a></h2>
+<p>You’re encouraged to inject all dependencies through constructor. The resulted code is highly testable, readable and predictable.</p>
+</div>
+<div class="section" id="infinitely-extendable">
+<h2>Infinitely-extendable<a class="headerlink" href="#infinitely-extendable" title="Permalink to this headline">¶</a></h2>
+<p>You just add another validating object in the validating object composition.</p>
+</div>
 </div>
 <div class="section" id="the-how">
 <h1>The How<a class="headerlink" href="#the-how" title="Permalink to this headline">¶</a></h1>
