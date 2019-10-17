@@ -1,0 +1,190 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Context-specific validation &#8212; Validol  documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="It’s declarative" href="declarative_validation.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="toctree-wrapper compound">
+</div>
+<div class="section" id="context-specific-validation">
+<h1>Context-specific validation<a class="headerlink" href="#context-specific-validation" title="Permalink to this headline">¶</a></h1>
+<p>That is, independent of data-model.
+Most of current frameworks don’t see the distinction between data model scope and validating scope. At least, default mode for most of us
+is to bind validation to our data model.
+What’s wrong with this approach?
+Consider an example where a guest registers a new food delivery order. The company behind this service, which actually cooks the order, is called SuperFood.
+That’s how the whole user-story looks like: Vasya as a guest visits SuperFood’s site and registered an order there.
+SuperFood’s backend service must ensure several things before putting in a database. One of them is to ensure that either email or phone number is passed.</p>
+<p>Now suppose another user registers an order in SuperFood, but through some aggregator service. This order doesn’t differ much from the one registered on SuperFood site,
+though the constraints to be enforced are different. For example, passing a phone number is essential for that aggregator, while email is optional.</p>
+<p>Now, a third user registers an order in SuperFood, and she does it through some else aggregator service.
+And for that one, passing a phone number is totally useless, but email is a must.</p>
+<p>So we have the following situation. I have a single data-model for an order, but there are at least three contexts with different set of constraints.
+I can go traditional way: introduce an entity corresponding to a database row, and impose that constraints through annotations or whatever way I’m get used to.
+Each of them has to check somehow what concrete scenario it operates within. The most straightforward way to do that is the following:</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<p>class EitherPhoneOrEmailArePresent
+{</p>
+<blockquote>
+<div><p>public EitherPhoneOrEmailArePresent() {}</p>
+<p>public void check()
+{</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>if (/* it’s NOT order registration through site*/ ) {</dt>
+<dd>// do nothing</dd>
+</dl>
+<p>}</p>
+<p>// check that either phone or email are present</p>
+</div></blockquote>
+<p>}</p>
+</div></blockquote>
+<p>}</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<p>class PhoneIsMandatoryForAggregatorOne
+{</p>
+<blockquote>
+<div><p>public PhoneIsMandatoryForAggregatorOne() {}</p>
+<p>public void check()
+{</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>if (/* it’s NOT order registration through aggregator 1*/ ) {</dt>
+<dd>// do nothing</dd>
+</dl>
+<p>}</p>
+<p>// check that phone is present</p>
+</div></blockquote>
+<p>}</p>
+</div></blockquote>
+<p>}</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<p>class EmailIsMandatoryForAggregatorTwo
+{</p>
+<blockquote>
+<div><p>public PhoneIsMandatoryForAggregatorOne() {}</p>
+<p>public void check()
+{</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>if (/* it’s NOT order registration through aggregator 2*/ ) {</dt>
+<dd>// do nothing</dd>
+</dl>
+<p>}</p>
+<p>// check that email is present</p>
+</div></blockquote>
+<p>}</p>
+</div></blockquote>
+<p>}</p>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Validol</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="declarative_validation.html">It’s declarative</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Context-specific validation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="the_why.html">The Why</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="the_why.html">The Why</a><ul>
+      <li>Previous: <a href="declarative_validation.html" title="previous chapter">It’s declarative</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019, Vadim Samokhin.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/context_specific_validation.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
