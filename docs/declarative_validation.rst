@@ -2,8 +2,66 @@
 
 It's declarative
 ------------------------------------
-That is, readable. Class names reflect what is validated.
-Their implementation doesn't clutter the higher-level validation logic description.
+What is declarative?
+^^^^^^^^^^^^^^^^^^^^
+Declarative code describes, or declares, what the desired result should look like. At the same time, it doesn't provide
+the client with implementation details.
+Wikipedia has a bit more formal definition, yet still readable:
+Declarative programming is a programming paradigm — a style of building the structure and elements of computer programs — that expresses the logic of a computation without describing its control flow.
+
+As we see, declarative programming has nothing to do with the language. You can use dense imperative code in Haskell. You can write declarative code in PHP.
+
+It does have something to do with you though.
+
+Quick example of declarative and imperative code, deliberately in pseudo-code. Unit here is a main building block in your language of choice.
+Typically, it's either a class or a function.
+
+Here is a declarative one:
+
+unit sum {
+    (int a, int b) => a + b
+}
+
+Why is it declarative in the first place? Because only a desired result is described, which is a sum. You can implement it by a number of ways,
+not only by addition.
+
+
+Nevertheless, when one needs a sum, the following code is typical:
+
+unit add {
+    (int a, int b) => a + b
+}
+
+What a big deal, just a different name, you might say. But naming is what reflects your way of thinking.
+Hence, there is a small difference in this situation, where we have only two basic programming units. And it's huge
+when we have 1M LoC.
+
+What declarative is not?
+^^^^^^^^^^^^^^^^^^^^^^^^
+One of the miconceptions I see quite often is that the fact that you've stick all your dependencies in a config file automatically makes your code declarative.
+Nope. Declarative code is much more than mechanical actions.
+
+
+The consequences of being imperative on a bigger scale
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+How do your user stories (or Application services, or Controllers) look like? I bet you recognize the following pattern:
+
+1. Validate a request
+2. Send some http request
+3. Parse response
+4. Update some entity
+5. Save it in a database
+
+Quick declarativeness test: you API changes, 3rd party API changes either, including the number and format of requests,
+thus parsing logic changes, consequently entity update logic does either, and finally, however crazy, you DB vendor changes.
+Does you controller code have to change? If yes -- bad news, sorry: your code is probably imperative. I hope you have controller tests in place.
+But you probably don't. Anyways, you're facing a changes that affect a significant area of your codebase.
+
+Declarative code is a way to avoid it.
+
+Declarative validation
+^^^^^^^^^^^^^^^^^^^^^^^
+Class names reflect what is validated, not how. Their implementation doesn't clutter the higher-level validation logic description.
 To get a feel of what it looks like, here is a quick example:
 
 `an example goes here`

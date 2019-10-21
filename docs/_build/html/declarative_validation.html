@@ -38,11 +38,64 @@
 </div>
 <div class="section" id="it-s-declarative">
 <h1>It’s declarative<a class="headerlink" href="#it-s-declarative" title="Permalink to this headline">¶</a></h1>
-<p>That is, readable. Class names reflect what is validated.
-Their implementation doesn’t clutter the higher-level validation logic description.
+<div class="section" id="what-is-declarative">
+<h2>What is declarative?<a class="headerlink" href="#what-is-declarative" title="Permalink to this headline">¶</a></h2>
+<p>Declarative code describes, or declares, what the desired result should look like. At the same time, it doesn’t provide
+the client with implementation details.
+Wikipedia has a bit more formal definition, yet still readable:
+Declarative programming is a programming paradigm — a style of building the structure and elements of computer programs — that expresses the logic of a computation without describing its control flow.</p>
+<p>As we see, declarative programming has nothing to do with the language. You can use dense imperative code in Haskell. You can write declarative code in PHP.</p>
+<p>It does have something to do with you though.</p>
+<p>Quick example of declarative and imperative code, deliberately in pseudo-code. Unit here is a main building block in your language of choice.
+Typically, it’s either a class or a function.</p>
+<p>Here is a declarative one:</p>
+<p><a href="#id1"><span class="problematic" id="id2">``</span></a>`
+unit sum {</p>
+<blockquote>
+<div>(int a, int b) =&gt; a + b</div></blockquote>
+<div class="section" id="id3">
+<h3>}<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<p>Why is it declarative in the first place? Because only a desired result is described, which is a sum. You can implement it by a number of ways,
+not only by addition.</p>
+<p>Nevertheless, when one needs a sum, the following code is typical:</p>
+<dl class="docutils">
+<dt>unit add {</dt>
+<dd>(int a, int b) =&gt; a + b</dd>
+</dl>
+<p>}</p>
+<p>What a big deal, just a different name, you might say. But naming is what reflects your way of thinking.
+Hence, there is a small difference in this situation, where we have only two basic programming units. And it’s huge
+when we have 1M LoC.</p>
+</div>
+</div>
+<div class="section" id="what-declarative-is-not">
+<h2>What declarative is not?<a class="headerlink" href="#what-declarative-is-not" title="Permalink to this headline">¶</a></h2>
+<p>One of the miconceptions I see quite often is that the fact that you’ve stick all your dependencies in a config file automatically makes your code declarative.
+Nope. Declarative code is much more than mechanical actions.</p>
+</div>
+<div class="section" id="the-consequences-of-being-imperative-on-a-bigger-scale">
+<h2>The consequences of being imperative on a bigger scale<a class="headerlink" href="#the-consequences-of-being-imperative-on-a-bigger-scale" title="Permalink to this headline">¶</a></h2>
+<p>How do your user stories (or Application services, or Controllers) look like? I bet you recognize the following pattern:</p>
+<ol class="arabic simple">
+<li>Validate a request</li>
+<li>Send some http request</li>
+<li>Parse response</li>
+<li>Update some entity</li>
+<li>Save it in a database</li>
+</ol>
+<p>Quick declarativeness test: you API changes, 3rd party API changes either, including the number and format of requests,
+thus parsing logic changes, consequently entity update logic does either, and finally, however crazy, you DB vendor changes.
+Does you controller code have to change? If yes – bad news, sorry: your code is probably imperative. I hope you have controller tests in place.
+But you probably don’t. Anyways, you’re facing a changes that affect a significant area of your codebase.</p>
+<p>Declarative code is a way to avoid it.</p>
+</div>
+<div class="section" id="declarative-validation">
+<h2>Declarative validation<a class="headerlink" href="#declarative-validation" title="Permalink to this headline">¶</a></h2>
+<p>Class names reflect what is validated, not how. Their implementation doesn’t clutter the higher-level validation logic description.
 To get a feel of what it looks like, here is a quick example:</p>
 <p><cite>an example goes here</cite></p>
 <p>It’s especially convenient in case of complex json data structures. Your validation composite object reflects the request structure.</p>
+</div>
 </div>
 
 
@@ -62,11 +115,12 @@ To get a feel of what it looks like, here is a quick example:</p>
 
 
 <h3>Navigation</h3>
-<p class="caption"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">It’s declarative</a></li>
 <li class="toctree-l1"><a class="reference internal" href="context_specific_validation.html">Context-specific validation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extendable_validation.html">Infinitely-extendable</a></li>
 <li class="toctree-l1"><a class="reference internal" href="the_why.html">The Why</a></li>
+<li class="toctree-l1"><a class="reference internal" href="the_how.html">The How</a></li>
 </ul>
 
 <div class="relations">
