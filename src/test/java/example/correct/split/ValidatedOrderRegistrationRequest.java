@@ -48,7 +48,7 @@ public class ValidatedOrderRegistrationRequest implements Validatable<OrderRegis
                                         "delivery",
                                         List.of(
                                             new Specific<>(
-                                                // todo: add real condition
+                                                // pretty dumb clause
                                                 () -> true,
                                                 new Courier(deliveryJsonElement)
                                             )

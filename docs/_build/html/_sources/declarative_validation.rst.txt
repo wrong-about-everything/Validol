@@ -22,9 +22,11 @@ Typically, it's either a class or a function.
 
 Here is a declarative one:
 
-unit sum {
-    (int a, int b) => a + b
-}
+.. code-block:: java
+
+    unit sum {
+        (int a, int b) => a + b
+    }
 
 Why is it declarative in the first place? Because only a desired result is described, which is a sum. You can implement it by a number of ways,
 not only by addition.
@@ -32,9 +34,11 @@ not only by addition.
 
 Nevertheless, when one needs a sum, the following code is typical:
 
-unit add {
-    (int a, int b) => a + b
-}
+.. code-block:: java
+
+    unit add {
+        (int a, int b) => a + b
+    }
 
 What a big deal, just a different name, you might say. But naming is what reflects your way of thinking.
 Hence, there is a small difference in this situation, where we have only two basic programming units. And it's huge
@@ -78,15 +82,63 @@ One of the miconceptions I see quite often is that the fact that you've put all 
 Nope. Declarative code is much more than mechanical actions. Simply sticking your service classes [https://www.yegor256.com/2014/05/05/oop-alternative-to-utility-classes.html]
 in a config file won't bring you closer to maintainable code.
 
+Using functions does not ensure your code to be declarative either. You can wrap each implementation step into its own function
+(or a service class), as in a previous controller example. But it still remains susceptible to specific kinds of changes.
+
 Declarative validation
 ^^^^^^^^^^^^^^^^^^^^^^^
+If you're tired of spaghetti validation code mess, you can try a declarative approach [https://github.com/wrong-about-everything/Validol].
 Class names reflect what is validated, not how. Their implementation doesn't clutter the higher-level validation logic description.
-To get a feel of what it looks like, here is a quick example:
+It's especially convenient in case of complex json data structures, when your validation composite object reflects the request structure.
+And as a nice declarative-approach side-effect, your code is not temporally coupled [https://blog.ploeh.dk/2011/05/24/DesignSmellTemporalCoupling/].
+
+To get a feel of what it looks like, consider a following example of a complex request validation.
+JSON structure looks the following:
+
+.. code-block:: JSON
+
+    {
+       "guest":{
+          "phone":"+44123456789",
+          "name":"Vasily Belov",
+          "email":"vasya@belov.com"
+       },
+       "bag":{
+          "items":[
+             {
+                "id":888
+             },
+             {
+                "id":777
+             }
+          ],
+          "discount":{
+             "promo_code":"VASYA1988"
+          },
+          "served_for":3
+       },
+       "delivery":{
+          "type_id":20,
+          "where":{
+             "restaurant_id":1
+          },
+          "when":{
+             "datetime":"2019-10-23T08:33:11.798400+00:00"
+          },
+          "from_where":{
+             "restaurant_id":1
+          }
+       },
+       "payment":{
+          "type_id":30
+       },
+       "source":20
+    }
+
+The semantics basically doesn't really matter, though you can guess that it has something to do with food delivery order registration.
 
 .. code-block:: java
-    :linenos:
 
-::
     new FastFail<>(
         new WellFormedJson(
             new Unnamed<>(Either.right(new Present<>(this.jsonRequestString)))
@@ -208,7 +260,60 @@ To get a feel of what it looks like, here is a quick example:
     )
         .result()
 
-It's especially convenient in case of complex json data structures.
-Your validation composite object reflects the request structure.
-And as a nice declarative-approach side-effect, your code is not temporally coupled [https://blog.ploeh.dk/2011/05/24/DesignSmellTemporalCoupling/].
+You can obtain the same result wrapping the blocks in separate objects, like this:
 
+.. code-block:: java
+
+    new FastFail<>(
+        new WellFormedJson(
+            new Unnamed<>(Either.right(new Present<>(this.jsonRequestString)))
+        ),
+        requestJsonObject ->
+            new UnnamedBlocOfNameds<>(
+                List.of(
+                    new Guest(requestJsonObject),
+                    new Items(requestJsonObject),
+                    new RequiredNamedBlocOfCallback<>(
+                        "delivery",
+                        requestJsonObject,
+                        deliveryJsonElement ->
+                            new SwitchTrue<>(
+                                "delivery",
+                                List.of(
+                                    new Specific<>(
+                                        // pretty dumb clause
+                                        () -> true,
+                                        new Courier(deliveryJsonElement)
+                                    )
+                                )
+                            )
+                    ),
+                    new Source(requestJsonObject)
+                ),
+                OrderRegistrationRequestData.class
+            )
+    )
+
+
+If everything's successful, you get
+
+.. code-block:: java
+
+    Result<OrderRegistrationRequestData> result = new ValidatedOrderRegistrationRequest(jsonRequest).result();
+    // get an email:
+    result.value().raw().guest().email();
+
+In case of error:
+
+.. code-block:: java
+
+    assertFalse(result.isSuccessful());
+    // Error is represented as generally as Object itself,
+    // for it can be a String, a List<String>, a Map<String, String>, a Map<String, Map<String, String>>, or mixed.
+    result.error();
+
+There is plenty of space left to extend the logic, just add another validating decorator.
+
+Interested?
+^^^^^^^^^^^^
+Check out more usage examples here [].
