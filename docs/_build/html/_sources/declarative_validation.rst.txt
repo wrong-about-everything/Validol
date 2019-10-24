@@ -5,10 +5,7 @@ It's declarative
 What is declarative?
 ^^^^^^^^^^^^^^^^^^^^
 
-https://medium.com/front-end-weekly/imperative-versus-declarative-code-whats-the-difference-adc7dd6c8380
-
-
-Declarative code describes, or declares, what the desired result should look like. At the same time, it doesn't explicitly
+`Declarative code <https://en.wikipedia.org/wiki/Declarative_programming>`_ describes, or declares, what the desired result should look like. At the same time, it doesn't explicitly
 specify the steps needed to reach its goal.
 Wikipedia has a bit more formal definition, yet still readable:
 Declarative programming is a programming paradigm — a style of building the structure and elements of computer programs — that expresses the logic of a computation without describing its control flow.
@@ -60,7 +57,8 @@ Does you controller code have to change? If yes -- bad news, sorry: your code is
 But chances are you don't. Anyways, you're facing a changes that affect a significant area of your codebase.
 
 Declarative approach helps you mitigate those issues. First, you don't have to validate the request. You just need a *validated* request.
-Second, you don't have to send an http request and parse its response. Instead, you need either a command result [https://www.enterpriseintegrationpatterns.com/patterns/messaging/CommandMessage.html]
+Second, you don't have to send an http request and parse its response. Instead, you need either a
+`command <https://www.enterpriseintegrationpatterns.com/patterns/messaging/CommandMessage.html>`_ result
 (like whether the transaction authorization was successful or not) or particular data (like special marketing offer for current client).
 And finally you don't have to update an entity and save it in database; instead you want it persisted.
 
@@ -79,7 +77,7 @@ both encapsulated and descriptive, contrary to prescriptive.
 What declarative is not?
 ^^^^^^^^^^^^^^^^^^^^^^^^
 One of the miconceptions I see quite often is that the fact that you've put all your dependencies in a config file automatically makes your code declarative.
-Nope. Declarative code is much more than mechanical actions. Simply sticking your service classes [https://www.yegor256.com/2014/05/05/oop-alternative-to-utility-classes.html]
+Nope. Declarative code is much more than mechanical actions. Simply sticking your `service classes <https://www.yegor256.com/2014/05/05/oop-alternative-to-utility-classes.html>`_
 in a config file won't bring you closer to maintainable code.
 
 Using functions does not ensure your code to be declarative either. You can wrap each implementation step into its own function
@@ -87,10 +85,10 @@ Using functions does not ensure your code to be declarative either. You can wrap
 
 Declarative validation
 ^^^^^^^^^^^^^^^^^^^^^^^
-If you're tired of spaghetti validation code mess, you can try a declarative approach [https://github.com/wrong-about-everything/Validol].
+If you're tired of spaghetti validation code mess, you can try a `declarative approach <https://github.com/wrong-about-everything/Validol>`_.
 Class names reflect what is validated, not how. Their implementation doesn't clutter the higher-level validation logic description.
 It's especially convenient in case of complex json data structures, when your validation composite object reflects the request structure.
-And as a nice declarative-approach side-effect, your code is not temporally coupled [https://blog.ploeh.dk/2011/05/24/DesignSmellTemporalCoupling/].
+And as a nice declarative-approach side-effect, your code is not `temporally coupled <https://blog.ploeh.dk/2011/05/24/DesignSmellTemporalCoupling/>`_.
 
 To get a feel of what it looks like, consider a following example of a complex request validation.
 JSON structure looks the following:
@@ -136,6 +134,8 @@ JSON structure looks the following:
     }
 
 The semantics basically doesn't really matter, though you can guess that it has something to do with food delivery order registration.
+Schema is quite large. Typically, validation code is less then clear.
+Here is the declarative validation composite with `Validol library <https://https://github.com/wrong-about-everything/Validol/>`_:
 
 .. code-block:: java
 
@@ -201,6 +201,8 @@ The semantics basically doesn't really matter, though you can guess that it has 
                                 "delivery",
                                 List.of(
                                     new Specific<>(
+                                        // Here goes the condition whether this order should be delivered by courier or picked up.
+                                        // It's omitted for brevity.
                                         () -> true,
                                         new UnnamedBlocOfNameds<>(
                                             List.of(
@@ -260,7 +262,16 @@ The semantics basically doesn't really matter, though you can guess that it has 
     )
         .result()
 
-You can obtain the same result wrapping the blocks in separate objects, like this:
+What catches the eye first? There are plenty of ``FastFail`` gizmos. This class accepts exactly two arguments:
+validatable element and closure. Whether the first parameter results in true, the second closure is invoked.
+The typical cases are just as in an example:
+
+ - Check whether the request represents a well-formed json
+ - Check whether some key is present (like ``new IndexedValue("when", deliveryJsonElement)``)
+
+Second, the object structure reflects the request structure. It might seem to (and actually could)  be a drawback,
+since the request can be extremely complex. The solution is pretty simple: you can represent each semantic block as its own class,
+like the following:
 
 .. code-block:: java
 
@@ -294,8 +305,10 @@ You can obtain the same result wrapping the blocks in separate objects, like thi
             )
     )
 
+If you have a block structure that depends on passed type (like ``type_id``), ``SwitchTrue`` is your friend. It represents a sort of declarative
+switch-case expression, where the value checked against is always ``true`` (hence the name, ``SwitchTrue``).
 
-If everything's successful, you get
+If everything's successful, you get a data object reflecting the request structure, with type hinted values:
 
 .. code-block:: java
 
@@ -314,6 +327,8 @@ In case of error:
 
 There is plenty of space left to extend the logic, just add another validating decorator.
 
-Interested?
-^^^^^^^^^^^^
-Check out more usage examples here [].
+More examples
+^^^^^^^^^^^^^^
+Check out more usage examples `here <https://github.com/wrong-about-everything/Validol/tree/master/src/test/java/example>`_.
+`Here <https://github.com/wrong-about-everything/Validol/tree/master/src/test/java/example/correct/inline>`_ is an example of inline validation in greater detail.
+`Here <https://github.com/wrong-about-everything/Validol/tree/master/src/test/java/example/correct/split>`_ you can find out how to split the validation logic according to semantic request blocks.

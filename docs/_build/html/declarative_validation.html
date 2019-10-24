@@ -40,8 +40,7 @@
 <h1>It’s declarative<a class="headerlink" href="#it-s-declarative" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="what-is-declarative">
 <h2>What is declarative?<a class="headerlink" href="#what-is-declarative" title="Permalink to this headline">¶</a></h2>
-<p><a class="reference external" href="https://medium.com/front-end-weekly/imperative-versus-declarative-code-whats-the-difference-adc7dd6c8380">https://medium.com/front-end-weekly/imperative-versus-declarative-code-whats-the-difference-adc7dd6c8380</a></p>
-<p>Declarative code describes, or declares, what the desired result should look like. At the same time, it doesn’t explicitly
+<p><a class="reference external" href="https://en.wikipedia.org/wiki/Declarative_programming">Declarative code</a> describes, or declares, what the desired result should look like. At the same time, it doesn’t explicitly
 specify the steps needed to reach its goal.
 Wikipedia has a bit more formal definition, yet still readable:
 Declarative programming is a programming paradigm — a style of building the structure and elements of computer programs — that expresses the logic of a computation without describing its control flow.</p>
@@ -82,7 +81,8 @@ thus parsing logic changes, consequently entity update logic does either, and fi
 Does you controller code have to change? If yes – bad news, sorry: your code is probably imperative. I hope you have controller tests in place.
 But chances are you don’t. Anyways, you’re facing a changes that affect a significant area of your codebase.</p>
 <p>Declarative approach helps you mitigate those issues. First, you don’t have to validate the request. You just need a <em>validated</em> request.
-Second, you don’t have to send an http request and parse its response. Instead, you need either a command result [<a class="reference external" href="https://www.enterpriseintegrationpatterns.com/patterns/messaging/CommandMessage.html">https://www.enterpriseintegrationpatterns.com/patterns/messaging/CommandMessage.html</a>]
+Second, you don’t have to send an http request and parse its response. Instead, you need either a
+<a class="reference external" href="https://www.enterpriseintegrationpatterns.com/patterns/messaging/CommandMessage.html">command</a> result
 (like whether the transaction authorization was successful or not) or particular data (like special marketing offer for current client).
 And finally you don’t have to update an entity and save it in database; instead you want it persisted.</p>
 <p>So as a result we get the following list of expressions:
@@ -98,17 +98,17 @@ both encapsulated and descriptive, contrary to prescriptive.</p>
 <div class="section" id="what-declarative-is-not">
 <h2>What declarative is not?<a class="headerlink" href="#what-declarative-is-not" title="Permalink to this headline">¶</a></h2>
 <p>One of the miconceptions I see quite often is that the fact that you’ve put all your dependencies in a config file automatically makes your code declarative.
-Nope. Declarative code is much more than mechanical actions. Simply sticking your service classes [<a class="reference external" href="https://www.yegor256.com/2014/05/05/oop-alternative-to-utility-classes.html">https://www.yegor256.com/2014/05/05/oop-alternative-to-utility-classes.html</a>]
+Nope. Declarative code is much more than mechanical actions. Simply sticking your <a class="reference external" href="https://www.yegor256.com/2014/05/05/oop-alternative-to-utility-classes.html">service classes</a>
 in a config file won’t bring you closer to maintainable code.</p>
 <p>Using functions does not ensure your code to be declarative either. You can wrap each implementation step into its own function
 (or a service class), as in a previous controller example. But it still remains susceptible to specific kinds of changes.</p>
 </div>
 <div class="section" id="declarative-validation">
 <h2>Declarative validation<a class="headerlink" href="#declarative-validation" title="Permalink to this headline">¶</a></h2>
-<p>If you’re tired of spaghetti validation code mess, you can try a declarative approach [<a class="reference external" href="https://github.com/wrong-about-everything/Validol">https://github.com/wrong-about-everything/Validol</a>].
+<p>If you’re tired of spaghetti validation code mess, you can try a <a class="reference external" href="https://github.com/wrong-about-everything/Validol">declarative approach</a>.
 Class names reflect what is validated, not how. Their implementation doesn’t clutter the higher-level validation logic description.
 It’s especially convenient in case of complex json data structures, when your validation composite object reflects the request structure.
-And as a nice declarative-approach side-effect, your code is not temporally coupled [<a class="reference external" href="https://blog.ploeh.dk/2011/05/24/DesignSmellTemporalCoupling/">https://blog.ploeh.dk/2011/05/24/DesignSmellTemporalCoupling/</a>].</p>
+And as a nice declarative-approach side-effect, your code is not <a class="reference external" href="https://blog.ploeh.dk/2011/05/24/DesignSmellTemporalCoupling/">temporally coupled</a>.</p>
 <p>To get a feel of what it looks like, consider a following example of a complex request validation.
 JSON structure looks the following:</p>
 <div class="highlight-JSON notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
@@ -150,7 +150,9 @@ JSON structure looks the following:</p>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>The semantics basically doesn’t really matter, though you can guess that it has something to do with food delivery order registration.</p>
+<p>The semantics basically doesn’t really matter, though you can guess that it has something to do with food delivery order registration.
+Schema is quite large. Typically, validation code is less then clear.
+Here is the declarative validation composite with <a class="reference external" href="https://https://github.com/wrong-about-everything/Validol/">Validol library</a>:</p>
 <div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="k">new</span> <span class="n">FastFail</span><span class="o">&lt;&gt;(</span>
     <span class="k">new</span> <span class="n">WellFormedJson</span><span class="o">(</span>
         <span class="k">new</span> <span class="n">Unnamed</span><span class="o">&lt;&gt;(</span><span class="n">Either</span><span class="o">.</span><span class="na">right</span><span class="o">(</span><span class="k">new</span> <span class="n">Present</span><span class="o">&lt;&gt;(</span><span class="k">this</span><span class="o">.</span><span class="na">jsonRequestString</span><span class="o">)))</span>
@@ -213,6 +215,8 @@ JSON structure looks the following:</p>
                             <span class="s">&quot;delivery&quot;</span><span class="o">,</span>
                             <span class="n">List</span><span class="o">.</span><span class="na">of</span><span class="o">(</span>
                                 <span class="k">new</span> <span class="n">Specific</span><span class="o">&lt;&gt;(</span>
+                                    <span class="c1">// Here goes the condition whether this order should be delivered by courier or picked up.</span>
+                                    <span class="c1">// It&#39;s omitted for brevity.</span>
                                     <span class="o">()</span> <span class="o">-&gt;</span> <span class="kc">true</span><span class="o">,</span>
                                     <span class="k">new</span> <span class="n">UnnamedBlocOfNameds</span><span class="o">&lt;&gt;(</span>
                                         <span class="n">List</span><span class="o">.</span><span class="na">of</span><span class="o">(</span>
@@ -273,7 +277,18 @@ JSON structure looks the following:</p>
     <span class="o">.</span><span class="na">result</span><span class="o">()</span>
 </pre></div>
 </div>
-<p>You can obtain the same result wrapping the blocks in separate objects, like this:</p>
+<p>What catches the eye first? There are plenty of <code class="docutils literal notranslate"><span class="pre">FastFail</span></code> gizmos. This class accepts exactly two arguments:
+validatable element and closure. Whether the first parameter results in true, the second closure is invoked.
+The typical cases are just as in an example:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Check whether the request represents a well-formed json</li>
+<li>Check whether some key is present (like <code class="docutils literal notranslate"><span class="pre">new</span> <span class="pre">IndexedValue(&quot;when&quot;,</span> <span class="pre">deliveryJsonElement)</span></code>)</li>
+</ul>
+</div></blockquote>
+<p>Second, the object structure reflects the request structure. It might seem to (and actually could)  be a drawback,
+since the request can be extremely complex. The solution is pretty simple: you can represent each semantic block as its own class,
+like the following:</p>
 <div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="k">new</span> <span class="n">FastFail</span><span class="o">&lt;&gt;(</span>
     <span class="k">new</span> <span class="n">WellFormedJson</span><span class="o">(</span>
         <span class="k">new</span> <span class="n">Unnamed</span><span class="o">&lt;&gt;(</span><span class="n">Either</span><span class="o">.</span><span class="na">right</span><span class="o">(</span><span class="k">new</span> <span class="n">Present</span><span class="o">&lt;&gt;(</span><span class="k">this</span><span class="o">.</span><span class="na">jsonRequestString</span><span class="o">)))</span>
@@ -305,7 +320,9 @@ JSON structure looks the following:</p>
 <span class="o">)</span>
 </pre></div>
 </div>
-<p>If everything’s successful, you get</p>
+<p>If you have a block structure that depends on passed type (like <code class="docutils literal notranslate"><span class="pre">type_id</span></code>), <code class="docutils literal notranslate"><span class="pre">SwitchTrue</span></code> is your friend. It represents a sort of declarative
+switch-case expression, where the value checked against is always <code class="docutils literal notranslate"><span class="pre">true</span></code> (hence the name, <code class="docutils literal notranslate"><span class="pre">SwitchTrue</span></code>).</p>
+<p>If everything’s successful, you get a data object reflecting the request structure, with type hinted values:</p>
 <div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="n">Result</span><span class="o">&lt;</span><span class="n">OrderRegistrationRequestData</span><span class="o">&gt;</span> <span class="n">result</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ValidatedOrderRegistrationRequest</span><span class="o">(</span><span class="n">jsonRequest</span><span class="o">).</span><span class="na">result</span><span class="o">();</span>
 <span class="c1">// get an email:</span>
 <span class="n">result</span><span class="o">.</span><span class="na">value</span><span class="o">().</span><span class="na">raw</span><span class="o">().</span><span class="na">guest</span><span class="o">().</span><span class="na">email</span><span class="o">();</span>
@@ -320,9 +337,11 @@ JSON structure looks the following:</p>
 </div>
 <p>There is plenty of space left to extend the logic, just add another validating decorator.</p>
 </div>
-<div class="section" id="interested">
-<h2>Interested?<a class="headerlink" href="#interested" title="Permalink to this headline">¶</a></h2>
-<p>Check out more usage examples here [].</p>
+<div class="section" id="more-examples">
+<h2>More examples<a class="headerlink" href="#more-examples" title="Permalink to this headline">¶</a></h2>
+<p>Check out more usage examples <a class="reference external" href="https://github.com/wrong-about-everything/Validol/tree/master/src/test/java/example">here</a>.
+<a class="reference external" href="https://github.com/wrong-about-everything/Validol/tree/master/src/test/java/example/correct/inline">Here</a> is an example of inline validation in greater detail.
+<a class="reference external" href="https://github.com/wrong-about-everything/Validol/tree/master/src/test/java/example/correct/split">Here</a> you can find out how to split the validation logic according to semantic request blocks.</p>
 </div>
 </div>
 
