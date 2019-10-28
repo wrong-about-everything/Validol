@@ -1,84 +1,85 @@
 .. toctree::
 
-Context-specific validation
+Contextual validation
 ------------------------------------
-That is, independent of data-model.
-Most of current frameworks don't see the distinction between data model scope and validating scope. At least, default mode for most of us
-is to bind validation to our data model.
-What's wrong with this approach?
+That is, independent of data-model and of domain objects.
+
+Validation bound to data-model
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Most of current frameworks compel us, its users, to put validation in data model. At least, default mode for most of us
+is to simply bind validation rules to specific fields in data model. What's wrong with this approach?
 Consider an example where a guest registers a new food delivery order. The company behind this service, which actually cooks the order, is called SuperFood.
 That's how the whole user-story looks like: Vasya as a guest visits SuperFood's site and registered an order there.
-SuperFood's backend service must ensure several things before putting in a database. One of them is to ensure that either email or phone number is passed.
+
+
+SuperFood's backend service must ensure several things before putting in a database. One of them is to ensure that either email or phone number are passed.
 
 Now suppose another user registers an order in SuperFood, but through some aggregator service. This order doesn't differ much from the one registered on SuperFood site,
 though the constraints to be enforced are different. For example, passing a phone number is essential for that aggregator, while email is optional.
 
 Now, a third user registers an order in SuperFood, and she does it through some else aggregator service.
-And for that one, passing a phone number is totally useless, but email is a must.
+And for that one, passing a phone number is not needed, but email is a must.
 
 So we have the following situation. I have a single data-model for an order, but there are at least three contexts with different set of constraints.
-I can go traditional way: introduce an entity corresponding to a database row, and impose that constraints through annotations or whatever way I'm get used to.
-Each of them has to check somehow what concrete scenario it operates within. The most straightforward way to do that is the following:
+I can go traditional way: introduce an entity corresponding to a database row, and impose that constraints through annotations or config files or whatever way I'm get used to.
+Data-model validation favors the following approach:
+
+
+The primary objective is to find out *somehow* what exactly is the concrete scenario it operates within.
+So implementing this situation(objective?) in the most straightforward way would look like the following:
 
 .. code-block:: java
 
-class EitherPhoneOrEmailArePresent
-{
-
-    public EitherPhoneOrEmailArePresent() {}
-
-    public void check()
+    class EitherEmailOrPhoneNumberArePresent
     {
+        public EitherEmailOrPhoneNumberArePresent() {}
 
-        if (/* it's NOT order registration through site*/ ) {
-            // do nothing
+        public void check()
+        {
+            if (/* it's NOT order registration through site*/ ) {
+                // do nothing
+            }
 
+            // check that either phone or email are present
         }
-
-        // check that either phone or email are present
-
     }
-
-}
 
 .. code-block:: java
 
-class PhoneIsMandatoryForAggregatorOne
-{
-
-    public PhoneIsMandatoryForAggregatorOne() {}
-
-    public void check()
+    class PhoneIsMandatoryForAggregatorOne
     {
+        public PhoneIsMandatoryForAggregatorOne() {}
 
-        if (/* it's NOT order registration through aggregator 1*/ ) {
-            // do nothing
+        public void check()
+        {
+            if (/* it's NOT order registration through aggregator 1*/ ) {
+                // do nothing
+            }
 
+            // check that phone is present
         }
-
-        // check that phone is present
-
     }
-
-}
 
 .. code-block:: java
 
-class EmailIsMandatoryForAggregatorTwo
-{
-
-    public PhoneIsMandatoryForAggregatorOne() {}
-
-    public void check()
+    class EmailIsMandatoryForAggregatorTwo
     {
+        public PhoneIsMandatoryForAggregatorOne() {}
 
-        if (/* it's NOT order registration through aggregator 2*/ ) {
-            // do nothing
+        public void check()
+        {
+            if (/* it's NOT order registration through aggregator 2*/ ) {
+                // do nothing
+            }
 
+            // check that email is present
         }
-
-        // check that email is present
-
     }
 
-}
+Better: validation in domain objects
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The best: contextual validation that is specific to a concrete user story
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
