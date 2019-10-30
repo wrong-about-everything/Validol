@@ -64,14 +64,3 @@ public class ValidatedOrderRegistrationRequest implements Validatable<OrderRegis
             ;
     }
 }
-
-
-public class ContactInfoValidator
-{
-    public boolean isValid(Order order)
-    {
-        if (/* registration though site*/) {
-            return order.getPhone() || order.getEmail();
-        }
-    }
-}

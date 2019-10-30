@@ -4,8 +4,8 @@ Contextual validation
 -------------------------
 Here we will consider different ways to carry out validation, what is contextual validation and why it beats all the other ways.
 
-Validation bound to data-model
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Context-independent validation bound to data-model
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Most of current frameworks compel us, its users, to put validation in data model. At least, default mode for most of us
 is to simply bind validation rules to specific fields in data model. What's wrong with this approach?
@@ -39,8 +39,8 @@ Data-model validation favors the following approach:
         // ...
     }
 
-Custom annotation `ValidContactInfo` eventually brings us to the `custom validator <https://stackoverflow.com/a/44326568/618020>`_,
-something like `ContactInfoValidator`. Its clearest implementation reflects the mental model of product-manager,
+Custom annotation ``ValidContactInfo`` eventually brings us to the `custom validator <https://stackoverflow.com/a/44326568/618020>`_,
+something like ``ContactInfoValidator``. Its clearest implementation reflects the mental model of product-manager,
 which goes like the following (in a pseudo code):
 
 .. code-block:: java
@@ -52,15 +52,64 @@ which goes like the following (in a pseudo code):
 The primary objective is to find out *somehow* what exactly is the concrete scenario it operates within.
 
 Data-model way implies that we should do that in a validator, taking fields from entity data-object.
-This way is I believe the least palatable one, since we can't use the power of domain model and reside the validation logic
+This way I believe is the least palatable one, since we can't use the power of domain model and have to reside the validation logic
 in `service classes <https://www.yegor256.com/2014/05/05/oop-alternative-to-utility-classes.html>`_.
 Simplified, it roughly looks like that:
 
 .. code-block:: java
 
+    public class ContactInfoValidator
+    {
+        public boolean isValid(Order order)
+        {
+            if (order.getSource.equals(new Site())) {
+                return order.getPhone() != null || order.getEmail() != null;
+            } else if (order.getSource.equals(new AggreA())) {
+                return order.getPhone() != null;
+            } else if (order.getSource.equals(new AggreB())) {
+                return order.getEmail() != null;
+            }
 
-Better: validation in domain objects
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+            throw new Exception("Unknown source given");
+        }
+    }
+
+Better: context-independent validation in domain objects
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Often times, validation logic shawn in previous example gets out of control. In this case, it could be more
+beneficial to put it in domain object responsible for business-logic. It could look like the following (mind the naming:
+I renamed ``Order`` to ``OrderFromRequest``):
+
+.. code-block:: java
+
+    public class DomainOrder
+    {
+        public DomainOrder(OrderFromRequest orderFromRequest)
+        {
+
+        }
+
+        public boolean register()
+        {
+            if (this.isValid()) {
+                // save in db
+            }
+        }
+
+        private boolean isValid()
+        {
+            if (orderFromRequest.getSource.equals(new Site())) {
+                return orderFromRequest.getPhone() != null || orderFromRequest.getEmail() != null;
+            } else if (orderFromRequest.getSource.equals(new AggreA())) {
+                return orderFromRequest.getPhone() != null;
+            } else if (orderFromRequest.getSource.equals(new AggreB())) {
+                return orderFromRequest.getEmail() != null;
+            }
+
+            throw new Exception("Unknown source given");
+        }
+    }
+
 
 The best: contextual validation that is specific to a concrete user story
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
