@@ -96,43 +96,47 @@ Simplified, it roughly looks like that:</p>
 </pre></div>
 </div>
 </div>
-<div class="section" id="better-context-independent-validation-in-domain-objects">
-<h2>Better: context-independent validation in domain objects<a class="headerlink" href="#better-context-independent-validation-in-domain-objects" title="Permalink to this headline">¶</a></h2>
-<p>Often times, validation logic shawn in previous example gets out of control. In this case, it could be more
-beneficial to put it in domain object responsible for business-logic. It could look like the following (mind the naming:
-I renamed <code class="docutils literal notranslate"><span class="pre">Order</span></code> to <code class="docutils literal notranslate"><span class="pre">OrderFromRequest</span></code>):</p>
+<div class="section" id="arguably-better-context-independent-validation-in-domain-objects">
+<h2>Arguably better: context-independent validation in domain objects<a class="headerlink" href="#arguably-better-context-independent-validation-in-domain-objects" title="Permalink to this headline">¶</a></h2>
+<p>Often times, validation logic shawn in previous example gets out of control. In this case, it probably could be more
+beneficial to put it in domain object responsible for business-logic.
+Besides, traditionally, it is domain code that we developers tend to test-cover first.
+It could look like the following (mind the naming:
+I renamed <code class="docutils literal notranslate"><span class="pre">Order</span></code> to <code class="docutils literal notranslate"><span class="pre">OrderFromRequest</span></code> to stress the difference between it and domain order):</p>
 <div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">DomainOrder</span>
 <span class="o">{</span>
-    <span class="kd">public</span> <span class="nf">DomainOrder</span><span class="o">(</span><span class="n">OrderFromRequest</span> <span class="n">orderFromRequest</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="nf">DomainOrder</span><span class="o">(</span><span class="n">OrderFromRequest</span> <span class="n">orderFromRequest</span><span class="o">,</span> <span class="n">HttpTransport</span> <span class="n">httpTransport</span><span class="o">,</span> <span class="n">Repository</span> <span class="n">repository</span><span class="o">)</span>
     <span class="o">{</span>
-
+        <span class="c1">// set private fields</span>
     <span class="o">}</span>
 
     <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">register</span><span class="o">()</span>
     <span class="o">{</span>
-        <span class="k">if</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">isValid</span><span class="o">())</span> <span class="o">{</span>
-            <span class="c1">// save in db</span>
+        <span class="k">if</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">isRegisteredThroughSite</span><span class="o">()</span> <span class="o">&amp;&amp;</span> <span class="k">this</span><span class="o">.</span><span class="na">isValidForRegistrationThroughSite</span><span class="o">())</span> <span class="o">{</span>
+            <span class="c1">// business logic 1</span>
+        <span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">isRegisteredThroughAggreA</span><span class="o">()</span> <span class="o">&amp;&amp;</span> <span class="k">this</span><span class="o">.</span><span class="na">isValidForRegistrationThroughAggreA</span><span class="o">())</span> <span class="o">{</span>
+            <span class="c1">// business logic 2</span>
+        <span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">isRegisteredThroughAggreB</span><span class="o">()</span> <span class="o">&amp;&amp;</span> <span class="k">this</span><span class="o">.</span><span class="na">isValidForRegistrationThroughAggreB</span><span class="o">())</span> <span class="o">{</span>
+            <span class="c1">// business logic 3</span>
         <span class="o">}</span>
     <span class="o">}</span>
 
-    <span class="kd">private</span> <span class="kt">boolean</span> <span class="nf">isValid</span><span class="o">()</span>
+    <span class="kd">private</span> <span class="kt">boolean</span> <span class="nf">isRegisteredThroughSite</span><span class="o">()</span>
     <span class="o">{</span>
-        <span class="k">if</span> <span class="o">(</span><span class="n">orderFromRequest</span><span class="o">.</span><span class="na">getSource</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="k">new</span> <span class="n">Site</span><span class="o">()))</span> <span class="o">{</span>
-            <span class="k">return</span> <span class="n">orderFromRequest</span><span class="o">.</span><span class="na">getPhone</span><span class="o">()</span> <span class="o">!=</span> <span class="kc">null</span> <span class="o">||</span> <span class="n">orderFromRequest</span><span class="o">.</span><span class="na">getEmail</span><span class="o">()</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">;</span>
-        <span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">orderFromRequest</span><span class="o">.</span><span class="na">getSource</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="k">new</span> <span class="n">AggreA</span><span class="o">()))</span> <span class="o">{</span>
-            <span class="k">return</span> <span class="n">orderFromRequest</span><span class="o">.</span><span class="na">getPhone</span><span class="o">()</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">;</span>
-        <span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">orderFromRequest</span><span class="o">.</span><span class="na">getSource</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="k">new</span> <span class="n">AggreB</span><span class="o">()))</span> <span class="o">{</span>
-            <span class="k">return</span> <span class="n">orderFromRequest</span><span class="o">.</span><span class="na">getEmail</span><span class="o">()</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">;</span>
-        <span class="o">}</span>
+        <span class="k">return</span> <span class="n">orderFromRequest</span><span class="o">.</span><span class="na">getSource</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="k">new</span> <span class="n">Site</span><span class="o">());</span>
+    <span class="o">}</span>
 
-        <span class="k">throw</span> <span class="k">new</span> <span class="n">Exception</span><span class="o">(</span><span class="s">&quot;Unknown source given&quot;</span><span class="o">);</span>
+    <span class="kd">private</span> <span class="kt">boolean</span> <span class="nf">isValidForRegistrationThroughSite</span><span class="o">()</span>
+    <span class="o">{</span>
+        <span class="k">return</span> <span class="n">orderFromRequest</span><span class="o">.</span><span class="na">getPhone</span><span class="o">()</span> <span class="o">!=</span> <span class="kc">null</span> <span class="o">||</span> <span class="n">orderFromRequest</span><span class="o">.</span><span class="na">getEmail</span><span class="o">()</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">;</span>
     <span class="o">}</span>
 <span class="o">}</span>
 </pre></div>
 </div>
+<p>But the problem of collecting errors and mapping them to UI arises. To my knowledge, there is no clean solution for that.</p>
 </div>
-<div class="section" id="the-best-contextual-validation-that-is-specific-to-a-concrete-user-story">
-<h2>The best: contextual validation that is specific to a concrete user story<a class="headerlink" href="#the-best-contextual-validation-that-is-specific-to-a-concrete-user-story" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="contextual-validation-that-is-specific-to-a-concrete-user-story">
+<h2>Contextual validation that is specific to a concrete user story<a class="headerlink" href="#contextual-validation-that-is-specific-to-a-concrete-user-story" title="Permalink to this headline">¶</a></h2>
 </div>
 </div>
 

@@ -74,43 +74,48 @@ Simplified, it roughly looks like that:
         }
     }
 
-Better: context-independent validation in domain objects
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-Often times, validation logic shawn in previous example gets out of control. In this case, it could be more
-beneficial to put it in domain object responsible for business-logic. It could look like the following (mind the naming:
-I renamed ``Order`` to ``OrderFromRequest``):
+Arguably better: context-independent validation in domain objects
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Often times, validation logic shawn in previous example gets out of control. In this case, it probably could be more
+beneficial to put it in domain object responsible for business-logic.
+Besides, traditionally, it is domain code that we developers tend to test-cover first.
+It could look like the following (mind the naming:
+I renamed ``Order`` to ``OrderFromRequest`` to stress the difference between it and domain order):
 
 .. code-block:: java
 
     public class DomainOrder
     {
-        public DomainOrder(OrderFromRequest orderFromRequest)
+        public DomainOrder(OrderFromRequest orderFromRequest, HttpTransport httpTransport, Repository repository)
         {
-
+            // set private fields
         }
 
         public boolean register()
         {
-            if (this.isValid()) {
-                // save in db
+            if (this.isRegisteredThroughSite() && this.isValidForRegistrationThroughSite()) {
+                // business logic 1
+            } else if (this.isRegisteredThroughAggreA() && this.isValidForRegistrationThroughAggreA()) {
+                // business logic 2
+            } else if (this.isRegisteredThroughAggreB() && this.isValidForRegistrationThroughAggreB()) {
+                // business logic 3
             }
         }
 
-        private boolean isValid()
+        private boolean isRegisteredThroughSite()
         {
-            if (orderFromRequest.getSource.equals(new Site())) {
-                return orderFromRequest.getPhone() != null || orderFromRequest.getEmail() != null;
-            } else if (orderFromRequest.getSource.equals(new AggreA())) {
-                return orderFromRequest.getPhone() != null;
-            } else if (orderFromRequest.getSource.equals(new AggreB())) {
-                return orderFromRequest.getEmail() != null;
-            }
+            return orderFromRequest.getSource.equals(new Site());
+        }
 
-            throw new Exception("Unknown source given");
+        private boolean isValidForRegistrationThroughSite()
+        {
+            return orderFromRequest.getPhone() != null || orderFromRequest.getEmail() != null;
         }
     }
 
+But the problem of collecting errors and mapping them to UI arises. To my knowledge, there is no clean solution for that.
 
-The best: contextual validation that is specific to a concrete user story
+
+Contextual validation that is specific to a concrete user story
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
