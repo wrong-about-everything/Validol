@@ -118,4 +118,131 @@ But the problem of collecting errors and mapping them to UI arises. To my knowle
 
 Contextual validation that is specific to a concrete user story
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+For me, validation serves a clear purpose: to tell clients what exactly is wrong with their requests.
+But what exactly should go to validation? It depends on your take on domain model. For me, objects in domain model
+represent context-independent "things" that can be orchestrated by a specific scenario in any possible way. They don't
+hold any context-specific constraints. They check only universal rules, the ones that simply **must** be true, otherwise
+that thing simply can't be that thing. This reflects an `always-valid approach <https://enterprisecraftsmanship.com/posts/always-valid-vs-not-always-valid-domain-model/>`_,
+when you simply can't create an object in an invalid state.
 
+For example, there is such thing as courier id. It can only consist of UUID value.
+And I'll definitely want to make sure that this is the case. It usually looks like the following:
+
+.. code-block:: java
+
+    public class CourierId
+    {
+        private String uuid;
+
+        public CourierId(String uuid)
+        {
+            if (/*not uuid*/) {
+                throw new Exception("uuid is invalid");
+            }
+
+            this.uuid = uuid;
+        }
+    }
+
+Introducing its own UUID interface with a couple of implementations would be even better:
+
+.. code-block:: java
+
+    public class FromString implements CourierId
+    {
+        private UUID uuid;
+
+        public FromString(UUID uuid)
+        {
+            this.uuid = uuid;
+        }
+
+        public String value()
+        {
+            return this.uuid.value();
+        }
+    }
+
+Typically, domain model invariants are quite basic and simple. All the other, more sophisticated context-specific checks
+belong to a specific controller (or Application service, or user-story). That's where `Validol <https://github.com/wrong-about-everything/Validol>`_
+comes in handy. You can first check basic, format-related validations, and proceed with however complicated ones.
+This could look as follows:
+
+.. code-block:: java
+    :linenos:
+
+    new FastFail<>(
+        new WellFormedJson(
+            new Unnamed<>(Either.right(new Present<>(this.jsonRequestString)))
+        ),
+        requestJsonObject ->
+            new UnnamedBlocOfNameds<>(
+                List.of(
+                    new RequiredNamedBlocOfCallback<>(
+                        "delivery",
+                        requestJsonObject,
+                        deliveryJsonElement ->
+                            new UnnamedBlocOfNameds<>(
+                                List.of(
+                                    new FastFail<>(
+                                        new IndexedValue("where", deliveryJsonElement),
+                                        whereJsonElement ->
+                                            new AddressIsAvailableForDelivery(
+                                                new NamedBlocOfNameds<>(
+                                                    "where",
+                                                    List.of(
+                                                        new AsString(
+                                                            new Required(
+                                                                new IndexedValue("street", whereJsonElement)
+                                                            )
+                                                        ),
+                                                        new AsInteger(
+                                                            new Required(
+                                                                new IndexedValue("building", whereJsonElement)
+                                                            )
+                                                        )
+                                                    ),
+                                                    Where.class
+                                                ),
+                                                this.dbConnection
+                                            )
+                                    ),
+                                    new FastFail<>(
+                                        new IndexedValue("when", deliveryJsonElement),
+                                        whenJsonElement ->
+                                            new TimeIsAvailable(
+                                                new NamedBlocOfNameds<>(
+                                                    "when",
+                                                    List.of(
+                                                        new AsDate(
+                                                            new AsString(
+                                                                new Required(
+                                                                    new IndexedValue("date", whenJsonElement)
+                                                                )
+                                                            ),
+                                                            new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+                                                        )
+                                                    ),
+                                                    DefaultWhen.class
+                                                ),
+                                                this.dbConnection
+                                            )
+                                    )
+                                ),
+                                CourierDelivery.class
+                            )
+                    )
+                ),
+                OrderRegistrationRequestData.class
+            )
+    )
+        .result();
+
+I admit it might look scary for anyone who sees the code for the first time and is totally unfamiliar with domain.
+Fear not, things are not so complicated. Let's consider what's going on line by line.
+
+``Lines 1-4``: check whether the input request data represents well-formed json. Otherwise, fail fast and return a respective error.
+
+``Line 5``: in case of well-formed json, a closure is invoked, and json data is passed.
+
+``Line 6``: json structure is declared. Higher-level structure is an unnamed block of named entities. It closely resembles a ``Map``.

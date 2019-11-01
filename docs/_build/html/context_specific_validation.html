@@ -137,6 +137,188 @@ I renamed <code class="docutils literal notranslate"><span class="pre">Order</sp
 </div>
 <div class="section" id="contextual-validation-that-is-specific-to-a-concrete-user-story">
 <h2>Contextual validation that is specific to a concrete user story<a class="headerlink" href="#contextual-validation-that-is-specific-to-a-concrete-user-story" title="Permalink to this headline">¶</a></h2>
+<p>For me, validation serves a clear purpose: to tell clients what exactly is wrong with their requests.
+But what exactly should go to validation? It depends on your take on domain model. For me, objects in domain model
+represent context-independent “things” that can be orchestrated by a specific scenario in any possible way. They don’t
+hold any context-specific constraints. They check only universal rules, the ones that simply <strong>must</strong> be true, otherwise
+that thing simply can’t be that thing. This reflects an <a class="reference external" href="https://enterprisecraftsmanship.com/posts/always-valid-vs-not-always-valid-domain-model/">always-valid approach</a>,
+when you simply can’t create an object in an invalid state.</p>
+<p>For example, there is such thing as courier id. It can only consist of UUID value.
+And I’ll definitely want to make sure that this is the case. It usually looks like the following:</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">CourierId</span>
+<span class="o">{</span>
+    <span class="kd">private</span> <span class="n">String</span> <span class="n">uuid</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nf">CourierId</span><span class="o">(</span><span class="n">String</span> <span class="n">uuid</span><span class="o">)</span>
+    <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="cm">/*not uuid*/</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">throw</span> <span class="k">new</span> <span class="n">Exception</span><span class="o">(</span><span class="s">&quot;uuid is invalid&quot;</span><span class="o">);</span>
+        <span class="o">}</span>
+
+        <span class="k">this</span><span class="o">.</span><span class="na">uuid</span> <span class="o">=</span> <span class="n">uuid</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>Introducing its own UUID interface with a couple of implementations would be even better:</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">FromString</span> <span class="kd">implements</span> <span class="n">CourierId</span>
+<span class="o">{</span>
+    <span class="kd">private</span> <span class="n">UUID</span> <span class="n">uuid</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nf">FromString</span><span class="o">(</span><span class="n">UUID</span> <span class="n">uuid</span><span class="o">)</span>
+    <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">uuid</span> <span class="o">=</span> <span class="n">uuid</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">value</span><span class="o">()</span>
+    <span class="o">{</span>
+        <span class="k">return</span> <span class="k">this</span><span class="o">.</span><span class="na">uuid</span><span class="o">.</span><span class="na">value</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>Typically, domain model invariants are quite basic and simple. All the other, more sophisticated context-specific checks
+belong to a specific controller (or Application service, or user-story). That’s where <a class="reference external" href="https://github.com/wrong-about-everything/Validol">Validol</a>
+comes in handy. You can first check basic, format-related validations, and proceed with however complicated ones.
+This could look as follows:</p>
+<div class="highlight-java notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">new</span> <span class="n">FastFail</span><span class="o">&lt;&gt;(</span>
+    <span class="k">new</span> <span class="n">WellFormedJson</span><span class="o">(</span>
+        <span class="k">new</span> <span class="n">Unnamed</span><span class="o">&lt;&gt;(</span><span class="n">Either</span><span class="o">.</span><span class="na">right</span><span class="o">(</span><span class="k">new</span> <span class="n">Present</span><span class="o">&lt;&gt;(</span><span class="k">this</span><span class="o">.</span><span class="na">jsonRequestString</span><span class="o">)))</span>
+    <span class="o">),</span>
+    <span class="n">requestJsonObject</span> <span class="o">-&gt;</span>
+        <span class="k">new</span> <span class="n">UnnamedBlocOfNameds</span><span class="o">&lt;&gt;(</span>
+            <span class="n">List</span><span class="o">.</span><span class="na">of</span><span class="o">(</span>
+                <span class="k">new</span> <span class="n">RequiredNamedBlocOfCallback</span><span class="o">&lt;&gt;(</span>
+                    <span class="s">&quot;delivery&quot;</span><span class="o">,</span>
+                    <span class="n">requestJsonObject</span><span class="o">,</span>
+                    <span class="n">deliveryJsonElement</span> <span class="o">-&gt;</span>
+                        <span class="k">new</span> <span class="n">UnnamedBlocOfNameds</span><span class="o">&lt;&gt;(</span>
+                            <span class="n">List</span><span class="o">.</span><span class="na">of</span><span class="o">(</span>
+                                <span class="k">new</span> <span class="n">FastFail</span><span class="o">&lt;&gt;(</span>
+                                    <span class="k">new</span> <span class="n">IndexedValue</span><span class="o">(</span><span class="s">&quot;where&quot;</span><span class="o">,</span> <span class="n">deliveryJsonElement</span><span class="o">),</span>
+                                    <span class="n">whereJsonElement</span> <span class="o">-&gt;</span>
+                                        <span class="k">new</span> <span class="n">AddressIsAvailableForDelivery</span><span class="o">(</span>
+                                            <span class="k">new</span> <span class="n">NamedBlocOfNameds</span><span class="o">&lt;&gt;(</span>
+                                                <span class="s">&quot;where&quot;</span><span class="o">,</span>
+                                                <span class="n">List</span><span class="o">.</span><span class="na">of</span><span class="o">(</span>
+                                                    <span class="k">new</span> <span class="n">AsString</span><span class="o">(</span>
+                                                        <span class="k">new</span> <span class="n">Required</span><span class="o">(</span>
+                                                            <span class="k">new</span> <span class="n">IndexedValue</span><span class="o">(</span><span class="s">&quot;street&quot;</span><span class="o">,</span> <span class="n">whereJsonElement</span><span class="o">)</span>
+                                                        <span class="o">)</span>
+                                                    <span class="o">),</span>
+                                                    <span class="k">new</span> <span class="n">AsInteger</span><span class="o">(</span>
+                                                        <span class="k">new</span> <span class="n">Required</span><span class="o">(</span>
+                                                            <span class="k">new</span> <span class="n">IndexedValue</span><span class="o">(</span><span class="s">&quot;building&quot;</span><span class="o">,</span> <span class="n">whereJsonElement</span><span class="o">)</span>
+                                                        <span class="o">)</span>
+                                                    <span class="o">)</span>
+                                                <span class="o">),</span>
+                                                <span class="n">Where</span><span class="o">.</span><span class="na">class</span>
+                                            <span class="o">),</span>
+                                            <span class="k">this</span><span class="o">.</span><span class="na">dbConnection</span>
+                                        <span class="o">)</span>
+                                <span class="o">),</span>
+                                <span class="k">new</span> <span class="n">FastFail</span><span class="o">&lt;&gt;(</span>
+                                    <span class="k">new</span> <span class="n">IndexedValue</span><span class="o">(</span><span class="s">&quot;when&quot;</span><span class="o">,</span> <span class="n">deliveryJsonElement</span><span class="o">),</span>
+                                    <span class="n">whenJsonElement</span> <span class="o">-&gt;</span>
+                                        <span class="k">new</span> <span class="n">TimeIsAvailable</span><span class="o">(</span>
+                                            <span class="k">new</span> <span class="n">NamedBlocOfNameds</span><span class="o">&lt;&gt;(</span>
+                                                <span class="s">&quot;when&quot;</span><span class="o">,</span>
+                                                <span class="n">List</span><span class="o">.</span><span class="na">of</span><span class="o">(</span>
+                                                    <span class="k">new</span> <span class="n">AsDate</span><span class="o">(</span>
+                                                        <span class="k">new</span> <span class="n">AsString</span><span class="o">(</span>
+                                                            <span class="k">new</span> <span class="n">Required</span><span class="o">(</span>
+                                                                <span class="k">new</span> <span class="n">IndexedValue</span><span class="o">(</span><span class="s">&quot;date&quot;</span><span class="o">,</span> <span class="n">whenJsonElement</span><span class="o">)</span>
+                                                            <span class="o">)</span>
+                                                        <span class="o">),</span>
+                                                        <span class="k">new</span> <span class="n">SimpleDateFormat</span><span class="o">(</span><span class="s">&quot;yyyy-MM-dd HH:mm:ss&quot;</span><span class="o">)</span>
+                                                    <span class="o">)</span>
+                                                <span class="o">),</span>
+                                                <span class="n">DefaultWhen</span><span class="o">.</span><span class="na">class</span>
+                                            <span class="o">),</span>
+                                            <span class="k">this</span><span class="o">.</span><span class="na">dbConnection</span>
+                                        <span class="o">)</span>
+                                <span class="o">)</span>
+                            <span class="o">),</span>
+                            <span class="n">CourierDelivery</span><span class="o">.</span><span class="na">class</span>
+                        <span class="o">)</span>
+                <span class="o">)</span>
+            <span class="o">),</span>
+            <span class="n">OrderRegistrationRequestData</span><span class="o">.</span><span class="na">class</span>
+        <span class="o">)</span>
+<span class="o">)</span>
+    <span class="o">.</span><span class="na">result</span><span class="o">();</span>
+</pre></div>
+</td></tr></table></div>
+<p>I admit it might look scary for anyone who sees the code for the first time and is totally unfamiliar with domain.
+Fear not, things are not so complicated. Let’s consider what’s going on line by line.</p>
+<p><code class="docutils literal notranslate"><span class="pre">Lines</span> <span class="pre">1-4</span></code>: check whether the input request data represents well-formed json. Otherwise, fail fast and return a respective error.</p>
+<p><code class="docutils literal notranslate"><span class="pre">Line</span> <span class="pre">5</span></code>: in case of well-formed json, a closure is invoked, and json data is passed.</p>
+<p><code class="docutils literal notranslate"><span class="pre">Line</span> <span class="pre">6</span></code>: json structure is declared. Higher-level structure is an unnamed block of named entities. It closely resembles a <code class="docutils literal notranslate"><span class="pre">Map</span></code>.</p>
 </div>
 </div>
 
