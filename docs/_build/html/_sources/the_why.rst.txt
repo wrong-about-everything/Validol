@@ -30,7 +30,3 @@ Postel's law
 --------------
 User stories can accept any data. What they validate is only the data they actually are able to work with.
 Validation doesn't postulate a strict schema. So if there is some field that is not needed, validation would pass.
-
-FAQ
--------
-Stack overflow questions

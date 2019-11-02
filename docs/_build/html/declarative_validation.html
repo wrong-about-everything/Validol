@@ -16,7 +16,7 @@
     <script type="text/javascript" src="_static/language_data.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Context-specific validation" href="context_specific_validation.html" />
+    <link rel="next" title="Contextual validation" href="context_specific_validation.html" />
     <link rel="prev" title="The Why" href="the_why.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
@@ -153,7 +153,128 @@ JSON structure looks the following:</p>
 <p>The semantics basically doesn’t really matter, though you can guess that it has something to do with food delivery order registration.
 Schema is quite large. Typically, validation code is less then clear.
 Here is the declarative validation composite with <a class="reference external" href="https://https://github.com/wrong-about-everything/Validol/">Validol library</a>:</p>
-<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="k">new</span> <span class="n">FastFail</span><span class="o">&lt;&gt;(</span>
+<div class="highlight-java notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>  1
+  2
+  3
+  4
+  5
+  6
+  7
+  8
+  9
+ 10
+ 11
+ 12
+ 13
+ 14
+ 15
+ 16
+ 17
+ 18
+ 19
+ 20
+ 21
+ 22
+ 23
+ 24
+ 25
+ 26
+ 27
+ 28
+ 29
+ 30
+ 31
+ 32
+ 33
+ 34
+ 35
+ 36
+ 37
+ 38
+ 39
+ 40
+ 41
+ 42
+ 43
+ 44
+ 45
+ 46
+ 47
+ 48
+ 49
+ 50
+ 51
+ 52
+ 53
+ 54
+ 55
+ 56
+ 57
+ 58
+ 59
+ 60
+ 61
+ 62
+ 63
+ 64
+ 65
+ 66
+ 67
+ 68
+ 69
+ 70
+ 71
+ 72
+ 73
+ 74
+ 75
+ 76
+ 77
+ 78
+ 79
+ 80
+ 81
+ 82
+ 83
+ 84
+ 85
+ 86
+ 87
+ 88
+ 89
+ 90
+ 91
+ 92
+ 93
+ 94
+ 95
+ 96
+ 97
+ 98
+ 99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">new</span> <span class="n">FastFail</span><span class="o">&lt;&gt;(</span>
     <span class="k">new</span> <span class="n">WellFormedJson</span><span class="o">(</span>
         <span class="k">new</span> <span class="n">Unnamed</span><span class="o">&lt;&gt;(</span><span class="n">Either</span><span class="o">.</span><span class="na">right</span><span class="o">(</span><span class="k">new</span> <span class="n">Present</span><span class="o">&lt;&gt;(</span><span class="k">this</span><span class="o">.</span><span class="na">jsonRequestString</span><span class="o">)))</span>
     <span class="o">),</span>
@@ -276,7 +397,7 @@ Here is the declarative validation composite with <a class="reference external" 
 <span class="o">)</span>
     <span class="o">.</span><span class="na">result</span><span class="o">()</span>
 </pre></div>
-</div>
+</td></tr></table></div>
 <p>What catches the eye first? There are plenty of <code class="docutils literal notranslate"><span class="pre">FastFail</span></code> gizmos. This class accepts exactly two arguments:
 validatable element and closure. Whether the first parameter results in true, the second closure is invoked.
 The typical cases are just as in an example:</p>
@@ -320,6 +441,7 @@ like the following:</p>
 <span class="o">)</span>
 </pre></div>
 </div>
+<p>&#64;TODO: ADD LINE-BY-LINE ANALYSIS</p>
 <p>If you have a block structure that depends on passed type (like <code class="docutils literal notranslate"><span class="pre">type_id</span></code>), <code class="docutils literal notranslate"><span class="pre">SwitchTrue</span></code> is your friend. It represents a sort of declarative
 switch-case expression, where the value checked against is always <code class="docutils literal notranslate"><span class="pre">true</span></code> (hence the name, <code class="docutils literal notranslate"><span class="pre">SwitchTrue</span></code>).</p>
 <p>If everything’s successful, you get a data object reflecting the request structure, with type hinted values:</p>
@@ -364,7 +486,7 @@ switch-case expression, where the value checked against is always <code class="d
 <h3>Navigation</h3>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">It’s declarative</a></li>
-<li class="toctree-l1"><a class="reference internal" href="context_specific_validation.html">Context-specific validation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="context_specific_validation.html">Contextual validation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="extendable_validation.html">Infinitely-extendable</a></li>
 <li class="toctree-l1"><a class="reference internal" href="the_why.html">The Why</a></li>
 <li class="toctree-l1"><a class="reference internal" href="the_how.html">The How</a></li>
@@ -376,7 +498,7 @@ switch-case expression, where the value checked against is always <code class="d
   <li><a href="index.html">Documentation overview</a><ul>
   <li><a href="the_why.html">The Why</a><ul>
       <li>Previous: <a href="the_why.html" title="previous chapter">The Why</a></li>
-      <li>Next: <a href="context_specific_validation.html" title="next chapter">Context-specific validation</a></li>
+      <li>Next: <a href="context_specific_validation.html" title="next chapter">Contextual validation</a></li>
   </ul></li>
   </ul></li>
 </ul>

@@ -138,6 +138,7 @@ Schema is quite large. Typically, validation code is less then clear.
 Here is the declarative validation composite with `Validol library <https://https://github.com/wrong-about-everything/Validol/>`_:
 
 .. code-block:: java
+    :linenos:
 
     new FastFail<>(
         new WellFormedJson(
@@ -304,6 +305,8 @@ like the following:
                 OrderRegistrationRequestData.class
             )
     )
+
+@TODO: ADD LINE-BY-LINE ANALYSIS
 
 If you have a block structure that depends on passed type (like ``type_id``), ``SwitchTrue`` is your friend. It represents a sort of declarative
 switch-case expression, where the value checked against is always ``true`` (hence the name, ``SwitchTrue``).

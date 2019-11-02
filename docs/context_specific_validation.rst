@@ -166,7 +166,19 @@ Introducing its own UUID interface with a couple of implementations would be eve
 Typically, domain model invariants are quite basic and simple. All the other, more sophisticated context-specific checks
 belong to a specific controller (or Application service, or user-story). That's where `Validol <https://github.com/wrong-about-everything/Validol>`_
 comes in handy. You can first check basic, format-related validations, and proceed with however complicated ones.
-This could look as follows:
+
+Consider the following JSON request:
+
+.. code-block:: java
+
+    {
+       "where":{
+          "building":1,
+          "street":"Red Square"
+       }
+    }
+
+Validation could look like that:
 
 .. code-block:: java
     :linenos:
@@ -178,52 +190,38 @@ This could look as follows:
         requestJsonObject ->
             new UnnamedBlocOfNameds<>(
                 List.of(
-                    new RequiredNamedBlocOfCallback<>(
-                        "delivery",
-                        requestJsonObject,
-                        deliveryJsonElement ->
-                            new UnnamedBlocOfNameds<>(
+                    new FastFail<>(
+                        new IsJsonObject(
+                            new Required(
+                                new IndexedValue("delivery", requestJsonObject)
+                            )
+                        ),
+                        deliveryJsonObject ->
+                            new NamedBlocOfNameds<>(
+                                "delivery",
                                 List.of(
                                     new FastFail<>(
-                                        new IndexedValue("where", deliveryJsonElement),
+                                        new IndexedValue("where", deliveryJsonObject),
                                         whereJsonElement ->
-                                            new AddressIsAvailableForDelivery(
-                                                new NamedBlocOfNameds<>(
-                                                    "where",
-                                                    List.of(
-                                                        new AsString(
-                                                            new Required(
-                                                                new IndexedValue("street", whereJsonElement)
-                                                            )
-                                                        ),
-                                                        new AsInteger(
-                                                            new Required(
-                                                                new IndexedValue("building", whereJsonElement)
-                                                            )
-                                                        )
-                                                    ),
-                                                    Where.class
-                                                ),
-                                                this.dbConnection
-                                            )
-                                    ),
-                                    new FastFail<>(
-                                        new IndexedValue("when", deliveryJsonElement),
-                                        whenJsonElement ->
-                                            new TimeIsAvailable(
-                                                new NamedBlocOfNameds<>(
-                                                    "when",
-                                                    List.of(
-                                                        new AsDate(
+                                            new AddressWithEligibleCourierDelivery<>(
+                                                new ExistingAddress<>(
+                                                    new NamedBlocOfNameds<>(
+                                                        "where",
+                                                        List.of(
                                                             new AsString(
                                                                 new Required(
-                                                                    new IndexedValue("date", whenJsonElement)
+                                                                    new IndexedValue("street", whereJsonElement)
                                                                 )
                                                             ),
-                                                            new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
-                                                        )
+                                                            new AsInteger(
+                                                                new Required(
+                                                                    new IndexedValue("building", whereJsonElement)
+                                                                )
+                                                            )
+                                                        ),
+                                                        Where.class
                                                     ),
-                                                    DefaultWhen.class
+                                                    this.httpTransport
                                                 ),
                                                 this.dbConnection
                                             )
@@ -241,8 +239,32 @@ This could look as follows:
 I admit it might look scary for anyone who sees the code for the first time and is totally unfamiliar with domain.
 Fear not, things are not so complicated. Let's consider what's going on line by line.
 
-``Lines 1-4``: check whether the input request data represents well-formed json. Otherwise, fail fast and return a respective error.
+| ``Lines 1-4``: check whether the input request data represents well-formed json. Otherwise, fail fast and return a corresponding error.
+| ``Line 5``: in case of well-formed json, a closure is invoked, and json data is passed.
+| ``Line 6``: json structure is validated. Higher-level structure is an unnamed block of named entities. It closely resembles a ``Map``.
+| ``Line 7``: A list with a single named block is implied.
+| ``Line 11``: It's called ``delivery``.
+| ``Line 10``: It's required.
+| ``Line 9``: It must represent a json object.
+| ``Line 14``: If all previous conditions are satisfied, closure is invoked. Otherwise, this whole things fails fast and returns an appropriate error.
+| ``Line 15``: A block named ``delivery`` consists of other named entities.
+| ``Line 19``: Namely, ``where`` block. It's not required though.
+| ``Line 20``: If it's present, closure is invoked.
+| ``Line 23``: Block named ``where`` consists of other named entities.
+| ``Line 28``: Namely, ``street``, which is ...
+|  ``Line 27``: ... required;
+|  ``Line 26``: and is represented as string.
+| ``Line 33``: and ``building``, which is ...
+|  ``Line 32``: required as well;
+|  ``Line 31``: and should be represented as integer.
+| ``Line 37``: if all previous checks are successfull, an object of class ``Where`` is created. To be honest, it's not a full-fledged object. It's just a data-structure with convenient, type-hinted and IDE-autocompleted access to its fields.
+| ``Line 22``: if underlying checks are passed, an address is ensured to exist. Mind the second argument, ``httpTransport``. It's for requesting some third-party service which checks an address existence.
+| ``Line 21``: Aaaand, finally, we want to ensure that courier delivery is enabled in that area. We'll need a database access for that, hence ``dbConnection`` argument.
+| ``Line 45``: If everything was fine, a ``CourierDelivery`` object is created. It has a single argument, ``Where``.
+| ``Line 49``: Finally, ``OrderRegistrationRequestData`` is created and returned.
 
-``Line 5``: in case of well-formed json, a closure is invoked, and json data is passed.
+So that's pretty much it. This approach might (and actually does) look like an overkill with such a simple request,
+though it shines with more complicated ones.
 
-``Line 6``: json structure is declared. Higher-level structure is an unnamed block of named entities. It closely resembles a ``Map``.
+I've intentionally put all the validating code in a single class. If the data-structure is really complex,
+I'd recommend to create a class per block. Check an example `here <https://github.com/wrong-about-everything/Validol/blob/master/src/test/java/example/correct/split/ValidatedOrderRegistrationRequest.java>`_.

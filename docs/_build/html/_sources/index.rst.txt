@@ -12,6 +12,8 @@ in virtue of declarative style.
 
    the_why
    the_how
+   FAQ
+   quick_start
 
 Indices and tables
 ==================
