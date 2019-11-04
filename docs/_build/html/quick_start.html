@@ -188,7 +188,318 @@
             
   <div class="section" id="validol-quick-start">
 <h1>Validol Quick start<a class="headerlink" href="#validol-quick-start" title="Permalink to this headline">¶</a></h1>
-<p>Let’s start with an example right away.</p>
+<p>Let’s start with an example of what <a class="reference external" href="https://https://github.com/wrong-about-everything/Validol/">Validol</a> can do.
+Here I’ll describe features that will be enough for you in most of the cases.</p>
+<p>Consider the following JSON schema:</p>
+<div class="highlight-JSON notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+   <span class="nt">&quot;guest&quot;</span><span class="p">:{</span>
+      <span class="nt">&quot;phone&quot;</span><span class="p">:</span><span class="s2">&quot;+44123456789&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;Vasily Belov&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;email&quot;</span><span class="p">:</span><span class="s2">&quot;vasya@belov.com&quot;</span>
+   <span class="p">},</span>
+   <span class="nt">&quot;bag&quot;</span><span class="p">:{</span>
+      <span class="nt">&quot;items&quot;</span><span class="p">:[</span>
+         <span class="p">{</span>
+            <span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="mi">888</span>
+         <span class="p">},</span>
+         <span class="p">{</span>
+            <span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="mi">777</span>
+         <span class="p">}</span>
+      <span class="p">],</span>
+      <span class="nt">&quot;discount&quot;</span><span class="p">:{</span>
+         <span class="nt">&quot;promo_code&quot;</span><span class="p">:</span><span class="s2">&quot;VASYA1988&quot;</span>
+      <span class="p">},</span>
+      <span class="nt">&quot;served_for&quot;</span><span class="p">:</span><span class="mi">3</span>
+   <span class="p">},</span>
+   <span class="nt">&quot;delivery&quot;</span><span class="p">:{</span>
+      <span class="nt">&quot;type_id&quot;</span><span class="p">:</span><span class="mi">20</span><span class="p">,</span>
+      <span class="nt">&quot;where&quot;</span><span class="p">:{</span>
+         <span class="nt">&quot;restaurant_id&quot;</span><span class="p">:</span><span class="mi">1</span>
+      <span class="p">},</span>
+      <span class="nt">&quot;when&quot;</span><span class="p">:{</span>
+         <span class="nt">&quot;datetime&quot;</span><span class="p">:</span><span class="s2">&quot;2019-10-23T08:33:11.798400+00:00&quot;</span>
+      <span class="p">},</span>
+      <span class="nt">&quot;from_where&quot;</span><span class="p">:{</span>
+         <span class="nt">&quot;restaurant_id&quot;</span><span class="p">:</span><span class="mi">1</span>
+      <span class="p">}</span>
+   <span class="p">},</span>
+   <span class="nt">&quot;payment&quot;</span><span class="p">:{</span>
+      <span class="nt">&quot;type_id&quot;</span><span class="p">:</span><span class="mi">30</span>
+   <span class="p">},</span>
+   <span class="nt">&quot;source&quot;</span><span class="p">:</span><span class="mi">20</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>This is a request that clearly has something to do with food order delivery. There must be plenty of things to validate before an order will be registered.
+First, take a really deep breath and have a glance at the whole picture.</p>
+<div class="highlight-java notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>  1
+  2
+  3
+  4
+  5
+  6
+  7
+  8
+  9
+ 10
+ 11
+ 12
+ 13
+ 14
+ 15
+ 16
+ 17
+ 18
+ 19
+ 20
+ 21
+ 22
+ 23
+ 24
+ 25
+ 26
+ 27
+ 28
+ 29
+ 30
+ 31
+ 32
+ 33
+ 34
+ 35
+ 36
+ 37
+ 38
+ 39
+ 40
+ 41
+ 42
+ 43
+ 44
+ 45
+ 46
+ 47
+ 48
+ 49
+ 50
+ 51
+ 52
+ 53
+ 54
+ 55
+ 56
+ 57
+ 58
+ 59
+ 60
+ 61
+ 62
+ 63
+ 64
+ 65
+ 66
+ 67
+ 68
+ 69
+ 70
+ 71
+ 72
+ 73
+ 74
+ 75
+ 76
+ 77
+ 78
+ 79
+ 80
+ 81
+ 82
+ 83
+ 84
+ 85
+ 86
+ 87
+ 88
+ 89
+ 90
+ 91
+ 92
+ 93
+ 94
+ 95
+ 96
+ 97
+ 98
+ 99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">new</span> <span class="n">FastFail</span><span class="o">&lt;&gt;(</span>
+    <span class="k">new</span> <span class="n">WellFormedJson</span><span class="o">(</span>
+        <span class="k">new</span> <span class="n">Unnamed</span><span class="o">&lt;&gt;(</span><span class="n">Either</span><span class="o">.</span><span class="na">right</span><span class="o">(</span><span class="k">new</span> <span class="n">Present</span><span class="o">&lt;&gt;(</span><span class="k">this</span><span class="o">.</span><span class="na">jsonRequestString</span><span class="o">)))</span>
+    <span class="o">),</span>
+    <span class="n">requestJsonObject</span> <span class="o">-&gt;</span>
+        <span class="k">new</span> <span class="n">UnnamedBlocOfNameds</span><span class="o">&lt;&gt;(</span>
+            <span class="n">List</span><span class="o">.</span><span class="na">of</span><span class="o">(</span>
+                <span class="k">new</span> <span class="n">FastFail</span><span class="o">&lt;&gt;(</span>
+                    <span class="k">new</span> <span class="n">IsJsonObject</span><span class="o">(</span>
+                        <span class="k">new</span> <span class="n">Required</span><span class="o">(</span>
+                            <span class="k">new</span> <span class="n">IndexedValue</span><span class="o">(</span><span class="s">&quot;guest&quot;</span><span class="o">,</span> <span class="n">requestJsonObject</span><span class="o">)</span>
+                        <span class="o">)</span>
+                    <span class="o">),</span>
+                    <span class="n">guestJsonObject</span> <span class="o">-&gt;</span>
+                        <span class="k">new</span> <span class="n">NamedBlocOfNameds</span><span class="o">&lt;&gt;(</span>
+                            <span class="s">&quot;guest&quot;</span><span class="o">,</span>
+                            <span class="n">List</span><span class="o">.</span><span class="na">of</span><span class="o">(</span>
+                                <span class="k">new</span> <span class="n">AsString</span><span class="o">(</span>
+                                    <span class="k">new</span> <span class="n">Required</span><span class="o">(</span>
+                                        <span class="k">new</span> <span class="n">IndexedValue</span><span class="o">(</span><span class="s">&quot;email&quot;</span><span class="o">,</span> <span class="n">guestJsonObject</span><span class="o">)</span>
+                                    <span class="o">)</span>
+                                <span class="o">),</span>
+                                <span class="k">new</span> <span class="n">AsString</span><span class="o">(</span>
+                                    <span class="k">new</span> <span class="n">Required</span><span class="o">(</span>
+                                        <span class="k">new</span> <span class="n">IndexedValue</span><span class="o">(</span><span class="s">&quot;name&quot;</span><span class="o">,</span> <span class="n">guestJsonObject</span><span class="o">)</span>
+                                    <span class="o">)</span>
+                                <span class="o">)</span>
+                            <span class="o">),</span>
+                            <span class="n">Guest</span><span class="o">.</span><span class="na">class</span>
+                        <span class="o">)</span>
+                <span class="o">),</span>
+                <span class="k">new</span> <span class="n">FastFail</span><span class="o">&lt;&gt;(</span>
+                    <span class="k">new</span> <span class="n">Required</span><span class="o">(</span>
+                        <span class="k">new</span> <span class="n">IndexedValue</span><span class="o">(</span><span class="s">&quot;items&quot;</span><span class="o">,</span> <span class="n">requestJsonObject</span><span class="o">)</span>
+                    <span class="o">),</span>
+                    <span class="n">itemsJsonElement</span> <span class="o">-&gt;</span>
+                        <span class="k">new</span> <span class="n">NamedBlocOfUnnameds</span><span class="o">&lt;&gt;(</span>
+                            <span class="s">&quot;items&quot;</span><span class="o">,</span>
+                            <span class="n">itemsJsonElement</span><span class="o">,</span>
+                            <span class="n">item</span> <span class="o">-&gt;</span>
+                                <span class="k">new</span> <span class="n">UnnamedBlocOfNameds</span><span class="o">&lt;&gt;(</span>
+                                    <span class="n">List</span><span class="o">.</span><span class="na">of</span><span class="o">(</span>
+                                        <span class="k">new</span> <span class="n">AsInteger</span><span class="o">(</span>
+                                            <span class="k">new</span> <span class="n">Required</span><span class="o">(</span>
+                                                <span class="k">new</span> <span class="n">IndexedValue</span><span class="o">(</span><span class="s">&quot;id&quot;</span><span class="o">,</span> <span class="n">item</span><span class="o">)</span>
+                                            <span class="o">)</span>
+                                        <span class="o">)</span>
+                                    <span class="o">),</span>
+                                    <span class="n">Item</span><span class="o">.</span><span class="na">class</span>
+                                <span class="o">),</span>
+                            <span class="n">Items</span><span class="o">.</span><span class="na">class</span>
+                        <span class="o">)</span>
+                <span class="o">),</span>
+                <span class="k">new</span> <span class="n">FastFail</span><span class="o">&lt;&gt;(</span>
+                    <span class="k">new</span> <span class="n">Required</span><span class="o">(</span>
+                        <span class="k">new</span> <span class="n">IndexedValue</span><span class="o">(</span><span class="s">&quot;delivery&quot;</span><span class="o">,</span> <span class="n">requestJsonObject</span><span class="o">)</span>
+                    <span class="o">),</span>
+                    <span class="n">deliveryJsonElement</span> <span class="o">-&gt;</span>
+                        <span class="k">new</span> <span class="n">SwitchTrue</span><span class="o">&lt;&gt;(</span>
+                            <span class="s">&quot;delivery&quot;</span><span class="o">,</span>
+                            <span class="n">List</span><span class="o">.</span><span class="na">of</span><span class="o">(</span>
+                                <span class="k">new</span> <span class="n">Specific</span><span class="o">&lt;&gt;(</span>
+                                    <span class="c1">// Here goes the condition whether this order should be delivered by courier or picked up.</span>
+                                    <span class="c1">// It&#39;s omitted for brevity.</span>
+                                    <span class="o">()</span> <span class="o">-&gt;</span> <span class="kc">true</span><span class="o">,</span>
+                                    <span class="k">new</span> <span class="n">UnnamedBlocOfNameds</span><span class="o">&lt;&gt;(</span>
+                                        <span class="n">List</span><span class="o">.</span><span class="na">of</span><span class="o">(</span>
+                                            <span class="k">new</span> <span class="n">FastFail</span><span class="o">&lt;&gt;(</span>
+                                                <span class="k">new</span> <span class="n">IndexedValue</span><span class="o">(</span><span class="s">&quot;where&quot;</span><span class="o">,</span> <span class="n">deliveryJsonElement</span><span class="o">),</span>
+                                                <span class="n">whereJsonElement</span> <span class="o">-&gt;</span>
+                                                    <span class="k">new</span> <span class="n">NamedBlocOfNameds</span><span class="o">&lt;&gt;(</span>
+                                                        <span class="s">&quot;where&quot;</span><span class="o">,</span>
+                                                        <span class="n">List</span><span class="o">.</span><span class="na">of</span><span class="o">(</span>
+                                                            <span class="k">new</span> <span class="n">AsString</span><span class="o">(</span>
+                                                                <span class="k">new</span> <span class="n">Required</span><span class="o">(</span>
+                                                                    <span class="k">new</span> <span class="n">IndexedValue</span><span class="o">(</span><span class="s">&quot;street&quot;</span><span class="o">,</span> <span class="n">whereJsonElement</span><span class="o">)</span>
+                                                                <span class="o">)</span>
+                                                            <span class="o">),</span>
+                                                            <span class="k">new</span> <span class="n">AsInteger</span><span class="o">(</span>
+                                                                <span class="k">new</span> <span class="n">Required</span><span class="o">(</span>
+                                                                    <span class="k">new</span> <span class="n">IndexedValue</span><span class="o">(</span><span class="s">&quot;building&quot;</span><span class="o">,</span> <span class="n">whereJsonElement</span><span class="o">)</span>
+                                                                <span class="o">)</span>
+                                                            <span class="o">)</span>
+                                                        <span class="o">),</span>
+                                                        <span class="n">Where</span><span class="o">.</span><span class="na">class</span>
+                                                    <span class="o">)</span>
+                                            <span class="o">),</span>
+                                            <span class="k">new</span> <span class="n">FastFail</span><span class="o">&lt;&gt;(</span>
+                                                <span class="k">new</span> <span class="n">IndexedValue</span><span class="o">(</span><span class="s">&quot;when&quot;</span><span class="o">,</span> <span class="n">deliveryJsonElement</span><span class="o">),</span>
+                                                <span class="n">whenJsonElement</span> <span class="o">-&gt;</span>
+                                                    <span class="k">new</span> <span class="n">NamedBlocOfNameds</span><span class="o">&lt;&gt;(</span>
+                                                        <span class="s">&quot;when&quot;</span><span class="o">,</span>
+                                                        <span class="n">List</span><span class="o">.</span><span class="na">of</span><span class="o">(</span>
+                                                            <span class="k">new</span> <span class="n">AsDate</span><span class="o">(</span>
+                                                                <span class="k">new</span> <span class="n">AsString</span><span class="o">(</span>
+                                                                    <span class="k">new</span> <span class="n">Required</span><span class="o">(</span>
+                                                                        <span class="k">new</span> <span class="n">IndexedValue</span><span class="o">(</span><span class="s">&quot;date&quot;</span><span class="o">,</span> <span class="n">whenJsonElement</span><span class="o">)</span>
+                                                                    <span class="o">)</span>
+                                                                <span class="o">),</span>
+                                                                <span class="k">new</span> <span class="n">SimpleDateFormat</span><span class="o">(</span><span class="s">&quot;yyyy-MM-dd HH:mm:ss&quot;</span><span class="o">)</span>
+                                                            <span class="o">)</span>
+                                                        <span class="o">),</span>
+                                                        <span class="n">DefaultWhen</span><span class="o">.</span><span class="na">class</span>
+                                                    <span class="o">)</span>
+                                            <span class="o">)</span>
+                                        <span class="o">),</span>
+                                        <span class="n">CourierDelivery</span><span class="o">.</span><span class="na">class</span>
+                                    <span class="o">)</span>
+                                <span class="o">)</span>
+                            <span class="o">)</span>
+                        <span class="o">)</span>
+                <span class="o">),</span>
+                <span class="k">new</span> <span class="n">AsInteger</span><span class="o">(</span>
+                    <span class="k">new</span> <span class="n">Required</span><span class="o">(</span>
+                        <span class="k">new</span> <span class="n">IndexedValue</span><span class="o">(</span><span class="s">&quot;source&quot;</span><span class="o">,</span> <span class="n">requestJsonObject</span><span class="o">)</span>
+                    <span class="o">)</span>
+                <span class="o">)</span>
+            <span class="o">),</span>
+            <span class="n">OrderRegistrationRequestData</span><span class="o">.</span><span class="na">class</span>
+        <span class="o">)</span>
+<span class="o">)</span>
+    <span class="o">.</span><span class="na">result</span><span class="o">()</span>
+</pre></div>
+</td></tr></table></div>
+<p>Fancy some line-by-line analysis? Here it goes:</p>
+<div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">Lines</span> <span class="pre">1-4</span></code>: check whether the input request data represents well-formed json. Otherwise, fail fast and return a corresponding error.</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">Line</span> <span class="pre">5</span></code>: if json is well-formed , a closure is invoked, and json data is passed.</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">Line</span> <span class="pre">6</span></code>: json structure is validated. Higher-level structure is an unnamed block of named entities.</div>
+<div class="line">It corresponds to higher level json request with the following keys <code class="docutils literal notranslate"><span class="pre">guest</span></code>, <code class="docutils literal notranslate"><span class="pre">bag</span></code>, <code class="docutils literal notranslate"><span class="pre">delivery</span></code>, <code class="docutils literal notranslate"><span class="pre">payment</span></code>, and <code class="docutils literal notranslate"><span class="pre">source</span></code>.</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">Line</span> <span class="pre">7</span></code>: A list of validatable elements, the ones corresponding to respective higher-level keys.</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">Line</span> <span class="pre">11</span></code>: The first one is <code class="docutils literal notranslate"><span class="pre">guest</span></code>;</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">Line</span> <span class="pre">10</span></code>: and it’s required.</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">Line</span> <span class="pre">9</span></code>: It must be a json object – neither a primitive, nor an array.</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">Line</span> <span class="pre">8</span></code>: If any of previous checks fail (either there is no such key <code class="docutils literal notranslate"><span class="pre">guest</span></code> or it’s not a json object), then do it fast, don’t dive any deeper. Move on to the next element.</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">Line</span> <span class="pre">14</span></code>: If all previous conditions are satisfied, closure is invoked. The single argument is a json object corresponding to <code class="docutils literal notranslate"><span class="pre">guest</span></code> element.</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">Lines</span> <span class="pre">15-16</span></code>: A block named <code class="docutils literal notranslate"><span class="pre">guest</span></code> consists of other named entities.</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">Line</span> <span class="pre">20</span></code>: The first one is an email;</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">Line</span> <span class="pre">19</span></code>: it’s required;</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">Line</span> <span class="pre">18</span></code>: and should be represented as string.</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">Line</span> <span class="pre">25</span></code>: The second one is an name;</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">Line</span> <span class="pre">24</span></code>: it’s required as well;</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">Line</span> <span class="pre">23</span></code>: and should be represented as string either.</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">Line</span> <span class="pre">29</span></code>: If all validatable elements in current named block are valid, then an object of class <code class="docutils literal notranslate"><span class="pre">Guest</span></code> will be returned.</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">Lines</span> <span class="pre">32-35</span></code>: Already familiar fast-failing block named <code class="docutils literal notranslate"><span class="pre">items</span></code>. Mind the absense of structure validation. If <code class="docutils literal notranslate"><span class="pre">items</span></code> element will be a string, subsequent validation breaks not-so-gracefully.</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">Line</span> <span class="pre">36</span></code>: If <code class="docutils literal notranslate"><span class="pre">items</span></code> block is present, closure is invoked.</div>
+</div>
 </div>
 
 

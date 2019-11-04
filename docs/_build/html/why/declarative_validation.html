@@ -302,7 +302,8 @@ JSON structure looks the following:</p>
 </div>
 <p>The semantics basically doesn’t really matter, though you can guess that it has something to do with food delivery order registration.
 Schema is quite large. Typically, validation code is less then clear.
-Here is the declarative validation composite with <a class="reference external" href="https://https://github.com/wrong-about-everything/Validol/">Validol library</a>:</p>
+Here is the declarative validation composite with <a class="reference external" href="https://https://github.com/wrong-about-everything/Validol/">Validol library</a>
+(check <a class="reference internal" href="../quick_start.html"><span class="doc">Validol’s Quick start page</span></a> for a line-by-line analysis, it’s not as scary as you imagine):</p>
 <div class="highlight-java notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>  1
   2
   3
@@ -591,7 +592,6 @@ like the following:</p>
 <span class="o">)</span>
 </pre></div>
 </div>
-<p>&#64;TODO: ADD LINE-BY-LINE ANALYSIS</p>
 <p>If you have a block structure that depends on passed type (like <code class="docutils literal notranslate"><span class="pre">type_id</span></code>), <code class="docutils literal notranslate"><span class="pre">SwitchTrue</span></code> is your friend. It represents a sort of declarative
 switch-case expression, where the value checked against is always <code class="docutils literal notranslate"><span class="pre">true</span></code> (hence the name, <code class="docutils literal notranslate"><span class="pre">SwitchTrue</span></code>).</p>
 <p>If everything’s successful, you get a data object reflecting the request structure, with type hinted values:</p>

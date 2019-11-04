@@ -133,7 +133,8 @@ JSON structure looks the following:
 
 The semantics basically doesn't really matter, though you can guess that it has something to do with food delivery order registration.
 Schema is quite large. Typically, validation code is less then clear.
-Here is the declarative validation composite with `Validol library <https://https://github.com/wrong-about-everything/Validol/>`_:
+Here is the declarative validation composite with `Validol library <https://https://github.com/wrong-about-everything/Validol/>`_
+(check :doc:`Validol's Quick start page <../quick_start>` for a line-by-line analysis, it's not as scary as you imagine):
 
 .. code-block:: java
     :linenos:
@@ -303,8 +304,6 @@ like the following:
                 OrderRegistrationRequestData.class
             )
     )
-
-@TODO: ADD LINE-BY-LINE ANALYSIS
 
 If you have a block structure that depends on passed type (like ``type_id``), ``SwitchTrue`` is your friend. It represents a sort of declarative
 switch-case expression, where the value checked against is always ``true`` (hence the name, ``SwitchTrue``).
