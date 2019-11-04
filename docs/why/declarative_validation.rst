@@ -1,6 +1,4 @@
-.. toctree::
-
-It's declarative
+Declarative validation
 ------------------------------------
 What is declarative?
 ^^^^^^^^^^^^^^^^^^^^
@@ -10,7 +8,7 @@ specify the steps needed to reach its goal.
 Wikipedia has a bit more formal definition, yet still readable:
 Declarative programming is a programming paradigm — a style of building the structure and elements of computer programs — that expresses the logic of a computation without describing its control flow.
 
-As we see, declarative programming has nothing to do with the language. You can use dense imperative code in Haskell. You can write declarative code in PHP.
+As we see, declarative programming has nothing to do with the language. You may very well use dense imperative code in Haskell. You can write declarative code in PHP.
 
 It does have something to do with you though.
 

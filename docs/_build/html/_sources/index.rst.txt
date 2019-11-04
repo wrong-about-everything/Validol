@@ -1,23 +1,21 @@
-https://stackoverflow.com/questions/15035546/hide-sphinx-subsections-from-main-toctree
+.. toctree::
+   :hidden:
 
-Validol documentation
-===================================
-Validol is a declarative-style validation library.
-It allows both to carry out complex validation and keep this logic manageable, maintainable and readable
-in virtue of declarative style.
+   quick_start
+   the_why
+   FAQ
 
 .. toctree::
-   :maxdepth: 1
-   :titlesonly:
+   :hidden:
+   :caption: Features
+   :maxdepth: 3
 
-   the_why
-   the_how
-   FAQ
-   quick_start
+.. toctree::
+   :hidden:
+   :caption: Inspired by
+   :maxdepth: 3
 
-Indices and tables
-==================
+   why/declarative_validation
+   why/context_specific_validation
 
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+.. include:: ../README.rst

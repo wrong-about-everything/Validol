@@ -1,5 +1,3 @@
-.. toctree::
-
 Contextual validation
 -------------------------
 Here we will consider different ways to carry out validation, what is contextual validation and why it beats all the other ways.
