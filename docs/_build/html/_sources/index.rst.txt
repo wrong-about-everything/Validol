@@ -15,7 +15,7 @@
    :caption: Inspired by
    :maxdepth: 3
 
-   why/declarative_validation
-   why/context_specific_validation
+   inspired_by/declarative_validation
+   inspired_by/context_specific_validation
 
 .. include:: ../README.rst

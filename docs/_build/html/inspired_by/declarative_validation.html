@@ -1,0 +1,641 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Declarative validation &mdash; Validol  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Validol
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../quick_start.html">Validol Quick start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../the_why.html">The Why</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../the_why.html#it-s-declarative">It’s declarative</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../the_why.html#it-s-contextual">It’s contextual</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../the_why.html#it-s-infinitely-extendable">It’s infinitely extendable</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../the_why.html#it-s-re-usable">It’s re-usable</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../the_why.html#no-magic-and-hidden-dependencies">No magic and hidden dependencies</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../FAQ.html">FAQ</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../FAQ.html#what-is-the-best-way-to-validate-json-in-java">What is the best way to validate json in Java?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../FAQ.html#how-to-validate-json-schema-in-java">How to validate json schema in Java?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../FAQ.html#what-is-the-best-java-email-address-validation-method">What is the best Java email address validation method?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../FAQ.html#how-to-perform-validation-in-java">How to perform validation in Java?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../FAQ.html#where-should-i-put-a-validation-logic">Where should I put a validation logic?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../FAQ.html#how-to-check-whether-a-given-string-is-valid-json-in-java">How to check whether a given string is valid JSON in Java?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../FAQ.html#how-to-check-whether-an-url-is-valid-in-java">How to check whether an URL is valid in Java?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../FAQ.html#how-to-validate-ipv4-string-in-java">How to validate IPv4 string in Java</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../FAQ.html#where-should-validation-go-in-domain-driven-design">Where should validation go in Domain-Driven Design</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../FAQ.html#should-i-throw-an-exception-or-return-a-bool-value-in-validation">Should I throw an exception or return a bool value in validation?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../FAQ.html#how-to-perform-a-validation-against-regex-in-java">How to perform a validation against regex in Java?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../FAQ.html#how-to-reduce-a-cyclomatic-complexity-in-validation">How to reduce a cyclomatic complexity in validation?</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Validol</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>Declarative validation</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/inspired_by/declarative_validation.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="declarative-validation">
+<h1>Declarative validation<a class="headerlink" href="#declarative-validation" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="what-is-declarative">
+<h2>What is declarative?<a class="headerlink" href="#what-is-declarative" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="https://en.wikipedia.org/wiki/Declarative_programming">Declarative code</a> describes, or declares, what the desired result should look like. At the same time, it doesn’t explicitly
+specify the steps needed to reach its goal.
+Wikipedia has a bit more formal definition, yet still readable:
+Declarative programming is a programming paradigm — a style of building the structure and elements of computer programs — that expresses the logic of a computation without describing its control flow.</p>
+<p>As we see, declarative programming has nothing to do with the language. You may very well use dense imperative code in Haskell. You can write declarative code in PHP.</p>
+<p>It does have something to do with you though.</p>
+<p>Quick example of declarative and imperative code, deliberately in pseudo-code. Unit here is a main building block in your language of choice.
+Typically, it’s either a class or a function.</p>
+<p>Here is a declarative one:</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="n">unit</span> <span class="n">sum</span> <span class="o">{</span>
+    <span class="o">(</span><span class="kt">int</span> <span class="n">a</span><span class="o">,</span> <span class="kt">int</span> <span class="n">b</span><span class="o">)</span> <span class="o">=&gt;</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>Why is it declarative in the first place? Because only a desired result is described, which is a sum. You can implement it by a number of ways,
+not only by addition.</p>
+<p>Nevertheless, when one needs a sum, the following code is typical:</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="n">unit</span> <span class="n">add</span> <span class="o">{</span>
+    <span class="o">(</span><span class="kt">int</span> <span class="n">a</span><span class="o">,</span> <span class="kt">int</span> <span class="n">b</span><span class="o">)</span> <span class="o">=&gt;</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>What a big deal, just a different name, you might say. But naming is what reflects your way of thinking.
+Hence, there is a small difference in this situation, where we have only two basic programming units. And it’s huge
+when we have 1 million lines of code.</p>
+</div>
+<div class="section" id="the-consequences-of-being-imperative-on-a-bigger-scale">
+<h2>The consequences of being imperative on a bigger scale<a class="headerlink" href="#the-consequences-of-being-imperative-on-a-bigger-scale" title="Permalink to this headline">¶</a></h2>
+<p>How do your user stories (or Application services, or Controllers) look like? I bet you recognize the following pattern:</p>
+<ol class="arabic simple">
+<li>Validate a request</li>
+<li>Send some http request</li>
+<li>Parse response</li>
+<li>Update some entity</li>
+<li>Save it in a database</li>
+</ol>
+<p>Quick declarativeness test: you API changes, 3rd party API changes either, including the number and format of requests,
+thus parsing logic changes, consequently entity update logic does either, and finally, however crazy, you DB vendor changes.
+Does you controller code have to change? If yes – bad news, sorry: your code is probably imperative. I hope you have controller tests in place.
+But chances are you don’t. Anyways, you’re facing a changes that affect a significant area of your codebase.</p>
+<p>Declarative approach helps you mitigate those issues. First, you don’t have to validate the request. You just need a <em>validated</em> request.
+Second, you don’t have to send an http request and parse its response. Instead, you need either a
+<a class="reference external" href="https://www.enterpriseintegrationpatterns.com/patterns/messaging/CommandMessage.html">command</a> result
+(like whether the transaction authorization was successful or not) or particular data (like special marketing offer for current client).
+And finally you don’t have to update an entity and save it in database; instead you want it persisted.</p>
+<p>So as a result we get the following list of expressions:
+1. Validated request
+2. Information about either successfulness or remote entity data
+3. Persisted local object as a result</p>
+<p>There are no implementation details left on this user-story level. Thus, your design will be subjected to less changes
+in case of any requirement changes. The scope of changes will be smaller, which means more readable and maintainable code.</p>
+<p>Declarative code probably can be considered as a special case of encapsulation.
+But there are plenty of ways to organize your classes in such a way that encapsulation is respected. Declarative code is
+both encapsulated and descriptive, contrary to prescriptive.</p>
+</div>
+<div class="section" id="what-declarative-is-not">
+<h2>What declarative is not?<a class="headerlink" href="#what-declarative-is-not" title="Permalink to this headline">¶</a></h2>
+<p>One of the miconceptions I see quite often is that the fact that you’ve put all your dependencies in a config file automatically makes your code declarative.
+Nope. Declarative code is much more than mechanical actions. Simply sticking your <a class="reference external" href="https://www.yegor256.com/2014/05/05/oop-alternative-to-utility-classes.html">service classes</a>
+in a config file won’t bring you closer to maintainable code.</p>
+<p>Using functions does not ensure your code to be declarative either. You can wrap each implementation step into its own function
+(or a service class), as in a previous controller example. But it still remains susceptible to specific kinds of changes.</p>
+</div>
+<div class="section" id="id1">
+<h2>Declarative validation<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>If you’re tired of spaghetti validation code mess, you can try a <a class="reference external" href="https://github.com/wrong-about-everything/Validol">declarative approach</a>.
+Class names reflect what is validated, not how. Their implementation doesn’t clutter the higher-level validation logic description.
+It’s especially convenient in case of complex json data structures, when your validation composite object reflects the request structure.
+And as a nice declarative-approach side-effect, your code is not <a class="reference external" href="https://blog.ploeh.dk/2011/05/24/DesignSmellTemporalCoupling/">temporally coupled</a>.</p>
+<p>To get a feel of what it looks like, consider a following example of a complex request validation.
+JSON structure looks the following:</p>
+<div class="highlight-JSON notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+   <span class="nt">&quot;guest&quot;</span><span class="p">:{</span>
+      <span class="nt">&quot;phone&quot;</span><span class="p">:</span><span class="s2">&quot;+44123456789&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;Vasily Belov&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;email&quot;</span><span class="p">:</span><span class="s2">&quot;vasya@belov.com&quot;</span>
+   <span class="p">},</span>
+   <span class="nt">&quot;bag&quot;</span><span class="p">:{</span>
+      <span class="nt">&quot;items&quot;</span><span class="p">:[</span>
+         <span class="p">{</span>
+            <span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="mi">888</span>
+         <span class="p">},</span>
+         <span class="p">{</span>
+            <span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="mi">777</span>
+         <span class="p">}</span>
+      <span class="p">],</span>
+      <span class="nt">&quot;discount&quot;</span><span class="p">:{</span>
+         <span class="nt">&quot;promo_code&quot;</span><span class="p">:</span><span class="s2">&quot;VASYA1988&quot;</span>
+      <span class="p">},</span>
+      <span class="nt">&quot;served_for&quot;</span><span class="p">:</span><span class="mi">3</span>
+   <span class="p">},</span>
+   <span class="nt">&quot;delivery&quot;</span><span class="p">:{</span>
+      <span class="nt">&quot;type_id&quot;</span><span class="p">:</span><span class="mi">20</span><span class="p">,</span>
+      <span class="nt">&quot;where&quot;</span><span class="p">:{</span>
+         <span class="nt">&quot;restaurant_id&quot;</span><span class="p">:</span><span class="mi">1</span>
+      <span class="p">},</span>
+      <span class="nt">&quot;when&quot;</span><span class="p">:{</span>
+         <span class="nt">&quot;datetime&quot;</span><span class="p">:</span><span class="s2">&quot;2019-10-23T08:33:11.798400+00:00&quot;</span>
+      <span class="p">},</span>
+      <span class="nt">&quot;from_where&quot;</span><span class="p">:{</span>
+         <span class="nt">&quot;restaurant_id&quot;</span><span class="p">:</span><span class="mi">1</span>
+      <span class="p">}</span>
+   <span class="p">},</span>
+   <span class="nt">&quot;payment&quot;</span><span class="p">:{</span>
+      <span class="nt">&quot;type_id&quot;</span><span class="p">:</span><span class="mi">30</span>
+   <span class="p">},</span>
+   <span class="nt">&quot;source&quot;</span><span class="p">:</span><span class="mi">20</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The semantics basically doesn’t really matter, though you can guess that it has something to do with food delivery order registration.
+Schema is quite large. Typically, validation code is less then clear.
+Here is the declarative validation composite with <a class="reference external" href="https://https://github.com/wrong-about-everything/Validol/">Validol library</a>
+(check <a class="reference internal" href="../quick_start.html"><span class="doc">Validol’s Quick start page</span></a> for a line-by-line analysis, it’s not as scary as you imagine):</p>
+<div class="highlight-java notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>  1
+  2
+  3
+  4
+  5
+  6
+  7
+  8
+  9
+ 10
+ 11
+ 12
+ 13
+ 14
+ 15
+ 16
+ 17
+ 18
+ 19
+ 20
+ 21
+ 22
+ 23
+ 24
+ 25
+ 26
+ 27
+ 28
+ 29
+ 30
+ 31
+ 32
+ 33
+ 34
+ 35
+ 36
+ 37
+ 38
+ 39
+ 40
+ 41
+ 42
+ 43
+ 44
+ 45
+ 46
+ 47
+ 48
+ 49
+ 50
+ 51
+ 52
+ 53
+ 54
+ 55
+ 56
+ 57
+ 58
+ 59
+ 60
+ 61
+ 62
+ 63
+ 64
+ 65
+ 66
+ 67
+ 68
+ 69
+ 70
+ 71
+ 72
+ 73
+ 74
+ 75
+ 76
+ 77
+ 78
+ 79
+ 80
+ 81
+ 82
+ 83
+ 84
+ 85
+ 86
+ 87
+ 88
+ 89
+ 90
+ 91
+ 92
+ 93
+ 94
+ 95
+ 96
+ 97
+ 98
+ 99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">new</span> <span class="n">FastFail</span><span class="o">&lt;&gt;(</span>
+    <span class="k">new</span> <span class="n">WellFormedJson</span><span class="o">(</span>
+        <span class="k">new</span> <span class="n">Unnamed</span><span class="o">&lt;&gt;(</span><span class="n">Either</span><span class="o">.</span><span class="na">right</span><span class="o">(</span><span class="k">new</span> <span class="n">Present</span><span class="o">&lt;&gt;(</span><span class="k">this</span><span class="o">.</span><span class="na">jsonRequestString</span><span class="o">)))</span>
+    <span class="o">),</span>
+    <span class="n">requestJsonObject</span> <span class="o">-&gt;</span>
+        <span class="k">new</span> <span class="n">UnnamedBlocOfNameds</span><span class="o">&lt;&gt;(</span>
+            <span class="n">List</span><span class="o">.</span><span class="na">of</span><span class="o">(</span>
+                <span class="k">new</span> <span class="n">FastFail</span><span class="o">&lt;&gt;(</span>
+                    <span class="k">new</span> <span class="n">IsJsonObject</span><span class="o">(</span>
+                        <span class="k">new</span> <span class="n">Required</span><span class="o">(</span>
+                            <span class="k">new</span> <span class="n">IndexedValue</span><span class="o">(</span><span class="s">&quot;guest&quot;</span><span class="o">,</span> <span class="n">requestJsonObject</span><span class="o">)</span>
+                        <span class="o">)</span>
+                    <span class="o">),</span>
+                    <span class="n">guestJsonObject</span> <span class="o">-&gt;</span>
+                        <span class="k">new</span> <span class="n">NamedBlocOfNameds</span><span class="o">&lt;&gt;(</span>
+                            <span class="s">&quot;guest&quot;</span><span class="o">,</span>
+                            <span class="n">List</span><span class="o">.</span><span class="na">of</span><span class="o">(</span>
+                                <span class="k">new</span> <span class="n">AsString</span><span class="o">(</span>
+                                    <span class="k">new</span> <span class="n">Required</span><span class="o">(</span>
+                                        <span class="k">new</span> <span class="n">IndexedValue</span><span class="o">(</span><span class="s">&quot;email&quot;</span><span class="o">,</span> <span class="n">guestJsonObject</span><span class="o">)</span>
+                                    <span class="o">)</span>
+                                <span class="o">),</span>
+                                <span class="k">new</span> <span class="n">AsString</span><span class="o">(</span>
+                                    <span class="k">new</span> <span class="n">Required</span><span class="o">(</span>
+                                        <span class="k">new</span> <span class="n">IndexedValue</span><span class="o">(</span><span class="s">&quot;name&quot;</span><span class="o">,</span> <span class="n">guestJsonObject</span><span class="o">)</span>
+                                    <span class="o">)</span>
+                                <span class="o">)</span>
+                            <span class="o">),</span>
+                            <span class="n">Guest</span><span class="o">.</span><span class="na">class</span>
+                        <span class="o">)</span>
+                <span class="o">),</span>
+                <span class="k">new</span> <span class="n">FastFail</span><span class="o">&lt;&gt;(</span>
+                    <span class="k">new</span> <span class="n">Required</span><span class="o">(</span>
+                        <span class="k">new</span> <span class="n">IndexedValue</span><span class="o">(</span><span class="s">&quot;items&quot;</span><span class="o">,</span> <span class="n">requestJsonObject</span><span class="o">)</span>
+                    <span class="o">),</span>
+                    <span class="n">itemsJsonElement</span> <span class="o">-&gt;</span>
+                        <span class="k">new</span> <span class="n">NamedBlocOfUnnameds</span><span class="o">&lt;&gt;(</span>
+                            <span class="s">&quot;items&quot;</span><span class="o">,</span>
+                            <span class="n">itemsJsonElement</span><span class="o">,</span>
+                            <span class="n">item</span> <span class="o">-&gt;</span>
+                                <span class="k">new</span> <span class="n">UnnamedBlocOfNameds</span><span class="o">&lt;&gt;(</span>
+                                    <span class="n">List</span><span class="o">.</span><span class="na">of</span><span class="o">(</span>
+                                        <span class="k">new</span> <span class="n">AsInteger</span><span class="o">(</span>
+                                            <span class="k">new</span> <span class="n">Required</span><span class="o">(</span>
+                                                <span class="k">new</span> <span class="n">IndexedValue</span><span class="o">(</span><span class="s">&quot;id&quot;</span><span class="o">,</span> <span class="n">item</span><span class="o">)</span>
+                                            <span class="o">)</span>
+                                        <span class="o">)</span>
+                                    <span class="o">),</span>
+                                    <span class="n">Item</span><span class="o">.</span><span class="na">class</span>
+                                <span class="o">),</span>
+                            <span class="n">Items</span><span class="o">.</span><span class="na">class</span>
+                        <span class="o">)</span>
+                <span class="o">),</span>
+                <span class="k">new</span> <span class="n">FastFail</span><span class="o">&lt;&gt;(</span>
+                    <span class="k">new</span> <span class="n">Required</span><span class="o">(</span>
+                        <span class="k">new</span> <span class="n">IndexedValue</span><span class="o">(</span><span class="s">&quot;delivery&quot;</span><span class="o">,</span> <span class="n">requestJsonObject</span><span class="o">)</span>
+                    <span class="o">),</span>
+                    <span class="n">deliveryJsonElement</span> <span class="o">-&gt;</span>
+                        <span class="k">new</span> <span class="n">SwitchTrue</span><span class="o">&lt;&gt;(</span>
+                            <span class="s">&quot;delivery&quot;</span><span class="o">,</span>
+                            <span class="n">List</span><span class="o">.</span><span class="na">of</span><span class="o">(</span>
+                                <span class="k">new</span> <span class="n">Specific</span><span class="o">&lt;&gt;(</span>
+                                    <span class="c1">// Here goes the condition whether this order should be delivered by courier or picked up.</span>
+                                    <span class="c1">// It&#39;s omitted for brevity.</span>
+                                    <span class="o">()</span> <span class="o">-&gt;</span> <span class="kc">true</span><span class="o">,</span>
+                                    <span class="k">new</span> <span class="n">UnnamedBlocOfNameds</span><span class="o">&lt;&gt;(</span>
+                                        <span class="n">List</span><span class="o">.</span><span class="na">of</span><span class="o">(</span>
+                                            <span class="k">new</span> <span class="n">FastFail</span><span class="o">&lt;&gt;(</span>
+                                                <span class="k">new</span> <span class="n">IndexedValue</span><span class="o">(</span><span class="s">&quot;where&quot;</span><span class="o">,</span> <span class="n">deliveryJsonElement</span><span class="o">),</span>
+                                                <span class="n">whereJsonElement</span> <span class="o">-&gt;</span>
+                                                    <span class="k">new</span> <span class="n">NamedBlocOfNameds</span><span class="o">&lt;&gt;(</span>
+                                                        <span class="s">&quot;where&quot;</span><span class="o">,</span>
+                                                        <span class="n">List</span><span class="o">.</span><span class="na">of</span><span class="o">(</span>
+                                                            <span class="k">new</span> <span class="n">AsString</span><span class="o">(</span>
+                                                                <span class="k">new</span> <span class="n">Required</span><span class="o">(</span>
+                                                                    <span class="k">new</span> <span class="n">IndexedValue</span><span class="o">(</span><span class="s">&quot;street&quot;</span><span class="o">,</span> <span class="n">whereJsonElement</span><span class="o">)</span>
+                                                                <span class="o">)</span>
+                                                            <span class="o">),</span>
+                                                            <span class="k">new</span> <span class="n">AsInteger</span><span class="o">(</span>
+                                                                <span class="k">new</span> <span class="n">Required</span><span class="o">(</span>
+                                                                    <span class="k">new</span> <span class="n">IndexedValue</span><span class="o">(</span><span class="s">&quot;building&quot;</span><span class="o">,</span> <span class="n">whereJsonElement</span><span class="o">)</span>
+                                                                <span class="o">)</span>
+                                                            <span class="o">)</span>
+                                                        <span class="o">),</span>
+                                                        <span class="n">Where</span><span class="o">.</span><span class="na">class</span>
+                                                    <span class="o">)</span>
+                                            <span class="o">),</span>
+                                            <span class="k">new</span> <span class="n">FastFail</span><span class="o">&lt;&gt;(</span>
+                                                <span class="k">new</span> <span class="n">IndexedValue</span><span class="o">(</span><span class="s">&quot;when&quot;</span><span class="o">,</span> <span class="n">deliveryJsonElement</span><span class="o">),</span>
+                                                <span class="n">whenJsonElement</span> <span class="o">-&gt;</span>
+                                                    <span class="k">new</span> <span class="n">NamedBlocOfNameds</span><span class="o">&lt;&gt;(</span>
+                                                        <span class="s">&quot;when&quot;</span><span class="o">,</span>
+                                                        <span class="n">List</span><span class="o">.</span><span class="na">of</span><span class="o">(</span>
+                                                            <span class="k">new</span> <span class="n">AsDate</span><span class="o">(</span>
+                                                                <span class="k">new</span> <span class="n">AsString</span><span class="o">(</span>
+                                                                    <span class="k">new</span> <span class="n">Required</span><span class="o">(</span>
+                                                                        <span class="k">new</span> <span class="n">IndexedValue</span><span class="o">(</span><span class="s">&quot;date&quot;</span><span class="o">,</span> <span class="n">whenJsonElement</span><span class="o">)</span>
+                                                                    <span class="o">)</span>
+                                                                <span class="o">),</span>
+                                                                <span class="k">new</span> <span class="n">SimpleDateFormat</span><span class="o">(</span><span class="s">&quot;yyyy-MM-dd HH:mm:ss&quot;</span><span class="o">)</span>
+                                                            <span class="o">)</span>
+                                                        <span class="o">),</span>
+                                                        <span class="n">DefaultWhen</span><span class="o">.</span><span class="na">class</span>
+                                                    <span class="o">)</span>
+                                            <span class="o">)</span>
+                                        <span class="o">),</span>
+                                        <span class="n">CourierDelivery</span><span class="o">.</span><span class="na">class</span>
+                                    <span class="o">)</span>
+                                <span class="o">)</span>
+                            <span class="o">)</span>
+                        <span class="o">)</span>
+                <span class="o">),</span>
+                <span class="k">new</span> <span class="n">AsInteger</span><span class="o">(</span>
+                    <span class="k">new</span> <span class="n">Required</span><span class="o">(</span>
+                        <span class="k">new</span> <span class="n">IndexedValue</span><span class="o">(</span><span class="s">&quot;source&quot;</span><span class="o">,</span> <span class="n">requestJsonObject</span><span class="o">)</span>
+                    <span class="o">)</span>
+                <span class="o">)</span>
+            <span class="o">),</span>
+            <span class="n">OrderRegistrationRequestData</span><span class="o">.</span><span class="na">class</span>
+        <span class="o">)</span>
+<span class="o">)</span>
+    <span class="o">.</span><span class="na">result</span><span class="o">()</span>
+</pre></div>
+</td></tr></table></div>
+<p>What catches the eye first? There are plenty of <code class="docutils literal notranslate"><span class="pre">FastFail</span></code> gizmos. This class accepts exactly two arguments:
+validatable element and closure. Whether the first parameter results in true, the second closure is invoked.
+The typical cases are just as in an example:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Check whether the request represents a well-formed json</li>
+<li>Check whether some key is present (like <code class="docutils literal notranslate"><span class="pre">new</span> <span class="pre">IndexedValue(&quot;when&quot;,</span> <span class="pre">deliveryJsonElement)</span></code>)</li>
+</ul>
+</div></blockquote>
+<p>Second, the object structure reflects the request structure. It might seem to (and actually could)  be a drawback,
+since the request can be extremely complex. The solution is pretty simple: you can represent each semantic block as its own class,
+like the following:</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="k">new</span> <span class="n">FastFail</span><span class="o">&lt;&gt;(</span>
+    <span class="k">new</span> <span class="n">WellFormedJson</span><span class="o">(</span>
+        <span class="k">new</span> <span class="n">Unnamed</span><span class="o">&lt;&gt;(</span><span class="n">Either</span><span class="o">.</span><span class="na">right</span><span class="o">(</span><span class="k">new</span> <span class="n">Present</span><span class="o">&lt;&gt;(</span><span class="k">this</span><span class="o">.</span><span class="na">jsonRequestString</span><span class="o">)))</span>
+    <span class="o">),</span>
+    <span class="n">requestJsonObject</span> <span class="o">-&gt;</span>
+        <span class="k">new</span> <span class="n">UnnamedBlocOfNameds</span><span class="o">&lt;&gt;(</span>
+            <span class="n">List</span><span class="o">.</span><span class="na">of</span><span class="o">(</span>
+                <span class="k">new</span> <span class="n">Guest</span><span class="o">(</span><span class="n">requestJsonObject</span><span class="o">),</span>
+                <span class="k">new</span> <span class="n">Items</span><span class="o">(</span><span class="n">requestJsonObject</span><span class="o">),</span>
+                <span class="k">new</span> <span class="n">RequiredNamedBlocOfCallback</span><span class="o">&lt;&gt;(</span>
+                    <span class="s">&quot;delivery&quot;</span><span class="o">,</span>
+                    <span class="n">requestJsonObject</span><span class="o">,</span>
+                    <span class="n">deliveryJsonElement</span> <span class="o">-&gt;</span>
+                        <span class="k">new</span> <span class="n">SwitchTrue</span><span class="o">&lt;&gt;(</span>
+                            <span class="s">&quot;delivery&quot;</span><span class="o">,</span>
+                            <span class="n">List</span><span class="o">.</span><span class="na">of</span><span class="o">(</span>
+                                <span class="k">new</span> <span class="n">Specific</span><span class="o">&lt;&gt;(</span>
+                                    <span class="c1">// pretty dumb clause</span>
+                                    <span class="o">()</span> <span class="o">-&gt;</span> <span class="kc">true</span><span class="o">,</span>
+                                    <span class="k">new</span> <span class="n">Courier</span><span class="o">(</span><span class="n">deliveryJsonElement</span><span class="o">)</span>
+                                <span class="o">)</span>
+                            <span class="o">)</span>
+                        <span class="o">)</span>
+                <span class="o">),</span>
+                <span class="k">new</span> <span class="n">Source</span><span class="o">(</span><span class="n">requestJsonObject</span><span class="o">)</span>
+            <span class="o">),</span>
+            <span class="n">OrderRegistrationRequestData</span><span class="o">.</span><span class="na">class</span>
+        <span class="o">)</span>
+<span class="o">)</span>
+</pre></div>
+</div>
+<p>If you have a block structure that depends on passed type (like <code class="docutils literal notranslate"><span class="pre">type_id</span></code>), <code class="docutils literal notranslate"><span class="pre">SwitchTrue</span></code> is your friend. It represents a sort of declarative
+switch-case expression, where the value checked against is always <code class="docutils literal notranslate"><span class="pre">true</span></code> (hence the name, <code class="docutils literal notranslate"><span class="pre">SwitchTrue</span></code>).</p>
+<p>If everything’s successful, you get a data object reflecting the request structure, with type hinted values:</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="n">Result</span><span class="o">&lt;</span><span class="n">OrderRegistrationRequestData</span><span class="o">&gt;</span> <span class="n">result</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ValidatedOrderRegistrationRequest</span><span class="o">(</span><span class="n">jsonRequest</span><span class="o">).</span><span class="na">result</span><span class="o">();</span>
+<span class="c1">// get an email:</span>
+<span class="n">result</span><span class="o">.</span><span class="na">value</span><span class="o">().</span><span class="na">raw</span><span class="o">().</span><span class="na">guest</span><span class="o">().</span><span class="na">email</span><span class="o">();</span>
+</pre></div>
+</div>
+<p>In case of error:</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="n">assertFalse</span><span class="o">(</span><span class="n">result</span><span class="o">.</span><span class="na">isSuccessful</span><span class="o">());</span>
+<span class="c1">// Error is represented as generally as Object itself,</span>
+<span class="c1">// for it can be a String, a List&lt;String&gt;, a Map&lt;String, String&gt;, a Map&lt;String, Map&lt;String, String&gt;&gt;, or mixed.</span>
+<span class="n">result</span><span class="o">.</span><span class="na">error</span><span class="o">();</span>
+</pre></div>
+</div>
+<p>There is plenty of space left to extend the logic, just add another validating decorator.</p>
+</div>
+<div class="section" id="more-examples">
+<h2>More examples<a class="headerlink" href="#more-examples" title="Permalink to this headline">¶</a></h2>
+<p>Check out more usage examples <a class="reference external" href="https://github.com/wrong-about-everything/Validol/tree/master/src/test/java/example">here</a>.
+<a class="reference external" href="https://github.com/wrong-about-everything/Validol/tree/master/src/test/java/example/correct/inline">Here</a> is an example of inline validation in greater detail.
+<a class="reference external" href="https://github.com/wrong-about-everything/Validol/tree/master/src/test/java/example/correct/split">Here</a> you can find out how to split the validation logic according to semantic request blocks.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Vadim Samokhin
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

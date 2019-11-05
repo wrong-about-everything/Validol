@@ -108,18 +108,18 @@
 </ul>
 <p class="caption"><span class="caption-text">Inspired by</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="why/declarative_validation.html">Declarative validation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="why/declarative_validation.html#what-is-declarative">What is declarative?</a></li>
-<li class="toctree-l2"><a class="reference internal" href="why/declarative_validation.html#the-consequences-of-being-imperative-on-a-bigger-scale">The consequences of being imperative on a bigger scale</a></li>
-<li class="toctree-l2"><a class="reference internal" href="why/declarative_validation.html#what-declarative-is-not">What declarative is not?</a></li>
-<li class="toctree-l2"><a class="reference internal" href="why/declarative_validation.html#id1">Declarative validation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="why/declarative_validation.html#more-examples">More examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="inspired_by/declarative_validation.html">Declarative validation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="inspired_by/declarative_validation.html#what-is-declarative">What is declarative?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="inspired_by/declarative_validation.html#the-consequences-of-being-imperative-on-a-bigger-scale">The consequences of being imperative on a bigger scale</a></li>
+<li class="toctree-l2"><a class="reference internal" href="inspired_by/declarative_validation.html#what-declarative-is-not">What declarative is not?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="inspired_by/declarative_validation.html#id1">Declarative validation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="inspired_by/declarative_validation.html#more-examples">More examples</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="why/context_specific_validation.html">Contextual validation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="why/context_specific_validation.html#context-independent-validation-bound-to-data-model">Context-independent validation bound to data-model</a></li>
-<li class="toctree-l2"><a class="reference internal" href="why/context_specific_validation.html#arguably-better-context-independent-validation-in-domain-objects">Arguably better: context-independent validation in domain objects</a></li>
-<li class="toctree-l2"><a class="reference internal" href="why/context_specific_validation.html#contextual-validation-that-is-specific-to-a-concrete-user-story">Contextual validation that is specific to a concrete user story</a></li>
+<li class="toctree-l1"><a class="reference internal" href="inspired_by/context_specific_validation.html">Contextual validation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="inspired_by/context_specific_validation.html#context-independent-validation-bound-to-data-model">Context-independent validation bound to data-model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="inspired_by/context_specific_validation.html#arguably-better-context-independent-validation-in-domain-objects">Arguably better: context-independent validation in domain objects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="inspired_by/context_specific_validation.html#contextual-validation-that-is-specific-to-a-concrete-user-story">Contextual validation that is specific to a concrete user story</a></li>
 </ul>
 </li>
 </ul>
@@ -191,12 +191,12 @@
 <p>There are quite a few libraries for data validation. Why <a class="reference external" href="https://github.com/wrong-about-everything/Validol">another one</a>?</p>
 <div class="section" id="it-s-declarative">
 <h2>It’s declarative<a class="headerlink" href="#it-s-declarative" title="Permalink to this headline">¶</a></h2>
-<p>I’d rather say, it’s <a class="reference internal" href="why/declarative_validation.html"><span class="doc">truly declarative</span></a>.
+<p>I’d rather say, it’s <a class="reference internal" href="inspired_by/declarative_validation.html"><span class="doc">truly declarative</span></a>.
 Not put-all-my-dependencies-in-config-file-and-i’m-done-kind of declarative, but (hopefully) the real one.</p>
 </div>
 <div class="section" id="it-s-contextual">
 <h2>It’s contextual<a class="headerlink" href="#it-s-contextual" title="Permalink to this headline">¶</a></h2>
-<p>Second, it encourages a <a class="reference internal" href="why/context_specific_validation.html"><span class="doc">contextual validation</span></a>, which is contrary to data-model-level validation.
+<p>Second, it encourages a <a class="reference internal" href="inspired_by/context_specific_validation.html"><span class="doc">contextual validation</span></a>, which is contrary to data-model-level validation.
 And, sorrowfully, which is the default mode in most frameworks.
 Anyways, you’re not forced to use it and you could opt into the
 <a class="reference external" href="https://martinfowler.com/bliki/ContextualValidation.html">best-practices-compliant</a>
@@ -207,7 +207,7 @@ Anyways, you’re not forced to use it and you could opt into the
 <p>Two concepts contribute to infinite extendability. I’ve already covered the first one, namely it’s declarative style.
 The second one is high composability. All the validatable elements implement the single <code class="docutils literal notranslate"><span class="pre">Validatable&lt;T&gt;</span></code> interface.
 If you have extremely complex logic, you won’t drown in spaghetti code. Instead, you’ll have a nice object composition.
-Check an <a class="reference internal" href="why/context_specific_validation.html"><span class="doc">example here</span></a>, in
+Check an <a class="reference internal" href="inspired_by/context_specific_validation.html"><span class="doc">example here</span></a>, in
 “Contextual validation that is specific to a concrete user story” sub-section.</p>
 </div>
 <div class="section" id="it-s-re-usable">
