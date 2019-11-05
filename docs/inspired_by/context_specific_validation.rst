@@ -167,7 +167,7 @@ comes in handy. You can first check basic, format-related validations, and proce
 
 Consider the following JSON request:
 
-.. code-block:: java
+.. code-block:: JSON
 
     {
        "where":{

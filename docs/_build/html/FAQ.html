@@ -35,6 +35,7 @@
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Declarative validation" href="inspired_by/declarative_validation.html" />
     <link rel="prev" title="The Why" href="the_why.html" /> 
 </head>
 
@@ -102,6 +103,23 @@
 <li class="toctree-l2"><a class="reference internal" href="#should-i-throw-an-exception-or-return-a-bool-value-in-validation">Should I throw an exception or return a bool value in validation?</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#how-to-perform-a-validation-against-regex-in-java">How to perform a validation against regex in Java?</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#how-to-reduce-a-cyclomatic-complexity-in-validation">How to reduce a cyclomatic complexity in validation?</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Inspired by</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="inspired_by/declarative_validation.html">Declarative validation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="inspired_by/declarative_validation.html#what-is-declarative">What is declarative?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="inspired_by/declarative_validation.html#the-consequences-of-being-imperative-on-a-bigger-scale">The consequences of being imperative on a bigger scale</a></li>
+<li class="toctree-l2"><a class="reference internal" href="inspired_by/declarative_validation.html#what-declarative-is-not">What declarative is not?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="inspired_by/declarative_validation.html#id1">Declarative validation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="inspired_by/declarative_validation.html#more-examples">More examples</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="inspired_by/context_specific_validation.html">Contextual validation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="inspired_by/context_specific_validation.html#context-independent-validation-bound-to-data-model">Context-independent validation bound to data-model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="inspired_by/context_specific_validation.html#arguably-better-context-independent-validation-in-domain-objects">Arguably better: context-independent validation in domain objects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="inspired_by/context_specific_validation.html#contextual-validation-that-is-specific-to-a-concrete-user-story">Contextual validation that is specific to a concrete user story</a></li>
 </ul>
 </li>
 </ul>
@@ -198,13 +216,82 @@
 </div>
 <p>Chances are your request is more complicated. Your validation logic can be much more complex. I suggest that you tackle it
 in a declarative fashion. For a line-by-line example take a look at <a class="reference internal" href="quick_start.html"><span class="doc">Quick-start</span></a> section.
-Also consider having a glance at <span class="xref std std-doc">contextual validation post inspired_by/context_specific_validation</span> and
+Also consider having a glance at <a class="reference internal" href="inspired_by/context_specific_validation.html"><span class="doc">contextual validation post</span></a> and
 my take on declarative programming in general and
-<span class="xref std std-doc">declarative validation</span> in particular.</p>
+<a class="reference internal" href="inspired_by/declarative_validation.html"><span class="doc">declarative validation</span></a> in particular, there you can find some more examples.</p>
 </div>
 <div class="section" id="how-to-validate-json-schema-in-java">
 <h2>How to validate json schema in Java?<a class="headerlink" href="#how-to-validate-json-schema-in-java" title="Permalink to this headline">¶</a></h2>
-<p>b</p>
+<p>Validating json schema can be a tedious task. Besides, take a look at validation code couple of months later after it was initially written.
+It can look really scary.</p>
+<p>There is an alternative though. With <a class="reference external" href="https://github.com/wrong-about-everything/Validol">Validol</a> library,
+your validation logic mirrors json structure. Complex validation checks decorate more basic ones. Besides, an entire validation logic
+represents a single <a class="reference external" href="https://blog.kotlin-academy.com/kotlin-programmer-dictionary-statement-vs-expression-e6743ba1aaa0">expression</a>.</p>
+<p>Consider a schema to be validated:</p>
+<div class="highlight-JSON notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+   <span class="nt">&quot;where&quot;</span><span class="p">:{</span>
+      <span class="nt">&quot;building&quot;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span>
+      <span class="nt">&quot;street&quot;</span><span class="p">:</span><span class="s2">&quot;Red Square&quot;</span>
+   <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Here is what validation logic looks like. It reflects the structure of json schema.
+All the constraints are described right in the structure itself.
+All the mundane checks like json key existence are already taken care of.</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="k">new</span> <span class="n">FastFail</span><span class="o">&lt;&gt;(</span>
+    <span class="k">new</span> <span class="n">WellFormedJson</span><span class="o">(</span>
+        <span class="k">new</span> <span class="n">Unnamed</span><span class="o">&lt;&gt;(</span><span class="n">Either</span><span class="o">.</span><span class="na">right</span><span class="o">(</span><span class="k">new</span> <span class="n">Present</span><span class="o">&lt;&gt;(</span><span class="k">this</span><span class="o">.</span><span class="na">jsonRequestString</span><span class="o">)))</span>
+    <span class="o">),</span>
+    <span class="n">requestJsonObject</span> <span class="o">-&gt;</span>
+        <span class="k">new</span> <span class="n">UnnamedBlocOfNameds</span><span class="o">&lt;&gt;(</span>
+            <span class="n">List</span><span class="o">.</span><span class="na">of</span><span class="o">(</span>
+                <span class="k">new</span> <span class="n">FastFail</span><span class="o">&lt;&gt;(</span>
+                    <span class="k">new</span> <span class="n">IsJsonObject</span><span class="o">(</span>
+                        <span class="k">new</span> <span class="n">Required</span><span class="o">(</span>
+                            <span class="k">new</span> <span class="n">IndexedValue</span><span class="o">(</span><span class="s">&quot;delivery&quot;</span><span class="o">,</span> <span class="n">requestJsonObject</span><span class="o">)</span>
+                        <span class="o">)</span>
+                    <span class="o">),</span>
+                    <span class="n">deliveryJsonObject</span> <span class="o">-&gt;</span>
+                        <span class="k">new</span> <span class="n">NamedBlocOfNameds</span><span class="o">&lt;&gt;(</span>
+                            <span class="s">&quot;delivery&quot;</span><span class="o">,</span>
+                            <span class="n">List</span><span class="o">.</span><span class="na">of</span><span class="o">(</span>
+                                <span class="k">new</span> <span class="n">FastFail</span><span class="o">&lt;&gt;(</span>
+                                    <span class="k">new</span> <span class="n">IsJsonObject</span><span class="o">(</span>
+                                        <span class="k">new</span> <span class="n">IndexedValue</span><span class="o">(</span><span class="s">&quot;where&quot;</span><span class="o">,</span> <span class="n">deliveryJsonObject</span><span class="o">)</span>
+                                    <span class="o">),</span>
+                                    <span class="n">whereJsonElement</span> <span class="o">-&gt;</span>
+                                        <span class="k">new</span> <span class="n">NamedBlocOfNameds</span><span class="o">&lt;&gt;(</span>
+                                            <span class="s">&quot;where&quot;</span><span class="o">,</span>
+                                            <span class="n">List</span><span class="o">.</span><span class="na">of</span><span class="o">(</span>
+                                                <span class="k">new</span> <span class="n">AsString</span><span class="o">(</span>
+                                                    <span class="k">new</span> <span class="n">Required</span><span class="o">(</span>
+                                                        <span class="k">new</span> <span class="n">IndexedValue</span><span class="o">(</span><span class="s">&quot;street&quot;</span><span class="o">,</span> <span class="n">whereJsonElement</span><span class="o">)</span>
+                                                    <span class="o">)</span>
+                                                <span class="o">),</span>
+                                                <span class="k">new</span> <span class="n">AsInteger</span><span class="o">(</span>
+                                                    <span class="k">new</span> <span class="n">Required</span><span class="o">(</span>
+                                                        <span class="k">new</span> <span class="n">IndexedValue</span><span class="o">(</span><span class="s">&quot;building&quot;</span><span class="o">,</span> <span class="n">whereJsonElement</span><span class="o">)</span>
+                                                    <span class="o">)</span>
+                                                <span class="o">)</span>
+                                            <span class="o">),</span>
+                                            <span class="n">Where</span><span class="o">.</span><span class="na">class</span>
+                                        <span class="o">)</span>
+                                <span class="o">)</span>
+                            <span class="o">),</span>
+                            <span class="n">CourierDelivery</span><span class="o">.</span><span class="na">class</span>
+                        <span class="o">)</span>
+                <span class="o">)</span>
+            <span class="o">),</span>
+            <span class="n">OrderRegistrationRequestData</span><span class="o">.</span><span class="na">class</span>
+        <span class="o">)</span>
+<span class="o">)</span>
+    <span class="o">.</span><span class="na">result</span><span class="o">();</span>
+</pre></div>
+</div>
+<p>There is no usual spaghetti-code code here. Only pure declarative expressions.</p>
+<p>Also, take a look at <a class="reference internal" href="quick_start.html"><span class="doc">quick-start section</span></a> and check my post on
+<a class="reference internal" href="inspired_by/context_specific_validation.html"><span class="doc">contextual validation</span></a> with more examples and line-by-line analysis.</p>
 </div>
 <div class="section" id="what-is-the-best-java-email-address-validation-method">
 <h2>What is the best Java email address validation method?<a class="headerlink" href="#what-is-the-best-java-email-address-validation-method" title="Permalink to this headline">¶</a></h2>
@@ -255,6 +342,8 @@ my take on declarative programming in general and
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="inspired_by/declarative_validation.html" class="btn btn-neutral float-right" title="Declarative validation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="the_why.html" class="btn btn-neutral float-left" title="The Why" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
