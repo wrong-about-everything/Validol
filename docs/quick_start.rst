@@ -195,5 +195,56 @@ Fancy some line-by-line analysis? Here it goes:
 | ``Line 24``: it's required as well;
 | ``Line 23``: and should be represented as string either.
 | ``Line 29``: If all validatable elements in current named block are valid, then an object of class ``Guest`` will be returned.
-| ``Lines 32-35``: Already familiar fast-failing block named ``items``. Mind the absense of structure validation. If ``items`` element will be a string, subsequent validation breaks not-so-gracefully.
-| ``Line 36``: If ``items`` block is present, closure is invoked.
+| The corresponding class has two arguments: `email`, which must be String, and `name`, which must be String as well.
+| ``Lines 32-35``: Already familiar fast-failing block named ``items``. Mind the absense of structure validation.
+| If ``items`` element will be a string, subsequent validation breaks not-so-gracefully.
+| ``Line 36``: If ``items`` block is present, closure is invoked. The single argument represents ``items`` json element.
+| ``Line 37``: Here the description of ``items`` element starts. For now we can see that it's a named block
+| which consists of an arbitrary number of unnamed elements.
+| ``Line 38``: The block mentioned above is named ``items``.
+| ``Line 39``: As the second argument, its corresponding json element is passed, which should be a json array. It's a good idea
+| to reinforce this knowledge
+| ``Line 40``: Since I don't know the exact structure, I need a mapping function, taking a json array and returning an array of concrete objects.
+| ``Line 41``: Each array element corresponds to an unnamed block.
+| ``Line 42``: The first argument is a list of array values.
+| ``Line 45``: In this particular case, there is a single ``id`` element.
+| ``Line 44``: It's required,
+| ``Line 43``: ... and should be represented as integer.
+| ``Line 49``: If everything's ok, an object of the ``Item`` class is created. It has a single argument: `id`, and it must be integer.
+| ``Line 51``: If validation for every block is correct, then the ``Items`` object is created, consisting of ``Item`` objects list passed as constructor argument.
+| ``Lines 54-57``: On to the next element, ``delivery``. First goes usual ``FastFail`` block.
+| ``Line 58``: Closure is invoked.
+| ``Line 59``: The structure of ``delivery`` block depends on what type of delivery it is. It's denoted by the ``type_id`` key.
+| Hence the block name is ``SwitchTrue``, switching between whether ``type_id`` is 10, 20, or something else.
+| `Check tests for more examples <https://github.com/wrong-about-everything/Validol/blob/master/src/test/java/validation/composite/conditional/switcz/SwitchTrueTest.java>`_.
+| ``Line 60``: The name of the block is ``delivery``.
+| ``Line 61``: The list of validatable elements is passed.
+| ``Line 62``: The first validatable element is specific to a concrete condition. It could pretty much anything,
+| for example checking that ``type_id`` equals to 20.
+| ``Line 65``: Here it's just stub always returning true.
+| ``Line 66``: If the previous condition is satisfied, validatable passed in a second argument validates ``deliveryJsonElement``.
+| It's an unnamed block of named elements.
+| ``Line 67``: The list of validatable elements.
+| ``Line 69``: The first one is a ``where`` block.
+| ``Line 68``: It's wrapped into already familiar ``FastFail`` thing.
+| ``Line 70``: The second argument is a closure. It's first argument is a ``where`` json object.
+| I was  a bit sloppy and haven't reinforced this knowledge with ``IsJsonObject`` object, but I should've done it.
+| ``Line 71``: Here goes the named block of named elements.
+| ``Line 72``: ``where`` is its name.
+| ``Line 73``: The second argument is a list of all elements.
+| ``Line 76``: The first element is ``street``.
+| ``Line 75``: It's required.
+| ``Line 74``: And should be represented as string.
+| ``Line 81``: The second one is ``building``.
+| ``Line 80``: It's required as well.
+| ``Line 79``: And should be represented as an integer.
+| ``Line 85``: If all previous checks are successful, an ``Where`` object is created.
+| It's first argument is `street`, which must be a String; the second one is `building`, which must be an integer.
+| ``Lines 88-106``: It's pretty much the same with ``where`` block.
+| ``Line 107``: If all validatable elements are correct, an object of ``CourierDelivery`` class is created.
+| It has two arguments: `where`, which should be of ``Where`` class, and `when`, which should be of ``When`` class.
+| ``Lines 113-117``: The last element is ``source``. All the basic standard checks are in place.
+| ``Line 119``: Finally, an object of class ``OrderRegistrationRequestData`` is created.
+| ``Line 122``: An object of class ``Result<OrderRegistrationRequestData>`` is returned.
+| If the result is successful, it contains an ``OrderRegistrationRequestData`` object. Otherwise, there is an ``Object`` of arbitrary structure.
+| Typically, you, backend engineer, shouldn't even have a clue of its structure -- your system's frontend should.
