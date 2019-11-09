@@ -1,7 +1,7 @@
 Validol Quick start
 =====================
 
-Let's start with an example of what `Validol <https://https://github.com/wrong-about-everything/Validol/>`_ can do.
+Let's start with an example of what `Validol <https://github.com/wrong-about-everything/Validol/>`_ can do.
 Here I'll describe features that will be enough for you in most of the cases.
 
 Consider the following JSON schema:

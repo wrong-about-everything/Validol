@@ -5,7 +5,9 @@ This is a list of frequently asked questions on validation.
 
 How to perform validation in Java?
 -------------------------------------------------------------
-d
+First of all, what is validation ? For me, it's a way to check whether the current scenario can be carried out.
+So this activity is inherently :doc:`contextual <inspired_by/context_specific_validation>`, that is, it's dependent on specific scenario which is validated.
+
 
 Where should I put a validation logic?
 -------------------------------------------------------------
