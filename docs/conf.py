@@ -66,6 +66,8 @@ language = None
 # This pattern also affects html_static_path and html_extra_path.
 exclude_patterns = [u'_build', 'Thumbs.db', '.DS_Store']
 
+html_extra_path = ['google9849a6b2baaa1719.html']
+
 # The name of the Pygments (syntax highlighting) style to use.
 pygments_style = None
 
