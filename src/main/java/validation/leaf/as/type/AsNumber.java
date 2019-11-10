@@ -1,25 +1,26 @@
 package validation.leaf.as.type;
 
 import com.google.gson.JsonElement;
-import com.spencerwi.either.Either;
 import validation.Validatable;
 import validation.leaf.is.of.type.IsNumber;
 import validation.result.*;
-import validation.value.Present;
-import validation.value.Value;
 
 final public class AsNumber implements Validatable<Number>
 {
-    private Validatable<JsonElement> validatable;
+    private Validatable<JsonElement> original;
 
-    public AsNumber(Validatable<JsonElement> validatable)
+    public AsNumber(Validatable<JsonElement> original) throws Exception
     {
-        this.validatable = validatable;
+        if (original == null) {
+            throw new Exception("Decorated validatable element can not be null");
+        }
+
+        this.original = original;
     }
 
     public Result<Number> result() throws Throwable
     {
-        Result<JsonElement> isNumberResult = new IsNumber(this.validatable).result();
+        Result<JsonElement> isNumberResult = new IsNumber(this.original).result();
 
         if (!isNumberResult.isSuccessful()) {
             return new FromNonSuccessful<>(isNumberResult);

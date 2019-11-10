@@ -13,8 +13,15 @@ final public class IndexedValue implements Validatable<JsonElement>
     private String name;
     private JsonElement json;
 
-    public IndexedValue(String name, JsonElement json)
+    public IndexedValue(String name, JsonElement json) throws Exception
     {
+        if (name == null) {
+            throw new Exception("Name can not be null");
+        }
+        if (json == null) {
+            throw new Exception("Json can not be null");
+        }
+
         this.name = name;
         this.json = json;
     }

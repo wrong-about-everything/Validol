@@ -13,8 +13,15 @@ final public class IsDate implements Validatable<String>
     private Validatable<String> original;
     private SimpleDateFormat format;
 
-    public IsDate(Validatable<String> original, SimpleDateFormat format)
+    public IsDate(Validatable<String> original, SimpleDateFormat format) throws Exception
     {
+        if (original == null) {
+            throw new Exception("Decorated validatable element can not be null");
+        }
+        if (format == null) {
+            throw new Exception("Format can not be null");
+        }
+
         this.original = original;
         this.format = format;
     }

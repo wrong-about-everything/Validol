@@ -13,18 +13,22 @@ import validation.value.Value;
 
 final public class AsBoolean implements Validatable<Boolean>
 {
-    private Validatable<JsonElement> validatable;
+    private Validatable<JsonElement> original;
 
-    public AsBoolean(Validatable<JsonElement> validatable)
+    public AsBoolean(Validatable<JsonElement> original) throws Exception
     {
-        this.validatable = validatable;
+        if (original == null) {
+            throw new Exception("Decorated original element can not be null");
+        }
+
+        this.original = original;
     }
 
     public Result<Boolean> result() throws Throwable
     {
-        Result<JsonElement> result = this.validatable.result();
+        Result<JsonElement> result = this.original.result();
 
-        Result<JsonElement> isBoolean = new IsBoolean(this.validatable).result();
+        Result<JsonElement> isBoolean = new IsBoolean(this.original).result();
         if (!isBoolean.isSuccessful()) {
             return new FromNonSuccessful<>(isBoolean);
         }

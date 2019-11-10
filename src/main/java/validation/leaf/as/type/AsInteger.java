@@ -3,29 +3,30 @@ package validation.leaf.as.type;
 import validation.leaf.is.of.type.IsInteger;
 import validation.result.*;
 import validation.Validatable;
-import validation.value.Present;
 import com.google.gson.JsonElement;
-import com.spencerwi.either.Either;
-import validation.value.Value;
 
 final public class AsInteger implements Validatable<Integer>
 {
-    private Validatable<JsonElement> validatable;
+    private Validatable<JsonElement> original;
 
-    public AsInteger(Validatable<JsonElement> validatable)
+    public AsInteger(Validatable<JsonElement> original) throws Exception
     {
-        this.validatable = validatable;
+        if (original == null) {
+            throw new Exception("Decorated validatable element can not be null");
+        }
+
+        this.original = original;
     }
 
     public Result<Integer> result() throws Throwable
     {
-        Result<JsonElement> result = this.validatable.result();
+        Result<JsonElement> result = this.original.result();
 
         if (!result.isSuccessful()) {
             return new FromNonSuccessful<>(result);
         }
 
-        if (!new IsInteger(this.validatable).result().isSuccessful()) {
+        if (!new IsInteger(this.original).result().isSuccessful()) {
             return new NonSuccessfulWithCustomError<>(result, "This value must be an integer.");
         }
 

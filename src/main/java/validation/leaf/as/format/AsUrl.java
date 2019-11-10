@@ -9,8 +9,12 @@ final public class AsUrl implements Validatable<URL>
 {
     private Validatable<String> original;
 
-    public AsUrl(Validatable<String> original)
+    public AsUrl(Validatable<String> original) throws Exception
     {
+        if (original == null) {
+            throw new Exception("Decorated validatable element can not be null");
+        }
+
         this.original = original;
     }
 

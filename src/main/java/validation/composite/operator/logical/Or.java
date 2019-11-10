@@ -11,8 +11,15 @@ public class Or implements Validatable<Boolean>
     private Validatable<Boolean> left;
     private Validatable<Boolean> right;
 
-    public Or(Validatable<Boolean> left, Validatable<Boolean> right)
+    public Or(Validatable<Boolean> left, Validatable<Boolean> right) throws Exception
     {
+        if (left == null) {
+            throw new Exception("Left validatable can not be null");
+        }
+        if (right == null) {
+            throw new Exception("Right validatable can not be null");
+        }
+
         this.left = left;
         this.right = right;
     }

@@ -11,22 +11,26 @@ import com.spencerwi.either.Either;
 // is a field is missing, then validation passes. If you want a field to be present, make it new Required() explicitly.
 final public class AsString implements Validatable<String>
 {
-    private Validatable<JsonElement> validatable;
+    private Validatable<JsonElement> original;
 
-    public AsString(Validatable<JsonElement> validatable)
+    public AsString(Validatable<JsonElement> original) throws Exception
     {
-        this.validatable = validatable;
+        if (original == null) {
+            throw new Exception("Decorated validatable element can not be null");
+        }
+
+        this.original = original;
     }
 
     public Result<String> result() throws Throwable
     {
-        Result<JsonElement> result = this.validatable.result();
+        Result<JsonElement> result = this.original.result();
 
         if (!result.isSuccessful()) {
             return new FromNonSuccessful<>(result);
         }
 
-        if (!new IsString(this.validatable).result().isSuccessful()) {
+        if (!new IsString(this.original).result().isSuccessful()) {
             return new NonSuccessfulWithCustomError<>(result, "This value must be a string.");
         }
 

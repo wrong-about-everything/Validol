@@ -12,8 +12,12 @@ final public class ValuesAndErrorsOfUnnameds<T>
 {
     private List<Validatable<T>> validatables;
 
-    public ValuesAndErrorsOfUnnameds(List<Validatable<T>> validatables)
+    public ValuesAndErrorsOfUnnameds(List<Validatable<T>> validatables) throws Exception
     {
+        if (validatables == null) {
+            throw new Exception("Validatables list can not be null");
+        }
+
         this.validatables = validatables;
     }
 
@@ -21,7 +25,15 @@ final public class ValuesAndErrorsOfUnnameds<T>
     {
         return
             this.validatables.stream()
-                .map((validatable) -> new ValidatableThrowingUncheckedException<>(validatable))
+                .map(
+                    (validatable) -> {
+                        try {
+                            return new ValidatableThrowingUncheckedException<>(validatable);
+                        } catch (Exception e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                )
                 .map((validatableThrowingUncheckedException) -> validatableThrowingUncheckedException.result())
                 .reduce(
                     Pair.with(List.of(), List.of()),

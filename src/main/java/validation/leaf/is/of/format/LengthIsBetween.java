@@ -9,8 +9,18 @@ final public class LengthIsBetween implements Validatable<String>
     private Integer min;
     private Integer max;
 
-    public LengthIsBetween(Validatable<String> original, Integer min, Integer max)
+    public LengthIsBetween(Validatable<String> original, Integer min, Integer max) throws Exception
     {
+        if (original == null) {
+            throw new Exception("Decorated validatable element can not be null");
+        }
+        if (min == null) {
+            throw new Exception("Min argument can not be null");
+        }
+        if (max == null) {
+            throw new Exception("Max argument can not be null");
+        }
+
         this.original = original;
         this.min = min;
         this.max = max;

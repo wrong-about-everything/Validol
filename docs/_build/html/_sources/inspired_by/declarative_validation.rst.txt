@@ -263,7 +263,7 @@ Here is the declarative validation composite with `Validol library <https://http
         .result()
 
 What catches the eye first? There are plenty of ``FastFail`` gizmos. This class accepts exactly two arguments:
-validatable element and closure. Whether the first parameter results in true, the second closure is invoked.
+original element and closure. Whether the first parameter results in true, the second closure is invoked.
 The typical cases are just as in an example:
 
  - Check whether the request represents a well-formed json

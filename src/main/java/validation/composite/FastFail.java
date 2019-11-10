@@ -12,8 +12,15 @@ final public class FastFail<T, R> implements Validatable<R>
     private Validatable<T> original;
     private VFunction<T, Validatable<R>> closure;
 
-    public FastFail(Validatable<T> validatable, VFunction<T, Validatable<R>> closure)
+    public FastFail(Validatable<T> validatable, VFunction<T, Validatable<R>> closure) throws Exception
     {
+        if (validatable == null) {
+            throw new Exception("Validatable can not be null");
+        }
+        if (closure == null) {
+            throw new Exception("Closure can not be null");
+        }
+
         this.original = validatable;
         this.closure = closure;
     }

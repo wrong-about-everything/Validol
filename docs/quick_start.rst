@@ -181,7 +181,7 @@ Fancy some line-by-line analysis? Here it goes:
 | ``Line 5``: if json is well-formed , a closure is invoked, and json data is passed.
 | ``Line 6``: json structure is validated. Higher-level structure is an unnamed block of named entities.
 | It corresponds to higher level json request with the following keys ``guest``, ``bag``, ``delivery``, ``payment``, and ``source``.
-| ``Line 7``: A list of validatable elements, the ones corresponding to respective higher-level keys.
+| ``Line 7``: A list of original elements, the ones corresponding to respective higher-level keys.
 | ``Line 11``: The first one is ``guest``;
 | ``Line 10``: and it's required.
 | ``Line 9``: It must be a json object -- neither a primitive, nor an array.
@@ -194,7 +194,7 @@ Fancy some line-by-line analysis? Here it goes:
 | ``Line 25``: The second one is an name;
 | ``Line 24``: it's required as well;
 | ``Line 23``: and should be represented as string either.
-| ``Line 29``: If all validatable elements in current named block are valid, then an object of class ``Guest`` will be returned.
+| ``Line 29``: If all original elements in current named block are valid, then an object of class ``Guest`` will be returned.
 | The corresponding class has two arguments: `email`, which must be String, and `name`, which must be String as well.
 | ``Lines 32-35``: Already familiar fast-failing block named ``items``. Mind the absense of structure validation.
 | If ``items`` element will be a string, subsequent validation breaks not-so-gracefully.
@@ -218,13 +218,13 @@ Fancy some line-by-line analysis? Here it goes:
 | Hence the block name is ``SwitchTrue``, switching between whether ``type_id`` is 10, 20, or something else.
 | `Check tests for more examples <https://github.com/wrong-about-everything/Validol/blob/master/src/test/java/validation/composite/conditional/switcz/SwitchTrueTest.java>`_.
 | ``Line 60``: The name of the block is ``delivery``.
-| ``Line 61``: The list of validatable elements is passed.
-| ``Line 62``: The first validatable element is specific to a concrete condition. It could pretty much anything,
+| ``Line 61``: The list of original elements is passed.
+| ``Line 62``: The first original element is specific to a concrete condition. It could pretty much anything,
 | for example checking that ``type_id`` equals to 20.
 | ``Line 65``: Here it's just stub always returning true.
-| ``Line 66``: If the previous condition is satisfied, validatable passed in a second argument validates ``deliveryJsonElement``.
+| ``Line 66``: If the previous condition is satisfied, original passed in a second argument validates ``deliveryJsonElement``.
 | It's an unnamed block of named elements.
-| ``Line 67``: The list of validatable elements.
+| ``Line 67``: The list of original elements.
 | ``Line 69``: The first one is a ``where`` block.
 | ``Line 68``: It's wrapped into already familiar ``FastFail`` thing.
 | ``Line 70``: The second argument is a closure. It's first argument is a ``where`` json object.
@@ -241,7 +241,7 @@ Fancy some line-by-line analysis? Here it goes:
 | ``Line 85``: If all previous checks are successful, an ``Where`` object is created.
 | It's first argument is `street`, which must be a String; the second one is `building`, which must be an integer.
 | ``Lines 88-106``: It's pretty much the same with ``where`` block.
-| ``Line 107``: If all validatable elements are correct, an object of ``CourierDelivery`` class is created.
+| ``Line 107``: If all original elements are correct, an object of ``CourierDelivery`` class is created.
 | It has two arguments: `where`, which should be of ``Where`` class, and `when`, which should be of ``When`` class.
 | ``Lines 113-117``: The last element is ``source``. All the basic standard checks are in place.
 | ``Line 119``: Finally, an object of class ``OrderRegistrationRequestData`` is created.

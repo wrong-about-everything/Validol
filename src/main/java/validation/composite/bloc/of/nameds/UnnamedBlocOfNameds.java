@@ -17,8 +17,15 @@ final public class UnnamedBlocOfNameds<T> implements Validatable<T>
     private List<Validatable<?>> validatables;
     private final Class<? extends T> clazz;
 
-    public UnnamedBlocOfNameds(List<Validatable<?>> validatables, Class<? extends T> clazz)
+    public UnnamedBlocOfNameds(List<Validatable<?>> validatables, Class<? extends T> clazz) throws Exception
     {
+        if (validatables == null) {
+            throw new Exception("Validatables can not be null");
+        }
+        if (clazz == null) {
+            throw new Exception("Clazz can not be null");
+        }
+
         this.validatables = validatables;
         this.clazz = clazz;
     }

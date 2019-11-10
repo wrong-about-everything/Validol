@@ -16,7 +16,7 @@ public class Guest implements Validatable<example.correct.bag.guest.Guest>
 {
     private Validatable<example.correct.bag.guest.Guest> v;
 
-    public Guest(JsonElement requestJsonObject)
+    public Guest(JsonElement requestJsonObject) throws Exception
     {
         this.v =
             new FastFail<>(

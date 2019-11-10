@@ -16,8 +16,15 @@ final public class AsDate implements Validatable<Date>
     private Validatable<String> original;
     private SimpleDateFormat format;
 
-    public AsDate(Validatable<String> original, SimpleDateFormat format)
+    public AsDate(Validatable<String> original, SimpleDateFormat format) throws Exception
     {
+        if (original == null) {
+            throw new Exception("Decorated validatable element can not be null");
+        }
+        if (format == null) {
+            throw new Exception("Format can not be null");
+        }
+
         this.original = original;
         this.format = format;
     }

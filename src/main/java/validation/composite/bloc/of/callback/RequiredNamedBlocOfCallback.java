@@ -16,7 +16,7 @@ public class RequiredNamedBlocOfCallback<T> implements Validatable<T>
         String name,
         JsonElement requestJsonObject,
         VFunction<JsonElement, Validatable<T>> returnedBloc
-    )
+    ) throws Exception
     {
         this.v =
             new FastFail<>(

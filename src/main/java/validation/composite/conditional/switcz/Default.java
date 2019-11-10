@@ -7,8 +7,12 @@ final public class Default<T> implements Case<T>
 {
     private Validatable<T> validatable;
 
-    public Default(Validatable<T> validatable)
+    public Default(Validatable<T> validatable) throws Exception
     {
+        if (validatable == null) {
+            throw new Exception("Validatable can not be null");
+        }
+
         this.validatable = validatable;
     }
 

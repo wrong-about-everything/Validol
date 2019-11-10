@@ -10,8 +10,11 @@ final public class IsEmail implements Validatable<String>
 {
     private Validatable<String> original;
 
-    public IsEmail(Validatable<String> original)
+    public IsEmail(Validatable<String> original) throws Exception
     {
+        if (original == null) {
+            throw new Exception("Decorated validatable element can not be null");
+        }
         this.original = original;
     }
 

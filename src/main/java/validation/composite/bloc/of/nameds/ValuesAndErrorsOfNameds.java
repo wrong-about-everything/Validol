@@ -13,8 +13,12 @@ final public class ValuesAndErrorsOfNameds
 {
     private List<Validatable<?>> validatables;
 
-    public ValuesAndErrorsOfNameds(List<Validatable<?>> validatables)
+    public ValuesAndErrorsOfNameds(List<Validatable<?>> validatables) throws Exception
     {
+        if (validatables == null) {
+            throw new Exception("Validatables can not be null");
+        }
+
         this.validatables = validatables;
     }
 
@@ -22,7 +26,15 @@ final public class ValuesAndErrorsOfNameds
     {
         return
             this.validatables.stream()
-                .map((validatable) -> new ValidatableThrowingUncheckedException<>(validatable))
+                .map(
+                    (validatable) -> {
+                        try {
+                            return new ValidatableThrowingUncheckedException<>(validatable);
+                        } catch (Exception e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                )
                 .map((validatableThrowingUncheckedException) -> validatableThrowingUncheckedException.result())
                 .reduce(
                     Pair.with(List.of(), Map.of()),

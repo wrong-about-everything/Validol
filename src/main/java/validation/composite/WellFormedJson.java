@@ -14,9 +14,13 @@ final public class WellFormedJson implements Validatable<JsonElement>
 {
     private Validatable<String> original;
 
-    public WellFormedJson(Validatable<String> validatable)
+    public WellFormedJson(Validatable<String> original) throws Exception
     {
-        this.original = validatable;
+        if (original == null) {
+            throw new Exception("Decorated validatable element can not be null");
+        }
+
+        this.original = original;
     }
 
     public Result<JsonElement> result() throws Throwable

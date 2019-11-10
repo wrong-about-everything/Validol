@@ -24,7 +24,7 @@ public class Courier implements Validatable<Delivery>
 {
     private Validatable<Delivery> v;
 
-    public Courier(JsonElement deliveryJsonElement)
+    public Courier(JsonElement deliveryJsonElement) throws Exception
     {
         this.v =
             new UnnamedBlocOfNameds<>(

@@ -19,14 +19,14 @@ Anyways, you're not forced to use it and you could opt into the
 It's infinitely extendable
 ---------------------------
 Two concepts contribute to infinite extendability. I've already covered the first one, namely it's declarative style.
-The second one is high composability. All the validatable elements implement the single ``Validatable<T>`` interface.
+The second one is high composability. All the original elements implement the single ``Validatable<T>`` interface.
 If you have extremely complex logic, you won't drown in spaghetti code. Instead, you'll have a nice object composition.
 Check an :doc:`example here <inspired_by/context_specific_validation>`, in
 "Contextual validation that is specific to a concrete user story" sub-section.
 
 It's re-usable
 ------------------------------------
-Each piece of validation logic is an object which can decorate existing validatable elements.
+Each piece of validation logic is an object which can decorate existing original elements.
 Reusability was never an ultimate goal for me, but it's a nice side-effect to have.
 
 No magic and hidden dependencies

@@ -1,5 +1,6 @@
 package validation.composite.bloc.of.unnameds;
 
+import validation.composite.VFunction;
 import validation.result.Named;
 import validation.result.Result;
 import validation.Validatable;
@@ -12,11 +13,24 @@ final public class NamedBlocOfUnnameds<T, R> implements Validatable<R>
 {
     private String name;
     private JsonElement jsonElement;
-    private Function<JsonElement, Validatable<T>> unnamed;
+    private VFunction<JsonElement, Validatable<T>> unnamed;
     private Class<? extends R> clazz;
 
-    public NamedBlocOfUnnameds(String name, JsonElement jsonElement, Function<JsonElement, Validatable<T>> unnamed, Class<? extends R> clazz)
+    public NamedBlocOfUnnameds(String name, JsonElement jsonElement, VFunction<JsonElement, Validatable<T>> unnamed, Class<? extends R> clazz) throws Exception
     {
+        if (name == null) {
+            throw new Exception("Name can not be null");
+        }
+        if (jsonElement == null) {
+            throw new Exception("JsonElement can not be null");
+        }
+        if (unnamed == null) {
+            throw new Exception("Unnamed can not be null");
+        }
+        if (clazz == null) {
+            throw new Exception("Clazz can not be null");
+        }
+
         this.name = name;
         this.jsonElement = jsonElement;
         this.unnamed = unnamed;

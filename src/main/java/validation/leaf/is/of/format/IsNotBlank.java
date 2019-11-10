@@ -13,8 +13,12 @@ final public class IsNotBlank implements Validatable<JsonElement>
 {
     private Validatable<JsonElement> original;
 
-    public IsNotBlank(Validatable<JsonElement> original)
+    public IsNotBlank(Validatable<JsonElement> original) throws Exception
     {
+        if (original == null) {
+            throw new Exception("Decorated validatable element can not be null");
+        }
+
         this.original = original;
     }
 

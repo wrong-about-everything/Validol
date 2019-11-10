@@ -1,5 +1,6 @@
 package validation.composite.bloc.of.unnameds;
 
+import validation.composite.VFunction;
 import validation.result.Result;
 import validation.Validatable;
 import validation.value.Present;
@@ -16,11 +17,21 @@ import java.util.stream.StreamSupport;
 final public class UnnamedBlocOfUnnameds<T, R> implements Validatable<R>
 {
     private JsonElement jsonElement;
-    private Function<JsonElement, Validatable<T>> unnamed;
+    private VFunction<JsonElement, Validatable<T>> unnamed;
     private Class<? extends R> clazz;
 
-    public UnnamedBlocOfUnnameds(JsonElement jsonElement, Function<JsonElement, Validatable<T>> unnamed, Class<? extends R> clazz)
+    public UnnamedBlocOfUnnameds(JsonElement jsonElement, VFunction<JsonElement, Validatable<T>> unnamed, Class<? extends R> clazz) throws Exception
     {
+        if (jsonElement == null) {
+            throw new Exception("JsonElement can not be null");
+        }
+        if (unnamed == null) {
+            throw new Exception("Unnamed can not be null");
+        }
+        if (clazz == null) {
+            throw new Exception("Clazz can not be null");
+        }
+
         this.jsonElement = jsonElement;
         this.unnamed = unnamed;
         this.clazz = clazz;
@@ -42,7 +53,13 @@ final public class UnnamedBlocOfUnnameds<T, R> implements Validatable<R>
                     false
                 )
                     .map(
-                        list -> this.unnamed.apply(list)
+                        list -> {
+                            try {
+                                return this.unnamed.apply(list);
+                            } catch (Throwable e) {
+                                throw new RuntimeException(e);
+                            }
+                        }
                     )
                     .collect(
                         Collectors.toUnmodifiableList()

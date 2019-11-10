@@ -8,8 +8,9 @@ How to perform validation in Java?
 
 First, put it into a particular scenario -- the one you're validating
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-First of all, what is validation ? For me, it's a way to check whether the current scenario can be carried out.
-So this activity is inherently :doc:`contextual <inspired_by/context_specific_validation>`, that is, it's dependent on specific scenario which is validated.
+First of all, what is validation? For me, it's a way to check whether the current scenario can be carried out.
+So this activity is inherently :doc:`contextual <inspired_by/context_specific_validation>`,
+that is, it's dependent on specific scenario which is currently validated.
 
 Besides, it's a user-friendly way of reporting errors. If you put validation logic in domain, there is a problem of mapping error to request fields.
 So I don't even bother with it. I put only fundamental checks in domain, like Price which is always positive. In case of violation,

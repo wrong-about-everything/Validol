@@ -12,8 +12,15 @@ final public class SwitchTrue<T> implements Validatable<T>
     private String name;
     private List<Case<T>> cases;
 
-    public SwitchTrue(String name, List<Case<T>> cases)
+    public SwitchTrue(String name, List<Case<T>> cases) throws Exception
     {
+        if (name == null) {
+            throw new Exception("Name can not be null");
+        }
+        if (cases == null) {
+            throw new Exception("Cases list can not be null");
+        }
+
         this.name = name;
         this.cases = cases;
     }

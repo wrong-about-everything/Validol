@@ -10,8 +10,15 @@ final public class MatchesPattern implements Validatable<String>
     private Validatable<String> original;
     private Pattern pattern;
 
-    public MatchesPattern(Validatable<String> original, Pattern pattern)
+    public MatchesPattern(Validatable<String> original, Pattern pattern) throws Exception
     {
+        if (original == null) {
+            throw new Exception("Decorated validatable element can not be null");
+        }
+        if (pattern == null) {
+            throw new Exception("Pattern can not be null");
+        }
+
         this.original = original;
         this.pattern = pattern;
     }

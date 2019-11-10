@@ -12,8 +12,18 @@ final public class NamedBlocOfNameds<T> implements Validatable<T>
     private List<Validatable<?>> validatables;
     private final Class<? extends T> clazz;
 
-    public NamedBlocOfNameds(String name, List<Validatable<?>> validatables, Class<? extends T> clazz)
+    public NamedBlocOfNameds(String name, List<Validatable<?>> validatables, Class<? extends T> clazz) throws Exception
     {
+        if (name == null) {
+            throw new Exception("Name can not be null");
+        }
+        if (validatables == null) {
+            throw new Exception("Validatables list can not be null");
+        }
+        if (clazz == null) {
+            throw new Exception("Clazz can not be null");
+        }
+
         this.name = name;
         this.validatables = validatables;
         this.clazz = clazz;

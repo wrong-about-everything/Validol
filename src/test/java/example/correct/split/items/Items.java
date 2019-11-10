@@ -17,7 +17,7 @@ public class Items implements Validatable<example.correct.bag.items.Items>
 {
     private Validatable<example.correct.bag.items.Items> v;
 
-    public Items(JsonElement requestJsonObject)
+    public Items(JsonElement requestJsonObject) throws Exception
     {
         this.v =
             new FastFail<>(

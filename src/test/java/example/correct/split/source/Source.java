@@ -11,7 +11,7 @@ public class Source implements Validatable<Integer>
 {
     private Validatable<Integer> v;
 
-    public Source(JsonElement requestJsonObject)
+    public Source(JsonElement requestJsonObject) throws Exception
     {
         this.v =
             new AsInteger(
