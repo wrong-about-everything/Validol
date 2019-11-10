@@ -16,8 +16,15 @@ final public class IsOneOf<T> implements Validatable<T>
     private Validatable<T> original;
     private List<T> list;
 
-    public IsOneOf(Validatable<T> original, List<T> list)
+    public IsOneOf(Validatable<T> original, List<T> list) throws Exception
     {
+        if (original == null) {
+            throw new Exception("Decorated validatable element can not be null");
+        }
+        if (list == null) {
+            throw new Exception("List to check against can not be null");
+        }
+
         this.original = original;
         this.list = list;
     }

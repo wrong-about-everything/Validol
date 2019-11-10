@@ -11,8 +11,12 @@ final public class IsInteger implements Validatable<JsonElement>
 {
     private Validatable<JsonElement> original;
 
-    public IsInteger(Validatable<JsonElement> original)
+    public IsInteger(Validatable<JsonElement> original) throws Exception
     {
+        if (original == null) {
+            throw new Exception("Decorated validatable element can not be null");
+        }
+
         this.original = original;
     }
 

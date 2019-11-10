@@ -10,6 +10,9 @@ final public class AbsentField<T, R> implements Result<R>
 
     public AbsentField(Result<T> result) throws Exception
     {
+        if (result == null) {
+            throw new Exception("Result can not be null");
+        }
         if (!result.isSuccessful()) {
             throw new Exception("Result must be successful");
         }

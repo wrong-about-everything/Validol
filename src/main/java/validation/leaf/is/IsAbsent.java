@@ -9,8 +9,12 @@ final public class IsAbsent<T> implements Validatable<T>
 {
     private Validatable<T> original;
 
-    public IsAbsent(Validatable<T> original)
+    public IsAbsent(Validatable<T> original) throws Exception
     {
+        if (original == null) {
+            throw new Exception("Decorated validatable element can not be null");
+        }
+
         this.original = original;
     }
 

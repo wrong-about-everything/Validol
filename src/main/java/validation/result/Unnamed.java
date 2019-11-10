@@ -7,8 +7,11 @@ final public class Unnamed<T> implements Result<T>
 {
     private Either<Object, Value<T>> value;
 
-    public Unnamed(Either<Object, Value<T>> value)
+    public Unnamed(Either<Object, Value<T>> value) throws Exception
     {
+        if (value == null) {
+            throw new Exception("Value can not be null");
+        }
         this.value = value;
     }
 

@@ -6,5 +6,5 @@ import java.util.Date;
 
 public interface When
 {
-    public Value<Date> date();
+    public Value<Date> date() throws Exception;
 }

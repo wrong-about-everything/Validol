@@ -10,8 +10,12 @@ final public class IsJsonObject implements Validatable<JsonElement>
 {
     private Validatable<JsonElement> original;
 
-    public IsJsonObject(Validatable<JsonElement> original)
+    public IsJsonObject(Validatable<JsonElement> original) throws Exception
     {
+        if (original == null) {
+            throw new Exception("Decorated validatable element can not be null");
+        }
+
         this.original = original;
     }
 

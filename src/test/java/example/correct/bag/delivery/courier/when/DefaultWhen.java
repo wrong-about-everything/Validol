@@ -15,7 +15,7 @@ public class DefaultWhen implements When
         this.date = date;
     }
 
-    public Value<Date> date()
+    public Value<Date> date() throws Exception
     {
         return new Present<>(this.date);
     }

@@ -10,8 +10,12 @@ final public class IsJsonPrimitive implements Validatable<JsonElement>
 {
     private Validatable<JsonElement> original;
 
-    public IsJsonPrimitive(Validatable<JsonElement> original)
+    public IsJsonPrimitive(Validatable<JsonElement> original) throws Exception
     {
+        if (original == null) {
+            throw new Exception("Decorated validatable element can not be null");
+        }
+
         this.original = original;
     }
 

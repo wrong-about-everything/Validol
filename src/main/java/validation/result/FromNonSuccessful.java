@@ -8,6 +8,9 @@ final public class FromNonSuccessful<T, R> implements Result<R>
 
     public FromNonSuccessful(Result<T> result) throws Exception
     {
+        if (result == null) {
+            throw new Exception("Result can not be null");
+        }
         if (result.isSuccessful()) {
             throw new Exception("Result must be non successful");
         }

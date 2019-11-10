@@ -9,8 +9,12 @@ final public class IsFalse implements Validatable<Boolean>
 {
     private Validatable<Boolean> original;
 
-    public IsFalse(Validatable<Boolean> original)
+    public IsFalse(Validatable<Boolean> original) throws Exception
     {
+        if (original == null) {
+            throw new Exception("Decorated validatable element can not be null");
+        }
+
         this.original = original;
     }
 

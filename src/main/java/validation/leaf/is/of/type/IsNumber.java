@@ -13,8 +13,12 @@ final public class IsNumber implements Validatable<JsonElement>
 {
     private Validatable<JsonElement> original;
 
-    public IsNumber(Validatable<JsonElement> original)
+    public IsNumber(Validatable<JsonElement> original) throws Exception
     {
+        if (original == null) {
+            throw new Exception("Decorated validatable element can not be null");
+        }
+
         this.original = original;
     }
 

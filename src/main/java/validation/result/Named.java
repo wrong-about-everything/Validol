@@ -8,8 +8,15 @@ final public class Named<T> implements Result<T>
     private String name;
     private Either<Object, Value<T>> value;
 
-    public Named(String name, Either<Object, Value<T>> value)
+    public Named(String name, Either<Object, Value<T>> value) throws Exception
     {
+        if (name == null) {
+            throw new Exception("Name can not be null");
+        }
+        if (value == null) {
+            throw new Exception("Value can not be null");
+        }
+
         this.name = name;
         this.value = value;
     }

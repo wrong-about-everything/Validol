@@ -9,6 +9,13 @@ final public class NonSuccessfulWithCustomError<T, R> implements Result<R>
 
     public NonSuccessfulWithCustomError(Result<T> result, Object error) throws Exception
     {
+        if (result == null) {
+            throw new Exception("Result can not be null");
+        }
+        if (error == null) {
+            throw new Exception("Error can not be null");
+        }
+
         this.result = result;
         this.error = error;
     }

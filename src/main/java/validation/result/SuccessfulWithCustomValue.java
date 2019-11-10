@@ -10,6 +10,12 @@ final public class SuccessfulWithCustomValue<T, R> implements Result<R>
 
     public SuccessfulWithCustomValue(Result<T> result, R value) throws Exception
     {
+        if (result == null) {
+            throw new Exception("Result can not be null");
+        }
+        if (value == null) {
+            throw new Exception("Value can not be null");
+        }
         if (!result.isSuccessful()) {
             throw new Exception("Result must be successful");
         }

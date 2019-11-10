@@ -13,8 +13,15 @@ final public class IsGreaterThanOrEqual<T extends Comparable<T>> implements Vali
     private Validatable<T> original;
     private T value;
 
-    public IsGreaterThanOrEqual(Validatable<T> original, T value)
+    public IsGreaterThanOrEqual(Validatable<T> original, T value) throws Exception
     {
+        if (original == null) {
+            throw new Exception("Decorated validatable element can not be null");
+        }
+        if (value == null) {
+            throw new Exception("Value to check against can not be null");
+        }
+
         this.original = original;
         this.value = value;
     }

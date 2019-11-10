@@ -26,7 +26,7 @@ final public class IndexedValue implements Validatable<JsonElement>
         this.json = json;
     }
 
-    public Result<JsonElement> result()
+    public Result<JsonElement> result() throws Exception
     {
         if (!this.json.isJsonObject()) {
             return new Named<>(this.name, Either.left("IndexedValue class is used on an inappropriate data structure"));

@@ -1,23 +1,24 @@
 package validation.leaf;
 
-import com.spencerwi.either.Either;
 import validation.Validatable;
 import validation.result.*;
-import validation.result.Named;
-import validation.result.Unnamed;
-import validation.value.Present;
-import validation.value.Value;
 
 import java.lang.reflect.Constructor;
-import java.util.List;
 
 final public class WithCustomType<T, R> implements Validatable<R>
 {
     private Validatable<T> validatable;
     private Class<? extends R> clazz;
 
-    public WithCustomType(Validatable<T> validatable, Class<? extends R> clazz)
+    public WithCustomType(Validatable<T> validatable, Class<? extends R> clazz) throws Exception
     {
+        if (validatable == null) {
+            throw new Exception("Decorated validatable can not be null");
+        }
+        if (clazz == null) {
+            throw new Exception("Clazz can not be null");
+        }
+
         this.validatable = validatable;
         this.clazz = clazz;
     }

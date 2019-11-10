@@ -11,8 +11,12 @@ final public class Required implements Validatable<JsonElement>
 {
     private Validatable<JsonElement> validatable;
 
-    public Required(Validatable<JsonElement> validatable)
+    public Required(Validatable<JsonElement> validatable) throws Exception
     {
+        if (validatable == null) {
+            throw new Exception("Decorated validatable element can not be null");
+        }
+
         this.validatable = validatable;
     }
 

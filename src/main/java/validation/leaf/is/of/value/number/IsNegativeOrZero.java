@@ -10,8 +10,12 @@ final public class IsNegativeOrZero implements Validatable<Number>
 {
     private Validatable<Number> original;
 
-    public IsNegativeOrZero(Validatable<Number> original)
+    public IsNegativeOrZero(Validatable<Number> original) throws Exception
     {
+        if (original == null) {
+            throw new Exception("Decorated validatable element can not be null");
+        }
+
         this.original = original;
     }
 
