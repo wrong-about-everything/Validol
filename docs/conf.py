@@ -20,8 +20,8 @@ import sphinx_rtd_theme
 # -- Project information -----------------------------------------------------
 
 project = u'Validol'
-copyright = u'2019, Vadim Samokhin'
-author = u'Vadim Samokhin'
+copyright = u'2019, Vadim Samokhin (samokhinvadim at gmail dot com)'
+author = u'Vadim Samokhin (samokhinvadim at gmail dot com)'
 
 # The short X.Y version
 version = u''
