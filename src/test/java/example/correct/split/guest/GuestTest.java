@@ -26,7 +26,7 @@ public class GuestTest
 {
     @Test
     @UseDataProvider("validRequests")
-    public void successfulRequest(JsonElement jsonRequest, Guest value) throws Throwable
+    public void successfulRequest(JsonElement jsonRequest, Guest value) throws Exception
     {
         Result<Guest> result = new example.correct.split.guest.Guest(jsonRequest).result();
 
@@ -36,7 +36,7 @@ public class GuestTest
     }
 
     @DataProvider
-    public static Object[][] validRequests() throws Throwable
+    public static Object[][] validRequests() throws Exception
     {
         return
             new Object[][] {
@@ -57,7 +57,7 @@ public class GuestTest
 
     @Test
     @UseDataProvider("invalidRequests")
-    public void nonSuccessfulRequest(JsonElement jsonRequest, Object errors) throws Throwable
+    public void nonSuccessfulRequest(JsonElement jsonRequest, Object errors) throws Exception
     {
         Result<Guest> result = new example.correct.split.guest.Guest(jsonRequest).result();
 

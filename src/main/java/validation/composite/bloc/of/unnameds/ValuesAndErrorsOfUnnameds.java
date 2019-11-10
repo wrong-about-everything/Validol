@@ -21,7 +21,7 @@ final public class ValuesAndErrorsOfUnnameds<T>
         this.validatables = validatables;
     }
 
-    public Pair<List<T>, List<Object>> value() throws Throwable
+    public Pair<List<T>, List<Object>> value() throws Exception
     {
         return
             this.validatables.stream()

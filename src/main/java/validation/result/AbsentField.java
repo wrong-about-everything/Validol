@@ -8,7 +8,7 @@ final public class AbsentField<T, R> implements Result<R>
 {
     private Result<R> result;
 
-    public AbsentField(Result<T> result) throws Throwable
+    public AbsentField(Result<T> result) throws Exception
     {
         if (!result.isSuccessful()) {
             throw new Exception("Result must be successful");

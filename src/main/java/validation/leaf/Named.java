@@ -16,7 +16,7 @@ final public class Named<T> implements Validatable<T>
         this.value = value;
     }
 
-    public Result<T> result() throws Throwable
+    public Result<T> result() throws Exception
     {
         Result<T> result = new Unnamed<>(this.value).result();
 

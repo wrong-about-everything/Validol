@@ -15,7 +15,7 @@ final public class IsJsonArray implements Validatable<JsonElement>
         this.original = original;
     }
 
-    public Result<JsonElement> result() throws Throwable
+    public Result<JsonElement> result() throws Exception
     {
         Result<JsonElement> prevResult = this.original.result();
 

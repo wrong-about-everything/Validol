@@ -30,7 +30,7 @@ final public class UnnamedBlocOfNameds<T> implements Validatable<T>
         this.clazz = clazz;
     }
 
-    public Result<T> result() throws Throwable
+    public Result<T> result() throws Exception
     {
         Pair<List<Object>, Map<String, Object>> valuesOrErrors = new ValuesAndErrorsOfNameds(this.validatables).value();
 

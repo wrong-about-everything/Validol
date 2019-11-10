@@ -46,7 +46,7 @@ public class Guest implements Validatable<example.correct.bag.guest.Guest>
     }
 
     @Override
-    public Result<example.correct.bag.guest.Guest> result() throws Throwable
+    public Result<example.correct.bag.guest.Guest> result() throws Exception
     {
         return this.v.result();
     }

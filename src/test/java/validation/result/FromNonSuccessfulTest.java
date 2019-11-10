@@ -8,7 +8,7 @@ import static org.junit.Assert.*;
 public class FromNonSuccessfulTest
 {
     @Test
-    public void createdFromNonSuccessfulNamed() throws Throwable
+    public void createdFromNonSuccessfulNamed() throws Exception
     {
         Result<?> result = new FromNonSuccessful<>(new Named<>("vasya", Either.left("Oooops")));
 
@@ -18,7 +18,7 @@ public class FromNonSuccessfulTest
     }
 
     @Test
-    public void createdFromNonSuccessfulUnnamed() throws Throwable
+    public void createdFromNonSuccessfulUnnamed() throws Exception
     {
         Result<?> result = new FromNonSuccessful<>(new Unnamed<>(Either.left("Oooops")));
 
@@ -28,7 +28,7 @@ public class FromNonSuccessfulTest
     }
 
     @Test
-    public void failedToCreateFromSuccessfulUnnamed() throws Throwable
+    public void failedToCreateFromSuccessfulUnnamed() throws Exception
     {
         Result<?> result = new FromNonSuccessful<>(new Unnamed<>(Either.left("Oooops")));
 

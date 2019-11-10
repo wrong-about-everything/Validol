@@ -11,7 +11,7 @@ import static org.junit.Assert.*;
 public class OrTest
 {
     @Test
-    public void testSuccessful() throws Throwable
+    public void testSuccessful() throws Exception
     {
         assertTrue(
             (new Or(
@@ -24,7 +24,7 @@ public class OrTest
     }
 
     @Test
-    public void testFirstOneFailed() throws Throwable
+    public void testFirstOneFailed() throws Exception
     {
         assertTrue(
             (new Or(
@@ -37,7 +37,7 @@ public class OrTest
     }
 
     @Test
-    public void testSecondOneFailed() throws Throwable
+    public void testSecondOneFailed() throws Exception
     {
         assertTrue(
             (new Or(
@@ -50,7 +50,7 @@ public class OrTest
     }
 
     @Test
-    public void testBothFailed() throws Throwable
+    public void testBothFailed() throws Exception
     {
         Result<Boolean> result =
             (new Or(

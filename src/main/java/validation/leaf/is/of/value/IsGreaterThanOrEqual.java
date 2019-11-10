@@ -19,7 +19,7 @@ final public class IsGreaterThanOrEqual<T extends Comparable<T>> implements Vali
         this.value = value;
     }
 
-    public Result<T> result() throws Throwable
+    public Result<T> result() throws Exception
     {
         Result<T> prevResult = this.original.result();
 

@@ -22,7 +22,7 @@ public class Source implements Validatable<Integer>
     }
 
     @Override
-    public Result<Integer> result() throws Throwable
+    public Result<Integer> result() throws Exception
     {
         return this.v.result();
     }

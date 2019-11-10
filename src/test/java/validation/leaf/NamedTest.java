@@ -8,7 +8,7 @@ import static org.junit.Assert.*;
 public class NamedTest
 {
     @Test
-    public void success() throws Throwable
+    public void success() throws Exception
     {
         Named<String> named = new Named<>("vasya", Either.right(new Present<>("miliy")));
 
@@ -18,7 +18,7 @@ public class NamedTest
     }
 
     @Test
-    public void failure() throws Throwable
+    public void failure() throws Exception
     {
         Named<String> named = new Named<>("vasya", Either.left("ooops"));
 

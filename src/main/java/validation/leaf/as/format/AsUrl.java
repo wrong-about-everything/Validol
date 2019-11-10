@@ -18,7 +18,7 @@ final public class AsUrl implements Validatable<URL>
         this.original = original;
     }
 
-    public Result<URL> result() throws Throwable
+    public Result<URL> result() throws Exception
     {
         Result<String> isUrlResult = new IsUrl(this.original).result();
 

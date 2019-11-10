@@ -6,7 +6,7 @@ final public class FromNonSuccessful<T, R> implements Result<R>
 {
     private Result<T> result;
 
-    public FromNonSuccessful(Result<T> result) throws Throwable
+    public FromNonSuccessful(Result<T> result) throws Exception
     {
         if (result.isSuccessful()) {
             throw new Exception("Result must be non successful");

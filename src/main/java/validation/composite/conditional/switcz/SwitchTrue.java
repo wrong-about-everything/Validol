@@ -25,7 +25,7 @@ final public class SwitchTrue<T> implements Validatable<T>
         this.cases = cases;
     }
 
-    public Result<T> result() throws Throwable
+    public Result<T> result() throws Exception
     {
         Result<T> result = this.caseResult();
 
@@ -36,7 +36,7 @@ final public class SwitchTrue<T> implements Validatable<T>
         return new Named<>(this.name, Either.right(result.value()));
     }
 
-    private Result<T> caseResult() throws Throwable
+    private Result<T> caseResult() throws Exception
     {
         for (Case<T> _case : this.cases) {
             if (_case.isSatisfied()) {

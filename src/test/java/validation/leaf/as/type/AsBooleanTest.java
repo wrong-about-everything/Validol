@@ -16,7 +16,7 @@ import static org.junit.Assert.*;
 public class AsBooleanTest
 {
     @Test
-    public void isBoolean() throws Throwable
+    public void isBoolean() throws Exception
     {
         AsBoolean named =
             new AsBoolean(
@@ -33,7 +33,7 @@ public class AsBooleanTest
     }
 
     @Test
-    public void isAlmostBoolean() throws Throwable
+    public void isAlmostBoolean() throws Exception
     {
         AsBoolean named =
             new AsBoolean(
@@ -50,7 +50,7 @@ public class AsBooleanTest
     }
 
     @Test
-    public void isNotBooleanAtAll() throws Throwable
+    public void isNotBooleanAtAll() throws Exception
     {
         AsBoolean named =
             new AsBoolean(
@@ -67,7 +67,7 @@ public class AsBooleanTest
     }
 
     @Test
-    public void isNotAJsonPrimitive() throws Throwable
+    public void isNotAJsonPrimitive() throws Exception
     {
         AsBoolean named =
             new AsBoolean(
@@ -84,7 +84,7 @@ public class AsBooleanTest
     }
 
     @Test
-    public void isAbsent() throws Throwable
+    public void isAbsent() throws Exception
     {
         AsBoolean named =
             new AsBoolean(

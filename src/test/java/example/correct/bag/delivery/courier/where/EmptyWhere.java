@@ -9,12 +9,12 @@ public class EmptyWhere implements Where
         return true;
     }
 
-    public String street() throws Throwable
+    public String street() throws Exception
     {
         throw new Exception("Empty where does not have a street");
     }
 
-    public Integer building() throws Throwable
+    public Integer building() throws Exception
     {
         throw new Exception("Empty where does not have a building");
     }

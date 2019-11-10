@@ -136,7 +136,7 @@ With `Validol <https://github.com/wrong-about-everything/Validol>`_, you can do 
         }
 
         @Override
-        public Result<JsonElement> result() throws Throwable
+        public Result<JsonElement> result() throws Exception
         {
             return
                 new WellFormedJson(
@@ -250,7 +250,7 @@ That's how the whole thing looks like:
         // ctor and jsonRequestString private property declaration
 
         @Override
-        public Result<OrderRegistrationRequestData> result() throws Throwable
+        public Result<OrderRegistrationRequestData> result() throws Exception
         {
             return
                 new FastFail<>(

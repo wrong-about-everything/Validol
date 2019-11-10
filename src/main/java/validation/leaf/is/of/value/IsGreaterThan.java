@@ -19,7 +19,7 @@ final public class IsGreaterThan<T extends Comparable<T>> implements Validatable
         this.value = value;
     }
 
-    public Result<T> result() throws Throwable
+    public Result<T> result() throws Exception
     {
         Result<T> prevResult = this.original.result();
 

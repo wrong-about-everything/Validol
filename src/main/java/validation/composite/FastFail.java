@@ -25,7 +25,7 @@ final public class FastFail<T, R> implements Validatable<R>
         this.closure = closure;
     }
 
-    public Result<R> result() throws Throwable
+    public Result<R> result() throws Exception
     {
         Result<T> originalResult = this.original.result();
 

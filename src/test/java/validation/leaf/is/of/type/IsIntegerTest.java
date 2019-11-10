@@ -17,7 +17,7 @@ import static org.junit.Assert.*;
 public class IsIntegerTest
 {
     @Test
-    public void failedWithFailedOriginalValidatable() throws Throwable
+    public void failedWithFailedOriginalValidatable() throws Exception
     {
         IsInteger named =
             new IsInteger(
@@ -33,7 +33,7 @@ public class IsIntegerTest
     }
 
     @Test
-    public void failedWithIncorrectStructure() throws Throwable
+    public void failedWithIncorrectStructure() throws Exception
     {
         IsInteger named =
             new IsInteger(
@@ -59,7 +59,7 @@ public class IsIntegerTest
     }
 
     @Test
-    public void failedWithNonInteger() throws Throwable
+    public void failedWithNonInteger() throws Exception
     {
         IsInteger named =
             new IsInteger(
@@ -77,7 +77,7 @@ public class IsIntegerTest
     }
 
     @Test
-    public void successfulWithPresentValue() throws Throwable
+    public void successfulWithPresentValue() throws Exception
     {
         IsInteger named = new IsInteger(new Named<>("vasya", Either.right(new Present<>(new JsonPrimitive(777)))));
 
@@ -87,7 +87,7 @@ public class IsIntegerTest
     }
 
     @Test
-    public void successfulWithAbsentValue() throws Throwable
+    public void successfulWithAbsentValue() throws Exception
     {
         IsInteger named = new IsInteger(new Named<>("vasya", Either.right(new Absent<>())));
 

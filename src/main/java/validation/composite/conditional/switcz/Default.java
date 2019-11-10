@@ -21,7 +21,7 @@ final public class Default<T> implements Case<T>
         return true;
     }
 
-    public Result<T> result() throws Throwable
+    public Result<T> result() throws Exception
     {
         return this.validatable.result();
     }

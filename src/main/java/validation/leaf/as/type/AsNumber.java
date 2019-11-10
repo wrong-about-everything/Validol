@@ -18,7 +18,7 @@ final public class AsNumber implements Validatable<Number>
         this.original = original;
     }
 
-    public Result<Number> result() throws Throwable
+    public Result<Number> result() throws Exception
     {
         Result<JsonElement> isNumberResult = new IsNumber(this.original).result();
 
@@ -33,7 +33,7 @@ final public class AsNumber implements Validatable<Number>
         return new SuccessfulWithCustomValue<>(isNumberResult, this.value(isNumberResult));
     }
 
-    private Number value(Result<JsonElement> result) throws Throwable
+    private Number value(Result<JsonElement> result) throws Exception
     {
         return result.value().raw().getAsNumber();
     }

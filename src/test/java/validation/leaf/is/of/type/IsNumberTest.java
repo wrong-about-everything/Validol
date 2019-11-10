@@ -22,7 +22,7 @@ import static org.junit.Assert.*;
 public class IsNumberTest
 {
     @Test
-    public void failedWithFailedOriginalValidatable() throws Throwable
+    public void failedWithFailedOriginalValidatable() throws Exception
     {
         IsNumber named =
             new IsNumber(
@@ -38,7 +38,7 @@ public class IsNumberTest
     }
 
     @Test
-    public void failedWithIncorrectStructure() throws Throwable
+    public void failedWithIncorrectStructure() throws Exception
     {
         IsNumber named =
             new IsNumber(
@@ -64,7 +64,7 @@ public class IsNumberTest
     }
 
     @Test
-    public void successfulWithAbsentValue() throws Throwable
+    public void successfulWithAbsentValue() throws Exception
     {
         IsNumber named = new IsNumber(new Named<>("vasya", Either.right(new Absent<>())));
 
@@ -73,7 +73,7 @@ public class IsNumberTest
     }
 
     @Test
-    public void failedWithBoolean() throws Throwable
+    public void failedWithBoolean() throws Exception
     {
         IsNumber named =
             new IsNumber(
@@ -92,7 +92,7 @@ public class IsNumberTest
 
     @Test
     @UseDataProvider("validNumbers")
-    public void successfulWithPresentValue(String number) throws Throwable
+    public void successfulWithPresentValue(String number) throws Exception
     {
         IsNumber named = new IsNumber(new Named<>("vasya", Either.right(new Present<>(new JsonPrimitive(number)))));
 

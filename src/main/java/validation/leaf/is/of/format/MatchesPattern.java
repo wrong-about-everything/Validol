@@ -23,7 +23,7 @@ final public class MatchesPattern implements Validatable<String>
         this.pattern = pattern;
     }
 
-    public Result<String> result() throws Throwable
+    public Result<String> result() throws Exception
     {
         Result<String> result = this.original.result();
 

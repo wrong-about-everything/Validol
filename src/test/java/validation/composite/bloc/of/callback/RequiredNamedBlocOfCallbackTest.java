@@ -24,7 +24,7 @@ import static org.junit.Assert.*;
 public class RequiredNamedBlocOfCallbackTest
 {
     @Test
-    public void success() throws Throwable
+    public void success() throws Exception
     {
         Result<Integer> result =
             new RequiredNamedBlocOfCallback<>(
@@ -39,7 +39,7 @@ public class RequiredNamedBlocOfCallbackTest
     }
 
     @Test
-    public void someFieldsFailed() throws Throwable
+    public void someFieldsFailed() throws Exception
     {
         Result<Object> result =
             new RequiredNamedBlocOfCallback<>(

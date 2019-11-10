@@ -16,7 +16,7 @@ import static org.junit.Assert.*;
 public class AsUuidTest
 {
     @Test
-    public void validationFailedWhenDecoratedElementIsInvalid() throws Throwable
+    public void validationFailedWhenDecoratedElementIsInvalid() throws Exception
     {
         AsUuid named =
             new AsUuid(
@@ -33,7 +33,7 @@ public class AsUuidTest
 
     @Test
     @UseDataProvider("invalidUuids")
-    public void validationFailedWithInvalidUuid(String uuid) throws Throwable
+    public void validationFailedWithInvalidUuid(String uuid) throws Exception
     {
         AsUuid named =
             new AsUuid(
@@ -67,7 +67,7 @@ public class AsUuidTest
 
     @Test
     @UseDataProvider("validUuids")
-    public void validationSucceededWithValidUuid(String uuid) throws Throwable
+    public void validationSucceededWithValidUuid(String uuid) throws Exception
     {
         AsUuid named =
             new AsUuid(
@@ -93,7 +93,7 @@ public class AsUuidTest
     }
 
     @Test
-    public void validationSucceededWithEmptyUuid() throws Throwable
+    public void validationSucceededWithEmptyUuid() throws Exception
     {
         AsUuid named =
             new AsUuid(

@@ -16,7 +16,7 @@ import static org.junit.Assert.*;
 public class AsDateTest
 {
     @Test
-    public void nonSuccessfulPreviousResult() throws Throwable
+    public void nonSuccessfulPreviousResult() throws Exception
     {
         AsDate named =
             new AsDate(
@@ -29,7 +29,7 @@ public class AsDateTest
     }
 
     @Test
-    public void nonSuccessfulWithNotADate() throws Throwable
+    public void nonSuccessfulWithNotADate() throws Exception
     {
         AsDate named =
             new AsDate(
@@ -42,7 +42,7 @@ public class AsDateTest
     }
 
     @Test
-    public void successfulWithAbsentField() throws Throwable
+    public void successfulWithAbsentField() throws Exception
     {
         AsDate named =
             new AsDate(
@@ -55,7 +55,7 @@ public class AsDateTest
     }
 
     @Test
-    public void successfulWithValidDate() throws Throwable
+    public void successfulWithValidDate() throws Exception
     {
         AsDate named =
             new AsDate(

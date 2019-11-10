@@ -73,7 +73,7 @@ public class Courier implements Validatable<Delivery>
     }
 
     @Override
-    public Result<Delivery> result() throws Throwable
+    public Result<Delivery> result() throws Exception
     {
         return this.v.result();
     }

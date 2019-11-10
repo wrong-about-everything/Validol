@@ -14,7 +14,7 @@ final public class IsAbsent<T> implements Validatable<T>
         this.original = original;
     }
 
-    public Result<T> result() throws Throwable
+    public Result<T> result() throws Exception
     {
         Result<T> prevResult = this.original.result();
 
@@ -29,7 +29,7 @@ final public class IsAbsent<T> implements Validatable<T>
             ;
     }
 
-    private Either<Object, Value<T>> value(Result<T> previousResult) throws Throwable
+    private Either<Object, Value<T>> value(Result<T> previousResult) throws Exception
     {
         return
             previousResult.value().isPresent()

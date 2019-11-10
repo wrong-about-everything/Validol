@@ -15,7 +15,7 @@ import static org.junit.Assert.*;
 public class WellFormedJsonTest
 {
     @Test
-    public void invalidJson() throws Throwable
+    public void invalidJson() throws Exception
     {
         Result<JsonElement> result =
             (new WellFormedJson(
@@ -28,7 +28,7 @@ public class WellFormedJsonTest
     }
 
     @Test
-    public void wellFormedJson() throws Throwable
+    public void wellFormedJson() throws Exception
     {
         Result<JsonElement> result =
             (new WellFormedJson(

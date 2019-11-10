@@ -21,7 +21,7 @@ final public class AsIp implements Validatable<InetAddress>
         this.original = original;
     }
 
-    public Result<InetAddress> result() throws Throwable
+    public Result<InetAddress> result() throws Exception
     {
         Result<String> result = new IsIp(this.original).result();
 
@@ -36,7 +36,7 @@ final public class AsIp implements Validatable<InetAddress>
         return new SuccessfulWithCustomValue<>(result, this.value(result));
     }
 
-    private InetAddress value(Result<String> result) throws Throwable
+    private InetAddress value(Result<String> result) throws Exception
     {
         return InetAddress.getByName(result.value().raw());
     }

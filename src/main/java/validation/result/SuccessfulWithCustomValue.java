@@ -8,7 +8,7 @@ final public class SuccessfulWithCustomValue<T, R> implements Result<R>
     private Result<T> result;
     private R value;
 
-    public SuccessfulWithCustomValue(Result<T> result, R value) throws Throwable
+    public SuccessfulWithCustomValue(Result<T> result, R value) throws Exception
     {
         if (!result.isSuccessful()) {
             throw new Exception("Result must be successful");

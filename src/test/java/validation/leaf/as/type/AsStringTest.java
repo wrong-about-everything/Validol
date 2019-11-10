@@ -13,7 +13,7 @@ import static org.junit.Assert.*;
 public class AsStringTest
 {
     @Test
-    public void isString() throws Throwable
+    public void isString() throws Exception
     {
         AsString named =
             new AsString(
@@ -30,7 +30,7 @@ public class AsStringTest
     }
 
     @Test
-    public void isNotAString() throws Throwable
+    public void isNotAString() throws Exception
     {
         AsString named =
             new AsString(
@@ -47,7 +47,7 @@ public class AsStringTest
     }
 
     @Test
-    public void isNotAJsonPrimitive() throws Throwable
+    public void isNotAJsonPrimitive() throws Exception
     {
         AsString named =
             new AsString(

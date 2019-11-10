@@ -16,7 +16,7 @@ final public class IsEqualTo<T> implements Validatable<T>
         this.value = value;
     }
 
-    public Result<T> result() throws Throwable
+    public Result<T> result() throws Exception
     {
         Result<T> prevResult = this.original.result();
 

@@ -26,7 +26,7 @@ final public class Specific<T> implements Case<T>
         return this.clause.isSatisfied();
     }
 
-    public Result<T> result() throws Throwable
+    public Result<T> result() throws Exception
     {
         return this.validatable.result();
     }

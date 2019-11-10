@@ -13,7 +13,7 @@ import static org.junit.Assert.*;
 public class AsIntegerTest
 {
     @Test
-    public void isInteger() throws Throwable
+    public void isInteger() throws Exception
     {
         AsInteger named =
             new AsInteger(
@@ -30,7 +30,7 @@ public class AsIntegerTest
     }
 
     @Test
-    public void isNotAnInteger() throws Throwable
+    public void isNotAnInteger() throws Exception
     {
         AsInteger named =
             new AsInteger(
@@ -47,7 +47,7 @@ public class AsIntegerTest
     }
 
     @Test
-    public void isNotAJsonPrimitive() throws Throwable
+    public void isNotAJsonPrimitive() throws Exception
     {
         AsInteger named =
             new AsInteger(

@@ -14,7 +14,7 @@ import static org.junit.Assert.*;
 public class IsJsonObjectTest
 {
     @Test
-    public void failsWithJsonPrimitive() throws Throwable
+    public void failsWithJsonPrimitive() throws Exception
     {
         IsJsonObject named =
             new IsJsonObject(
@@ -33,7 +33,7 @@ public class IsJsonObjectTest
     }
 
     @Test
-    public void failsWithJsonList() throws Throwable
+    public void failsWithJsonList() throws Exception
     {
         IsJsonObject named =
             new IsJsonObject(
@@ -54,7 +54,7 @@ public class IsJsonObjectTest
     }
 
     @Test
-    public void successfulWithJsonObject() throws Throwable
+    public void successfulWithJsonObject() throws Exception
     {
         IsJsonObject named =
             new IsJsonObject(

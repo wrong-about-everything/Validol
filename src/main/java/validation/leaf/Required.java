@@ -16,7 +16,7 @@ final public class Required implements Validatable<JsonElement>
         this.validatable = validatable;
     }
 
-    public Result<JsonElement> result() throws Throwable
+    public Result<JsonElement> result() throws Exception
     {
         Result<JsonElement> result = this.validatable.result();
 

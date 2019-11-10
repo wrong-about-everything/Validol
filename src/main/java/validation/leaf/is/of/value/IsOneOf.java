@@ -22,7 +22,7 @@ final public class IsOneOf<T> implements Validatable<T>
         this.list = list;
     }
 
-    public Result<T> result() throws Throwable
+    public Result<T> result() throws Exception
     {
         Result<T> prevResult = this.original.result();
 

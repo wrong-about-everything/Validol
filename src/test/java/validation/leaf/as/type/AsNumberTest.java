@@ -19,7 +19,7 @@ public class AsNumberTest
 {
     @Test
     @UseDataProvider("validNumbers")
-    public void isNumber(Number number) throws Throwable
+    public void isNumber(Number number) throws Exception
     {
         AsNumber named =
             new AsNumber(
@@ -48,7 +48,7 @@ public class AsNumberTest
 
     @Test
     @UseDataProvider("invalidNumbers")
-    public void isNotANumber(Object notANumber) throws Throwable
+    public void isNotANumber(Object notANumber) throws Exception
     {
         AsNumber named =
             new AsNumber(
@@ -76,7 +76,7 @@ public class AsNumberTest
     }
 
     @Test
-    public void isNotAJsonPrimitive() throws Throwable
+    public void isNotAJsonPrimitive() throws Exception
     {
         AsNumber named =
             new AsNumber(

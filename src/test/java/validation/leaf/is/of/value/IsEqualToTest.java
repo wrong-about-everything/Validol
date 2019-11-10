@@ -10,7 +10,7 @@ import static org.junit.Assert.*;
 public class IsEqualToTest
 {
     @Test
-    public void failedWithFailedOriginalValidatable() throws Throwable
+    public void failedWithFailedOriginalValidatable() throws Exception
     {
         IsEqualTo<?> named =
             new IsEqualTo<>(
@@ -27,7 +27,7 @@ public class IsEqualToTest
     }
 
     @Test
-    public void successfulWithAbsentValue() throws Throwable
+    public void successfulWithAbsentValue() throws Exception
     {
         IsEqualTo<?> named =
             new IsEqualTo<>(
@@ -40,7 +40,7 @@ public class IsEqualToTest
     }
 
     @Test
-    public void successfulWithPresentFalseValue() throws Throwable
+    public void successfulWithPresentFalseValue() throws Exception
     {
         IsEqualTo<?> named =
             new IsEqualTo<>(
@@ -54,7 +54,7 @@ public class IsEqualToTest
     }
 
     @Test
-    public void successfulWithPresentIntegerValue() throws Throwable
+    public void successfulWithPresentIntegerValue() throws Exception
     {
         IsEqualTo<?> named =
             new IsEqualTo<>(
@@ -68,7 +68,7 @@ public class IsEqualToTest
     }
 
     @Test
-    public void failedWithPresentStringValue() throws Throwable
+    public void failedWithPresentStringValue() throws Exception
     {
         IsEqualTo<?> named =
             new IsEqualTo<>(

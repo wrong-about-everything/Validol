@@ -16,7 +16,7 @@ import static org.junit.Assert.*;
 public class IsIpTest
 {
     @Test
-    public void validationFailedWhenDecoratedElementIsInvalid() throws Throwable
+    public void validationFailedWhenDecoratedElementIsInvalid() throws Exception
     {
         IsIp named =
             new IsIp(
@@ -33,7 +33,7 @@ public class IsIpTest
 
     @Test
     @UseDataProvider("invalidIps")
-    public void validationFailedWithInvalidIp(String ip) throws Throwable
+    public void validationFailedWithInvalidIp(String ip) throws Exception
     {
         IsIp named =
             new IsIp(
@@ -62,7 +62,7 @@ public class IsIpTest
 
     @Test
     @UseDataProvider("validIps")
-    public void validationSucceededWithValidIp(String ip) throws Throwable
+    public void validationSucceededWithValidIp(String ip) throws Exception
     {
         IsIp named =
             new IsIp(
@@ -88,7 +88,7 @@ public class IsIpTest
     }
 
     @Test
-    public void validationSucceededWithEmptyIp() throws Throwable
+    public void validationSucceededWithEmptyIp() throws Exception
     {
         IsIp named =
             new IsIp(

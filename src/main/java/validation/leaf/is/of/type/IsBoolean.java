@@ -17,7 +17,7 @@ final public class IsBoolean implements Validatable<JsonElement>
         this.original = original;
     }
 
-    public Result<JsonElement> result() throws Throwable
+    public Result<JsonElement> result() throws Exception
     {
         Result<JsonElement> prevResult = new IsJsonPrimitive(this.original).result();
 
@@ -36,7 +36,7 @@ final public class IsBoolean implements Validatable<JsonElement>
         return new SuccessfulWithCustomValue<>(prevResult, this.value(prevResult));
     }
 
-    private JsonElement value(Result<JsonElement> prevResult) throws Throwable
+    private JsonElement value(Result<JsonElement> prevResult) throws Exception
     {
         return prevResult.value().raw();
     }
@@ -46,7 +46,7 @@ final public class IsBoolean implements Validatable<JsonElement>
         return Either.left("This value must be a boolean.");
     }
 
-    private Boolean isBoolean(Result<JsonElement> prevResult) throws Throwable
+    private Boolean isBoolean(Result<JsonElement> prevResult) throws Exception
     {
         return
             prevResult.value().raw().toString()

@@ -21,7 +21,7 @@ final public class AsUuid implements Validatable<UUID>
         this.original = original;
     }
 
-    public Result<UUID> result() throws Throwable
+    public Result<UUID> result() throws Exception
     {
         Result<String> result = new IsUuid(this.original).result();
 
@@ -44,7 +44,7 @@ final public class AsUuid implements Validatable<UUID>
         return new SuccessfulWithCustomValue<>(result, this.value(result));
     }
 
-    private UUID value(Result<String> result) throws Throwable
+    private UUID value(Result<String> result) throws Exception
     {
         return UUID.fromString(result.value().raw());
     }

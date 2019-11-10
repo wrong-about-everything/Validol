@@ -13,7 +13,7 @@ import static org.junit.Assert.*;
 public class NamedBlocOfNamedsTest
 {
     @Test
-    public void success() throws Throwable
+    public void success() throws Exception
     {
         Result<Team> result =
             new NamedBlocOfNameds<>(
@@ -43,7 +43,7 @@ public class NamedBlocOfNamedsTest
     }
 
     @Test
-    public void someFieldsFailed() throws Throwable
+    public void someFieldsFailed() throws Exception
     {
         Result<Team> result =
             new NamedBlocOfNameds<>(

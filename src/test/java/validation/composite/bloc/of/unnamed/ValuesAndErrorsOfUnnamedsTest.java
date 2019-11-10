@@ -15,7 +15,7 @@ import static org.junit.Assert.*;
 public class ValuesAndErrorsOfUnnamedsTest
 {
     @Test
-    public void noErrorsInPlainUnnameds() throws Throwable
+    public void noErrorsInPlainUnnameds() throws Exception
     {
         Pair<List<Object>, List<Object>> valuesAndErrors =
             new ValuesAndErrorsOfUnnameds<Object>(
@@ -44,7 +44,7 @@ public class ValuesAndErrorsOfUnnamedsTest
     }
 
     @Test
-    public void failedValidationOfPlainUnnameds() throws Throwable
+    public void failedValidationOfPlainUnnameds() throws Exception
     {
         Pair<List<String>, List<Object>> valuesAndErrors =
             new ValuesAndErrorsOfUnnameds<>(
@@ -68,7 +68,7 @@ public class ValuesAndErrorsOfUnnamedsTest
     }
 
     @Test
-    public void successfulValidationOfUnnamedBlocks() throws Throwable
+    public void successfulValidationOfUnnamedBlocks() throws Exception
     {
         Integers i = new Integers(List.of(1, 2, 3));
 

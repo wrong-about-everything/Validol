@@ -7,7 +7,7 @@ public interface Delivery
 {
     public Boolean isByCourier();
 
-    public Where where() throws Throwable;
+    public Where where() throws Exception;
 
-    public When when() throws Throwable;
+    public When when() throws Exception;
 }

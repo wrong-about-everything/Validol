@@ -25,7 +25,7 @@ public class InlineValidatableExampleTest
 {
     @Test
     @UseDataProvider("validRequests")
-    public void successfulComplexRequest(String jsonRequest, OrderRegistrationRequestData value) throws Throwable
+    public void successfulComplexRequest(String jsonRequest, OrderRegistrationRequestData value) throws Exception
     {
         Result<OrderRegistrationRequestData> result = new ValidatedOrderRegistrationRequest(jsonRequest).result();
 
@@ -43,7 +43,7 @@ public class InlineValidatableExampleTest
     }
 
     @DataProvider
-    public static Object[][] validRequests() throws Throwable
+    public static Object[][] validRequests() throws Exception
     {
         return
             new Object[][] {
@@ -114,7 +114,7 @@ public class InlineValidatableExampleTest
 
     @Test
     @UseDataProvider("invalidRequests")
-    public void nonSuccessfulComplexRequest(String jsonRequest, Object errors) throws Throwable
+    public void nonSuccessfulComplexRequest(String jsonRequest, Object errors) throws Exception
     {
         Result<OrderRegistrationRequestData> result = new ValidatedOrderRegistrationRequest(jsonRequest).result();
 

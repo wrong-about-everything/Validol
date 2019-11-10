@@ -24,7 +24,7 @@ public class And implements Validatable<Boolean>
         this.right = right;
     }
 
-    public Result<Boolean> result() throws Throwable
+    public Result<Boolean> result() throws Exception
     {
         Result<Boolean> leftResult = this.left.result();
         Result<Boolean> rightResult = this.right.result();

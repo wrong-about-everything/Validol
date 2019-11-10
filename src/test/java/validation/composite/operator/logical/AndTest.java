@@ -10,7 +10,7 @@ import validation.value.Present;
 public class AndTest
 {
     @Test
-    public void testSuccessful() throws Throwable
+    public void testSuccessful() throws Exception
     {
         assertTrue(
             (new And(
@@ -23,7 +23,7 @@ public class AndTest
     }
 
     @Test
-    public void testFirstOneFailed() throws Throwable
+    public void testFirstOneFailed() throws Exception
     {
         Result<Boolean> result =
             (new And(
@@ -37,7 +37,7 @@ public class AndTest
     }
 
     @Test
-    public void testSecondOneFailed() throws Throwable
+    public void testSecondOneFailed() throws Exception
     {
         Result<Boolean> result =
             (new And(

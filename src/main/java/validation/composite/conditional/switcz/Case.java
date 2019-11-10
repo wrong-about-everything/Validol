@@ -6,5 +6,5 @@ interface Case<T>
 {
     public Boolean isSatisfied();
 
-    public Result<T> result() throws Throwable;
+    public Result<T> result() throws Exception;
 }

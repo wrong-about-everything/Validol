@@ -26,7 +26,7 @@ final public class LengthIsBetween implements Validatable<String>
         this.max = max;
     }
 
-    public Result<String> result() throws Throwable
+    public Result<String> result() throws Exception
     {
         Result<String> result = this.original.result();
 

@@ -37,7 +37,7 @@ final public class UnnamedBlocOfUnnameds<T, R> implements Validatable<R>
         this.clazz = clazz;
     }
 
-    public Result<R> result() throws Throwable
+    public Result<R> result() throws Exception
     {
         if (!this.jsonElement.isJsonArray()) {
             return

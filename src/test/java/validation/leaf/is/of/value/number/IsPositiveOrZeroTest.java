@@ -18,7 +18,7 @@ import static org.junit.Assert.*;
 public class IsPositiveOrZeroTest
 {
     @Test
-    public void failedWithFailedOriginalValidatable() throws Throwable
+    public void failedWithFailedOriginalValidatable() throws Exception
     {
         IsPositiveOrZero named =
             new IsPositiveOrZero(
@@ -34,7 +34,7 @@ public class IsPositiveOrZeroTest
     }
 
     @Test
-    public void successfulWithAbsentValue() throws Throwable
+    public void successfulWithAbsentValue() throws Exception
     {
         IsPositiveOrZero named = new IsPositiveOrZero(new Named<>("vasya", Either.right(new Absent<>())));
 
@@ -43,7 +43,7 @@ public class IsPositiveOrZeroTest
     }
 
     @Test
-    public void successfulWithPresentPositiveValue() throws Throwable
+    public void successfulWithPresentPositiveValue() throws Exception
     {
         IsPositiveOrZero named = new IsPositiveOrZero(new Named<>("vasya", Either.right(new Present<>(25))));
 
@@ -53,7 +53,7 @@ public class IsPositiveOrZeroTest
     }
 
     @Test
-    public void successfulWithPresentZeroValue() throws Throwable
+    public void successfulWithPresentZeroValue() throws Exception
     {
         IsPositiveOrZero named = new IsPositiveOrZero(new Named<>("vasya", Either.right(new Present<>(0))));
 
@@ -63,7 +63,7 @@ public class IsPositiveOrZeroTest
     }
 
     @Test
-    public void failedWithPresentNegativeValue() throws Throwable
+    public void failedWithPresentNegativeValue() throws Exception
     {
         IsPositiveOrZero named = new IsPositiveOrZero(new Named<>("vasya", Either.right(new Present<>(-0.4))));
 

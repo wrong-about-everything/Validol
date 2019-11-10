@@ -26,7 +26,7 @@ final public class IsDate implements Validatable<String>
         this.format = format;
     }
 
-    public Result<String> result() throws Throwable
+    public Result<String> result() throws Exception
     {
         Result<String> prevResult = this.original.result();
 
@@ -45,7 +45,7 @@ final public class IsDate implements Validatable<String>
         return prevResult;
     }
 
-    private Boolean isValidDate(Result<String> prevResult) throws Throwable
+    private Boolean isValidDate(Result<String> prevResult) throws Exception
     {
         try {
             this.format.setLenient(false);

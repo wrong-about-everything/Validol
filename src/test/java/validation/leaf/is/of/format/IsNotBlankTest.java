@@ -23,7 +23,7 @@ import static org.junit.Assert.*;
 public class IsNotBlankTest
 {
     @Test
-    public void failedWithInvalidOriginalValidatable() throws Throwable
+    public void failedWithInvalidOriginalValidatable() throws Exception
     {
         IsNotBlank named =
             new IsNotBlank(
@@ -39,7 +39,7 @@ public class IsNotBlankTest
     }
 
     @Test
-    public void failedWithIncorrectStructure() throws Throwable
+    public void failedWithIncorrectStructure() throws Exception
     {
         IsNotBlank named =
             new IsNotBlank(
@@ -65,7 +65,7 @@ public class IsNotBlankTest
     }
 
     @Test
-    public void successWithNonExistentField() throws Throwable
+    public void successWithNonExistentField() throws Exception
     {
         IsNotBlank named =
             new IsNotBlank(
@@ -84,7 +84,7 @@ public class IsNotBlankTest
 
     @Test
     @UseDataProvider("nonBlankData")
-    public void successfulWithNonBlankData(JsonElement json) throws Throwable
+    public void successfulWithNonBlankData(JsonElement json) throws Exception
     {
         IsNotBlank named = new IsNotBlank(new Named<>("vasya", Either.right(new Present<>(json))));
 

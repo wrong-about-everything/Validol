@@ -21,7 +21,7 @@ import static org.junit.Assert.*;
 public class NamedBlocOfUnnamedsTest
 {
     @Test
-    public void success() throws Throwable
+    public void success() throws Exception
     {
         Result<Items> result =
             new NamedBlocOfUnnameds<>(
@@ -49,7 +49,7 @@ public class NamedBlocOfUnnamedsTest
     }
 
     @Test
-    public void fail() throws Throwable
+    public void fail() throws Exception
     {
         Result<Items> result =
             new NamedBlocOfUnnameds<>(
@@ -80,7 +80,7 @@ public class NamedBlocOfUnnamedsTest
     }
 
     @Test
-    public void wrongStructure() throws Throwable
+    public void wrongStructure() throws Exception
     {
         Result<Items> result =
             new NamedBlocOfUnnameds<>(

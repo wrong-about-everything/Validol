@@ -29,7 +29,7 @@ final public class AsDate implements Validatable<Date>
         this.format = format;
     }
 
-    public Result<Date> result() throws Throwable
+    public Result<Date> result() throws Exception
     {
         Result<String> isDateResult = new IsDate(this.original, this.format).result();
 
@@ -44,7 +44,7 @@ final public class AsDate implements Validatable<Date>
         return new SuccessfulWithCustomValue<>(isDateResult, this.value(isDateResult));
     }
 
-    private Date value(Result<String> prevResult) throws Throwable
+    private Date value(Result<String> prevResult) throws Exception
     {
         this.format.setLenient(false);
         return this.format.parse(prevResult.value().raw().trim());

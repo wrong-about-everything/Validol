@@ -15,7 +15,7 @@ import static org.junit.Assert.*;
 public class LengthIsBetweenTest
 {
     @Test
-    public void failedWithInvalidOriginalValidatable() throws Throwable
+    public void failedWithInvalidOriginalValidatable() throws Exception
     {
         LengthIsBetween named =
             new LengthIsBetween(
@@ -33,7 +33,7 @@ public class LengthIsBetweenTest
     }
 
     @Test
-    public void successWithNonExistentField() throws Throwable
+    public void successWithNonExistentField() throws Exception
     {
         LengthIsBetween named =
             new LengthIsBetween(
@@ -54,7 +54,7 @@ public class LengthIsBetweenTest
 
     @Test
     @UseDataProvider("nonMatchingLengths")
-    public void failedWithNonMatchingLengths(String value, Integer min, Integer max) throws Throwable
+    public void failedWithNonMatchingLengths(String value, Integer min, Integer max) throws Exception
     {
         LengthIsBetween named =
             new LengthIsBetween(
@@ -85,7 +85,7 @@ public class LengthIsBetweenTest
 
     @Test
     @UseDataProvider("matchingLengths")
-    public void successfulWithMatchingLengths(String value, Integer min, Integer max) throws Throwable
+    public void successfulWithMatchingLengths(String value, Integer min, Integer max) throws Exception
     {
         LengthIsBetween named =
             new LengthIsBetween(

@@ -23,7 +23,7 @@ final public class WithCustomType<T, R> implements Validatable<R>
     }
 
     @Override
-    public Result<R> result() throws Throwable
+    public Result<R> result() throws Exception
     {
         Result<T> result = this.validatable.result();
 

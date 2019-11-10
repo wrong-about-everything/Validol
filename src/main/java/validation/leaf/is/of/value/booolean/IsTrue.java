@@ -16,7 +16,7 @@ final public class IsTrue implements Validatable<Boolean>
         this.original = original;
     }
 
-    public Result<Boolean> result() throws Throwable
+    public Result<Boolean> result() throws Exception
     {
         Result<Boolean> asBoolean = this.original.result();
 
@@ -31,7 +31,7 @@ final public class IsTrue implements Validatable<Boolean>
         return new SuccessfulWithCustomValue<>(asBoolean, this.value(asBoolean));
     }
 
-    private Boolean value(Result<Boolean> prevResult) throws Throwable
+    private Boolean value(Result<Boolean> prevResult) throws Exception
     {
         return prevResult.value().raw();
     }

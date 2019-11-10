@@ -15,7 +15,7 @@ final public class IsPositiveOrZero implements Validatable<Number>
         this.original = original;
     }
 
-    public Result<Number> result() throws Throwable
+    public Result<Number> result() throws Exception
     {
         Result<Number> asNumber = this.original.result();
 
@@ -30,7 +30,7 @@ final public class IsPositiveOrZero implements Validatable<Number>
         return new SuccessfulWithCustomValue<>(asNumber, this.value(asNumber));
     }
 
-    private Number value(Result<Number> prevResult) throws Throwable
+    private Number value(Result<Number> prevResult) throws Exception
     {
         return prevResult.value().raw();
     }

@@ -37,7 +37,7 @@ public class ValidatedOrderRegistrationRequest implements Validatable<OrderRegis
     }
 
     @Override
-    public Result<OrderRegistrationRequestData> result() throws Throwable
+    public Result<OrderRegistrationRequestData> result() throws Exception
     {
         // todo: Обработать случаи, когда классы используются неверно. Например, NamedBlocOfNameds используется с неименованными элементами валидации.
         return

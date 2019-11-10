@@ -18,7 +18,7 @@ final public class AsInteger implements Validatable<Integer>
         this.original = original;
     }
 
-    public Result<Integer> result() throws Throwable
+    public Result<Integer> result() throws Exception
     {
         Result<JsonElement> result = this.original.result();
 
@@ -33,7 +33,7 @@ final public class AsInteger implements Validatable<Integer>
         return new SuccessfulWithCustomValue<>(result, this.value(result));
     }
 
-    private Integer value(Result<JsonElement> result) throws Throwable
+    private Integer value(Result<JsonElement> result) throws Exception
     {
         return Integer.parseInt(result.value().raw().toString());
     }

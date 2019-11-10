@@ -22,7 +22,7 @@ final public class ValuesAndErrorsOfNameds
         this.validatables = validatables;
     }
 
-    public Pair<List<Object>, Map<String, Object>> value() throws Throwable
+    public Pair<List<Object>, Map<String, Object>> value() throws Exception
     {
         return
             this.validatables.stream()

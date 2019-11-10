@@ -20,7 +20,7 @@ final public class IsUrl implements Validatable<String>
         this.original = original;
     }
 
-    public Result<String> result() throws Throwable
+    public Result<String> result() throws Exception
     {
         Result<String> prevResult = this.original.result();
 
@@ -39,7 +39,7 @@ final public class IsUrl implements Validatable<String>
         return prevResult;
     }
 
-    private Boolean isValidUrl(Result<String> result) throws Throwable
+    private Boolean isValidUrl(Result<String> result) throws Exception
     {
         try {
             new URL(result.value().raw());

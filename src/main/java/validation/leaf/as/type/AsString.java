@@ -22,7 +22,7 @@ final public class AsString implements Validatable<String>
         this.original = original;
     }
 
-    public Result<String> result() throws Throwable
+    public Result<String> result() throws Exception
     {
         Result<JsonElement> result = this.original.result();
 

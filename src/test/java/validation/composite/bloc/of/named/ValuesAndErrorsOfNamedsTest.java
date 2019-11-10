@@ -15,7 +15,7 @@ import static org.junit.Assert.*;
 public class ValuesAndErrorsOfNamedsTest
 {
     @Test
-    public void success() throws Throwable
+    public void success() throws Exception
     {
         Pair<List<Object>, Map<String, Object>> result =
             new ValuesAndErrorsOfNameds(
@@ -42,7 +42,7 @@ public class ValuesAndErrorsOfNamedsTest
     }
 
     @Test
-    public void someFieldsFailed() throws Throwable
+    public void someFieldsFailed() throws Exception
     {
         Pair<List<Object>, Map<String, Object>> result =
             new ValuesAndErrorsOfNameds(

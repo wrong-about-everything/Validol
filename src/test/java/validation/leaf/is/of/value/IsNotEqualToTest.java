@@ -11,7 +11,7 @@ import static org.junit.Assert.*;
 public class IsNotEqualToTest
 {
     @Test
-    public void failedWithFailedOriginalValidatable() throws Throwable
+    public void failedWithFailedOriginalValidatable() throws Exception
     {
         IsNotEqualTo<?> named =
             new IsNotEqualTo<>(
@@ -28,7 +28,7 @@ public class IsNotEqualToTest
     }
 
     @Test
-    public void successfulWithAbsentValue() throws Throwable
+    public void successfulWithAbsentValue() throws Exception
     {
         IsNotEqualTo<?> named =
             new IsNotEqualTo<>(
@@ -41,7 +41,7 @@ public class IsNotEqualToTest
     }
 
     @Test
-    public void failedWithPresentFalseValue() throws Throwable
+    public void failedWithPresentFalseValue() throws Exception
     {
         IsNotEqualTo<?> named =
             new IsNotEqualTo<>(
@@ -55,7 +55,7 @@ public class IsNotEqualToTest
     }
 
     @Test
-    public void failedWithPresentIntegerValue() throws Throwable
+    public void failedWithPresentIntegerValue() throws Exception
     {
         IsNotEqualTo<?> named =
             new IsNotEqualTo<>(
@@ -69,7 +69,7 @@ public class IsNotEqualToTest
     }
 
     @Test
-    public void successfulWithPresentStringValue() throws Throwable
+    public void successfulWithPresentStringValue() throws Exception
     {
         IsNotEqualTo<?> named =
             new IsNotEqualTo<>(

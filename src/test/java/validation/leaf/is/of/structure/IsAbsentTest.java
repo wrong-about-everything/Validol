@@ -12,7 +12,7 @@ import static org.junit.Assert.*;
 public class IsAbsentTest
 {
     @Test
-    public void isPresent() throws Throwable
+    public void isPresent() throws Exception
     {
         IsAbsent<String> named =
             new IsAbsent<>(
@@ -29,7 +29,7 @@ public class IsAbsentTest
     }
 
     @Test
-    public void isAbsent() throws Throwable
+    public void isAbsent() throws Exception
     {
         IsAbsent<?> named =
             new IsAbsent<>(

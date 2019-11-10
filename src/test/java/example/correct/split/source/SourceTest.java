@@ -22,7 +22,7 @@ public class SourceTest
 {
     @Test
     @UseDataProvider("validRequests")
-    public void successfulRequest(JsonElement jsonRequest, Integer value) throws Throwable
+    public void successfulRequest(JsonElement jsonRequest, Integer value) throws Exception
     {
         Result<Integer> result = new example.correct.split.source.Source(jsonRequest).result();
 
@@ -31,7 +31,7 @@ public class SourceTest
     }
 
     @DataProvider
-    public static Object[][] validRequests() throws Throwable
+    public static Object[][] validRequests() throws Exception
     {
         return
             new Object[][] {
@@ -49,7 +49,7 @@ public class SourceTest
 
     @Test
     @UseDataProvider("invalidRequests")
-    public void nonSuccessfulRequest(JsonElement jsonRequest, Object errors) throws Throwable
+    public void nonSuccessfulRequest(JsonElement jsonRequest, Object errors) throws Exception
     {
         Result<Integer> result = new example.correct.split.source.Source(jsonRequest).result();
 

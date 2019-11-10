@@ -16,7 +16,7 @@ import static org.junit.Assert.*;
 public class SwitchTrueTest
 {
     @Test
-    public void firstCaseIsSatisfiedAndIsSuccessful() throws Throwable
+    public void firstCaseIsSatisfiedAndIsSuccessful() throws Exception
     {
         Result<Team> result =
             new SwitchTrue<>(
@@ -53,7 +53,7 @@ public class SwitchTrueTest
     }
 
     @Test
-    public void secondCaseIsSatisfiedAndIsSuccessful() throws Throwable
+    public void secondCaseIsSatisfiedAndIsSuccessful() throws Exception
     {
         Result<String> result =
             new SwitchTrue<>(
@@ -76,7 +76,7 @@ public class SwitchTrueTest
     }
 
     @Test
-    public void noneOfTheCasesAreSatisfiedAndDefaultCaseIsAbsent() throws Throwable
+    public void noneOfTheCasesAreSatisfiedAndDefaultCaseIsAbsent() throws Exception
     {
         try {
             new SwitchTrue<>(
@@ -102,7 +102,7 @@ public class SwitchTrueTest
     }
 
     @Test
-    public void noneOfTheCasesAreSatisfiedAndDefaultCaseIsPresent() throws Throwable
+    public void noneOfTheCasesAreSatisfiedAndDefaultCaseIsPresent() throws Exception
     {
         Result<String> result =
             new SwitchTrue<>(
@@ -128,7 +128,7 @@ public class SwitchTrueTest
     }
 
     @Test
-    public void someFieldsFailed() throws Throwable
+    public void someFieldsFailed() throws Exception
     {
         Result<Team> result =
             new SwitchTrue<>(

@@ -11,7 +11,7 @@ import static org.junit.Assert.*;
 public class FastFailTest
 {
     @Test
-    public void success() throws Throwable
+    public void success() throws Exception
     {
         Result<?> result =
             new FastFail<>(
@@ -25,7 +25,7 @@ public class FastFailTest
     }
 
     @Test
-    public void fail() throws Throwable
+    public void fail() throws Exception
     {
         Result<?> result =
             new FastFail<>(

@@ -25,7 +25,7 @@ public class ValidatedSampleRequest implements Validatable<SampleRequest>
     }
 
     @Override
-    public Result<SampleRequest> result() throws Throwable
+    public Result<SampleRequest> result() throws Exception
     {
         return
             new FastFail<>(

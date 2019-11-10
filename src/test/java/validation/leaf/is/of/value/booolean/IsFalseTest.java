@@ -10,7 +10,7 @@ import static org.junit.Assert.*;
 public class IsFalseTest
 {
     @Test
-    public void failedWithFailedOriginalValidatable() throws Throwable
+    public void failedWithFailedOriginalValidatable() throws Exception
     {
         IsFalse named =
             new IsFalse(
@@ -26,7 +26,7 @@ public class IsFalseTest
     }
 
     @Test
-    public void successfulWithAbsentValue() throws Throwable
+    public void successfulWithAbsentValue() throws Exception
     {
         IsFalse named = new IsFalse(new Named<>("vasya", Either.right(new Absent<>())));
 
@@ -35,7 +35,7 @@ public class IsFalseTest
     }
 
     @Test
-    public void successfulWithPresentFalseValue() throws Throwable
+    public void successfulWithPresentFalseValue() throws Exception
     {
         IsFalse named = new IsFalse(new Named<>("vasya", Either.right(new Present<>(false))));
 
@@ -45,7 +45,7 @@ public class IsFalseTest
     }
 
     @Test
-    public void failedWithPresentTrueValue() throws Throwable
+    public void failedWithPresentTrueValue() throws Exception
     {
         IsFalse named = new IsFalse(new Named<>("vasya", Either.right(new Present<>(true))));
 

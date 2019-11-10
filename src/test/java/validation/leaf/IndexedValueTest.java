@@ -13,7 +13,7 @@ import static org.junit.Assert.*;
 public class IndexedValueTest
 {
     @Test
-    public void nonSuccessful() throws Throwable
+    public void nonSuccessful() throws Exception
     {
         IndexedValue named = new IndexedValue("vasya", this.emptyJson());
 
@@ -23,7 +23,7 @@ public class IndexedValueTest
     }
 
     @Test
-    public void successful() throws Throwable
+    public void successful() throws Exception
     {
         IndexedValue named = new IndexedValue("vasya", this.json());
 

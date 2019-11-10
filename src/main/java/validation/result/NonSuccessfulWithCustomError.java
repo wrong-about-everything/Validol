@@ -7,7 +7,7 @@ final public class NonSuccessfulWithCustomError<T, R> implements Result<R>
     private Result<T> result;
     private Object error;
 
-    public NonSuccessfulWithCustomError(Result<T> result, Object error) throws Throwable
+    public NonSuccessfulWithCustomError(Result<T> result, Object error) throws Exception
     {
         this.result = result;
         this.error = error;

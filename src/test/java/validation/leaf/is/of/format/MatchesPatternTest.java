@@ -14,7 +14,7 @@ import static org.junit.Assert.*;
 @RunWith(DataProviderRunner.class)
 public class MatchesPatternTest {
     @Test
-    public void validationFailedWhenDecoratedElementIsInvalid() throws Throwable {
+    public void validationFailedWhenDecoratedElementIsInvalid() throws Exception {
         MatchesPattern named =
             new MatchesPattern(
                 new Named<>(
@@ -30,7 +30,7 @@ public class MatchesPatternTest {
     }
 
     @Test
-    public void validationFailedWithNonMatchedPattern() throws Throwable {
+    public void validationFailedWithNonMatchedPattern() throws Exception {
         MatchesPattern named =
             new MatchesPattern(
                 new Named<>(
@@ -46,7 +46,7 @@ public class MatchesPatternTest {
     }
 
     @Test
-    public void validationSucceededWithAbsentField() throws Throwable {
+    public void validationSucceededWithAbsentField() throws Exception {
         MatchesPattern named =
             new MatchesPattern(
                 new Named<>(
@@ -62,7 +62,7 @@ public class MatchesPatternTest {
     }
 
     @Test
-    public void validationSucceededWithMatchedPattern() throws Throwable {
+    public void validationSucceededWithMatchedPattern() throws Exception {
         MatchesPattern named =
             new MatchesPattern(
                 new Named<>(

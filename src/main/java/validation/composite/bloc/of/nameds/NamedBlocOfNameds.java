@@ -29,7 +29,7 @@ final public class NamedBlocOfNameds<T> implements Validatable<T>
         this.clazz = clazz;
     }
 
-    public Result<T> result() throws Throwable
+    public Result<T> result() throws Exception
     {
         Result<T> result = new UnnamedBlocOfNameds<T>(this.validatables, this.clazz).result();
 

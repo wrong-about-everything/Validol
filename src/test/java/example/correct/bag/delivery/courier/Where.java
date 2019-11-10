@@ -4,7 +4,7 @@ public interface Where
 {
     public Boolean isAbsent();
 
-    public String street() throws Throwable;
+    public String street() throws Exception;
 
-    public Integer building() throws Throwable;
+    public Integer building() throws Exception;
 }

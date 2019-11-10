@@ -22,7 +22,7 @@ final public class IsNotBlank implements Validatable<JsonElement>
         this.original = original;
     }
 
-    public Result<JsonElement> result() throws Throwable
+    public Result<JsonElement> result() throws Exception
     {
         Result<JsonElement> prevResult = new IsJsonPrimitive(this.original).result();
 
@@ -41,7 +41,7 @@ final public class IsNotBlank implements Validatable<JsonElement>
         return prevResult;
     }
 
-    private Either<Object, Value<JsonElement>> value(Result<JsonElement> prevResult) throws Throwable
+    private Either<Object, Value<JsonElement>> value(Result<JsonElement> prevResult) throws Exception
     {
         return
             Either.right(

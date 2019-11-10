@@ -15,7 +15,7 @@ import static org.junit.Assert.*;
 public class IsEmailTest
 {
     @Test
-    public void validationFailedWhenDecoratedElementIsInvalid() throws Throwable
+    public void validationFailedWhenDecoratedElementIsInvalid() throws Exception
     {
         IsEmail named =
             new IsEmail(
@@ -32,7 +32,7 @@ public class IsEmailTest
 
     @Test
     @UseDataProvider("invalidEmails")
-    public void validationFailedWithInvalidEmail(String email) throws Throwable
+    public void validationFailedWithInvalidEmail(String email) throws Exception
     {
         IsEmail named =
             new IsEmail(
@@ -78,7 +78,7 @@ public class IsEmailTest
 
     @Test
     @UseDataProvider("validEmails")
-    public void validationSucceededWithValidEmail(String email) throws Throwable
+    public void validationSucceededWithValidEmail(String email) throws Exception
     {
         IsEmail named =
             new IsEmail(
@@ -115,7 +115,7 @@ public class IsEmailTest
     }
 
     @Test
-    public void validationSucceededWithEmptyEmail() throws Throwable
+    public void validationSucceededWithEmptyEmail() throws Exception
     {
         IsEmail named =
             new IsEmail(

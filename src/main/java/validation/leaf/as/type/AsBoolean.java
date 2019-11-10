@@ -24,7 +24,7 @@ final public class AsBoolean implements Validatable<Boolean>
         this.original = original;
     }
 
-    public Result<Boolean> result() throws Throwable
+    public Result<Boolean> result() throws Exception
     {
         Result<JsonElement> result = this.original.result();
 
@@ -40,7 +40,7 @@ final public class AsBoolean implements Validatable<Boolean>
             );
     }
 
-    private Either<Object, Value<Boolean>> value(Result<JsonElement> result) throws Throwable
+    private Either<Object, Value<Boolean>> value(Result<JsonElement> result) throws Exception
     {
         return
             Either.right(

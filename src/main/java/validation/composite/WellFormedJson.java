@@ -23,7 +23,7 @@ final public class WellFormedJson implements Validatable<JsonElement>
         this.original = original;
     }
 
-    public Result<JsonElement> result() throws Throwable
+    public Result<JsonElement> result() throws Exception
     {
         Result<String> originalResult = this.original.result();
 

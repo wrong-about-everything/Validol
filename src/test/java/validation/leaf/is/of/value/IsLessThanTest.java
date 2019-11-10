@@ -16,7 +16,7 @@ import static org.junit.Assert.*;
 public class IsLessThanTest
 {
     @Test
-    public void failedWithFailedOriginalValidatable() throws Throwable
+    public void failedWithFailedOriginalValidatable() throws Exception
     {
         IsLessThan<?> named =
             new IsLessThan<>(
@@ -33,7 +33,7 @@ public class IsLessThanTest
     }
 
     @Test
-    public void successfulWithAbsentValue() throws Throwable
+    public void successfulWithAbsentValue() throws Exception
     {
         IsLessThan<?> named =
             new IsLessThan<>(
@@ -47,7 +47,7 @@ public class IsLessThanTest
 
     @Test
     @UseDataProvider("lessValues")
-    public <T extends Comparable<T>> void successfulWithPresentValues(T compared, T against) throws Throwable
+    public <T extends Comparable<T>> void successfulWithPresentValues(T compared, T against) throws Exception
     {
         IsLessThan<T> named =
             new IsLessThan<>(
@@ -74,7 +74,7 @@ public class IsLessThanTest
 
     @Test
     @UseDataProvider("greaterOrEqualValues")
-    public <T extends Comparable<T>> void failedWithPresentValues(T compared, T against) throws Throwable
+    public <T extends Comparable<T>> void failedWithPresentValues(T compared, T against) throws Exception
     {
         IsLessThan<T> named =
             new IsLessThan<>(

@@ -13,7 +13,7 @@ import static org.junit.Assert.*;
 public class IsOneOfTest
 {
     @Test
-    public void failedWithFailedOriginalValidatable() throws Throwable
+    public void failedWithFailedOriginalValidatable() throws Exception
     {
         IsOneOf<?> named =
             new IsOneOf<>(
@@ -30,7 +30,7 @@ public class IsOneOfTest
     }
 
     @Test
-    public void successfulWithAbsentValue() throws Throwable
+    public void successfulWithAbsentValue() throws Exception
     {
         IsOneOf<?> named =
             new IsOneOf<>(
@@ -43,7 +43,7 @@ public class IsOneOfTest
     }
 
     @Test
-    public void failedWithIntegerValueAbsentInList() throws Throwable
+    public void failedWithIntegerValueAbsentInList() throws Exception
     {
         IsOneOf<?> named =
             new IsOneOf<>(
@@ -57,7 +57,7 @@ public class IsOneOfTest
     }
 
     @Test
-    public void successfulWithStringValuePresentInList() throws Throwable
+    public void successfulWithStringValuePresentInList() throws Exception
     {
         IsOneOf<?> named =
             new IsOneOf<>(

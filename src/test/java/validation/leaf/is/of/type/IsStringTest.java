@@ -17,7 +17,7 @@ import static org.junit.Assert.*;
 public class IsStringTest
 {
     @Test
-    public void failedWithFailedOriginalValidatable() throws Throwable
+    public void failedWithFailedOriginalValidatable() throws Exception
     {
         IsString named =
             new IsString(
@@ -33,7 +33,7 @@ public class IsStringTest
     }
 
     @Test
-    public void failedWithIncorrectStructure() throws Throwable
+    public void failedWithIncorrectStructure() throws Exception
     {
         IsString named =
             new IsString(
@@ -59,7 +59,7 @@ public class IsStringTest
     }
 
     @Test
-    public void failedWithNonString() throws Throwable
+    public void failedWithNonString() throws Exception
     {
         IsString named =
             new IsString(
@@ -77,7 +77,7 @@ public class IsStringTest
     }
 
     @Test
-    public void successfulWithPresentValue() throws Throwable
+    public void successfulWithPresentValue() throws Exception
     {
         IsString named = new IsString(new Named<>("vasya", Either.right(new Present<>(new JsonPrimitive("hello, vasya")))));
 
@@ -87,7 +87,7 @@ public class IsStringTest
     }
 
     @Test
-    public void successfulWithAbsentValue() throws Throwable
+    public void successfulWithAbsentValue() throws Exception
     {
         IsString named = new IsString(new Named<>("vasya", Either.right(new Absent<>())));
 

@@ -18,7 +18,7 @@ import static org.junit.Assert.*;
 public class AsUrlTest
 {
     @Test
-    public void validationFailedWhenDecoratedElementIsInvalid() throws Throwable
+    public void validationFailedWhenDecoratedElementIsInvalid() throws Exception
     {
         AsUrl named =
             new AsUrl(
@@ -35,7 +35,7 @@ public class AsUrlTest
 
     @Test
     @UseDataProvider("invalidUrls")
-    public void validationFailedWithInvalidUrl(String url) throws Throwable
+    public void validationFailedWithInvalidUrl(String url) throws Exception
     {
         AsUrl named =
             new AsUrl(
@@ -71,7 +71,7 @@ public class AsUrlTest
 
     @Test
     @UseDataProvider("validUrls")
-    public void validationSucceededWithValidUrl(String url) throws Throwable
+    public void validationSucceededWithValidUrl(String url) throws Exception
     {
         AsUrl named =
             new AsUrl(
@@ -98,7 +98,7 @@ public class AsUrlTest
     }
 
     @Test
-    public void validationSucceededWithEmptyField() throws Throwable
+    public void validationSucceededWithEmptyField() throws Exception
     {
         AsUrl named =
             new AsUrl(

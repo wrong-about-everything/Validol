@@ -15,7 +15,7 @@ import static org.junit.Assert.fail;
 public class ValidatableAndDataClassHaveTheSameStructureButInDifferentOrderTest
 {
     @Test
-    public void requestWithInvalidDataClasses() throws Throwable
+    public void requestWithInvalidDataClasses() throws Exception
     {
         try {
             new ValidatedSampleRequest(

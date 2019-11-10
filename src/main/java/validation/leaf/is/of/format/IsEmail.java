@@ -18,7 +18,7 @@ final public class IsEmail implements Validatable<String>
         this.original = original;
     }
 
-    public Result<String> result() throws Throwable
+    public Result<String> result() throws Exception
     {
         Result<String> prevResult = this.original.result();
 
@@ -37,7 +37,7 @@ final public class IsEmail implements Validatable<String>
         return prevResult;
     }
 
-    private Boolean isValidEmail(Result<String> prevResult) throws Throwable
+    private Boolean isValidEmail(Result<String> prevResult) throws Exception
     {
         return EmailValidator.getInstance().isValid(prevResult.value().raw().trim());
     }

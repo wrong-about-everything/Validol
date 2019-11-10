@@ -23,7 +23,7 @@ public class ItemsTest
 {
     @Test
     @UseDataProvider("validRequests")
-    public void successfulRequest(JsonElement jsonRequest, Items value) throws Throwable
+    public void successfulRequest(JsonElement jsonRequest, Items value) throws Exception
     {
         Result<Items> result = new example.correct.split.items.Items(jsonRequest).result();
 
@@ -32,7 +32,7 @@ public class ItemsTest
     }
 
     @DataProvider
-    public static Object[][] validRequests() throws Throwable
+    public static Object[][] validRequests() throws Exception
     {
         return
             new Object[][] {
@@ -52,7 +52,7 @@ public class ItemsTest
 
     @Test
     @UseDataProvider("invalidRequests")
-    public void nonSuccessfulRequest(JsonElement jsonRequest, Object errors) throws Throwable
+    public void nonSuccessfulRequest(JsonElement jsonRequest, Object errors) throws Exception
     {
         Result<Items> result = new example.correct.split.items.Items(jsonRequest).result();
 

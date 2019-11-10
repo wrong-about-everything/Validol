@@ -26,7 +26,7 @@ public class CourierTest
 {
     @Test
     @UseDataProvider("validRequests")
-    public void successfulRequest(JsonElement jsonRequest, Delivery value) throws Throwable
+    public void successfulRequest(JsonElement jsonRequest, Delivery value) throws Exception
     {
         Result<Delivery> result = new Courier(jsonRequest).result();
 
@@ -44,7 +44,7 @@ public class CourierTest
     }
 
     @DataProvider
-    public static Object[][] validRequests() throws Throwable
+    public static Object[][] validRequests() throws Exception
     {
         return
             new Object[][] {
@@ -94,7 +94,7 @@ public class CourierTest
 
     @Test
     @UseDataProvider("invalidRequests")
-    public void nonSuccessfulRequest(JsonElement jsonRequest, Object errors) throws Throwable
+    public void nonSuccessfulRequest(JsonElement jsonRequest, Object errors) throws Exception
     {
         Result<Delivery> result = new Courier(jsonRequest).result();
 

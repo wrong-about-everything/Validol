@@ -25,7 +25,7 @@ import static org.junit.Assert.*;
 public class UnnamedBlocOfUnnamedsTest
 {
     @Test
-    public void successfulValidationOfPlainUnnamed() throws Throwable
+    public void successfulValidationOfPlainUnnamed() throws Exception
     {
         Result<Integers> result =
             new UnnamedBlocOfUnnameds<>(
@@ -50,7 +50,7 @@ public class UnnamedBlocOfUnnamedsTest
     }
 
     @Test
-    public void failedValidationOfPlainUnnameds() throws Throwable
+    public void failedValidationOfPlainUnnameds() throws Exception
     {
         Result<Integers> result =
             new UnnamedBlocOfUnnameds<>(
@@ -74,7 +74,7 @@ public class UnnamedBlocOfUnnamedsTest
     }
 
     @Test
-    public void successfulValidationOfUnnamedBlocks() throws Throwable
+    public void successfulValidationOfUnnamedBlocks() throws Exception
     {
         Result<Items> result =
             new UnnamedBlocOfUnnameds<>(
@@ -101,7 +101,7 @@ public class UnnamedBlocOfUnnamedsTest
     }
 
     @Test
-    public void fail() throws Throwable
+    public void fail() throws Exception
     {
         Result<Items> result =
             new UnnamedBlocOfUnnameds<>(
@@ -131,7 +131,7 @@ public class UnnamedBlocOfUnnamedsTest
     }
 
     @Test
-    public void wrongStructure() throws Throwable
+    public void wrongStructure() throws Exception
     {
         Result<Items> result =
             new UnnamedBlocOfUnnameds<>(

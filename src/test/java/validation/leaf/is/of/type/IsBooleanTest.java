@@ -17,7 +17,7 @@ import static org.junit.Assert.*;
 public class IsBooleanTest
 {
     @Test
-    public void failedWithFailedOriginalValidatable() throws Throwable
+    public void failedWithFailedOriginalValidatable() throws Exception
     {
         IsBoolean named =
             new IsBoolean(
@@ -33,7 +33,7 @@ public class IsBooleanTest
     }
 
     @Test
-    public void failedWithIncorrectStructure() throws Throwable
+    public void failedWithIncorrectStructure() throws Exception
     {
         IsBoolean named =
             new IsBoolean(
@@ -59,7 +59,7 @@ public class IsBooleanTest
     }
 
     @Test
-    public void failedWithNonBoolean() throws Throwable
+    public void failedWithNonBoolean() throws Exception
     {
         IsBoolean named =
             new IsBoolean(
@@ -77,7 +77,7 @@ public class IsBooleanTest
     }
 
     @Test
-    public void successfulWithPresentValue() throws Throwable
+    public void successfulWithPresentValue() throws Exception
     {
         IsBoolean named = new IsBoolean(new Named<>("vasya", Either.right(new Present<>(new JsonPrimitive(false)))));
 
@@ -87,7 +87,7 @@ public class IsBooleanTest
     }
 
     @Test
-    public void successfulWithAbsentValue() throws Throwable
+    public void successfulWithAbsentValue() throws Exception
     {
         IsBoolean named = new IsBoolean(new Named<>("vasya", Either.right(new Absent<>())));
 

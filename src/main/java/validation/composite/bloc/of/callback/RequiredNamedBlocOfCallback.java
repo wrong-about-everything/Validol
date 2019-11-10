@@ -28,7 +28,7 @@ public class RequiredNamedBlocOfCallback<T> implements Validatable<T>
     }
 
     @Override
-    public Result<T> result() throws Throwable
+    public Result<T> result() throws Exception
     {
         return this.v.result();
     }

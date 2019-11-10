@@ -46,7 +46,7 @@ public class Items implements Validatable<example.correct.bag.items.Items>
     }
 
     @Override
-    public Result<example.correct.bag.items.Items> result() throws Throwable
+    public Result<example.correct.bag.items.Items> result() throws Exception
     {
         return this.v.result();
     }

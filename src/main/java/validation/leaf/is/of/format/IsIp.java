@@ -20,7 +20,7 @@ final public class IsIp implements Validatable<String>
         this.original = original;
     }
 
-    public Result<String> result() throws Throwable
+    public Result<String> result() throws Exception
     {
         Result<String> prevResult = this.original.result();
 
@@ -39,7 +39,7 @@ final public class IsIp implements Validatable<String>
         return prevResult;
     }
 
-    private Boolean isValidIp(Result<String> result) throws Throwable
+    private Boolean isValidIp(Result<String> result) throws Exception
     {
         try {
             InetAddress.getByName(result.value().raw());

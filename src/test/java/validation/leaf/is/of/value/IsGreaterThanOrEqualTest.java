@@ -15,7 +15,7 @@ import com.tngtech.java.junit.dataprovider.UseDataProvider;
 public class IsGreaterThanOrEqualTest
 {
     @Test
-    public void failedWithFailedOriginalValidatable() throws Throwable
+    public void failedWithFailedOriginalValidatable() throws Exception
     {
         IsGreaterThanOrEqual<?> named =
             new IsGreaterThanOrEqual<>(
@@ -32,7 +32,7 @@ public class IsGreaterThanOrEqualTest
     }
 
     @Test
-    public void successfulWithAbsentValue() throws Throwable
+    public void successfulWithAbsentValue() throws Exception
     {
         IsGreaterThanOrEqual<?> named =
             new IsGreaterThanOrEqual<>(
@@ -46,7 +46,7 @@ public class IsGreaterThanOrEqualTest
 
     @Test
     @UseDataProvider("greaterThanOrEqualValues")
-    public <T extends Comparable<T>> void successfulWithPresentValues(T compared, T against) throws Throwable
+    public <T extends Comparable<T>> void successfulWithPresentValues(T compared, T against) throws Exception
     {
         IsGreaterThanOrEqual<T> named =
             new IsGreaterThanOrEqual<>(
@@ -76,7 +76,7 @@ public class IsGreaterThanOrEqualTest
 
     @Test
     @UseDataProvider("lessValues")
-    public <T extends Comparable<T>> void failedWithPresentValues(T compared, T against) throws Throwable
+    public <T extends Comparable<T>> void failedWithPresentValues(T compared, T against) throws Exception
     {
         IsGreaterThanOrEqual<T> named =
             new IsGreaterThanOrEqual<>(
