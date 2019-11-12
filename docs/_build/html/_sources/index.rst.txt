@@ -3,12 +3,19 @@
 
    quick_start
    the_why
-   FAQ
 
 .. toctree::
    :hidden:
    :caption: Features
    :maxdepth: 3
+
+.. toctree::
+   :hidden:
+   :caption: FAQ
+   :maxdepth: 3
+
+   faq/how_to_perform_validation_in_java
+   faq/what_is_the_best_way_to_validate_json_in_java
 
 .. toctree::
    :hidden:

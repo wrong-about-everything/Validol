@@ -1,0 +1,255 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>What is the best way to validate json in Java? &mdash; Validol  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Validol
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../quick_start.html">Validol Quick start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../the_why.html">The Why</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../the_why.html#it-s-declarative">It’s declarative</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../the_why.html#it-s-contextual">It’s contextual</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../the_why.html#it-s-infinitely-extendable">It’s infinitely extendable</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../the_why.html#it-s-re-usable">It’s re-usable</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../the_why.html#no-magic-and-hidden-dependencies">No magic and hidden dependencies</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">FAQ</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="how_to_perform_validation_in_java.html">How to perform validation in Java?</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="how_to_perform_validation_in_java.html#first-put-it-into-a-particular-scenario-the-one-you-re-validating">First, put it into a particular scenario – the one you’re validating</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="how_to_perform_validation_in_java.html#quick-example">Quick example</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="how_to_perform_validation_in_java.html#do-it-declaratively">Do it declaratively</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Inspired by</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../inspired_by/declarative_validation.html">Declarative validation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../inspired_by/declarative_validation.html#what-is-declarative">What is declarative?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../inspired_by/declarative_validation.html#the-consequences-of-being-imperative-on-a-bigger-scale">The consequences of being imperative on a bigger scale</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../inspired_by/declarative_validation.html#what-declarative-is-not">What declarative is not?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../inspired_by/declarative_validation.html#id1">Declarative validation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../inspired_by/declarative_validation.html#more-examples">More examples</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../inspired_by/context_specific_validation.html">Contextual validation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../inspired_by/context_specific_validation.html#context-independent-validation-bound-to-data-model">Context-independent validation bound to data-model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../inspired_by/context_specific_validation.html#arguably-better-context-independent-validation-in-domain-objects">Arguably better: context-independent validation in domain objects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../inspired_by/context_specific_validation.html#contextual-validation-that-is-specific-to-a-concrete-user-story">Contextual validation that is specific to a concrete user story</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Validol</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>What is the best way to validate json in Java?</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/faq/what_is_the_best_way_to_validate_json_in_java.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="what-is-the-best-way-to-validate-json-in-java">
+<h1>What is the best way to validate json in Java?<a class="headerlink" href="#what-is-the-best-way-to-validate-json-in-java" title="Permalink to this headline">¶</a></h1>
+<p>With <a class="reference external" href="https://github.com/wrong-about-everything/Validol">Validol</a>, you can do it like that:</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">ValidatedRequest</span> <span class="kd">implements</span> <span class="n">Validatable</span><span class="o">&lt;</span><span class="n">JsonElement</span><span class="o">&gt;</span>
+<span class="o">{</span>
+    <span class="kd">private</span> <span class="n">String</span> <span class="n">jsonRequestString</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nf">ValidatedRequest</span><span class="o">(</span><span class="n">String</span> <span class="n">jsonRequestString</span><span class="o">)</span>
+    <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">jsonRequestString</span> <span class="o">=</span> <span class="n">jsonRequestString</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="n">Result</span><span class="o">&lt;</span><span class="n">JsonElement</span><span class="o">&gt;</span> <span class="nf">result</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span>
+    <span class="o">{</span>
+        <span class="k">return</span>
+            <span class="k">new</span> <span class="n">WellFormedJson</span><span class="o">(</span>
+                <span class="k">new</span> <span class="n">Unnamed</span><span class="o">&lt;&gt;(</span><span class="n">Either</span><span class="o">.</span><span class="na">right</span><span class="o">(</span><span class="k">new</span> <span class="n">Present</span><span class="o">&lt;&gt;(</span><span class="k">this</span><span class="o">.</span><span class="na">jsonRequestString</span><span class="o">)))</span>
+            <span class="o">)</span>
+                <span class="o">.</span><span class="na">result</span><span class="o">()</span>
+            <span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>Chances are your request is more complicated. Your validation logic can be much more complex. I suggest that you tackle it
+in a declarative fashion. For a line-by-line example take a look at <a class="reference internal" href="../quick_start.html"><span class="doc">Quick-start</span></a> section.
+Also consider having a glance at <a class="reference internal" href="../inspired_by/context_specific_validation.html"><span class="doc">contextual validation post</span></a> and
+my take on declarative programming in general and
+<a class="reference internal" href="../inspired_by/declarative_validation.html"><span class="doc">declarative validation</span></a> in particular, there you can find some more examples.</p>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Vadim Samokhin (samokhinvadim at gmail dot com)
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

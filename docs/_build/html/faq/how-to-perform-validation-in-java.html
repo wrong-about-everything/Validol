@@ -1,0 +1,333 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>How to perform validation in Java? &mdash; Validol  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Validol
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../quick_start.html">Validol Quick start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../the_why.html">The Why</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../the_why.html#it-s-declarative">It’s declarative</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../the_why.html#it-s-contextual">It’s contextual</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../the_why.html#it-s-infinitely-extendable">It’s infinitely extendable</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../the_why.html#it-s-re-usable">It’s re-usable</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../the_why.html#no-magic-and-hidden-dependencies">No magic and hidden dependencies</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Inspired by</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../inspired_by/declarative_validation.html">Declarative validation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../inspired_by/declarative_validation.html#what-is-declarative">What is declarative?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../inspired_by/declarative_validation.html#the-consequences-of-being-imperative-on-a-bigger-scale">The consequences of being imperative on a bigger scale</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../inspired_by/declarative_validation.html#what-declarative-is-not">What declarative is not?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../inspired_by/declarative_validation.html#id1">Declarative validation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../inspired_by/declarative_validation.html#more-examples">More examples</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../inspired_by/context_specific_validation.html">Contextual validation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../inspired_by/context_specific_validation.html#context-independent-validation-bound-to-data-model">Context-independent validation bound to data-model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../inspired_by/context_specific_validation.html#arguably-better-context-independent-validation-in-domain-objects">Arguably better: context-independent validation in domain objects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../inspired_by/context_specific_validation.html#contextual-validation-that-is-specific-to-a-concrete-user-story">Contextual validation that is specific to a concrete user story</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Validol</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>How to perform validation in Java?</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/faq/how-to-perform-validation-in-java.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="how-to-perform-validation-in-java">
+<h1>How to perform validation in Java?<a class="headerlink" href="#how-to-perform-validation-in-java" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="first-put-it-into-a-particular-scenario-the-one-you-re-validating">
+<h2>First, put it into a particular scenario – the one you’re validating<a class="headerlink" href="#first-put-it-into-a-particular-scenario-the-one-you-re-validating" title="Permalink to this headline">¶</a></h2>
+<p>First of all, what is validation? For me, it’s a way to check whether the current scenario can be carried out.
+So this activity is inherently <span class="xref std std-doc">contextual</span>,
+that is, it’s dependent on specific scenario which is currently validated.</p>
+<p>Besides, it’s a user-friendly way of reporting errors. If you put validation logic in domain, there is a problem of mapping error to request fields.
+So I don’t even bother with it. I put only fundamental checks in domain, like Price which is always positive. In case of violation,
+I throw an exception without hesitation:</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kd">final</span> <span class="kd">public</span> <span class="kd">class</span> <span class="nc">Price</span>
+<span class="o">{</span>
+    <span class="kd">private</span> <span class="n">Integer</span> <span class="n">amount</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nf">Price</span><span class="o">(</span><span class="n">Integer</span> <span class="n">amount</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span>
+    <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">amount</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">throw</span> <span class="k">new</span> <span class="n">Exception</span><span class="o">(</span><span class="s">&quot;Amount can not be empty&quot;</span><span class="o">);</span>
+        <span class="o">}</span>
+
+        <span class="k">this</span><span class="o">.</span><span class="na">amount</span> <span class="o">=</span> <span class="n">amount</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="c1">// some logic</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>So it doesn’t fit my definition of the word “validation”. It’s more of a <cite>domain constraint</cite>.</p>
+<div class="section" id="quick-example">
+<h3>Quick example<a class="headerlink" href="#quick-example" title="Permalink to this headline">¶</a></h3>
+<p>Consider an food delivery order that can be registered by client online, and by an online support operator.
+In the first case, there is a chance that guest will make a typo in a delivery address, and the backend system fails to find the nearest restaurant.
+Is it a legal case to lose an order? I bet it’s not. So it’s perfectly fine to register an order even if it’s not known which restaurant’s gonna deliver it.
+In this case, support staff finds a way to connect with a client (either by phone or an email, or, if nothing worked out, by finding his name in a client database).</p>
+<p>Now, consider the second case: online support operator registers an order. Validation is clearly stronger. No typos are allowed, since there is no chance to fix them.
+So if there is no way the backend system can find a restaurant, support staff should have the ability to set it manually somehow.</p>
+<p>The moral of the story: don’t put validation in any central place. It will hit you hard some day.</p>
+</div>
+</div>
+<div class="section" id="do-it-declaratively">
+<h2>Do it declaratively<a class="headerlink" href="#do-it-declaratively" title="Permalink to this headline">¶</a></h2>
+<p><span class="xref std std-doc">Declarative code</span> means effectively more readable, more maintainable code.
+Generally, it’s the code written with what you need as a result in mind, not how exactly you should achieve it.</p>
+<p>As an example, consider the following request (actually, some part of it) represented with the following json schema:</p>
+<div class="highlight-JSON notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+   <span class="nt">&quot;when&quot;</span><span class="p">:{</span>
+      <span class="nt">&quot;datetime&quot;</span><span class="p">:</span><span class="s2">&quot;2019-11-29 20:08:12+01:00&quot;</span>
+   <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>It’s a request for order delivery. There are quite a few checks we need to check, starting with json correctness,
+then the structure as a whole, the required fields, their format, and further some more intricate business constraints specific to the concrete scenario:</p>
+<div class="highlight-java notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">new</span> <span class="n">FastFail</span><span class="o">&lt;&gt;(</span>
+    <span class="k">new</span> <span class="n">IsJsonObject</span><span class="o">(</span>
+        <span class="k">new</span> <span class="n">WellFormedJson</span><span class="o">(</span>
+            <span class="k">new</span> <span class="n">IndexedValue</span><span class="o">(</span><span class="s">&quot;when&quot;</span><span class="o">,</span> <span class="n">jsonString</span><span class="o">)</span>
+        <span class="o">)</span>
+    <span class="o">),</span>
+    <span class="n">whenJsonElement</span> <span class="o">-&gt;</span>
+        <span class="k">new</span> <span class="n">NamedBlocOfNameds</span><span class="o">&lt;&gt;(</span>
+            <span class="s">&quot;when&quot;</span><span class="o">,</span>
+            <span class="n">List</span><span class="o">.</span><span class="na">of</span><span class="o">(</span>
+                <span class="k">new</span> <span class="n">RestaurantIsAbleToDeliverBySpecifiedTime</span><span class="o">(</span>
+                    <span class="k">new</span> <span class="n">IsGreaterThan</span><span class="o">(</span>
+                        <span class="k">new</span> <span class="n">AsDate</span><span class="o">(</span>
+                            <span class="k">new</span> <span class="n">AsString</span><span class="o">(</span>
+                                <span class="k">new</span> <span class="n">Required</span><span class="o">(</span>
+                                    <span class="k">new</span> <span class="n">IndexedValue</span><span class="o">(</span><span class="s">&quot;datetime&quot;</span><span class="o">,</span> <span class="n">whenJsonElement</span><span class="o">)</span>
+                                <span class="o">)</span>
+                            <span class="o">)</span>
+                        <span class="o">),</span>
+                        <span class="k">new</span> <span class="n">Now</span><span class="o">().</span><span class="na">value</span><span class="o">()</span>
+                    <span class="o">),</span>
+                    <span class="k">this</span><span class="o">.</span><span class="na">dbConnection</span>
+                <span class="o">)</span>
+            <span class="o">),</span>
+            <span class="n">When</span><span class="o">.</span><span class="na">class</span>
+        <span class="o">)</span>
+<span class="o">)</span>
+    <span class="o">.</span><span class="na">result</span><span class="o">();</span>
+</pre></div>
+</td></tr></table></div>
+<p>The whole validation logic constitutes in a single expression. The whole validation is a FastFail (declared on (<code class="docutils literal notranslate"><span class="pre">Line</span> <span class="pre">1</span></code>)) block, the one returning an error
+if the first argument results in an error. So the first thing is to check whether it’s a valid json at all (<code class="docutils literal notranslate"><span class="pre">Line</span> <span class="pre">3</span></code>), then whether it’s a
+json object (<code class="docutils literal notranslate"><span class="pre">Line</span> <span class="pre">2</span></code>). If everything’s fine, a closure is invoked (<code class="docutils literal notranslate"><span class="pre">Line</span> <span class="pre">7</span></code>), with the first argument being the well-formed json structure.
+Then the structure itself is validated: it’s a block (<code class="docutils literal notranslate"><span class="pre">Line</span> <span class="pre">8</span></code>) named <code class="docutils literal notranslate"><span class="pre">when</span></code> (<code class="docutils literal notranslate"><span class="pre">Line</span> <span class="pre">9</span></code>) consisting of other named entities. In this particular case
+we expect a single key called <code class="docutils literal notranslate"><span class="pre">datetime</span></code> (<code class="docutils literal notranslate"><span class="pre">Line</span> <span class="pre">16</span></code>). It’s required (<code class="docutils literal notranslate"><span class="pre">Line</span> <span class="pre">15</span></code>), turned to string (<code class="docutils literal notranslate"><span class="pre">Line</span> <span class="pre">14</span></code>) and checked whether it’s a valid date (<code class="docutils literal notranslate"><span class="pre">Line</span> <span class="pre">13</span></code>)
+which is greater than now (<code class="docutils literal notranslate"><span class="pre">Line</span> <span class="pre">12</span></code>). Finally, I involve a database to find out whether some restaurant is able to deliver
+this order by specified time. If all checks pass, an object of class <code class="docutils literal notranslate"><span class="pre">When</span></code> is created.</p>
+<p>This code is backed by <a class="reference external" href="https://github.com/wrong-about-everything/Validol">Validol</a> library. Check out more examples in <span class="xref std std-doc">Quick start</span> section.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Vadim Samokhin (samokhinvadim at gmail dot com)
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
