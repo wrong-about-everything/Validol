@@ -1,0 +1,363 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>What is the best way to validate json request in Java? &mdash; Validol  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="How to validate json schema in Java?" href="how_to_validate_json_schema_in_java.html" />
+    <link rel="prev" title="How to perform validation in Java?" href="how_to_perform_validation_in_java.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Validol
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../quick_start.html">Validol Quick start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../the_why.html">The Why</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../the_why.html#it-s-declarative">It’s declarative</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../the_why.html#it-s-contextual">It’s contextual</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../the_why.html#it-s-infinitely-extendable">It’s infinitely extendable</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../the_why.html#it-s-re-usable">It’s re-usable</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../the_why.html#no-magic-and-hidden-dependencies">No magic and hidden dependencies</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">FAQ</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="how_to_perform_validation_in_java.html">How to perform validation in Java?</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="how_to_perform_validation_in_java.html#first-put-it-into-a-particular-scenario-the-one-you-re-validating">First, put it into a particular scenario – the one you’re validating</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="how_to_perform_validation_in_java.html#quick-example">Quick example</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="how_to_perform_validation_in_java.html#do-it-declaratively">Do it declaratively</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">What is the best way to validate json request in Java?</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#problem">Problem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#how-not-to-do-it">How not to do it</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#solution">Solution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#example">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="how_to_validate_json_schema_in_java.html">How to validate json schema in Java?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="what_is_the_best_java_email_address_validation_method.html">What is the best Java email address validation method?</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Inspired by</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../inspired_by/declarative_validation.html">Declarative validation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../inspired_by/declarative_validation.html#what-is-declarative">What is declarative?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../inspired_by/declarative_validation.html#the-consequences-of-being-imperative-on-a-bigger-scale">The consequences of being imperative on a bigger scale</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../inspired_by/declarative_validation.html#what-declarative-is-not">What declarative is not?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../inspired_by/declarative_validation.html#id1">Declarative validation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../inspired_by/declarative_validation.html#more-examples">More examples</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../inspired_by/context_specific_validation.html">Contextual validation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../inspired_by/context_specific_validation.html#context-independent-validation-bound-to-data-model">Context-independent validation bound to data-model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../inspired_by/context_specific_validation.html#arguably-better-context-independent-validation-in-domain-objects">Arguably better: context-independent validation in domain objects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../inspired_by/context_specific_validation.html#contextual-validation-that-is-specific-to-a-concrete-user-story">Contextual validation that is specific to a concrete user story</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Validol</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>What is the best way to validate json request in Java?</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/faq/what_is_the_best_way_to_validate_json_request_in_java.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="what-is-the-best-way-to-validate-json-request-in-java">
+<h1>What is the best way to validate json request in Java?<a class="headerlink" href="#what-is-the-best-way-to-validate-json-request-in-java" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="problem">
+<h2>Problem<a class="headerlink" href="#problem" title="Permalink to this headline">¶</a></h2>
+<p>Validating json request can be a tedious task. Its schema might be deeply nested, and you want to make sure not to have forgotten
+all those json key existence checks. Validation constraints can include business-specific checks, not only related to format.
+And they are usually way more complicated.
+You want to keep them all in a specific place, the one everybody is well aware of.</p>
+<p>All in all, if you take a look at your validation code couple of months later after it was initially written, it can look really scary.</p>
+</div>
+<div class="section" id="how-not-to-do-it">
+<h2>How not to do it<a class="headerlink" href="#how-not-to-do-it" title="Permalink to this headline">¶</a></h2>
+<p>Very often, validation checks are tied to data model: every request field is explicitly mapped to data-storage column
+and validation rules are put in a single place, which is those columns. Looks like a bliss, huh? It works well for simple
+domain models, where all requests fall under the CRUD category. Have a user? Great, there is a domain class <code class="docutils literal notranslate"><span class="pre">User</span></code>, corresponding
+to <code class="docutils literal notranslate"><span class="pre">user</span></code> table. CRUD requests have the same fields a <code class="docutils literal notranslate"><span class="pre">User</span></code> class has.</p>
+<p>Things start to look different in more complicated domains. What if a user can be “created” within two different scenarios?
+The first one is when the user registers herself. Apparently, you don’t want to lose her, so the validation rules are quite loose.
+I believe you should give her a chance to fill non-critical info some time later.</p>
+<p>The second one is when the user is registered by any kind of online-support staff. There is no second chance here, so validation
+must be way more strict.</p>
+<p>It’s inherently tricky to put this kind of <a class="reference internal" href="../inspired_by/context_specific_validation.html"><span class="doc">contextual validation</span></a> in a data model,
+because you have to have a way to distinguish between the two scenarios on data-model level, when it’s already too late.</p>
+</div>
+<div class="section" id="solution">
+<h2>Solution<a class="headerlink" href="#solution" title="Permalink to this headline">¶</a></h2>
+<p>There is an alternative though. With <a class="reference external" href="https://github.com/wrong-about-everything/Validol">Validol</a> library,
+your validation logic mirrors json structure. Complex validation checks decorate more basic ones. Besides, an entire validation logic
+represents a single <a class="reference external" href="https://blog.kotlin-academy.com/kotlin-programmer-dictionary-statement-vs-expression-e6743ba1aaa0">expression</a>.
+And it encourages you to put validation in a specific scenario – the one being currently validated.</p>
+</div>
+<div class="section" id="example">
+<h2>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
+<p>Consider a schema to be validated:</p>
+<div class="highlight-JSON notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+   <span class="nt">&quot;where&quot;</span><span class="p">:{</span>
+      <span class="nt">&quot;building&quot;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span>
+      <span class="nt">&quot;street&quot;</span><span class="p">:</span><span class="s2">&quot;Red Square&quot;</span>
+   <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Validation logic reflects the structure of json schema. All the constraints are described right in the structure itself.
+All the mundane checks like json key existence are already taken care of.</p>
+<p>Here it goes:</p>
+<div class="highlight-java notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">new</span> <span class="n">FastFail</span><span class="o">&lt;&gt;(</span>
+    <span class="k">new</span> <span class="n">IsJsonObject</span><span class="o">(</span>
+        <span class="k">new</span> <span class="n">WellFormedJson</span><span class="o">(</span>
+            <span class="k">new</span> <span class="n">IndexedValue</span><span class="o">(</span><span class="s">&quot;where&quot;</span><span class="o">,</span> <span class="n">jsonString</span><span class="o">)</span>
+        <span class="o">)</span>
+    <span class="o">),</span>
+    <span class="n">whereJsonElement</span> <span class="o">-&gt;</span>
+        <span class="k">new</span> <span class="n">NamedBlocOfNameds</span><span class="o">&lt;&gt;(</span>
+            <span class="s">&quot;where&quot;</span><span class="o">,</span>
+            <span class="n">List</span><span class="o">.</span><span class="na">of</span><span class="o">(</span>
+                <span class="k">new</span> <span class="n">AsString</span><span class="o">(</span>
+                    <span class="k">new</span> <span class="n">Required</span><span class="o">(</span>
+                        <span class="k">new</span> <span class="n">IndexedValue</span><span class="o">(</span><span class="s">&quot;street&quot;</span><span class="o">,</span> <span class="n">whereJsonElement</span><span class="o">)</span>
+                    <span class="o">)</span>
+                <span class="o">),</span>
+                <span class="k">new</span> <span class="n">AsInteger</span><span class="o">(</span>
+                    <span class="k">new</span> <span class="n">Required</span><span class="o">(</span>
+                        <span class="k">new</span> <span class="n">IndexedValue</span><span class="o">(</span><span class="s">&quot;building&quot;</span><span class="o">,</span> <span class="n">whereJsonElement</span><span class="o">)</span>
+                    <span class="o">)</span>
+                <span class="o">)</span>
+            <span class="o">),</span>
+            <span class="n">Where</span><span class="o">.</span><span class="na">class</span>
+        <span class="o">)</span>
+<span class="o">)</span>
+    <span class="o">.</span><span class="na">result</span><span class="o">();</span>
+</pre></div>
+</td></tr></table></div>
+<p>There is no familiar spaghetti-code here. Only pure gluten-free <a class="reference internal" href="../inspired_by/declarative_validation.html"><span class="doc">declarative expressions</span></a>.
+Let’s take a look what’s going on here, line by line.</p>
+<div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">Line</span> <span class="pre">1</span></code>: The whole validation is a fast fail thing, the one returning an error if the first argument results in an error.</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">Line</span> <span class="pre">4</span></code>: THe first argument is a declaration of a <code class="docutils literal notranslate"><span class="pre">where</span></code> block.</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">Line</span> <span class="pre">3</span></code>: It must be a well-formed json.</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">Line</span> <span class="pre">2</span></code>: Besides, it should be a json object.</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">Line</span> <span class="pre">7</span></code>: The second argument is a closure. It’s first argument is a <code class="docutils literal notranslate"><span class="pre">where</span></code> json object.</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">Line</span> <span class="pre">8</span></code>: Here goes the named block of named elements.</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">Line</span> <span class="pre">9</span></code>: Its name is <code class="docutils literal notranslate"><span class="pre">where</span></code>.</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">Line</span> <span class="pre">10</span></code>: The second argument is a list of all elements.</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">Line</span> <span class="pre">13</span></code>: The first element is <code class="docutils literal notranslate"><span class="pre">street</span></code>.</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">Line</span> <span class="pre">12</span></code>: It’s required.</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">Line</span> <span class="pre">11</span></code>: And should be represented as string.</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">Line</span> <span class="pre">18</span></code>: The second one is <code class="docutils literal notranslate"><span class="pre">building</span></code>.</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">Line</span> <span class="pre">17</span></code>: It’s required as well.</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">Line</span> <span class="pre">16</span></code>: And should be represented as an integer.</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">Line</span> <span class="pre">22</span></code>: If all previous checks are successful, an <code class="docutils literal notranslate"><span class="pre">Where</span></code> object is created.</div>
+<div class="line">It’s first argument is <cite>street</cite>, which must be a String; the second one is <cite>building</cite>, which must be an integer.</div>
+</div>
+<p>Also, take a look at <a class="reference internal" href="../quick_start.html"><span class="doc">quick-start section</span></a> for more examples and line-by-line code analysis.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="how_to_validate_json_schema_in_java.html" class="btn btn-neutral float-right" title="How to validate json schema in Java?" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="how_to_perform_validation_in_java.html" class="btn btn-neutral float-left" title="How to perform validation in Java?" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Vadim Samokhin (samokhinvadim at gmail dot com)
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
