@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>What is the best way to validate json in Java? &mdash; Validol  documentation</title>
+  <title>How to validate json schema in Java? &mdash; Validol  documentation</title>
   
 
   
@@ -35,8 +35,8 @@
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="How to validate json schema in Java?" href="how_to_validate_json_schema_in_java.html" />
-    <link rel="prev" title="How to perform validation in Java?" href="how_to_perform_validation_in_java.html" /> 
+    <link rel="next" title="What is the best Java email address validation method?" href="what_is_the_best_java_email_address_validation_method.html" />
+    <link rel="prev" title="What is the best way to validate json in Java?" href="what_is_the_best_way_to_validate_json_in_java.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -101,8 +101,8 @@
 <li class="toctree-l2"><a class="reference internal" href="how_to_perform_validation_in_java.html#do-it-declaratively">Do it declaratively</a></li>
 </ul>
 </li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">What is the best way to validate json in Java?</a></li>
-<li class="toctree-l1"><a class="reference internal" href="how_to_validate_json_schema_in_java.html">How to validate json schema in Java?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="what_is_the_best_way_to_validate_json_in_java.html">What is the best way to validate json in Java?</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">How to validate json schema in Java?</a></li>
 <li class="toctree-l1"><a class="reference internal" href="what_is_the_best_java_email_address_validation_method.html">What is the best Java email address validation method?</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Inspired by</span></p>
@@ -166,13 +166,13 @@
     
       <li><a href="../index.html">Docs</a> &raquo;</li>
         
-      <li>What is the best way to validate json in Java?</li>
+      <li>How to validate json schema in Java?</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="../_sources/faq/what_is_the_best_way_to_validate_json_in_java.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/faq/how_to_validate_json_schema_in_java.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -185,36 +185,55 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="what-is-the-best-way-to-validate-json-in-java">
-<h1>What is the best way to validate json in Java?<a class="headerlink" href="#what-is-the-best-way-to-validate-json-in-java" title="Permalink to this headline">¶</a></h1>
-<p>With <a class="reference external" href="https://github.com/wrong-about-everything/Validol">Validol</a>, you can do it like that:</p>
-<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">ValidatedRequest</span> <span class="kd">implements</span> <span class="n">Validatable</span><span class="o">&lt;</span><span class="n">JsonElement</span><span class="o">&gt;</span>
-<span class="o">{</span>
-    <span class="kd">private</span> <span class="n">String</span> <span class="n">jsonRequestString</span><span class="o">;</span>
-
-    <span class="kd">public</span> <span class="nf">ValidatedRequest</span><span class="o">(</span><span class="n">String</span> <span class="n">jsonRequestString</span><span class="o">)</span>
-    <span class="o">{</span>
-        <span class="k">this</span><span class="o">.</span><span class="na">jsonRequestString</span> <span class="o">=</span> <span class="n">jsonRequestString</span><span class="o">;</span>
-    <span class="o">}</span>
-
-    <span class="nd">@Override</span>
-    <span class="kd">public</span> <span class="n">Result</span><span class="o">&lt;</span><span class="n">JsonElement</span><span class="o">&gt;</span> <span class="nf">result</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span>
-    <span class="o">{</span>
-        <span class="k">return</span>
-            <span class="k">new</span> <span class="n">WellFormedJson</span><span class="o">(</span>
-                <span class="k">new</span> <span class="n">Unnamed</span><span class="o">&lt;&gt;(</span><span class="n">Either</span><span class="o">.</span><span class="na">right</span><span class="o">(</span><span class="k">new</span> <span class="n">Present</span><span class="o">&lt;&gt;(</span><span class="k">this</span><span class="o">.</span><span class="na">jsonRequestString</span><span class="o">)))</span>
-            <span class="o">)</span>
-                <span class="o">.</span><span class="na">result</span><span class="o">()</span>
-            <span class="o">;</span>
-    <span class="o">}</span>
-<span class="o">}</span>
+  <div class="section" id="how-to-validate-json-schema-in-java">
+<h1>How to validate json schema in Java?<a class="headerlink" href="#how-to-validate-json-schema-in-java" title="Permalink to this headline">¶</a></h1>
+<p>Validating json schema can be a tedious task. Besides, take a look at validation code couple of months later after it was initially written.
+It can look really scary.</p>
+<p>There is an alternative though. With <a class="reference external" href="https://github.com/wrong-about-everything/Validol">Validol</a> library,
+your validation logic mirrors json structure. Complex validation checks decorate more basic ones. Besides, an entire validation logic
+represents a single <a class="reference external" href="https://blog.kotlin-academy.com/kotlin-programmer-dictionary-statement-vs-expression-e6743ba1aaa0">expression</a>.</p>
+<p>Consider a schema to be validated:</p>
+<div class="highlight-JSON notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+   <span class="nt">&quot;where&quot;</span><span class="p">:{</span>
+      <span class="nt">&quot;building&quot;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span>
+      <span class="nt">&quot;street&quot;</span><span class="p">:</span><span class="s2">&quot;Red Square&quot;</span>
+   <span class="p">}</span>
+<span class="p">}</span>
 </pre></div>
 </div>
-<p>Chances are your request is more complicated. Your validation logic can be much more complex. I suggest that you tackle it
-in a declarative fashion. For a line-by-line example take a look at <a class="reference internal" href="../quick_start.html"><span class="doc">Quick-start</span></a> section.
-Also consider having a glance at <a class="reference internal" href="../inspired_by/context_specific_validation.html"><span class="doc">contextual validation post</span></a> and
-my take on declarative programming in general and
-<a class="reference internal" href="../inspired_by/declarative_validation.html"><span class="doc">declarative validation</span></a> in particular, there you can find some more examples.</p>
+<p>Here is what validation logic looks like. It reflects the structure of json schema.
+All the constraints are described right in the structure itself.
+All the mundane checks like json key existence are already taken care of.</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="k">new</span> <span class="n">FastFail</span><span class="o">&lt;&gt;(</span>
+    <span class="k">new</span> <span class="n">IsJsonObject</span><span class="o">(</span>
+        <span class="k">new</span> <span class="n">WellFormedJson</span><span class="o">(</span>
+            <span class="k">new</span> <span class="n">IndexedValue</span><span class="o">(</span><span class="s">&quot;where&quot;</span><span class="o">,</span> <span class="n">jsonString</span><span class="o">)</span>
+        <span class="o">)</span>
+    <span class="o">),</span>
+    <span class="n">whereJsonElement</span> <span class="o">-&gt;</span>
+        <span class="k">new</span> <span class="n">NamedBlocOfNameds</span><span class="o">&lt;&gt;(</span>
+            <span class="s">&quot;where&quot;</span><span class="o">,</span>
+            <span class="n">List</span><span class="o">.</span><span class="na">of</span><span class="o">(</span>
+                <span class="k">new</span> <span class="n">AsString</span><span class="o">(</span>
+                    <span class="k">new</span> <span class="n">Required</span><span class="o">(</span>
+                        <span class="k">new</span> <span class="n">IndexedValue</span><span class="o">(</span><span class="s">&quot;street&quot;</span><span class="o">,</span> <span class="n">whereJsonElement</span><span class="o">)</span>
+                    <span class="o">)</span>
+                <span class="o">),</span>
+                <span class="k">new</span> <span class="n">AsInteger</span><span class="o">(</span>
+                    <span class="k">new</span> <span class="n">Required</span><span class="o">(</span>
+                        <span class="k">new</span> <span class="n">IndexedValue</span><span class="o">(</span><span class="s">&quot;building&quot;</span><span class="o">,</span> <span class="n">whereJsonElement</span><span class="o">)</span>
+                    <span class="o">)</span>
+                <span class="o">)</span>
+            <span class="o">),</span>
+            <span class="n">Where</span><span class="o">.</span><span class="na">class</span>
+        <span class="o">)</span>
+<span class="o">)</span>
+    <span class="o">.</span><span class="na">result</span><span class="o">();</span>
+</pre></div>
+</div>
+<p>There is no usual spaghetti-code code here. Only pure <a class="reference internal" href="../inspired_by/declarative_validation.html"><span class="doc">declarative expressions</span></a>.</p>
+<p>Also, take a look at <a class="reference internal" href="../quick_start.html"><span class="doc">quick-start section</span></a> and check my post on
+<a class="reference internal" href="../inspired_by/context_specific_validation.html"><span class="doc">contextual validation</span></a> with more examples and line-by-line analysis.</p>
 </div>
 
 
@@ -225,10 +244,10 @@ my take on declarative programming in general and
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="how_to_validate_json_schema_in_java.html" class="btn btn-neutral float-right" title="How to validate json schema in Java?" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="what_is_the_best_java_email_address_validation_method.html" class="btn btn-neutral float-right" title="What is the best Java email address validation method?" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="how_to_perform_validation_in_java.html" class="btn btn-neutral float-left" title="How to perform validation in Java?" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="what_is_the_best_way_to_validate_json_in_java.html" class="btn btn-neutral float-left" title="What is the best way to validate json in Java?" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

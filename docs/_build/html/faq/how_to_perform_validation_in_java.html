@@ -102,6 +102,8 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="what_is_the_best_way_to_validate_json_in_java.html">What is the best way to validate json in Java?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="how_to_validate_json_schema_in_java.html">How to validate json schema in Java?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="what_is_the_best_java_email_address_validation_method.html">What is the best Java email address validation method?</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Inspired by</span></p>
 <ul>
@@ -190,7 +192,8 @@
 <p>First of all, what is validation? For me, it’s a way to check whether the current scenario can be carried out.
 So this activity is inherently <a class="reference internal" href="../inspired_by/context_specific_validation.html"><span class="doc">contextual</span></a>,
 that is, it’s dependent on specific scenario which is currently validated.</p>
-<p>Besides, it’s a user-friendly way of reporting errors. If you put validation logic in domain, there is a problem of mapping error to request fields.
+<p>Besides, it’s a user-friendly way of reporting errors. If you put validation logic in domain,
+there is a problem of <a class="reference external" href="https://enterprisecraftsmanship.com/posts/validation-and-ddd/">mapping error to request fields</a>.
 So I don’t even bother with it. I put only fundamental checks in domain, like Price which is always positive. In case of violation,
 I throw an exception without hesitation:</p>
 <div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kd">final</span> <span class="kd">public</span> <span class="kd">class</span> <span class="nc">Price</span>
@@ -199,6 +202,7 @@ I throw an exception without hesitation:</p>
 
     <span class="kd">public</span> <span class="nf">Price</span><span class="o">(</span><span class="n">Integer</span> <span class="n">amount</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span>
     <span class="o">{</span>
+        <span class="c1">// null check as well!</span>
         <span class="k">if</span> <span class="o">(</span><span class="n">amount</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
             <span class="k">throw</span> <span class="k">new</span> <span class="n">Exception</span><span class="o">(</span><span class="s">&quot;Amount can not be empty&quot;</span><span class="o">);</span>
         <span class="o">}</span>
@@ -219,13 +223,15 @@ Is it a legal case to lose an order? I bet it’s not. So it’s perfectly fine 
 In this case, support staff finds a way to connect with a client (either by phone or an email, or, if nothing worked out, by finding his name in a client database).</p>
 <p>Now, consider the second case: online support operator registers an order. Validation is clearly stronger. No typos are allowed, since there is no chance to fix them.
 So if there is no way the backend system can find a restaurant, support staff should have the ability to set it manually somehow.</p>
-<p>The moral of the story: don’t put validation in any central place. It will hit you hard some day.</p>
+<p>The moral of the story, again: validation is contextual-dependent, so don’t put it in any central place, such as a data-model.
+It will hit you hard some day.</p>
 </div>
 </div>
 <div class="section" id="do-it-declaratively">
 <h2>Do it declaratively<a class="headerlink" href="#do-it-declaratively" title="Permalink to this headline">¶</a></h2>
 <p><a class="reference internal" href="../inspired_by/declarative_validation.html"><span class="doc">Declarative code</span></a> means effectively more readable, more maintainable code.
-Generally, it’s the code written with what you need as a result in mind, not how exactly you should achieve it.</p>
+Generally, it’s the code written with what you need as a result in mind, not how exactly you should achieve it.
+And, by the way, it’s a renowned way to make your code spaghetti-free, that is, <a class="reference external" href="https://blog.ploeh.dk/2011/05/24/DesignSmellTemporalCoupling/">not coupled temporally</a>.</p>
 <p>As an example, consider the following request (actually, some part of it) represented with the following json schema:</p>
 <div class="highlight-JSON notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
    <span class="nt">&quot;when&quot;</span><span class="p">:{</span>
@@ -234,7 +240,7 @@ Generally, it’s the code written with what you need as a result in mind, not h
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>It’s a request for order delivery. There are quite a few checks we need to check, starting with json correctness,
+<p>It’s a request for order delivery. There are quite a few checks we need to implement, starting with json correctness,
 then the structure as a whole, the required fields, their format, and further some more intricate business constraints specific to the concrete scenario:</p>
 <div class="highlight-java notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
@@ -293,14 +299,15 @@ then the structure as a whole, the required fields, their format, and further so
     <span class="o">.</span><span class="na">result</span><span class="o">();</span>
 </pre></div>
 </td></tr></table></div>
-<p>The whole validation logic constitutes in a single expression. The whole validation is a FastFail (declared on (<code class="docutils literal notranslate"><span class="pre">Line</span> <span class="pre">1</span></code>)) block, the one returning an error
+<p>The whole validation logic constitutes in a single expression. It is a higher-level <code class="docutils literal notranslate"><span class="pre">FastFail</span></code> (declared on (<code class="docutils literal notranslate"><span class="pre">Line</span> <span class="pre">1</span></code>)) block, the one returning an error
 if the first argument results in an error. So the first thing is to check whether it’s a valid json at all (<code class="docutils literal notranslate"><span class="pre">Line</span> <span class="pre">3</span></code>), then whether it’s a
 json object (<code class="docutils literal notranslate"><span class="pre">Line</span> <span class="pre">2</span></code>). If everything’s fine, a closure is invoked (<code class="docutils literal notranslate"><span class="pre">Line</span> <span class="pre">7</span></code>), with the first argument being the well-formed json structure.
 Then the structure itself is validated: it’s a block (<code class="docutils literal notranslate"><span class="pre">Line</span> <span class="pre">8</span></code>) named <code class="docutils literal notranslate"><span class="pre">when</span></code> (<code class="docutils literal notranslate"><span class="pre">Line</span> <span class="pre">9</span></code>) consisting of other named entities. In this particular case
 we expect a single key called <code class="docutils literal notranslate"><span class="pre">datetime</span></code> (<code class="docutils literal notranslate"><span class="pre">Line</span> <span class="pre">16</span></code>). It’s required (<code class="docutils literal notranslate"><span class="pre">Line</span> <span class="pre">15</span></code>), turned to string (<code class="docutils literal notranslate"><span class="pre">Line</span> <span class="pre">14</span></code>) and checked whether it’s a valid date (<code class="docutils literal notranslate"><span class="pre">Line</span> <span class="pre">13</span></code>)
 which is greater than now (<code class="docutils literal notranslate"><span class="pre">Line</span> <span class="pre">12</span></code>). Finally, I involve a database to find out whether some restaurant is able to deliver
 this order by specified time. If all checks pass, an object of class <code class="docutils literal notranslate"><span class="pre">When</span></code> is created.</p>
-<p>This code is backed by <a class="reference external" href="https://github.com/wrong-about-everything/Validol">Validol</a> library. Check out more examples in <a class="reference internal" href="../quick_start.html"><span class="doc">Quick start</span></a> section.</p>
+<p>Oh, and by the way, this code is backed by <a class="reference external" href="https://github.com/wrong-about-everything/Validol">Validol</a> library.
+Check out more examples in <a class="reference internal" href="../quick_start.html"><span class="doc">Quick start</span></a> section.</p>
 </div>
 </div>
 

@@ -16,6 +16,8 @@
 
    faq/how_to_perform_validation_in_java
    faq/what_is_the_best_way_to_validate_json_in_java
+   faq/how_to_validate_json_schema_in_java
+   faq/what_is_the_best_java_email_address_validation_method
 
 .. toctree::
    :hidden:
