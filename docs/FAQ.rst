@@ -1,9 +1,6 @@
 FAQ
 =====
 
-This is a list of frequently asked questions on validation.
-
-
 Where should I put a validation logic?
 -------------------------------------------------------------
 e
