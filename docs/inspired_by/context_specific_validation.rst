@@ -255,7 +255,7 @@ Fear not, things are not so complicated. Let's consider what's going on line by 
 | ``Line 33``: and ``building``, which is ...
 |  ``Line 32``: required as well;
 |  ``Line 31``: and should be represented as integer.
-| ``Line 37``: if all previous checks are successfull, an object of class ``Where`` is created. To be honest, it's not a full-fledged object. It's just a data-structure with convenient, type-hinted and IDE-autocompleted access to its fields.
+| ``Line 37``: if all previous checks are successful, an object of class ``Where`` is created. To be honest, it's not a full-fledged object. It's just a data-structure with convenient, type-hinted and IDE-autocompleted access to its fields.
 | ``Line 22``: if underlying checks are passed, an address is ensured to exist. Mind the second argument, ``httpTransport``. It's for requesting some third-party service which checks an address existence.
 | ``Line 21``: Aaaand, finally, we want to ensure that courier delivery is enabled in that area. We'll need a database access for that, hence ``dbConnection`` argument.
 | ``Line 45``: If everything was fine, a ``CourierDelivery`` object is created. It has a single argument, ``Where``.

@@ -107,7 +107,15 @@
 <li class="toctree-l2"><a class="reference internal" href="../faq/what_is_the_best_way_to_validate_json_request_in_java.html#example">Example</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../faq/how_to_validate_json_schema_in_java.html">How to validate json schema in Java?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../faq/how_to_parse_and_validate_json_schema_in_java.html">How to parse and validate json in Java?</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../faq/how_to_parse_and_validate_json_schema_in_java.html#problems">Problems</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../faq/how_to_parse_and_validate_json_schema_in_java.html#validation-is-often-an-imperative-code-clutter">Validation is often an imperative code-clutter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../faq/how_to_parse_and_validate_json_schema_in_java.html#json-schema-could-be-not-so-desirable-to-deal-with">JSON Schema could be not so desirable to deal with</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../faq/how_to_parse_and_validate_json_schema_in_java.html#solution">Solution</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../faq/what_is_the_best_java_email_address_validation_method.html">What is the best Java email address validation method?</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Inspired by</span></p>
@@ -474,7 +482,7 @@ Fear not, things are not so complicated. Let’s consider what’s going on line
 <div class="line"><code class="docutils literal notranslate"><span class="pre">Line</span> <span class="pre">32</span></code>: required as well;</div>
 <div class="line"><code class="docutils literal notranslate"><span class="pre">Line</span> <span class="pre">31</span></code>: and should be represented as integer.</div>
 </div>
-<div class="line"><code class="docutils literal notranslate"><span class="pre">Line</span> <span class="pre">37</span></code>: if all previous checks are successfull, an object of class <code class="docutils literal notranslate"><span class="pre">Where</span></code> is created. To be honest, it’s not a full-fledged object. It’s just a data-structure with convenient, type-hinted and IDE-autocompleted access to its fields.</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">Line</span> <span class="pre">37</span></code>: if all previous checks are successful, an object of class <code class="docutils literal notranslate"><span class="pre">Where</span></code> is created. To be honest, it’s not a full-fledged object. It’s just a data-structure with convenient, type-hinted and IDE-autocompleted access to its fields.</div>
 <div class="line"><code class="docutils literal notranslate"><span class="pre">Line</span> <span class="pre">22</span></code>: if underlying checks are passed, an address is ensured to exist. Mind the second argument, <code class="docutils literal notranslate"><span class="pre">httpTransport</span></code>. It’s for requesting some third-party service which checks an address existence.</div>
 <div class="line"><code class="docutils literal notranslate"><span class="pre">Line</span> <span class="pre">21</span></code>: Aaaand, finally, we want to ensure that courier delivery is enabled in that area. We’ll need a database access for that, hence <code class="docutils literal notranslate"><span class="pre">dbConnection</span></code> argument.</div>
 <div class="line"><code class="docutils literal notranslate"><span class="pre">Line</span> <span class="pre">45</span></code>: If everything was fine, a <code class="docutils literal notranslate"><span class="pre">CourierDelivery</span></code> object is created. It has a single argument, <code class="docutils literal notranslate"><span class="pre">Where</span></code>.</div>
