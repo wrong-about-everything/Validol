@@ -1,4 +1,4 @@
-What is the best way to validate json request in Java?
+What is the best way to validate a json request in Java?
 -------------------------------------------------------------
 Problem
 ^^^^^^^^
