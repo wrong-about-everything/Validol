@@ -43,7 +43,11 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>3.0.0</version>
+                <configuration>
+                    <javadocExecutable>${java.home}/../../bin/javadoc</javadocExecutable>
+                    <additionalparam>-Xdoclint:none</additionalparam>
+                </configuration>
+                <version>3.1.1</version>
                 <executions>
                     <execution>
                         <id>attach-javadocs</id>
