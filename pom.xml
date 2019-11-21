@@ -6,6 +6,7 @@
 
     <groupId>com.github.wrong-about-everything</groupId>
     <artifactId>Validol</artifactId>
+    <name>Validol</name>
     <version>0.1.0</version>
     <description>Easy to use JSON validation library. It makes validation code concise and ensures declarative style.</description>
     <url>https://validol.readthedocs.io/en/latest/</url>
@@ -45,7 +46,7 @@
                 <artifactId>maven-javadoc-plugin</artifactId>
                 <configuration>
                     <javadocExecutable>${java.home}/../../bin/javadoc</javadocExecutable>
-                    <additionalparam>-Xdoclint:none</additionalparam>
+                    <doclint>none</doclint>
                 </configuration>
                 <version>3.1.1</version>
                 <executions>
