@@ -7,6 +7,7 @@ import validation.value.Value;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Map;
 
 final public class IsDate implements Validatable<String>
 {
@@ -56,8 +57,15 @@ final public class IsDate implements Validatable<String>
         }
     }
 
-    private Either<Object, Value<String>> error()
+    private Either<Object, Value<Map<String, String>>> error()
     {
-        return Either.left("This value must be a date of a certain format.");
+        return
+            Either.left(
+                Map.of(
+                    "message", new DefaultDateError().message(),
+                    "code", new DefaultDateError().code()
+                )
+//                "This value must be a date of a certain format."
+            );
     }
 }

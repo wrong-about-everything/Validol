@@ -1,13 +1,8 @@
 package validation.leaf.as.format;
 
-import com.spencerwi.either.Either;
 import validation.Validatable;
 import validation.leaf.is.of.format.IsDate;
 import validation.result.*;
-import validation.value.Present;
-import validation.value.Value;
-
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -15,8 +10,9 @@ final public class AsDate implements Validatable<Date>
 {
     private Validatable<String> original;
     private SimpleDateFormat format;
+    private Error customErrorMessage;
 
-    public AsDate(Validatable<String> original, SimpleDateFormat format) throws Exception
+    public AsDate(Validatable<String> original, SimpleDateFormat format, Error customErrorMessage) throws Exception
     {
         if (original == null) {
             throw new Exception("Decorated validatable element can not be null");
@@ -24,14 +20,23 @@ final public class AsDate implements Validatable<Date>
         if (format == null) {
             throw new Exception("Format can not be null");
         }
+        if (customErrorMessage == null) {
+            throw new Exception("customErrorMessage can not be null");
+        }
 
         this.original = original;
         this.format = format;
+        this.customErrorMessage = customErrorMessage;
+    }
+
+    public AsDate(Validatable<String> original, SimpleDateFormat format) throws Exception
+    {
+        this(original, format, this.error());
     }
 
     public Result<Date> result() throws Exception
     {
-        Result<String> isDateResult = new IsDate(this.original, this.format).result();
+        Result<String> isDateResult = new IsDate(this.original, this.format, this.error()).result();
 
         if (!isDateResult.isSuccessful()) {
             return new FromNonSuccessful<>(isDateResult);
@@ -48,5 +53,10 @@ final public class AsDate implements Validatable<Date>
     {
         this.format.setLenient(false);
         return this.format.parse(prevResult.value().raw().trim());
+    }
+
+    private error()
+    {
+        return new DefaultDateError();
     }
 }
