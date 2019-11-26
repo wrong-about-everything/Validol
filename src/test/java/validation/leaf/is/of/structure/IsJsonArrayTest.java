@@ -1,7 +1,7 @@
 package validation.leaf.is.of.structure;
 
 import validation.leaf.Named;
-import validation.value.Present;
+import validation.result.value.Present;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;

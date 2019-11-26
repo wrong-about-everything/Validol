@@ -1,6 +1,6 @@
 package validation.result;
 
-import validation.value.Value;
+import validation.result.value.Value;
 
 final public class FromNonSuccessful<T, R> implements Result<R>
 {

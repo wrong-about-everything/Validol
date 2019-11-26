@@ -5,8 +5,7 @@ import com.spencerwi.either.Either;
 import validation.Validatable;
 import validation.leaf.is.of.structure.IsJsonPrimitive;
 import validation.result.*;
-import validation.value.Present;
-import validation.value.Value;
+import validation.result.value.Value;
 
 final public class IsBoolean implements Validatable<JsonElement>
 {

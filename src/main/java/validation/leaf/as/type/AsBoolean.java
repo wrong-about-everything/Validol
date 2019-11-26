@@ -7,9 +7,9 @@ import validation.leaf.is.of.type.IsBoolean;
 import validation.result.Named;
 import validation.result.FromNonSuccessful;
 import validation.result.Result;
-import validation.value.Absent;
-import validation.value.Present;
-import validation.value.Value;
+import validation.result.value.Absent;
+import validation.result.value.Present;
+import validation.result.value.Value;
 
 final public class AsBoolean implements Validatable<Boolean>
 {

@@ -1,7 +1,7 @@
 package validation.leaf.is.of.structure;
 
 import validation.leaf.Named;
-import validation.value.Present;
+import validation.result.value.Present;
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
 import com.spencerwi.either.Either;

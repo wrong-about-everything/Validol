@@ -4,7 +4,6 @@ import validation.result.AbsentField;
 import validation.result.Named;
 import validation.result.Result;
 import validation.Validatable;
-import validation.value.Absent;
 import com.spencerwi.either.Either;
 
 final public class FastFail<T, R> implements Validatable<R>

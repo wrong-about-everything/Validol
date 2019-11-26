@@ -3,7 +3,7 @@ package validation.composite.bloc.of.nameds;
 import validation.result.Result;
 import validation.result.Unnamed;
 import validation.Validatable;
-import validation.value.Present;
+import validation.result.value.Present;
 import com.spencerwi.either.Either;
 import org.javatuples.Pair;
 

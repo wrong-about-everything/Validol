@@ -3,7 +3,7 @@ package validation.leaf.is.of.format;
 import com.spencerwi.either.Either;
 import validation.Validatable;
 import validation.result.*;
-import validation.value.Value;
+import validation.result.value.Value;
 import java.net.MalformedURLException;
 import java.net.URL;
 

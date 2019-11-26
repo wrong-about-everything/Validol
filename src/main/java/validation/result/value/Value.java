@@ -1,4 +1,4 @@
-package validation.value;
+package validation.result.value;
 
 public interface Value<T>
 {

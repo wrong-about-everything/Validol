@@ -5,7 +5,7 @@ import org.junit.Test;
 import validation.result.Result;
 import validation.result.Unnamed;
 import static org.junit.Assert.*;
-import validation.value.Present;
+import validation.result.value.Present;
 
 public class AndTest
 {

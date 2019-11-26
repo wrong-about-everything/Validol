@@ -5,8 +5,8 @@ import com.spencerwi.either.Either;
 import validation.Validatable;
 import validation.leaf.is.of.structure.IsJsonPrimitive;
 import validation.result.*;
-import validation.value.Present;
-import validation.value.Value;
+import validation.result.value.Present;
+import validation.result.value.Value;
 
 // doc: fields exists, but its value is blank. When value is absent, it means no such field exists
 final public class IsNotBlank implements Validatable<JsonElement>

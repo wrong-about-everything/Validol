@@ -3,7 +3,7 @@ package validation.leaf.is;
 import com.spencerwi.either.Either;
 import validation.Validatable;
 import validation.result.*;
-import validation.value.Value;
+import validation.result.value.Value;
 
 final public class IsAbsent<T> implements Validatable<T>
 {

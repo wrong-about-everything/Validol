@@ -2,7 +2,7 @@ package validation.composite;
 
 import validation.leaf.*;
 import validation.result.Result;
-import validation.value.Present;
+import validation.result.value.Present;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.reflect.TypeToken;

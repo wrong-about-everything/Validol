@@ -6,8 +6,8 @@ import com.google.gson.reflect.TypeToken;
 import com.spencerwi.either.Either;
 import org.junit.Test;
 import validation.leaf.Named;
-import validation.value.Absent;
-import validation.value.Present;
+import validation.result.value.Absent;
+import validation.result.value.Present;
 
 import java.util.List;
 import java.util.Map;

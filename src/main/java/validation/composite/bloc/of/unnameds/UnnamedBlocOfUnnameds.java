@@ -3,14 +3,13 @@ package validation.composite.bloc.of.unnameds;
 import validation.composite.VFunction;
 import validation.result.Result;
 import validation.Validatable;
-import validation.value.Present;
+import validation.result.value.Present;
 import com.google.gson.JsonElement;
 import com.spencerwi.either.Either;
 import org.javatuples.Pair;
 import validation.result.Unnamed;
 
 import java.util.List;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 

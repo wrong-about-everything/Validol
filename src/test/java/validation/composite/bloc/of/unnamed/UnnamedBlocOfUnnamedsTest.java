@@ -9,7 +9,7 @@ import validation.leaf.as.type.AsInteger;
 import validation.leaf.is.of.type.IsInteger;
 import validation.leaf.Unnamed;
 import validation.result.Result;
-import validation.value.Present;
+import validation.result.value.Present;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.reflect.TypeToken;

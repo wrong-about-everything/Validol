@@ -4,7 +4,7 @@ import com.spencerwi.either.Either;
 import org.junit.Test;
 import validation.result.Result;
 import validation.result.Unnamed;
-import validation.value.Present;
+import validation.result.value.Present;
 
 import static org.junit.Assert.*;
 

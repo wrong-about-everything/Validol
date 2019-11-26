@@ -1,7 +1,7 @@
 package validation.result;
 
-import validation.value.Present;
-import validation.value.Value;
+import validation.result.value.Present;
+import validation.result.value.Value;
 
 final public class SuccessfulWithCustomValue<T, R> implements Result<R>
 {

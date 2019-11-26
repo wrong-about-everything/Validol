@@ -4,7 +4,7 @@ import com.spencerwi.either.Either;
 import validation.Validatable;
 import validation.result.Result;
 import validation.result.Unnamed;
-import validation.value.Absent;
+import validation.result.value.Absent;
 
 public class Xor implements Validatable<Boolean>
 {

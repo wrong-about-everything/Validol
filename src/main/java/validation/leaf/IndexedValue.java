@@ -3,8 +3,8 @@ package validation.leaf;
 import validation.result.Named;
 import validation.result.Result;
 import validation.Validatable;
-import validation.value.Absent;
-import validation.value.Present;
+import validation.result.value.Absent;
+import validation.result.value.Present;
 import com.google.gson.JsonElement;
 import com.spencerwi.either.Either;
 

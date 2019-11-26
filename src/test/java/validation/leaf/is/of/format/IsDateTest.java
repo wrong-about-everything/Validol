@@ -5,8 +5,8 @@ import com.tngtech.java.junit.dataprovider.DataProviderRunner;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import validation.result.Unnamed;
-import validation.value.Absent;
-import validation.value.Present;
+import validation.result.value.Absent;
+import validation.result.value.Present;
 
 import java.text.SimpleDateFormat;
 import static org.junit.Assert.*;

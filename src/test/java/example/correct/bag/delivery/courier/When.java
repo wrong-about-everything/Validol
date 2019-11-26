@@ -1,6 +1,6 @@
 package example.correct.bag.delivery.courier;
 
-import validation.value.Value;
+import validation.result.value.Value;
 
 import java.util.Date;
 

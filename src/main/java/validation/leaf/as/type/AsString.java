@@ -3,7 +3,7 @@ package validation.leaf.as.type;
 import validation.leaf.is.of.type.IsString;
 import validation.result.*;
 import validation.Validatable;
-import validation.value.Present;
+import validation.result.value.Present;
 import com.google.gson.JsonElement;
 import com.spencerwi.either.Either;
 

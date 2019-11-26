@@ -4,9 +4,8 @@ import com.google.gson.Gson;
 import com.spencerwi.either.Either;
 import org.junit.Test;
 import validation.leaf.IndexedValue;
-import validation.leaf.as.type.AsBoolean;
 import validation.result.Named;
-import validation.value.Absent;
+import validation.result.value.Absent;
 
 import java.util.List;
 import java.util.Map;

@@ -1,6 +1,6 @@
 package validation.result;
 
-import validation.value.Present;
+import validation.result.value.Present;
 import com.spencerwi.either.Either;
 import org.junit.Test;
 import static org.junit.Assert.*;

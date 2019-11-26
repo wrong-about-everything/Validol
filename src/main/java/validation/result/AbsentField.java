@@ -1,8 +1,8 @@
 package validation.result;
 
 import com.spencerwi.either.Either;
-import validation.value.Absent;
-import validation.value.Value;
+import validation.result.value.Absent;
+import validation.result.value.Value;
 
 final public class AbsentField<T, R> implements Result<R>
 {

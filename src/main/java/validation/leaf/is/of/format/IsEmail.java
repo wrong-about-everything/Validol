@@ -4,7 +4,7 @@ import com.spencerwi.either.Either;
 import org.apache.commons.validator.routines.EmailValidator;
 import validation.Validatable;
 import validation.result.*;
-import validation.value.Value;
+import validation.result.value.Value;
 
 final public class IsEmail implements Validatable<String>
 {

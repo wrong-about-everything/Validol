@@ -1,4 +1,4 @@
-package validation.value;
+package validation.result.value;
 
 final public class Present<T> implements Value<T>
 {

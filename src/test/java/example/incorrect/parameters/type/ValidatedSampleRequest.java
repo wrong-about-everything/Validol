@@ -7,7 +7,7 @@ import validation.leaf.Named;
 import validation.leaf.Required;
 import validation.result.Result;
 import validation.Validatable;
-import validation.value.Present;
+import validation.result.value.Present;
 import com.spencerwi.either.Either;
 import validation.composite.FastFail;
 import validation.composite.bloc.of.nameds.UnnamedBlocOfNameds;

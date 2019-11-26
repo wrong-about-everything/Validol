@@ -15,7 +15,7 @@ import validation.composite.conditional.switcz.Specific;
 import validation.composite.conditional.switcz.SwitchTrue;
 import validation.leaf.Unnamed;
 import validation.result.Result;
-import validation.value.Present;
+import validation.result.value.Present;
 import java.util.List;
 
 public class ValidatedOrderRegistrationRequest implements Validatable<OrderRegistrationRequestData>

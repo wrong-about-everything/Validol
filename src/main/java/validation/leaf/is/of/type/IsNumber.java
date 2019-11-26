@@ -6,8 +6,7 @@ import org.apache.commons.lang3.math.NumberUtils;
 import validation.Validatable;
 import validation.leaf.is.of.structure.IsJsonPrimitive;
 import validation.result.*;
-import validation.value.Present;
-import validation.value.Value;
+import validation.result.value.Value;
 
 final public class IsNumber implements Validatable<JsonElement>
 {

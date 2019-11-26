@@ -3,7 +3,7 @@ package validation.leaf.is.of.format;
 import validation.result.*;
 import validation.Validatable;
 import com.spencerwi.either.Either;
-import validation.value.Value;
+import validation.result.value.Value;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -61,11 +61,11 @@ final public class IsDate implements Validatable<String>
     {
         return
             Either.left(
-                Map.of(
-                    "message", new DefaultDateError().message(),
-                    "code", new DefaultDateError().code()
-                )
-//                "This value must be a date of a certain format."
+//                Map.of(
+//                    "message", new DefaultDateError().message(),
+//                    "code", new DefaultDateError().code()
+//                )
+                "This value must be a date of a certain format."
             );
     }
 }

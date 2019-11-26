@@ -1,6 +1,6 @@
 package validation.result;
 
-import validation.value.Value;
+import validation.result.value.Value;
 import com.spencerwi.either.Either;
 
 final public class Named<T> implements Result<T>

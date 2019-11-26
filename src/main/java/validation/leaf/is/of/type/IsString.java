@@ -1,12 +1,9 @@
 package validation.leaf.is.of.type;
 
 import com.google.gson.JsonElement;
-import com.spencerwi.either.Either;
 import validation.Validatable;
 import validation.leaf.is.of.structure.IsJsonPrimitive;
 import validation.result.*;
-import validation.value.Present;
-import validation.value.Value;
 
 final public class IsString implements Validatable<JsonElement>
 {

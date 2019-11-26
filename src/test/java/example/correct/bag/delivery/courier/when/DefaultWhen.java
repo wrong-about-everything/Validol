@@ -1,8 +1,8 @@
 package example.correct.bag.delivery.courier.when;
 
 import example.correct.bag.delivery.courier.When;
-import validation.value.Present;
-import validation.value.Value;
+import validation.result.value.Present;
+import validation.result.value.Value;
 
 import java.util.Date;
 

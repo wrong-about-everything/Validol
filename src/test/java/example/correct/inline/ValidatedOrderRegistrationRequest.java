@@ -21,7 +21,7 @@ import validation.leaf.IndexedValue;
 import validation.leaf.is.of.structure.IsJsonObject;
 import validation.result.Result;
 import validation.Validatable;
-import validation.value.Present;
+import validation.result.value.Present;
 import com.spencerwi.either.Either;
 import validation.leaf.Required;
 import java.text.SimpleDateFormat;

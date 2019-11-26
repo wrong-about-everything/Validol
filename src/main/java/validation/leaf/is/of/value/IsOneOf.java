@@ -6,7 +6,7 @@ import validation.result.AbsentField;
 import validation.result.FromNonSuccessful;
 import validation.result.NonSuccessfulWithCustomError;
 import validation.result.Result;
-import validation.value.Value;
+import validation.result.value.Value;
 
 import java.util.List;
 import java.util.stream.Collectors;

@@ -6,7 +6,7 @@ import org.junit.Test;
 import validation.composite.bloc.of.unnameds.ValuesAndErrorsOfUnnameds;
 import validation.composite.bloc.of.unnamed.bag.Integers;
 import validation.leaf.Unnamed;
-import validation.value.Present;
+import validation.result.value.Present;
 import java.util.List;
 
 import static org.junit.Assert.*;

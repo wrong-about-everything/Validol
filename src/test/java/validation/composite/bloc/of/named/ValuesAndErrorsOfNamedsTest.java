@@ -5,7 +5,7 @@ import org.javatuples.Pair;
 import org.junit.Test;
 import validation.composite.bloc.of.nameds.ValuesAndErrorsOfNameds;
 import validation.result.Named;
-import validation.value.Present;
+import validation.result.value.Present;
 
 import java.util.List;
 import java.util.Map;

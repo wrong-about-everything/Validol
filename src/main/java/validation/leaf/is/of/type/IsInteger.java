@@ -4,7 +4,7 @@ import com.google.gson.JsonElement;
 import validation.leaf.is.of.structure.IsJsonPrimitive;
 import validation.result.*;
 import validation.Validatable;
-import validation.value.Value;
+import validation.result.value.Value;
 import com.spencerwi.either.Either;
 
 final public class IsInteger implements Validatable<JsonElement>

@@ -6,7 +6,7 @@ import validation.composite.bloc.of.unnamed.bag.Item;
 import validation.composite.bloc.of.unnamed.bag.Items;
 import validation.leaf.Named;
 import validation.result.Result;
-import validation.value.Present;
+import validation.result.value.Present;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.reflect.TypeToken;

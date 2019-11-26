@@ -3,7 +3,7 @@ package validation.composite.bloc.of.named;
 import validation.composite.bloc.of.nameds.NamedBlocOfNameds;
 import validation.result.Named;
 import validation.result.Result;
-import validation.value.Present;
+import validation.result.value.Present;
 import com.spencerwi.either.Either;
 import org.junit.Test;
 import java.util.*;

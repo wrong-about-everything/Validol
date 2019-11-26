@@ -4,7 +4,7 @@ import validation.result.Named;
 import validation.result.Result;
 import validation.Validatable;
 import validation.result.Unnamed;
-import validation.value.Present;
+import validation.result.value.Present;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;

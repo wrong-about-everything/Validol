@@ -4,7 +4,7 @@ import validation.composite.bloc.of.nameds.UnnamedBlocOfNameds;
 import validation.leaf.Unnamed;
 import validation.result.Named;
 import validation.result.Result;
-import validation.value.Present;
+import validation.result.value.Present;
 import com.spencerwi.either.Either;
 import org.junit.Test;
 

@@ -2,7 +2,7 @@ package validation.composite;
 
 import validation.leaf.Named;
 import validation.result.Result;
-import validation.value.Present;
+import validation.result.value.Present;
 import com.spencerwi.either.Either;
 import org.junit.Test;
 

@@ -3,7 +3,7 @@ package validation.leaf.is.of.value.booolean;
 import com.spencerwi.either.Either;
 import validation.Validatable;
 import validation.result.*;
-import validation.value.Value;
+import validation.result.value.Value;
 
 // doc: all validatables are successful if the corresponding field is absent.
 // If you want it to be required, specify it explicitly.

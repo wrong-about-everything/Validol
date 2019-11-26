@@ -3,7 +3,7 @@ package validation.leaf.is.of.format;
 import com.spencerwi.either.Either;
 import validation.Validatable;
 import validation.result.*;
-import validation.value.Value;
+import validation.result.value.Value;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
