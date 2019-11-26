@@ -1,13 +1,14 @@
 package validation.result;
 
+import validation.result.error.Error;
 import validation.result.value.Value;
 
 final public class NonSuccessfulWithCustomError<T, R> implements Result<R>
 {
     private Result<T> result;
-    private Object error;
+    private Error error;
 
-    public NonSuccessfulWithCustomError(Result<T> result, Object error) throws Exception
+    public NonSuccessfulWithCustomError(Result<T> result, Error error) throws Exception
     {
         if (result == null) {
             throw new Exception("Result can not be null");
@@ -29,11 +30,11 @@ final public class NonSuccessfulWithCustomError<T, R> implements Result<R>
     @Override
     public Value<R> value() throws Exception
     {
-        throw new Exception("No raw exists on a non-successful element");
+        throw new Exception("No value exists on a non-successful element");
     }
 
     @Override
-    public Object error() throws Exception
+    public Error error() throws Exception
     {
         return this.error;
     }

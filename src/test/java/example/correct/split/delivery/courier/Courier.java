@@ -14,7 +14,6 @@ import validation.leaf.Required;
 import validation.leaf.as.format.AsDate;
 import validation.leaf.as.type.AsInteger;
 import validation.leaf.as.type.AsString;
-import validation.leaf.is.of.format.IsDate;
 import validation.result.Result;
 
 import java.text.SimpleDateFormat;

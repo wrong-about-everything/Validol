@@ -1,7 +1,7 @@
 package validation.leaf.as.format;
 
 import validation.Validatable;
-import validation.leaf.is.of.format.IsDate;
+import validation.leaf.is.of.format.date.IsDate;
 import validation.result.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -59,6 +59,6 @@ final public class AsDate implements Validatable<Date>
 
 //    private error()
 //    {
-//        return new DefaultDateError();
+//        return new WrongDateFormat();
 //    }
 }

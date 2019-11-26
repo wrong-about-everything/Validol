@@ -1,13 +1,10 @@
-package validation.leaf.is.of.format;
+package validation.leaf.is.of.format.date;
 
 import validation.result.*;
 import validation.Validatable;
-import com.spencerwi.either.Either;
-import validation.result.value.Value;
-
+import validation.result.error.Error;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Map;
 
 final public class IsDate implements Validatable<String>
 {
@@ -40,7 +37,7 @@ final public class IsDate implements Validatable<String>
         }
 
         if (!this.isValidDate(prevResult)) {
-            return new NonSuccessfulWithCustomError<>(prevResult, this.error().getLeft());
+            return new NonSuccessfulWithCustomError<>(prevResult, this.error());
         }
 
         return prevResult;
@@ -57,15 +54,8 @@ final public class IsDate implements Validatable<String>
         }
     }
 
-    private Either<Object, Value<Map<String, String>>> error()
+    private Error error()
     {
-        return
-            Either.left(
-//                Map.of(
-//                    "message", new DefaultDateError().message(),
-//                    "code", new DefaultDateError().code()
-//                )
-                "This value must be a date of a certain format."
-            );
+        return new WrongDateFormat();
     }
 }

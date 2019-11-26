@@ -4,6 +4,7 @@ import com.spencerwi.either.Either;
 import com.tngtech.java.junit.dataprovider.DataProviderRunner;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import validation.leaf.is.of.format.date.IsDate;
 import validation.result.Unnamed;
 import validation.result.value.Absent;
 import validation.result.value.Present;
