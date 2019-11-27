@@ -2,7 +2,6 @@ package validation.leaf.is.of.format.date;
 
 import validation.result.*;
 import validation.Validatable;
-import validation.result.error.Error;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
@@ -37,7 +36,7 @@ final public class IsDate implements Validatable<String>
         }
 
         if (!this.isValidDate(prevResult)) {
-            return new NonSuccessfulWithCustomError<>(prevResult, this.error());
+            return new NonSuccessfulWithCustomError<>(prevResult, new WrongDateFormat());
         }
 
         return prevResult;
@@ -52,10 +51,5 @@ final public class IsDate implements Validatable<String>
         } catch (ParseException e) {
             return false;
         }
-    }
-
-    private Error error()
-    {
-        return new WrongDateFormat();
     }
 }

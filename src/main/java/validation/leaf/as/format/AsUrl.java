@@ -1,7 +1,7 @@
 package validation.leaf.as.format;
 
 import validation.Validatable;
-import validation.leaf.is.of.format.IsUrl;
+import validation.leaf.is.of.format.url.IsUrl;
 import validation.result.*;
 import java.net.URL;
 

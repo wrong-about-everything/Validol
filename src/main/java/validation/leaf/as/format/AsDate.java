@@ -59,6 +59,6 @@ final public class AsDate implements Validatable<Date>
 
 //    private error()
 //    {
-//        return new WrongDateFormat();
+//        return new Invalid();
 //    }
 }

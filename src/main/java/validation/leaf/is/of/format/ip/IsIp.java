@@ -1,17 +1,17 @@
-package validation.leaf.is.of.format;
+package validation.leaf.is.of.format.ip;
 
 import com.spencerwi.either.Either;
 import validation.Validatable;
 import validation.result.*;
 import validation.result.value.Value;
-import java.net.MalformedURLException;
-import java.net.URL;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 
-final public class IsUrl implements Validatable<String>
+final public class IsIp implements Validatable<String>
 {
     private Validatable<String> original;
 
-    public IsUrl(Validatable<String> original) throws Exception
+    public IsIp(Validatable<String> original) throws Exception
     {
         if (original == null) {
             throw new Exception("Decorated validatable element can not be null");
@@ -32,25 +32,20 @@ final public class IsUrl implements Validatable<String>
             return new AbsentField<>(prevResult);
         }
 
-        if (!this.isValidUrl(prevResult)) {
-            return new NonSuccessfulWithCustomError<>(prevResult, this.error().getLeft());
+        if (!this.isValidIp(prevResult)) {
+            return new NonSuccessfulWithCustomError<>(prevResult, new InvalidIp());
         }
 
         return prevResult;
     }
 
-    private Boolean isValidUrl(Result<String> result) throws Exception
+    private Boolean isValidIp(Result<String> result) throws Exception
     {
         try {
-            new URL(result.value().raw());
+            InetAddress.getByName(result.value().raw());
             return true;
-        } catch (MalformedURLException e) {
+        }  catch (UnknownHostException e) {
             return false;
         }
-    }
-
-    private Either<Object, Value<String>> error()
-    {
-        return Either.left("This value must be a valid url.");
     }
 }

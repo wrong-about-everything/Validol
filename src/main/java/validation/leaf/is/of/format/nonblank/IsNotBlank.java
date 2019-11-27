@@ -1,12 +1,9 @@
-package validation.leaf.is.of.format;
+package validation.leaf.is.of.format.nonblank;
 
 import com.google.gson.JsonElement;
-import com.spencerwi.either.Either;
 import validation.Validatable;
 import validation.leaf.is.of.structure.IsJsonPrimitive;
 import validation.result.*;
-import validation.result.value.Present;
-import validation.result.value.Value;
 
 // doc: fields exists, but its value is blank. When value is absent, it means no such field exists
 final public class IsNotBlank implements Validatable<JsonElement>
@@ -35,24 +32,9 @@ final public class IsNotBlank implements Validatable<JsonElement>
         }
 
         if (prevResult.value().raw().getAsString().length() == 0) {
-            return new NonSuccessfulWithCustomError<>(prevResult, this.error());
+            return new NonSuccessfulWithCustomError<>(prevResult, new Blank());
         }
 
         return prevResult;
-    }
-
-    private Either<Object, Value<JsonElement>> value(Result<JsonElement> prevResult) throws Exception
-    {
-        return
-            Either.right(
-                new Present<>(
-                    prevResult.value().raw()
-                )
-            );
-    }
-
-    private Either<Object, Value<JsonElement>> error()
-    {
-        return Either.left("This value must not be blank.");
     }
 }

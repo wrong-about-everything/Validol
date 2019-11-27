@@ -1,10 +1,8 @@
-package validation.leaf.is.of.format;
+package validation.leaf.is.of.format.email;
 
-import com.spencerwi.either.Either;
 import org.apache.commons.validator.routines.EmailValidator;
 import validation.Validatable;
 import validation.result.*;
-import validation.result.value.Value;
 
 final public class IsEmail implements Validatable<String>
 {
@@ -31,7 +29,7 @@ final public class IsEmail implements Validatable<String>
         }
 
         if (!this.isValidEmail(prevResult)) {
-            return new NonSuccessfulWithCustomError<>(prevResult, this.error().getLeft());
+            return new NonSuccessfulWithCustomError<>(prevResult, new InvalidEmail());
         }
 
         return prevResult;
@@ -40,10 +38,5 @@ final public class IsEmail implements Validatable<String>
     private Boolean isValidEmail(Result<String> prevResult) throws Exception
     {
         return EmailValidator.getInstance().isValid(prevResult.value().raw().trim());
-    }
-
-    private Either<Object, Value<String>> error()
-    {
-        return Either.left("This value must be an email.");
     }
 }

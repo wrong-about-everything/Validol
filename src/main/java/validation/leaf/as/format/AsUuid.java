@@ -2,7 +2,7 @@ package validation.leaf.as.format;
 
 import com.spencerwi.either.Either;
 import validation.Validatable;
-import validation.leaf.is.of.format.IsUuid;
+import validation.leaf.is.of.format.uuid.IsUuid;
 import validation.result.*;
 import validation.result.value.Value;
 

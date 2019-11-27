@@ -4,6 +4,6 @@ public class DefaultDateErrorCode
 {
     public String value()
     {
-        return "wrong-format";
+        return "date-wrong-format";
     }
 }

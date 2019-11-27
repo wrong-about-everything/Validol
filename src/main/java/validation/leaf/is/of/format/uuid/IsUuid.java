@@ -1,9 +1,7 @@
-package validation.leaf.is.of.format;
+package validation.leaf.is.of.format.uuid;
 
-import com.spencerwi.either.Either;
 import validation.Validatable;
 import validation.result.*;
-import validation.result.value.Value;
 import java.util.UUID;
 
 final public class IsUuid implements Validatable<String>
@@ -32,7 +30,7 @@ final public class IsUuid implements Validatable<String>
         }
 
         if (!this.isValidUuid(prevResult)) {
-            return new NonSuccessfulWithCustomError<>(prevResult, this.error().getLeft());
+            return new NonSuccessfulWithCustomError<>(prevResult, new InvalidUuid());
         }
 
         return prevResult;
@@ -45,10 +43,5 @@ final public class IsUuid implements Validatable<String>
         } catch (Throwable e) {
             return false;
         }
-    }
-
-    private Either<Object, Value<String>> error()
-    {
-        return Either.left("This value must be a valid uuid.");
     }
 }

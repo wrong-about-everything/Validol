@@ -1,4 +1,4 @@
-package validation.leaf.is.of.format;
+package validation.leaf.is.of.format.lengthisbetween;
 
 import validation.Validatable;
 import validation.result.*;
@@ -38,20 +38,10 @@ final public class LengthIsBetween implements Validatable<String>
             return result;
         }
 
-        if (result.value().raw().length() < min || result.value().raw().length() > max) {
-            return new NonSuccessfulWithCustomError<>(result, this.error());
+        if (result.value().raw().length() < this.min || result.value().raw().length() > this.max) {
+            return new NonSuccessfulWithCustomError<>(result, new LengthMustBeBounded(this.min, this.max));
         }
 
         return result;
-    }
-
-    private String error()
-    {
-        return
-            String.format(
-                "The length of this value must be between %d and %d, inclusively.",
-                this.min,
-                this.max
-            );
     }
 }
