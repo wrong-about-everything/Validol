@@ -1,6 +1,6 @@
 package validation.leaf.as.type;
 
-import validation.leaf.is.of.type.IsInteger;
+import validation.leaf.is.of.type.integer.IsInteger;
 import validation.result.*;
 import validation.Validatable;
 import com.google.gson.JsonElement;

@@ -1,5 +1,6 @@
 package validation.result;
 
+import validation.result.error.Error;
 import validation.result.value.Value;
 
 public interface Result<T>
@@ -14,7 +15,7 @@ public interface Result<T>
      * Hence, return type is just Object, which is just enough:
      * everything that is supposed to do in case of error is turn it to json and output.
      */
-    public Object error() throws Exception;
+    public Error error() throws Exception;
 
     public Boolean isNamed();
 

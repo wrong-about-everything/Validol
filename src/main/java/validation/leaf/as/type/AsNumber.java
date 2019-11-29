@@ -2,7 +2,7 @@ package validation.leaf.as.type;
 
 import com.google.gson.JsonElement;
 import validation.Validatable;
-import validation.leaf.is.of.type.IsNumber;
+import validation.leaf.is.of.type.number.IsNumber;
 import validation.result.*;
 
 final public class AsNumber implements Validatable<Number>

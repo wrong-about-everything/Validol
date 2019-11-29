@@ -29,7 +29,7 @@ final public class IsEmail implements Validatable<String>
         }
 
         if (!this.isValidEmail(prevResult)) {
-            return new NonSuccessfulWithCustomError<>(prevResult, new InvalidEmail());
+            return new NonSuccessfulWithCustomError<>(prevResult, new MustBeValidEmail());
         }
 
         return prevResult;

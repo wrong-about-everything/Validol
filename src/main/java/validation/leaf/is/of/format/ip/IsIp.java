@@ -1,9 +1,8 @@
 package validation.leaf.is.of.format.ip;
 
-import com.spencerwi.either.Either;
 import validation.Validatable;
 import validation.result.*;
-import validation.result.value.Value;
+
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
@@ -33,7 +32,7 @@ final public class IsIp implements Validatable<String>
         }
 
         if (!this.isValidIp(prevResult)) {
-            return new NonSuccessfulWithCustomError<>(prevResult, new InvalidIp());
+            return new NonSuccessfulWithCustomError<>(prevResult, new MustBeValidIp());
         }
 
         return prevResult;

@@ -3,6 +3,7 @@ package validation.leaf.is.of.value.booolean;
 import com.spencerwi.either.Either;
 import org.junit.Test;
 import validation.leaf.Named;
+import validation.leaf.is.of.value.booolean.phalse.IsFalse;
 import validation.result.value.Absent;
 import validation.result.value.Present;
 import static org.junit.Assert.*;

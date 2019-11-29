@@ -1,6 +1,6 @@
 package validation.leaf.as.type;
 
-import validation.leaf.is.of.type.IsString;
+import validation.leaf.is.of.type.string.IsString;
 import validation.result.*;
 import validation.Validatable;
 import validation.result.value.Present;

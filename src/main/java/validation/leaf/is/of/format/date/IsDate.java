@@ -36,7 +36,7 @@ final public class IsDate implements Validatable<String>
         }
 
         if (!this.isValidDate(prevResult)) {
-            return new NonSuccessfulWithCustomError<>(prevResult, new WrongDateFormat());
+            return new NonSuccessfulWithCustomError<>(prevResult, new MustBeValidDate());
         }
 
         return prevResult;

@@ -8,6 +8,7 @@ import com.google.gson.reflect.TypeToken;
 import com.spencerwi.either.Either;
 import org.junit.Test;
 import validation.leaf.Named;
+import validation.leaf.is.of.structure.jsonprimitive.IsJsonPrimitive;
 import validation.result.value.Present;
 
 import java.util.HashMap;

@@ -3,6 +3,7 @@ package validation.leaf.is.of.value.number;
 import com.spencerwi.either.Either;
 import org.junit.Test;
 import validation.leaf.Named;
+import validation.leaf.is.of.value.number.positive.IsPositive;
 import validation.result.value.Absent;
 import validation.result.value.Present;
 

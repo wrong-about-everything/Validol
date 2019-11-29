@@ -1,6 +1,7 @@
 package validation.leaf.is.of.structure;
 
 import validation.leaf.Named;
+import validation.leaf.is.of.structure.jsonobject.IsJsonObject;
 import validation.result.value.Present;
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;

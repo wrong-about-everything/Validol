@@ -7,7 +7,7 @@ import validation.composite.bloc.of.nameds.NamedBlocOfNameds;
 import validation.leaf.IndexedValue;
 import validation.leaf.Required;
 import validation.leaf.as.type.AsString;
-import validation.leaf.is.of.structure.IsJsonObject;
+import validation.leaf.is.of.structure.jsonobject.IsJsonObject;
 import validation.result.Result;
 
 import java.util.List;

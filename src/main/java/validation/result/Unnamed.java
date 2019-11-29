@@ -1,13 +1,14 @@
 package validation.result;
 
+import validation.result.error.Error;
 import validation.result.value.Value;
 import com.spencerwi.either.Either;
 
 final public class Unnamed<T> implements Result<T>
 {
-    private Either<Object, Value<T>> value;
+    private Either<Error, Value<T>> value;
 
-    public Unnamed(Either<Object, Value<T>> value) throws Exception
+    public Unnamed(Either<Error, Value<T>> value) throws Exception
     {
         if (value == null) {
             throw new Exception("Value can not be null");
@@ -32,7 +33,7 @@ final public class Unnamed<T> implements Result<T>
     }
 
     @Override
-    public Object error() throws Exception {
+    public Error error() throws Exception {
         if (this.isSuccessful()) {
             throw new Exception("No error exists on a successful element");
         }

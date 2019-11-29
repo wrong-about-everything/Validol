@@ -1,6 +1,7 @@
 package validation.result;
 
 import com.spencerwi.either.Either;
+import validation.result.error.Error;
 import validation.result.value.Absent;
 import validation.result.value.Value;
 
@@ -51,7 +52,7 @@ final public class AbsentField<T, R> implements Result<R>
     }
 
     @Override
-    public Object error() throws Exception
+    public Error error() throws Exception
     {
         throw new Exception("No error exists in successful result");
     }

@@ -10,6 +10,7 @@ import com.tngtech.java.junit.dataprovider.UseDataProvider;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import validation.leaf.Named;
+import validation.leaf.is.of.type.number.IsNumber;
 import validation.result.value.Absent;
 import validation.result.value.Present;
 

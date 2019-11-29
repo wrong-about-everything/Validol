@@ -2,7 +2,7 @@ package validation.leaf.is.of.format.nonblank;
 
 import com.google.gson.JsonElement;
 import validation.Validatable;
-import validation.leaf.is.of.structure.IsJsonPrimitive;
+import validation.leaf.is.of.structure.jsonprimitive.IsJsonPrimitive;
 import validation.result.*;
 
 // doc: fields exists, but its value is blank. When value is absent, it means no such field exists
@@ -32,7 +32,7 @@ final public class IsNotBlank implements Validatable<JsonElement>
         }
 
         if (prevResult.value().raw().getAsString().length() == 0) {
-            return new NonSuccessfulWithCustomError<>(prevResult, new Blank());
+            return new NonSuccessfulWithCustomError<>(prevResult, new MustNotBeBlank());
         }
 
         return prevResult;

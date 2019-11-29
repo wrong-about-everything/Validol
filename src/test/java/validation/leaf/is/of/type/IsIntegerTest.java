@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonPrimitive;
 import com.google.gson.reflect.TypeToken;
 import validation.leaf.Named;
+import validation.leaf.is.of.type.integer.IsInteger;
 import validation.result.value.Absent;
 import validation.result.value.Present;
 import com.spencerwi.either.Either;

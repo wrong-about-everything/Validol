@@ -6,7 +6,7 @@ import validation.composite.bloc.of.unnamed.bag.Integers;
 import validation.composite.bloc.of.unnamed.bag.Item;
 import validation.composite.bloc.of.unnamed.bag.Items;
 import validation.leaf.as.type.AsInteger;
-import validation.leaf.is.of.type.IsInteger;
+import validation.leaf.is.of.type.integer.IsInteger;
 import validation.leaf.Unnamed;
 import validation.result.Result;
 import validation.result.value.Present;

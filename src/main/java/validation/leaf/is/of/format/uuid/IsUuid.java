@@ -30,7 +30,7 @@ final public class IsUuid implements Validatable<String>
         }
 
         if (!this.isValidUuid(prevResult)) {
-            return new NonSuccessfulWithCustomError<>(prevResult, new InvalidUuid());
+            return new NonSuccessfulWithCustomError<>(prevResult, new MustBeValidUuid());
         }
 
         return prevResult;

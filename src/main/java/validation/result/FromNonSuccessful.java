@@ -1,5 +1,6 @@
 package validation.result;
 
+import validation.result.error.Error;
 import validation.result.value.Value;
 
 final public class FromNonSuccessful<T, R> implements Result<R>
@@ -30,7 +31,7 @@ final public class FromNonSuccessful<T, R> implements Result<R>
     }
 
     @Override
-    public Object error() throws Exception
+    public Error error() throws Exception
     {
         return this.result.error();
     }

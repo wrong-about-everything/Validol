@@ -18,7 +18,7 @@ import validation.leaf.as.format.AsDate;
 import validation.leaf.as.type.AsInteger;
 import validation.leaf.as.type.AsString;
 import validation.leaf.IndexedValue;
-import validation.leaf.is.of.structure.IsJsonObject;
+import validation.leaf.is.of.structure.jsonobject.IsJsonObject;
 import validation.result.Result;
 import validation.Validatable;
 import validation.result.value.Present;

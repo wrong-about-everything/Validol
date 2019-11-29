@@ -1,9 +1,8 @@
 package validation.leaf.is.of.format.url;
 
-import com.spencerwi.either.Either;
 import validation.Validatable;
 import validation.result.*;
-import validation.result.value.Value;
+
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -33,7 +32,7 @@ final public class IsUrl implements Validatable<String>
         }
 
         if (!this.isValidUrl(prevResult)) {
-            return new NonSuccessfulWithCustomError<>(prevResult, new InvalidUrl());
+            return new NonSuccessfulWithCustomError<>(prevResult, new MustBeValidUrl());
         }
 
         return prevResult;

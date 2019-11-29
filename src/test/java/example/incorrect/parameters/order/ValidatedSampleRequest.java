@@ -5,7 +5,7 @@ import validation.composite.bloc.of.nameds.UnnamedBlocOfNameds;
 import validation.composite.WellFormedJson;
 import validation.leaf.as.type.AsString;
 import validation.leaf.IndexedValue;
-import validation.leaf.is.of.type.IsInteger;
+import validation.leaf.is.of.type.integer.IsInteger;
 import validation.leaf.Named;
 import validation.leaf.Required;
 import validation.result.Result;

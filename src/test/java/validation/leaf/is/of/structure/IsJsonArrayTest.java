@@ -1,6 +1,7 @@
 package validation.leaf.is.of.structure;
 
 import validation.leaf.Named;
+import validation.leaf.is.of.structure.jsonarray.IsJsonArray;
 import validation.result.value.Present;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;

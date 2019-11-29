@@ -20,8 +20,8 @@ final public class LengthMustBeBounded implements Error
     {
         return
             Map.of(
-                "code", new DefaultDateErrorCode().value(),
-                "message", new DefaultDateErrorMessage(this.min, this.max).value()
+                "code", new Code().value(),
+                "message", new Message(this.min, this.max).value()
             );
     }
 }
