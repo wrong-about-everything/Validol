@@ -4,6 +4,7 @@ import com.spencerwi.either.Either;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import validation.leaf.Named;
+import validation.leaf.is.of.value.generic.greaterthanorequal.genericvalue.IsGreaterThanOrEqual;
 import validation.result.value.Absent;
 import validation.result.value.Present;
 import static org.junit.Assert.*;
