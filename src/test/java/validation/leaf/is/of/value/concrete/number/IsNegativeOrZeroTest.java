@@ -2,7 +2,7 @@ package validation.leaf.is.of.value.concrete.number;
 
 import com.spencerwi.either.Either;
 import org.junit.Test;
-import validation.leaf.Named;
+import validation.leaf.NamedStub;
 import validation.leaf.is.of.value.lessthanorequal.zero.IsNegativeOrZero;
 import validation.result.value.Absent;
 import validation.result.value.Present;
@@ -15,7 +15,7 @@ public class IsNegativeOrZeroTest
     {
         IsNegativeOrZero named =
             new IsNegativeOrZero(
-                new Named<>(
+                new NamedStub<>(
                     "vasya",
                     Either.left("Wooops")
                 )
@@ -29,7 +29,7 @@ public class IsNegativeOrZeroTest
     @Test
     public void successfulWithAbsentValue() throws Exception
     {
-        IsNegativeOrZero named = new IsNegativeOrZero(new Named<>("vasya", Either.right(new Absent<>())));
+        IsNegativeOrZero named = new IsNegativeOrZero(new NamedStub<>("vasya", Either.right(new Absent<>())));
 
         assertTrue(named.result().isSuccessful());
         assertFalse(named.result().value().isPresent());
@@ -38,7 +38,7 @@ public class IsNegativeOrZeroTest
     @Test
     public void failedWithPresentPositiveValue() throws Exception
     {
-        IsNegativeOrZero named = new IsNegativeOrZero(new Named<>("vasya", Either.right(new Present<>(0.05))));
+        IsNegativeOrZero named = new IsNegativeOrZero(new NamedStub<>("vasya", Either.right(new Present<>(0.05))));
 
         assertFalse(named.result().isSuccessful());
         assertEquals("vasya", named.result().name());
@@ -48,7 +48,7 @@ public class IsNegativeOrZeroTest
     @Test
     public void successfulWithPresentZeroValue() throws Exception
     {
-        IsNegativeOrZero named = new IsNegativeOrZero(new Named<>("vasya", Either.right(new Present<>(0))));
+        IsNegativeOrZero named = new IsNegativeOrZero(new NamedStub<>("vasya", Either.right(new Present<>(0))));
 
         assertTrue(named.result().isSuccessful());
         assertEquals("vasya", named.result().name());
@@ -58,7 +58,7 @@ public class IsNegativeOrZeroTest
     @Test
     public void successfulWithPresentNegativeValue() throws Exception
     {
-        IsNegativeOrZero named = new IsNegativeOrZero(new Named<>("vasya", Either.right(new Present<>(-0.4))));
+        IsNegativeOrZero named = new IsNegativeOrZero(new NamedStub<>("vasya", Either.right(new Present<>(-0.4))));
 
         assertTrue(named.result().isSuccessful());
         assertEquals("vasya", named.result().name());

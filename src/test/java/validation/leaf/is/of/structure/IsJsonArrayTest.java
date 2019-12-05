@@ -1,6 +1,6 @@
 package validation.leaf.is.of.structure;
 
-import validation.leaf.Named;
+import validation.leaf.NamedStub;
 import validation.leaf.is.of.structure.jsonarray.IsJsonArray;
 import validation.result.value.Present;
 import com.google.gson.Gson;
@@ -23,7 +23,7 @@ public class IsJsonArrayTest
     {
         IsJsonArray named =
             new IsJsonArray(
-                new Named<>(
+                new NamedStub<>(
                     "delivery_by",
                     Either.right(
                         new Present<>(
@@ -42,7 +42,7 @@ public class IsJsonArrayTest
     {
         IsJsonArray named =
             new IsJsonArray(
-                new Named<>(
+                new NamedStub<>(
                     "json",
                     Either.right(
                         new Present<>(
@@ -62,7 +62,7 @@ public class IsJsonArrayTest
     {
         IsJsonArray named =
             new IsJsonArray(
-                new Named<>(
+                new NamedStub<>(
                     "delivery_by",
                     Either.right(
                         new Present<>(

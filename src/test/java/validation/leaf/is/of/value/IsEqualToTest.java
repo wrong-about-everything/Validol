@@ -2,7 +2,7 @@ package validation.leaf.is.of.value;
 
 import com.spencerwi.either.Either;
 import org.junit.Test;
-import validation.leaf.Named;
+import validation.leaf.NamedStub;
 import validation.leaf.is.of.value.equalto.genericvalue.IsEqualTo;
 import validation.result.value.Absent;
 import validation.result.value.Present;
@@ -15,7 +15,7 @@ public class IsEqualToTest
     {
         IsEqualTo<?> named =
             new IsEqualTo<>(
-                new Named<>(
+                new NamedStub<>(
                     "vasya",
                     Either.left("Wooops")
                 ),
@@ -32,7 +32,7 @@ public class IsEqualToTest
     {
         IsEqualTo<?> named =
             new IsEqualTo<>(
-                new Named<>("vasya", Either.right(new Absent<>())),
+                new NamedStub<>("vasya", Either.right(new Absent<>())),
                 false
             );
 
@@ -45,7 +45,7 @@ public class IsEqualToTest
     {
         IsEqualTo<?> named =
             new IsEqualTo<>(
-                new Named<>("vasya", Either.right(new Present<>(false))),
+                new NamedStub<>("vasya", Either.right(new Present<>(false))),
                 false
             );
 
@@ -59,7 +59,7 @@ public class IsEqualToTest
     {
         IsEqualTo<?> named =
             new IsEqualTo<>(
-                new Named<>("vasya", Either.right(new Present<>(777))),
+                new NamedStub<>("vasya", Either.right(new Present<>(777))),
                 777
             );
 
@@ -73,7 +73,7 @@ public class IsEqualToTest
     {
         IsEqualTo<?> named =
             new IsEqualTo<>(
-                new Named<>("vasya", Either.right(new Present<>("vasya"))),
+                new NamedStub<>("vasya", Either.right(new Present<>("vasya"))),
                 "fedya"
             );
 

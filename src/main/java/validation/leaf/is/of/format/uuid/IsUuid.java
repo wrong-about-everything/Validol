@@ -36,7 +36,7 @@ final public class IsUuid implements Validatable<String>
         return prevResult;
     }
 
-    private Boolean isValidUuid(Result<String> result) throws Exception
+    private Boolean isValidUuid(Result<String> result)
     {
         try {
             return UUID.fromString(result.value().raw()).toString().equals(result.value().raw());

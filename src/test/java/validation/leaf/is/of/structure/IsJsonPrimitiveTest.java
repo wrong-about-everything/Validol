@@ -7,7 +7,7 @@ import com.google.gson.JsonPrimitive;
 import com.google.gson.reflect.TypeToken;
 import com.spencerwi.either.Either;
 import org.junit.Test;
-import validation.leaf.Named;
+import validation.leaf.NamedStub;
 import validation.leaf.is.of.structure.jsonprimitive.IsJsonPrimitive;
 import validation.result.value.Present;
 
@@ -22,7 +22,7 @@ public class IsJsonPrimitiveTest
     {
         IsJsonPrimitive named =
             new IsJsonPrimitive(
-                new Named<>(
+                new NamedStub<>(
                     "delivery_by",
                     Either.right(
                         new Present<>(
@@ -41,7 +41,7 @@ public class IsJsonPrimitiveTest
     {
         IsJsonPrimitive named =
             new IsJsonPrimitive(
-                new Named<>(
+                new NamedStub<>(
                     "delivery_by",
                     Either.right(
                         new Present<>(
@@ -62,7 +62,7 @@ public class IsJsonPrimitiveTest
     {
         IsJsonPrimitive named =
             new IsJsonPrimitive(
-                new Named<>(
+                new NamedStub<>(
                     "jsonObject",
                     Either.right(
                         new Present<>(

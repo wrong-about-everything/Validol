@@ -2,8 +2,8 @@ package validation.leaf.is.of.structure;
 
 import com.spencerwi.either.Either;
 import org.junit.Test;
-import validation.leaf.Named;
-import validation.leaf.is.IsAbsent;
+import validation.leaf.NamedStub;
+import validation.leaf.is.absent.IsAbsent;
 import validation.result.value.Absent;
 import validation.result.value.Present;
 import static org.junit.Assert.*;
@@ -16,7 +16,7 @@ public class IsAbsentTest
     {
         IsAbsent<String> named =
             new IsAbsent<>(
-                new Named<>(
+                new NamedStub<>(
                     "delivery_by",
                     Either.right(
                         new Present<>("vasya")
@@ -33,7 +33,7 @@ public class IsAbsentTest
     {
         IsAbsent<?> named =
             new IsAbsent<>(
-                new Named<>(
+                new NamedStub<>(
                     "delivery_by",
                     Either.right(
                         new Absent<>()

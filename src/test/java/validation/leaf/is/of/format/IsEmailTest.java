@@ -6,7 +6,7 @@ import com.tngtech.java.junit.dataprovider.DataProviderRunner;
 import com.tngtech.java.junit.dataprovider.UseDataProvider;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import validation.leaf.Named;
+import validation.leaf.NamedStub;
 import validation.leaf.is.of.format.email.IsEmail;
 import validation.result.value.Absent;
 import validation.result.value.Present;
@@ -20,7 +20,7 @@ public class IsEmailTest
     {
         IsEmail named =
             new IsEmail(
-                new Named<>(
+                new NamedStub<>(
                     "vasya",
                     Either.left("Wooops")
                 )
@@ -37,7 +37,7 @@ public class IsEmailTest
     {
         IsEmail named =
             new IsEmail(
-                new Named<>(
+                new NamedStub<>(
                     "vasya",
                     Either.right(new Present<>(email))
                 )
@@ -83,7 +83,7 @@ public class IsEmailTest
     {
         IsEmail named =
             new IsEmail(
-                new Named<>(
+                new NamedStub<>(
                     "vasya",
                     Either.right(new Present<>(email))
                 )
@@ -120,7 +120,7 @@ public class IsEmailTest
     {
         IsEmail named =
             new IsEmail(
-                new Named<>(
+                new NamedStub<>(
                     "vasya",
                     Either.right(new Absent<>())
                 )

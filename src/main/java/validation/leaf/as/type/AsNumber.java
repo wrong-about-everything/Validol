@@ -20,21 +20,16 @@ final public class AsNumber implements Validatable<Number>
 
     public Result<Number> result() throws Exception
     {
-        Result<JsonElement> isNumberResult = new IsNumber(this.original).result();
+        Result<JsonElement> result = new IsNumber(this.original).result();
 
-        if (!isNumberResult.isSuccessful()) {
-            return new FromNonSuccessful<>(isNumberResult);
+        if (!result.isSuccessful()) {
+            return new FromNonSuccessful<>(result);
         }
 
-        if (!isNumberResult.value().isPresent()) {
-            return new AbsentField<>(isNumberResult);
+        if (!result.value().isPresent()) {
+            return new AbsentField<>(result);
         }
 
-        return new SuccessfulWithCustomValue<>(isNumberResult, this.value(isNumberResult));
-    }
-
-    private Number value(Result<JsonElement> result) throws Exception
-    {
-        return result.value().raw().getAsNumber();
+        return new SuccessfulWithCustomValue<>(result, result.value().raw().getAsNumber());
     }
 }

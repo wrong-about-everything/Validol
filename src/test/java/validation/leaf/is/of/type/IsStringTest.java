@@ -5,7 +5,7 @@ import com.google.gson.JsonPrimitive;
 import com.google.gson.reflect.TypeToken;
 import com.spencerwi.either.Either;
 import org.junit.Test;
-import validation.leaf.Named;
+import validation.leaf.NamedStub;
 import validation.leaf.is.of.type.string.IsString;
 import validation.result.value.Absent;
 import validation.result.value.Present;
@@ -22,7 +22,7 @@ public class IsStringTest
     {
         IsString named =
             new IsString(
-                new Named<>(
+                new NamedStub<>(
                     "vasya",
                     Either.left("Wooops")
                 )
@@ -38,7 +38,7 @@ public class IsStringTest
     {
         IsString named =
             new IsString(
-                new Named<>(
+                new NamedStub<>(
                     "vasya",
                     Either.right(
                         new Present<>(
@@ -64,7 +64,7 @@ public class IsStringTest
     {
         IsString named =
             new IsString(
-                new Named<>(
+                new NamedStub<>(
                     "vasya",
                     Either.right(
                         new Present<>(new JsonPrimitive(777))
@@ -80,7 +80,7 @@ public class IsStringTest
     @Test
     public void successfulWithPresentValue() throws Exception
     {
-        IsString named = new IsString(new Named<>("vasya", Either.right(new Present<>(new JsonPrimitive("hello, vasya")))));
+        IsString named = new IsString(new NamedStub<>("vasya", Either.right(new Present<>(new JsonPrimitive("hello, vasya")))));
 
         assertTrue(named.result().isSuccessful());
         assertEquals("vasya", named.result().name());
@@ -90,7 +90,7 @@ public class IsStringTest
     @Test
     public void successfulWithAbsentValue() throws Exception
     {
-        IsString named = new IsString(new Named<>("vasya", Either.right(new Absent<>())));
+        IsString named = new IsString(new NamedStub<>("vasya", Either.right(new Absent<>())));
 
         assertTrue(named.result().isSuccessful());
         assertFalse(named.result().value().isPresent());

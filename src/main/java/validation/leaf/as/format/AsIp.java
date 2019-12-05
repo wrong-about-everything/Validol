@@ -1,10 +1,8 @@
 package validation.leaf.as.format;
 
-import com.spencerwi.either.Either;
 import validation.Validatable;
 import validation.leaf.is.of.format.ip.IsIp;
 import validation.result.*;
-import validation.result.value.Value;
 
 import java.net.InetAddress;
 
@@ -39,10 +37,5 @@ final public class AsIp implements Validatable<InetAddress>
     private InetAddress value(Result<String> result) throws Exception
     {
         return InetAddress.getByName(result.value().raw());
-    }
-
-    private Either<Object, Value<String>> error()
-    {
-        return Either.left("This value must be a valid ip.");
     }
 }

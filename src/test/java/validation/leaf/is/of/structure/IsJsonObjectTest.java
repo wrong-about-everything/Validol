@@ -1,6 +1,6 @@
 package validation.leaf.is.of.structure;
 
-import validation.leaf.Named;
+import validation.leaf.NamedStub;
 import validation.leaf.is.of.structure.jsonobject.IsJsonObject;
 import validation.result.value.Present;
 import com.google.gson.*;
@@ -19,7 +19,7 @@ public class IsJsonObjectTest
     {
         IsJsonObject named =
             new IsJsonObject(
-                new Named<>(
+                new NamedStub<>(
                     "delivery_by",
                     Either.right(
                         new Present<>(
@@ -38,7 +38,7 @@ public class IsJsonObjectTest
     {
         IsJsonObject named =
             new IsJsonObject(
-                new Named<>(
+                new NamedStub<>(
                     "delivery_by",
                     Either.right(
                         new Present<>(
@@ -59,7 +59,7 @@ public class IsJsonObjectTest
     {
         IsJsonObject named =
             new IsJsonObject(
-                new Named<>(
+                new NamedStub<>(
                     "jsonObject",
                     Either.right(
                         new Present<>(

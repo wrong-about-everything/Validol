@@ -6,7 +6,7 @@ import com.tngtech.java.junit.dataprovider.DataProviderRunner;
 import com.tngtech.java.junit.dataprovider.UseDataProvider;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import validation.leaf.Named;
+import validation.leaf.NamedStub;
 import validation.result.value.Absent;
 import validation.result.value.Present;
 
@@ -22,7 +22,7 @@ public class AsUrlTest
     {
         AsUrl named =
             new AsUrl(
-                new Named<>(
+                new NamedStub<>(
                     "vasya",
                     Either.left("Wooops")
                 )
@@ -39,7 +39,7 @@ public class AsUrlTest
     {
         AsUrl named =
             new AsUrl(
-                new Named<>(
+                new NamedStub<>(
                     "vasya",
                     Either.right(new Present<>(url))
                 )
@@ -75,7 +75,7 @@ public class AsUrlTest
     {
         AsUrl named =
             new AsUrl(
-                new Named<>(
+                new NamedStub<>(
                     "vasya",
                     Either.right(new Present<>(url))
                 )
@@ -102,7 +102,7 @@ public class AsUrlTest
     {
         AsUrl named =
             new AsUrl(
-                new Named<>(
+                new NamedStub<>(
                     "vasya",
                     Either.right(new Absent<>())
                 )

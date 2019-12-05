@@ -1,9 +1,7 @@
-package validation.leaf.is;
+package validation.leaf.is.absent;
 
-import com.spencerwi.either.Either;
 import validation.Validatable;
 import validation.result.*;
-import validation.result.value.Value;
 
 final public class IsAbsent<T> implements Validatable<T>
 {
@@ -26,19 +24,10 @@ final public class IsAbsent<T> implements Validatable<T>
             return new FromNonSuccessful<>(prevResult);
         }
 
-        return
-            prevResult.isNamed()
-                ? new Named<>(prevResult.name(), this.value(prevResult))
-                : new Unnamed<>(this.value(prevResult))
-            ;
-    }
+        if (prevResult.value().isPresent()) {
+            return new NonSuccessfulWithCustomError<>(prevResult, new MustBeAbsent());
+        }
 
-    private Either<Object, Value<T>> value(Result<T> previousResult) throws Exception
-    {
-        return
-            previousResult.value().isPresent()
-                ? Either.left("There should be no such field")
-                : Either.right(previousResult.value())
-            ;
+        return prevResult;
     }
 }

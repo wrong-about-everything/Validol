@@ -2,7 +2,7 @@ package validation.leaf.is.of.value;
 
 import com.spencerwi.either.Either;
 import org.junit.Test;
-import validation.leaf.Named;
+import validation.leaf.NamedStub;
 import validation.leaf.is.of.value.oneof.IsOneOf;
 import validation.result.value.Absent;
 import validation.result.value.Present;
@@ -18,7 +18,7 @@ public class IsOneOfTest
     {
         IsOneOf<?> named =
             new IsOneOf<>(
-                new Named<>(
+                new NamedStub<>(
                     "vasya",
                     Either.left("Wooops")
                 ),
@@ -35,7 +35,7 @@ public class IsOneOfTest
     {
         IsOneOf<?> named =
             new IsOneOf<>(
-                new Named<>("vasya", Either.right(new Absent<>())),
+                new NamedStub<>("vasya", Either.right(new Absent<>())),
                 List.of(25)
             );
 
@@ -48,7 +48,7 @@ public class IsOneOfTest
     {
         IsOneOf<?> named =
             new IsOneOf<>(
-                new Named<>("vasya", Either.right(new Present<>(777))),
+                new NamedStub<>("vasya", Either.right(new Present<>(777))),
                 List.of(888, 999)
             );
 
@@ -62,7 +62,7 @@ public class IsOneOfTest
     {
         IsOneOf<?> named =
             new IsOneOf<>(
-                new Named<>("vasya", Either.right(new Present<>("vasya"))),
+                new NamedStub<>("vasya", Either.right(new Present<>("vasya"))),
                 List.of("fedya", "vasya", "vitya")
             );
 

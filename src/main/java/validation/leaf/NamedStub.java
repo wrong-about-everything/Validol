@@ -5,12 +5,12 @@ import validation.Validatable;
 import validation.result.value.Value;
 import com.spencerwi.either.Either;
 
-final public class Named<T> implements Validatable<T>
+final public class NamedStub<T> implements Validatable<T>
 {
     private String name;
     private Either<Object, Value<T>> value;
 
-    public Named(String name, Either<Object, Value<T>> value) throws Exception
+    public NamedStub(String name, Either<Object, Value<T>> value) throws Exception
     {
         if (name == null) {
             throw new Exception("Name can not be null");

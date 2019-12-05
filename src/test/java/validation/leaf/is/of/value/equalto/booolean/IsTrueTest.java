@@ -2,7 +2,7 @@ package validation.leaf.is.of.value.equalto.booolean;
 
 import com.spencerwi.either.Either;
 import org.junit.Test;
-import validation.leaf.Named;
+import validation.leaf.NamedStub;
 import validation.leaf.is.of.value.equalto.booolean.trooe.IsTrue;
 import validation.result.value.Absent;
 import validation.result.value.Present;
@@ -15,7 +15,7 @@ public class IsTrueTest
     {
         IsTrue named =
             new IsTrue(
-                new Named<>(
+                new NamedStub<>(
                     "vasya",
                     Either.left("Wooops")
                 )
@@ -29,7 +29,7 @@ public class IsTrueTest
     @Test
     public void successfulWithAbsentValue() throws Exception
     {
-        IsTrue named = new IsTrue(new Named<>("vasya", Either.right(new Absent<>())));
+        IsTrue named = new IsTrue(new NamedStub<>("vasya", Either.right(new Absent<>())));
 
         assertTrue(named.result().isSuccessful());
         assertFalse(named.result().value().isPresent());
@@ -38,7 +38,7 @@ public class IsTrueTest
     @Test
     public void failedWithPresentFalseValue() throws Exception
     {
-        IsTrue named = new IsTrue(new Named<>("vasya", Either.right(new Present<>(false))));
+        IsTrue named = new IsTrue(new NamedStub<>("vasya", Either.right(new Present<>(false))));
 
         assertFalse(named.result().isSuccessful());
         assertEquals("vasya", named.result().name());
@@ -47,7 +47,7 @@ public class IsTrueTest
     @Test
     public void successfulWithPresentTrueValue() throws Exception
     {
-        IsTrue named = new IsTrue(new Named<>("vasya", Either.right(new Present<>(true))));
+        IsTrue named = new IsTrue(new NamedStub<>("vasya", Either.right(new Present<>(true))));
 
         assertTrue(named.result().isSuccessful());
         assertEquals("vasya", named.result().name());

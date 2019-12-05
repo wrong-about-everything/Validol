@@ -24,14 +24,10 @@ final public class AsString implements Validatable<String>
 
     public Result<String> result() throws Exception
     {
-        Result<JsonElement> result = this.original.result();
+        Result<JsonElement> result = new IsString(this.original).result();
 
         if (!result.isSuccessful()) {
             return new FromNonSuccessful<>(result);
-        }
-
-        if (!new IsString(this.original).result().isSuccessful()) {
-            return new NonSuccessfulWithCustomError<>(result, "This value must be a string.");
         }
 
         if (!result.value().isPresent()) {

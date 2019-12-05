@@ -15,7 +15,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.reflect.TypeToken;
 import com.spencerwi.either.Either;
 import org.junit.Test;
-import validation.leaf.Named;
+import validation.leaf.NamedStub;
 
 import java.util.List;
 import java.util.Map;
@@ -82,7 +82,7 @@ public class UnnamedBlocOfUnnamedsTest
                 jsonMapElement ->
                     new UnnamedBlocOfNameds<>(
                         List.of(
-                            new Named<>(
+                            new NamedStub<>(
                                 "id",
                                 Either.right(
                                     new Present<>(jsonMapElement.getAsJsonObject().get("id").getAsInt())
@@ -109,7 +109,7 @@ public class UnnamedBlocOfUnnamedsTest
                 jsonMapElement ->
                     new UnnamedBlocOfNameds<>(
                         List.of(
-                            new Named<>(
+                            new NamedStub<>(
                                 "id",
                                 Either.left("Wooooooops")
                             )
@@ -139,7 +139,7 @@ public class UnnamedBlocOfUnnamedsTest
                 jsonMapElement ->
                     new UnnamedBlocOfNameds<>(
                         List.of(
-                            new Named<>(
+                            new NamedStub<>(
                                 "id",
                                 Either.left("Wooooooops")
                             )

@@ -1,6 +1,6 @@
 package validation.composite;
 
-import validation.leaf.Named;
+import validation.leaf.NamedStub;
 import validation.result.Result;
 import validation.result.value.Present;
 import com.spencerwi.either.Either;
@@ -16,7 +16,7 @@ public class FastFailTest
         Result<?> result =
             new FastFail<>(
                 () -> new validation.result.Named<>("vasya", Either.right(new Present<>("belov"))),
-                belov -> new Named<>("fedya", Either.right(new Present<>("vasiliev")))
+                belov -> new NamedStub<>("fedya", Either.right(new Present<>("vasiliev")))
             )
                 .result();
 
@@ -30,7 +30,7 @@ public class FastFailTest
         Result<?> result =
             new FastFail<>(
                 () ->new validation.result.Named<>("vasya", Either.left("Erroneous vasya")),
-                belov -> new Named<>("fedya", Either.right(new Present<>("vasiliev")))
+                belov -> new NamedStub<>("fedya", Either.right(new Present<>("vasiliev")))
             )
                 .result();
 

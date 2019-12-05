@@ -19,7 +19,7 @@ public class WellFormedJsonTest
     {
         Result<JsonElement> result =
             (new WellFormedJson(
-                new Named<>("vasya", Either.right(new Present<>("invalid json azaza")))
+                new NamedStub<>("vasya", Either.right(new Present<>("invalid json azaza")))
             ))
                 .result();
 
@@ -32,7 +32,7 @@ public class WellFormedJsonTest
     {
         Result<JsonElement> result =
             (new WellFormedJson(
-                new Named<>("vasya", Either.right(new Present<>(this.validJsonRequest())))
+                new NamedStub<>("vasya", Either.right(new Present<>(this.validJsonRequest())))
             ))
                 .result();
 

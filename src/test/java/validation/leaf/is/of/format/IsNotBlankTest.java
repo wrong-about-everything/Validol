@@ -10,7 +10,7 @@ import com.tngtech.java.junit.dataprovider.DataProviderRunner;
 import com.tngtech.java.junit.dataprovider.UseDataProvider;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import validation.leaf.Named;
+import validation.leaf.NamedStub;
 import validation.leaf.is.of.format.nonblank.IsNotBlank;
 import validation.result.value.Absent;
 import validation.result.value.Present;
@@ -28,7 +28,7 @@ public class IsNotBlankTest
     {
         IsNotBlank named =
             new IsNotBlank(
-                new Named<>(
+                new NamedStub<>(
                     "vasya",
                     Either.left("Wooops")
                 )
@@ -44,7 +44,7 @@ public class IsNotBlankTest
     {
         IsNotBlank named =
             new IsNotBlank(
-                new Named<>(
+                new NamedStub<>(
                     "vasya",
                     Either.right(
                         new Present<>(
@@ -70,7 +70,7 @@ public class IsNotBlankTest
     {
         IsNotBlank named =
             new IsNotBlank(
-                new Named<>(
+                new NamedStub<>(
                     "vasya",
                     Either.right(
                         new Absent<>()
@@ -87,7 +87,7 @@ public class IsNotBlankTest
     @UseDataProvider("nonBlankData")
     public void successfulWithNonBlankData(JsonElement json) throws Exception
     {
-        IsNotBlank named = new IsNotBlank(new Named<>("vasya", Either.right(new Present<>(json))));
+        IsNotBlank named = new IsNotBlank(new NamedStub<>("vasya", Either.right(new Present<>(json))));
 
         assertTrue(named.result().isSuccessful());
         assertEquals("vasya", named.result().name());

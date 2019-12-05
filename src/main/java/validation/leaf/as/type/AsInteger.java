@@ -20,14 +20,14 @@ final public class AsInteger implements Validatable<Integer>
 
     public Result<Integer> result() throws Exception
     {
-        Result<JsonElement> result = this.original.result();
+        Result<JsonElement> result = new IsInteger(this.original).result();
 
         if (!result.isSuccessful()) {
             return new FromNonSuccessful<>(result);
         }
 
-        if (!new IsInteger(this.original).result().isSuccessful()) {
-            return new NonSuccessfulWithCustomError<>(result, "This value must be an integer.");
+        if (!result.value().isPresent()) {
+            return new AbsentField<>(result);
         }
 
         return new SuccessfulWithCustomValue<>(result, this.value(result));

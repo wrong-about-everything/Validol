@@ -1,15 +1,9 @@
 package validation.leaf.as.type;
 
 import com.google.gson.JsonElement;
-import com.spencerwi.either.Either;
 import validation.Validatable;
 import validation.leaf.is.of.type.booolean.IsBoolean;
-import validation.result.Named;
-import validation.result.FromNonSuccessful;
-import validation.result.Result;
-import validation.result.value.Absent;
-import validation.result.value.Present;
-import validation.result.value.Value;
+import validation.result.*;
 
 final public class AsBoolean implements Validatable<Boolean>
 {
@@ -26,30 +20,21 @@ final public class AsBoolean implements Validatable<Boolean>
 
     public Result<Boolean> result() throws Exception
     {
-        Result<JsonElement> result = this.original.result();
+        Result<JsonElement> result = new IsBoolean(this.original).result();
 
-        Result<JsonElement> isBoolean = new IsBoolean(this.original).result();
-        if (!isBoolean.isSuccessful()) {
-            return new FromNonSuccessful<>(isBoolean);
+        if (!result.isSuccessful()) {
+            return new FromNonSuccessful<>(result);
         }
 
-        return
-            new Named<>(
-                result.name(),
-                this.value(result)
-            );
+        if (!result.value().isPresent()) {
+            return new AbsentField<>(result);
+        }
+
+        return new SuccessfulWithCustomValue<>(result, this.value(result));
     }
 
-    private Either<Object, Value<Boolean>> value(Result<JsonElement> result) throws Exception
+    private Boolean value(Result<JsonElement> result) throws Exception
     {
-        return
-            Either.right(
-                result.value().isPresent()
-                    ?
-                        new Present<>(
-                            result.value().raw().getAsJsonPrimitive().getAsBoolean()
-                        )
-                    : new Absent<>()
-            );
+        return result.value().raw().getAsJsonPrimitive().getAsBoolean();
     }
 }

@@ -9,7 +9,7 @@ import com.tngtech.java.junit.dataprovider.DataProviderRunner;
 import com.tngtech.java.junit.dataprovider.UseDataProvider;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import validation.leaf.Named;
+import validation.leaf.NamedStub;
 import validation.leaf.is.of.type.number.IsNumber;
 import validation.result.value.Absent;
 import validation.result.value.Present;
@@ -27,7 +27,7 @@ public class IsNumberTest
     {
         IsNumber named =
             new IsNumber(
-                new Named<>(
+                new NamedStub<>(
                     "vasya",
                     Either.left("Wooops")
                 )
@@ -43,7 +43,7 @@ public class IsNumberTest
     {
         IsNumber named =
             new IsNumber(
-                new Named<>(
+                new NamedStub<>(
                     "vasya",
                     Either.right(
                         new Present<>(
@@ -67,7 +67,7 @@ public class IsNumberTest
     @Test
     public void successfulWithAbsentValue() throws Exception
     {
-        IsNumber named = new IsNumber(new Named<>("vasya", Either.right(new Absent<>())));
+        IsNumber named = new IsNumber(new NamedStub<>("vasya", Either.right(new Absent<>())));
 
         assertTrue(named.result().isSuccessful());
         assertFalse(named.result().value().isPresent());
@@ -78,7 +78,7 @@ public class IsNumberTest
     {
         IsNumber named =
             new IsNumber(
-                new Named<>(
+                new NamedStub<>(
                     "vasya",
                     Either.right(
                         new Present<>(new JsonPrimitive(true))
@@ -95,7 +95,7 @@ public class IsNumberTest
     @UseDataProvider("validNumbers")
     public void successfulWithPresentValue(String number) throws Exception
     {
-        IsNumber named = new IsNumber(new Named<>("vasya", Either.right(new Present<>(new JsonPrimitive(number)))));
+        IsNumber named = new IsNumber(new NamedStub<>("vasya", Either.right(new Present<>(new JsonPrimitive(number)))));
 
         assertTrue(named.result().isSuccessful());
         assertEquals("vasya", named.result().name());

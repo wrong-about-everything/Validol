@@ -2,7 +2,7 @@ package validation.leaf.is.of.value;
 
 import com.spencerwi.either.Either;
 import org.junit.Test;
-import validation.leaf.Named;
+import validation.leaf.NamedStub;
 import validation.leaf.is.of.value.notequalto.IsNotEqualTo;
 import validation.result.value.Absent;
 import validation.result.value.Present;
@@ -16,7 +16,7 @@ public class IsNotEqualToTest
     {
         IsNotEqualTo<?> named =
             new IsNotEqualTo<>(
-                new Named<>(
+                new NamedStub<>(
                     "vasya",
                     Either.left("Wooops")
                 ),
@@ -33,7 +33,7 @@ public class IsNotEqualToTest
     {
         IsNotEqualTo<?> named =
             new IsNotEqualTo<>(
-                new Named<>("vasya", Either.right(new Absent<>())),
+                new NamedStub<>("vasya", Either.right(new Absent<>())),
                 false
             );
 
@@ -46,7 +46,7 @@ public class IsNotEqualToTest
     {
         IsNotEqualTo<?> named =
             new IsNotEqualTo<>(
-                new Named<>("vasya", Either.right(new Present<>(false))),
+                new NamedStub<>("vasya", Either.right(new Present<>(false))),
                 false
             );
 
@@ -60,7 +60,7 @@ public class IsNotEqualToTest
     {
         IsNotEqualTo<?> named =
             new IsNotEqualTo<>(
-                new Named<>("vasya", Either.right(new Present<>(777))),
+                new NamedStub<>("vasya", Either.right(new Present<>(777))),
                 777
             );
 
@@ -74,7 +74,7 @@ public class IsNotEqualToTest
     {
         IsNotEqualTo<?> named =
             new IsNotEqualTo<>(
-                new Named<>("vasya", Either.right(new Present<>("vasya"))),
+                new NamedStub<>("vasya", Either.right(new Present<>("vasya"))),
                 "fedya"
             );
 

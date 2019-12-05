@@ -3,7 +3,7 @@ package validation.leaf.is.of.value;
 import com.spencerwi.either.Either;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import validation.leaf.Named;
+import validation.leaf.NamedStub;
 import validation.leaf.is.of.value.greaterthanorequal.genericvalue.IsGreaterThanOrEqual;
 import validation.result.value.Absent;
 import validation.result.value.Present;
@@ -20,7 +20,7 @@ public class IsGreaterThanOrEqualTest
     {
         IsGreaterThanOrEqual<?> named =
             new IsGreaterThanOrEqual<>(
-                new Named<>(
+                new NamedStub<>(
                     "vasya",
                     Either.left("Wooops")
                 ),
@@ -37,7 +37,7 @@ public class IsGreaterThanOrEqualTest
     {
         IsGreaterThanOrEqual<?> named =
             new IsGreaterThanOrEqual<>(
-                new Named<>("vasya", Either.right(new Absent<>())),
+                new NamedStub<>("vasya", Either.right(new Absent<>())),
                 false
             );
 
@@ -51,7 +51,7 @@ public class IsGreaterThanOrEqualTest
     {
         IsGreaterThanOrEqual<T> named =
             new IsGreaterThanOrEqual<>(
-                new Named<>("vasya", Either.right(new Present<>(compared))),
+                new NamedStub<>("vasya", Either.right(new Present<>(compared))),
                 against
             );
 
@@ -81,7 +81,7 @@ public class IsGreaterThanOrEqualTest
     {
         IsGreaterThanOrEqual<T> named =
             new IsGreaterThanOrEqual<>(
-                new Named<>("vasya", Either.right(new Present<>(compared))),
+                new NamedStub<>("vasya", Either.right(new Present<>(compared))),
                 against
             );
 
