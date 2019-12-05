@@ -3,7 +3,7 @@ package validation.leaf.as.type;
 import com.google.gson.Gson;
 import com.spencerwi.either.Either;
 import org.junit.Test;
-import validation.leaf.IndexedValue;
+import validation.leaf.is.IndexedValue;
 import validation.result.Named;
 import validation.result.value.Absent;
 

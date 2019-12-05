@@ -3,7 +3,7 @@ package validation.leaf.is.of.type;
 import com.google.gson.Gson;
 import com.google.gson.JsonPrimitive;
 import com.google.gson.reflect.TypeToken;
-import validation.leaf.NamedStub;
+import validation.leaf.is.NamedStub;
 import validation.leaf.is.of.type.integer.IsInteger;
 import validation.result.value.Absent;
 import validation.result.value.Present;

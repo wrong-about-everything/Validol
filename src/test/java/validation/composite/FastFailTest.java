@@ -1,6 +1,6 @@
 package validation.composite;
 
-import validation.leaf.NamedStub;
+import validation.leaf.is.NamedStub;
 import validation.result.Result;
 import validation.result.value.Present;
 import com.spencerwi.either.Either;

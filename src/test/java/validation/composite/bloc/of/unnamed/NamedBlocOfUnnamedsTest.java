@@ -4,7 +4,7 @@ import validation.composite.bloc.of.nameds.UnnamedBlocOfNameds;
 import validation.composite.bloc.of.unnameds.NamedBlocOfUnnameds;
 import validation.composite.bloc.of.unnamed.bag.Item;
 import validation.composite.bloc.of.unnamed.bag.Items;
-import validation.leaf.NamedStub;
+import validation.leaf.is.NamedStub;
 import validation.result.Result;
 import validation.result.value.Present;
 import com.google.gson.Gson;

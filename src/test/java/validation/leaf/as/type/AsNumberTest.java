@@ -6,8 +6,7 @@ import com.tngtech.java.junit.dataprovider.DataProviderRunner;
 import com.tngtech.java.junit.dataprovider.UseDataProvider;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import validation.leaf.IndexedValue;
-import validation.leaf.as.type.AsNumber;
+import validation.leaf.is.IndexedValue;
 
 import java.util.List;
 import java.util.Map;

@@ -2,8 +2,8 @@ package example.correct.split.source;
 
 import com.google.gson.JsonElement;
 import validation.Validatable;
-import validation.leaf.IndexedValue;
-import validation.leaf.Required;
+import validation.leaf.is.IndexedValue;
+import validation.leaf.is.required.Required;
 import validation.leaf.as.type.AsInteger;
 import validation.result.Result;
 

@@ -1,6 +1,6 @@
 package validation.leaf.is.of.structure;
 
-import validation.leaf.NamedStub;
+import validation.leaf.is.NamedStub;
 import validation.leaf.is.of.structure.jsonarray.IsJsonArray;
 import validation.result.value.Present;
 import com.google.gson.Gson;

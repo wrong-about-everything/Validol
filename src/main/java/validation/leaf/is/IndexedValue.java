@@ -1,4 +1,4 @@
-package validation.leaf;
+package validation.leaf.is;
 
 import validation.result.Named;
 import validation.result.Result;
@@ -28,10 +28,6 @@ final public class IndexedValue implements Validatable<JsonElement>
 
     public Result<JsonElement> result() throws Exception
     {
-        if (!this.json.isJsonObject()) {
-            return new Named<>(this.name, Either.left("IndexedValue class is used on an inappropriate data structure"));
-        }
-
         if (!this.json.getAsJsonObject().has(this.name)) {
             return new Named<>(this.name, Either.right(new Absent<>()));
         }

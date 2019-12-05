@@ -2,7 +2,7 @@ package validation.leaf.is.of.value.equalto.booolean;
 
 import com.spencerwi.either.Either;
 import org.junit.Test;
-import validation.leaf.NamedStub;
+import validation.leaf.is.NamedStub;
 import validation.leaf.is.of.value.equalto.booolean.phalse.IsFalse;
 import validation.result.value.Absent;
 import validation.result.value.Present;

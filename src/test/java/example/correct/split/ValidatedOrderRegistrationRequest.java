@@ -9,7 +9,7 @@ import example.correct.split.items.Items;
 import example.correct.split.source.Source;
 import validation.Validatable;
 import validation.composite.FastFail;
-import validation.composite.WellFormedJson;
+import validation.composite.wellformedjson.WellFormedJson;
 import validation.composite.bloc.of.nameds.UnnamedBlocOfNameds;
 import validation.composite.conditional.switcz.Specific;
 import validation.composite.conditional.switcz.SwitchTrue;

@@ -1,6 +1,7 @@
 package validation.composite;
 
-import validation.leaf.*;
+import validation.composite.wellformedjson.WellFormedJson;
+import validation.leaf.is.NamedStub;
 import validation.result.Result;
 import validation.result.value.Present;
 import com.google.gson.Gson;

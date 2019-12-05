@@ -1,4 +1,4 @@
-package validation.composite.operator.logical;
+package validation.composite.operator.logical.or;
 
 import com.spencerwi.either.Either;
 import validation.Validatable;
@@ -33,6 +33,7 @@ public class Or implements Validatable<Boolean>
             return
                 new Unnamed<>(
                     Either.left(
+                        new EitherLeftOrRight()
                         String.format(
                             "Either %s or %s",
                             leftResult.error(),

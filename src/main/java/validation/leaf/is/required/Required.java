@@ -1,10 +1,10 @@
-package validation.leaf;
+package validation.leaf.is.required;
 
-import validation.result.Named;
+import validation.leaf.is.absent.MustBeAbsent;
+import validation.result.NonSuccessfulWithCustomError;
 import validation.result.Result;
 import validation.Validatable;
 import com.google.gson.JsonElement;
-import com.spencerwi.either.Either;
 
 // doc: the field itself must be present, it might be empty though
 final public class Required implements Validatable<JsonElement>
@@ -29,7 +29,7 @@ final public class Required implements Validatable<JsonElement>
         }
 
         if (!result.value().isPresent()) {
-            return new Named<>(result.name(), Either.left("This field is obligatory"));
+            return new NonSuccessfulWithCustomError<>(result, new MustBeAbsent());
         }
 
         return result;

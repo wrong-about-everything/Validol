@@ -4,7 +4,7 @@ import com.spencerwi.either.Either;
 import com.tngtech.java.junit.dataprovider.DataProviderRunner;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import validation.leaf.NamedStub;
+import validation.leaf.is.NamedStub;
 import validation.leaf.is.of.format.pattern.MatchesPattern;
 import validation.result.value.Absent;
 import validation.result.value.Present;

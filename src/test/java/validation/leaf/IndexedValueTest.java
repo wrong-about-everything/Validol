@@ -5,6 +5,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 import org.junit.Test;
+import validation.leaf.is.IndexedValue;
 
 import java.util.HashMap;
 

@@ -5,7 +5,7 @@ import com.google.gson.JsonPrimitive;
 import com.google.gson.reflect.TypeToken;
 import com.spencerwi.either.Either;
 import org.junit.Test;
-import validation.leaf.NamedStub;
+import validation.leaf.is.NamedStub;
 import validation.leaf.is.of.type.booolean.IsBoolean;
 import validation.result.value.Absent;
 import validation.result.value.Present;

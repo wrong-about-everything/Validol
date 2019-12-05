@@ -2,7 +2,7 @@ package validation.leaf.is.of.value.concrete.number;
 
 import com.spencerwi.either.Either;
 import org.junit.Test;
-import validation.leaf.NamedStub;
+import validation.leaf.is.NamedStub;
 import validation.leaf.is.of.value.greaterthanorequal.zero.IsPositiveOrZero;
 import validation.result.value.Absent;
 import validation.result.value.Present;

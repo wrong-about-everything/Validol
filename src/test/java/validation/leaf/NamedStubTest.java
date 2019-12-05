@@ -1,5 +1,6 @@
 package validation.leaf;
 
+import validation.leaf.is.NamedStub;
 import validation.result.value.Present;
 import com.spencerwi.either.Either;
 import org.junit.Test;

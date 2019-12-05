@@ -2,6 +2,7 @@ package validation.composite.operator.logical;
 
 import com.spencerwi.either.Either;
 import org.junit.Test;
+import validation.composite.operator.logical.or.Or;
 import validation.result.Result;
 import validation.result.Unnamed;
 import validation.result.value.Present;

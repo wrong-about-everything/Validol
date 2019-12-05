@@ -2,8 +2,7 @@ package validation.leaf.as.type;
 
 import com.google.gson.Gson;
 import org.junit.Test;
-import validation.leaf.IndexedValue;
-import validation.leaf.as.type.AsInteger;
+import validation.leaf.is.IndexedValue;
 
 import java.util.List;
 import java.util.Map;

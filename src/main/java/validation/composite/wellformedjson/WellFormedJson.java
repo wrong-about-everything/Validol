@@ -1,6 +1,7 @@
-package validation.composite;
+package validation.composite.wellformedjson;
 
 import validation.result.Named;
+import validation.result.NonSuccessfulWithCustomError;
 import validation.result.Result;
 import validation.Validatable;
 import validation.result.Unnamed;
@@ -55,7 +56,7 @@ final public class WellFormedJson implements Validatable<JsonElement>
                         )
                 ;
         } catch(JsonSyntaxException ex) {
-            return new Named<>(originalResult.name(), Either.left("This must be a valid json"));
+            return new NonSuccessfulWithCustomError<>(originalResult, new MustBeWellFormedJson());
         }
     }
 }

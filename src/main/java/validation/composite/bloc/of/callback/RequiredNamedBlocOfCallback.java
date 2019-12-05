@@ -4,8 +4,8 @@ import com.google.gson.JsonElement;
 import validation.Validatable;
 import validation.composite.FastFail;
 import validation.composite.VFunction;
-import validation.leaf.IndexedValue;
-import validation.leaf.Required;
+import validation.leaf.is.IndexedValue;
+import validation.leaf.is.required.Required;
 import validation.result.Result;
 
 public class RequiredNamedBlocOfCallback<T> implements Validatable<T>
