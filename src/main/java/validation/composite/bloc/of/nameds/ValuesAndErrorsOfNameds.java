@@ -43,34 +43,34 @@ final public class ValuesAndErrorsOfNameds
                             return
                                 !currentResult.isSuccessful()
                                     ?
-                                    Pair.with(
-                                        List.of(),
-                                        Stream.concat(
-                                            currentValuesAndErrors.getValue1().entrySet().stream(),
-                                            Map.of(currentResult.name(), currentResult.error()).entrySet().stream()
-                                        )
-                                            .collect(
-                                                Collectors.toMap(
-                                                    currentMapEntry -> currentMapEntry.getKey(),
-                                                    currentMapEntry -> currentMapEntry.getValue()
-                                                )
+                                        Pair.with(
+                                            List.of(),
+                                            Stream.concat(
+                                                currentValuesAndErrors.getValue1().entrySet().stream(),
+                                                Map.of(currentResult.name(), currentResult.error().value()).entrySet().stream()
                                             )
-                                    )
-                                    :
-                                    Pair.with(
-                                        currentValuesAndErrors.getValue1().isEmpty()
-                                            ?
-                                                Stream.concat(
-                                                    currentValuesAndErrors.getValue0().stream(),
-                                                    currentResult.value().isPresent()
-                                                        ? List.of(currentResult.value().raw()).stream()
-                                                        : List.of().stream()
-
+                                                .collect(
+                                                    Collectors.toMap(
+                                                        currentMapEntry -> currentMapEntry.getKey(),
+                                                        currentMapEntry -> currentMapEntry.getValue()
+                                                    )
                                                 )
-                                                    .collect(Collectors.toUnmodifiableList())
-                                            : List.of(),
-                                        currentValuesAndErrors.getValue1()
-                                    )
+                                        )
+                                    :
+                                        Pair.with(
+                                            currentValuesAndErrors.getValue1().isEmpty()
+                                                ?
+                                                    Stream.concat(
+                                                        currentValuesAndErrors.getValue0().stream(),
+                                                        currentResult.value().isPresent()
+                                                            ? List.of(currentResult.value().raw()).stream()
+                                                            : List.of().stream()
+
+                                                    )
+                                                        .collect(Collectors.toUnmodifiableList())
+                                                : List.of(),
+                                            currentValuesAndErrors.getValue1()
+                                        )
                                 ;
                         } catch (Exception e) {
                             throw new RuntimeException(e);

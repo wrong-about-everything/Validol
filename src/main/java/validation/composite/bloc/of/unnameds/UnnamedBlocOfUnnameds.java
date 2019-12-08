@@ -1,6 +1,7 @@
 package validation.composite.bloc.of.unnameds;
 
 import validation.composite.VFunction;
+import validation.composite.bloc.of.unnameds.MustBeAnArray.MustBeAnArray;
 import validation.result.Result;
 import validation.Validatable;
 import validation.result.value.Present;
@@ -39,10 +40,7 @@ final public class UnnamedBlocOfUnnameds<T, R> implements Validatable<R>
     public Result<R> result() throws Exception
     {
         if (!this.jsonElement.isJsonArray()) {
-            return
-                new Unnamed<>(
-                    Either.left("This block must be an array.")
-                );
+            return new Unnamed<>(Either.left(new MustBeAnArray()));
         }
 
         Pair<List<T>, List<Object>> valuesAndErrors =
@@ -67,12 +65,7 @@ final public class UnnamedBlocOfUnnameds<T, R> implements Validatable<R>
                 .value();
 
         if (!valuesAndErrors.getValue1().isEmpty()) {
-            return
-                new Unnamed<>(
-                    Either.left(
-                        valuesAndErrors.getValue1()
-                    )
-                );
+            return new Unnamed<>(Either.left(new Error(valuesAndErrors.getValue1())));
         }
 
         return

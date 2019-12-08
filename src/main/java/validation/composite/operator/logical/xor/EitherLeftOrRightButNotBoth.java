@@ -1,15 +1,15 @@
-package validation.composite.operator.logical.or;
+package validation.composite.operator.logical.xor;
 
 import validation.result.error.Error;
 
 import java.util.Map;
 
-public class EitherLeftOrRight implements Error
+public class EitherLeftOrRightButNotBoth implements Error
 {
     private String left;
     private String right;
 
-    public EitherLeftOrRight(String left, String right)
+    public EitherLeftOrRightButNotBoth(String left, String right)
     {
         this.left = left;
         this.right = right;

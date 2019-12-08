@@ -46,7 +46,7 @@ final public class ValuesAndErrorsOfUnnameds<T>
                                         List.of(),
                                         Stream.concat(
                                             currentValuesAndErrors.getValue1().stream(),
-                                            List.of((currentResult.error())).stream()
+                                            List.of((currentResult.error().value())).stream()
                                         )
                                             .collect(
                                                 Collectors.toUnmodifiableList()

@@ -1,4 +1,4 @@
-package validation.composite.operator.logical.or;
+package validation.composite.operator.logical.xor;
 
 public class Message
 {
@@ -15,7 +15,7 @@ public class Message
     {
         return
             String.format(
-                "Either %s or %s",
+                "Either %s or %s but not both",
                 this.left,
                 this.right
             );

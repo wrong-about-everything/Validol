@@ -33,11 +33,9 @@ public class Or implements Validatable<Boolean>
             return
                 new Unnamed<>(
                     Either.left(
-                        new EitherLeftOrRight()
-                        String.format(
-                            "Either %s or %s",
-                            leftResult.error(),
-                            rightResult.error()
+                        new EitherLeftOrRight(
+                            leftResult.error().value().get("message").toString(),
+                            rightResult.error().value().get("message").toString()
                         )
                     )
                 );

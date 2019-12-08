@@ -35,7 +35,7 @@ final public class UnnamedBlocOfNameds<T> implements Validatable<T>
         Pair<List<Object>, Map<String, Object>> valuesOrErrors = new ValuesAndErrorsOfNameds(this.validatables).value();
 
         if (valuesOrErrors.getValue1().size() > 0) {
-            return new Unnamed<>(Either.left(valuesOrErrors.getValue1()));
+            return new Unnamed<>(Either.left(new Error(valuesOrErrors.getValue1())));
         }
 
         return

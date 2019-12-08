@@ -2,7 +2,10 @@ package validation.composite.operator.logical;
 
 import com.spencerwi.either.Either;
 import org.junit.Test;
+import validation.composite.operator.logical.or.EitherLeftOrRight;
 import validation.composite.operator.logical.or.Or;
+import validation.leaf.is.of.type.integer.MustBeInteger;
+import validation.leaf.is.of.type.string.MustBeString;
 import validation.result.Result;
 import validation.result.Unnamed;
 import validation.result.value.Present;
@@ -29,7 +32,7 @@ public class OrTest
     {
         assertTrue(
             (new Or(
-                () -> new Unnamed<>(Either.left("vasya-vasya...")),
+                () -> new Unnamed<>(Either.left(new MustBeInteger())),
                 () -> new Unnamed<>(Either.right(new Present<>(true)))
             ))
                 .result()
@@ -43,7 +46,7 @@ public class OrTest
         assertTrue(
             (new Or(
                 () -> new Unnamed<>(Either.right(new Present<>(true))),
-                () -> new Unnamed<>(Either.left("fedya-fedya..."))
+                () -> new Unnamed<>(Either.left(new MustBeInteger()))
             ))
                 .result()
                     .isSuccessful()
@@ -55,8 +58,8 @@ public class OrTest
     {
         Result<Boolean> result =
             (new Or(
-                () -> new Unnamed<>(Either.left("vasya-vasya...")),
-                () -> new Unnamed<>(Either.left("fedya-fedya..."))
+                () -> new Unnamed<>(Either.left(new MustBeInteger())),
+                () -> new Unnamed<>(Either.left(new MustBeString()))
             ))
                 .result();
 

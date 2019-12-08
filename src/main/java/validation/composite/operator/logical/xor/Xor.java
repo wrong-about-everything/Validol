@@ -1,4 +1,4 @@
-package validation.composite.operator.logical;
+package validation.composite.operator.logical.xor;
 
 import com.spencerwi.either.Either;
 import validation.Validatable;
@@ -33,6 +33,6 @@ public class Xor implements Validatable<Boolean>
             return new Unnamed<>(Either.right(new Absent<>()));
         }
 
-        return new Unnamed<>(Either.left(""));
+        return new Unnamed<>(Either.left(new EitherLeftOrRightButNotBoth("", "")));
     }
 }
