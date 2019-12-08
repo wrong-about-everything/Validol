@@ -1,19 +1,17 @@
-package validation.leaf.is.of.value;
+package validation.leaf.is.of.value.lessthan;
 
-import com.spencerwi.either.Either;
 import validation.Validatable;
 import validation.result.AbsentField;
 import validation.result.FromNonSuccessful;
 import validation.result.NonSuccessfulWithCustomError;
 import validation.result.Result;
-import validation.result.value.Value;
 
-final public class IsGreaterThanOrEqual<T extends Comparable<T>> implements Validatable<T>
+final public class IsLessThan<T extends Comparable<T>> implements Validatable<T>
 {
     private Validatable<T> original;
     private T value;
 
-    public IsGreaterThanOrEqual(Validatable<T> original, T value) throws Exception
+    public IsLessThan(Validatable<T> original, T value) throws Exception
     {
         if (original == null) {
             throw new Exception("Decorated validatable element can not be null");
@@ -38,15 +36,10 @@ final public class IsGreaterThanOrEqual<T extends Comparable<T>> implements Vali
             return new AbsentField<>(prevResult);
         }
 
-        if (prevResult.value().raw().compareTo(this.value) < 0) {
-            return new NonSuccessfulWithCustomError<>(prevResult, this.error().getLeft());
+        if (prevResult.value().raw().compareTo(this.value) >= 0) {
+            return new NonSuccessfulWithCustomError<>(prevResult, new MustBeLessThan<>(this.value));
         }
 
         return prevResult;
-    }
-
-    private Either<Object, Value<T>> error()
-    {
-        return Either.left(String.format("This value must be greater than or equal to %s.", this.value));
     }
 }

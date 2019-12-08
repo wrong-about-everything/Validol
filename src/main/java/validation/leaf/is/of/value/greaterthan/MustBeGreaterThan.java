@@ -1,14 +1,14 @@
-package validation.leaf.is.of.value.equalto;
+package validation.leaf.is.of.value.greaterthan;
 
 import validation.result.error.Error;
 
 import java.util.Map;
 
-public class MustBeEqualTo<T> implements Error
+public class MustBeGreaterThan<T> implements Error
 {
     private T value;
 
-    public MustBeEqualTo(T value)
+    public MustBeGreaterThan(T value)
     {
         this.value = value;
     }

@@ -4,6 +4,6 @@ public class Code
 {
     public String value()
     {
-        return "must-be-negative";
+        return "must-be-equal-to";
     }
 }

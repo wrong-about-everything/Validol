@@ -1,14 +1,14 @@
-package validation.leaf.is.of.value.equalto;
+package validation.leaf.is.of.value.lessthan;
 
 import validation.result.error.Error;
 
 import java.util.Map;
 
-public class MustBeEqualTo<T> implements Error
+public class MustBeLessThan<T> implements Error
 {
     private T value;
 
-    public MustBeEqualTo(T value)
+    public MustBeLessThan(T value)
     {
         this.value = value;
     }

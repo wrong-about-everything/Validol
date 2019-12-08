@@ -1,4 +1,4 @@
-package validation.leaf.is.of.value.equalto;
+package validation.leaf.is.of.value.greaterthan;
 
 public class Message<T>
 {
@@ -11,6 +11,6 @@ public class Message<T>
 
     public String value()
     {
-        return String.format("This value must be equal to %s.", this.value);
+        return String.format("This value must be greater than %s.", this.value);
     }
 }

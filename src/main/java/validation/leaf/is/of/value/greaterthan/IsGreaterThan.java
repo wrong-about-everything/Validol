@@ -1,12 +1,10 @@
-package validation.leaf.is.of.value;
+package validation.leaf.is.of.value.greaterthan;
 
-import com.spencerwi.either.Either;
 import validation.Validatable;
 import validation.result.AbsentField;
 import validation.result.FromNonSuccessful;
 import validation.result.NonSuccessfulWithCustomError;
 import validation.result.Result;
-import validation.result.value.Value;
 
 final public class IsGreaterThan<T extends Comparable<T>> implements Validatable<T>
 {
@@ -39,14 +37,9 @@ final public class IsGreaterThan<T extends Comparable<T>> implements Validatable
         }
 
         if (prevResult.value().raw().compareTo(this.value) <= 0) {
-            return new NonSuccessfulWithCustomError<>(prevResult, this.error().getLeft());
+            return new NonSuccessfulWithCustomError<>(prevResult, new MustBeGreaterThan<>(this.value));
         }
 
         return prevResult;
-    }
-
-    private Either<Object, Value<T>> error()
-    {
-        return Either.left(String.format("This value must be greater than %s.", this.value));
     }
 }

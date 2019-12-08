@@ -1,9 +1,7 @@
 package validation.leaf.is.of.value.equalto;
 
-import com.spencerwi.either.Either;
 import validation.Validatable;
 import validation.result.*;
-import validation.result.value.Value;
 
 final public class IsEqualTo<T> implements Validatable<T>
 {
@@ -36,14 +34,9 @@ final public class IsEqualTo<T> implements Validatable<T>
         }
 
         if (!prevResult.value().raw().equals(this.value)) {
-            return new NonSuccessfulWithCustomError<>(prevResult, this.error().getLeft());
+            return new NonSuccessfulWithCustomError<>(prevResult, new MustBeEqualTo<>(this.value));
         }
 
         return prevResult;
-    }
-
-    private Either<Object, Value<T>> error()
-    {
-        return Either.left(String.format("This value must be equal to %s.", this.value));
     }
 }
