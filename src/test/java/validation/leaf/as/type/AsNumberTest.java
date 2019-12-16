@@ -60,7 +60,7 @@ public class AsNumberTest
             );
 
         assertFalse(named.result().isSuccessful());
-        assertEquals("This value must be a number.", named.result().error());
+        assertEquals("This value must be a number.", named.result().error().value().get("message"));
     }
 
     @DataProvider
@@ -88,6 +88,6 @@ public class AsNumberTest
             );
 
         assertFalse(named.result().isSuccessful());
-        assertEquals("This value must be a json primitive.", named.result().error());
+        assertEquals("This value must be a json primitive.", named.result().error().value().get("message"));
     }
 }

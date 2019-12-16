@@ -34,7 +34,7 @@ public class IsJsonArrayTest
             );
 
         assertFalse(named.result().isSuccessful());
-        assertEquals("This value must be a json array", named.result().error());
+        assertEquals("This value must be a json array", named.result().error().value().get("message"));
     }
 
     @Test
@@ -54,7 +54,7 @@ public class IsJsonArrayTest
             );
 
         assertFalse(named.result().isSuccessful());
-        assertEquals("This value must be a json array", named.result().error());
+        assertEquals("This value must be a json array", named.result().error().value().get("message"));
     }
 
     @Test

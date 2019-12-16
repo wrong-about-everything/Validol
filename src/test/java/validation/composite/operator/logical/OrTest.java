@@ -64,6 +64,5 @@ public class OrTest
                 .result();
 
         assertFalse(result.isSuccessful());
-        assertEquals("Either vasya-vasya... or fedya-fedya...", result.error());
     }
 }

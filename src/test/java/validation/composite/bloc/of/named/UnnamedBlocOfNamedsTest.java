@@ -62,8 +62,14 @@ public class UnnamedBlocOfNamedsTest
         assertFalse(result.isSuccessful());
         assertEquals(
             Map.of(
-                "fedya", "Ooops",
-                "tolya", "Woooooooops"
+                "fedya", Map.of(
+                    "code", 123,
+                    "message", "Ooops"
+                ),
+                "tolya", Map.of(
+                    "code", 123,
+                    "message", "Woooooooops"
+                )
             ),
             result.error().value()
         );

@@ -80,6 +80,6 @@ public class IsEqualToTest
 
         assertFalse(named.result().isSuccessful());
         assertEquals("vasya", named.result().name());
-        assertEquals("This value must be equal to fedya.", named.result().error());
+        assertEquals("This value must be equal to fedya.", named.result().error().value().get("message"));
     }
 }

@@ -25,7 +25,7 @@ public class WellFormedJsonTest
                 .result();
 
         assertFalse(result.isSuccessful());
-        assertEquals("This must be a valid json", result.error());
+        assertEquals("This must be a well-formed json.", result.error().value().get("message"));
     }
 
     @Test

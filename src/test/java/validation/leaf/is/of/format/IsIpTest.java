@@ -47,7 +47,7 @@ public class IsIpTest
 
         assertFalse(named.result().isSuccessful());
         assertEquals("vasya", named.result().name());
-        assertEquals("This value must be a valid ip.", named.result().error());
+        assertEquals("This value must be a valid ip.", named.result().error().value().get("message"));
     }
 
     @DataProvider

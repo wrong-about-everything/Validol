@@ -154,8 +154,8 @@ public class SwitchTrueTest
         assertFalse(result.isSuccessful());
         assertEquals(
             Map.of(
-                "fedya", "Ooops",
-                "tolya", "Woooooooops"
+                "fedya", new ErrorStub("Ooops").value(),
+                "tolya", new ErrorStub("Woooooooops").value()
             ),
             result.error().value()
         );

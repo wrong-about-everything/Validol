@@ -64,7 +64,7 @@ public class ValuesAndErrorsOfUnnamedsTest
                 .value();
 
         assertEquals(List.of(), valuesAndErrors.getValue0());
-        assertEquals(List.of("error 2"), valuesAndErrors.getValue1());
+        assertEquals(new ErrorStub("error 2").value(), valuesAndErrors.getValue1().get(0));
     }
 
     @Test

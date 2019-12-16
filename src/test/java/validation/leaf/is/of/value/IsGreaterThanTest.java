@@ -86,7 +86,7 @@ public class IsGreaterThanTest
 
         assertFalse(named.result().isSuccessful());
         assertEquals("vasya", named.result().name());
-        assertEquals(String.format("This value must be greater than %s.", against), named.result().error());
+        assertEquals(String.format("This value must be greater than %s.", against), named.result().error().value().get("message"));
     }
 
     @DataProvider

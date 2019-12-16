@@ -9,6 +9,7 @@ import validation.composite.bloc.of.unnamed.bag.Items;
 import validation.leaf.as.type.AsInteger;
 import validation.leaf.is.of.type.integer.IsInteger;
 import validation.leaf.Unnamed;
+import validation.leaf.is.of.type.integer.MustBeInteger;
 import validation.result.Result;
 import validation.result.value.Present;
 import com.google.gson.Gson;
@@ -71,7 +72,14 @@ public class UnnamedBlocOfUnnamedsTest
                 .result();
 
         assertFalse(result.isSuccessful());
-        assertEquals(List.of("This value must be an integer.", "This value must be an integer."), result.error());
+        assertEquals(
+            new MustBeInteger().value(),
+            result.error().value().get("0")
+        );
+        assertEquals(
+            new MustBeInteger().value(),
+            result.error().value().get("1")
+        );
     }
 
     @Test
@@ -123,11 +131,8 @@ public class UnnamedBlocOfUnnamedsTest
 
         assertFalse(result.isSuccessful());
         assertEquals(
-            List.of(
-                Map.of("id", "Wooooooops"),
-                Map.of("id", "Wooooooops")
-            ),
-            result.error().value()
+            Map.of("id", new ErrorStub("Wooooooops").value()),
+            result.error().value().get("0")
         );
     }
 

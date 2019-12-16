@@ -62,6 +62,5 @@ public class XorTest
                 .result();
 
         assertFalse(result.isSuccessful());
-        assertEquals("", result.error().value().get("message"));
     }
 }

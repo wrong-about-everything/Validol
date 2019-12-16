@@ -25,7 +25,7 @@ public class IsAbsentTest
             );
 
         assertFalse(named.result().isSuccessful());
-        assertEquals("There should be no such field", named.result().error());
+        assertEquals("There should be no such field.", named.result().error().value().get("message"));
     }
 
     @Test

@@ -4,6 +4,6 @@ public class Message
 {
     public String value()
     {
-        return "This value must be absent.";
+        return "There should be no such field.";
     }
 }

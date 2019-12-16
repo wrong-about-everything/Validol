@@ -60,8 +60,14 @@ public class ValuesAndErrorsOfNamedsTest
         assertEquals(List.of(), result.getValue0());
         assertEquals(
             Map.of(
-                "fedya", "Ooops",
-                "tolya", "Woooooooops"
+                "fedya", Map.of(
+                    "code", 123,
+                    "message", "Ooops"
+                ),
+                "tolya", Map.of(
+                    "code", 123,
+                    "message", "Woooooooops"
+                )
             ),
             result.getValue1()
         );

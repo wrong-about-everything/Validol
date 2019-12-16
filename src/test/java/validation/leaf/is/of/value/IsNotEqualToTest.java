@@ -53,7 +53,7 @@ public class IsNotEqualToTest
 
         assertFalse(named.result().isSuccessful());
         assertEquals("vasya", named.result().name());
-        assertEquals("This value must not be equal to false.", named.result().error());
+        assertEquals("This value must be non-equal to false.", named.result().error().value().get("message"));
     }
 
     @Test
@@ -67,7 +67,7 @@ public class IsNotEqualToTest
 
         assertFalse(named.result().isSuccessful());
         assertEquals("vasya", named.result().name());
-        assertEquals("This value must not be equal to 777.", named.result().error());
+        assertEquals("This value must be non-equal to 777.", named.result().error().value().get("message"));
     }
 
     @Test

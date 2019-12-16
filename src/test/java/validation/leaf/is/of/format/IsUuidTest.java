@@ -47,7 +47,7 @@ public class IsUuidTest
 
         assertFalse(named.result().isSuccessful());
         assertEquals("vasya", named.result().name());
-        assertEquals("This value must be a valid uuid.", named.result().error());
+        assertEquals("This value must be a valid UUID.", named.result().error().value().get("message"));
     }
 
     @DataProvider

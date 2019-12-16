@@ -90,7 +90,7 @@ public class IsLessThanOrEqualTest
 
         assertFalse(named.result().isSuccessful());
         assertEquals("vasya", named.result().name());
-        assertEquals(String.format("This value must be less than or equal to %s.", against), named.result().error());
+        assertEquals(String.format("This value must be less than or equal to %s.", against), named.result().error().value().get("message"));
     }
 
     @DataProvider

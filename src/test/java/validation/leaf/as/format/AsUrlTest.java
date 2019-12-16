@@ -48,7 +48,7 @@ public class AsUrlTest
 
         assertFalse(named.result().isSuccessful());
         assertEquals("vasya", named.result().name());
-        assertEquals("This value must be a valid url.", named.result().error());
+        assertEquals("This value must be a valid url.", named.result().error().value().get("message"));
     }
 
     @DataProvider

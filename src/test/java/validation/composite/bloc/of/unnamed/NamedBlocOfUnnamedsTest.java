@@ -72,11 +72,18 @@ public class NamedBlocOfUnnamedsTest
 
         assertFalse(result.isSuccessful());
         assertEquals(
-            List.of(
-                Map.of("id", "Wooooooops"),
-                Map.of("id", "Wooooooops")
-            ),
-            result.error().value()
+            Map.of("id", Map.of(
+                "code", 123,
+                "message", "Wooooooops"
+            )),
+            result.error().value().get("0")
+        );
+        assertEquals(
+            Map.of("id", Map.of(
+                "code", 123,
+                "message", "Wooooooops"
+            )),
+            result.error().value().get("1")
         );
     }
 

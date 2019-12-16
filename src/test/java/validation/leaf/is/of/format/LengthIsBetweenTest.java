@@ -71,7 +71,7 @@ public class LengthIsBetweenTest
         assertFalse(named.result().isSuccessful());
         assertEquals(
             String.format("The length of this value must be between %d and %d, inclusively.", min, max),
-            named.result().error()
+            named.result().error().value().get("message")
         );
     }
 

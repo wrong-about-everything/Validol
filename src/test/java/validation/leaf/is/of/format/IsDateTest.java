@@ -65,6 +65,6 @@ public class IsDateTest
             );
 
         assertFalse(named.result().isSuccessful());
-        assertEquals("This value must be a date of a certain format.", named.result().error());
+        assertEquals("This value must be a date of a certain format.", named.result().error().value().get("message"));
     }
 }
