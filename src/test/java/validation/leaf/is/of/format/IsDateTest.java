@@ -4,6 +4,7 @@ import com.spencerwi.either.Either;
 import com.tngtech.java.junit.dataprovider.DataProviderRunner;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import validation.ErrorStub;
 import validation.leaf.is.of.format.date.IsDate;
 import validation.result.Unnamed;
 import validation.result.value.Absent;
@@ -20,12 +21,12 @@ public class IsDateTest
     {
         IsDate named =
             new IsDate(
-                () -> new Unnamed<>(Either.left("hey there")),
+                () -> new Unnamed<>(Either.left(new ErrorStub("hey there"))),
                 new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
             );
 
         assertFalse(named.result().isSuccessful());
-        assertEquals("hey there", named.result().error());
+        assertEquals("hey there", named.result().error().value().get("message"));
     }
 
     @Test

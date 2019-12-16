@@ -3,6 +3,7 @@ package validation.leaf.is.of.type;
 import com.google.gson.Gson;
 import com.google.gson.JsonPrimitive;
 import com.google.gson.reflect.TypeToken;
+import validation.ErrorStub;
 import validation.leaf.is.NamedStub;
 import validation.leaf.is.of.type.integer.IsInteger;
 import validation.result.value.Absent;
@@ -24,13 +25,13 @@ public class IsIntegerTest
             new IsInteger(
                 new NamedStub<>(
                     "vasya",
-                    Either.left("Wooops")
+                    Either.left(new ErrorStub("Wooops"))
                 )
             );
 
         assertFalse(named.result().isSuccessful());
         assertEquals("vasya", named.result().name());
-        assertEquals("Wooops", named.result().error());
+        assertEquals("Wooops", named.result().error().value().get("message"));
     }
 
     @Test

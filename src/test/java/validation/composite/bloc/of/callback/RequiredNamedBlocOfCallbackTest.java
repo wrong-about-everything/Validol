@@ -5,6 +5,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.reflect.TypeToken;
 import com.spencerwi.either.Either;
 import org.junit.Test;
+import validation.ErrorStub;
 import validation.result.Named;
 import validation.result.Result;
 import validation.result.value.Present;
@@ -38,12 +39,12 @@ public class RequiredNamedBlocOfCallbackTest
             new RequiredNamedBlocOfCallback<>(
                 "guest",
                 this.json(),
-                (element) -> () -> new Named<>("guest", Either.left("An error occured"))
+                (element) -> () -> new Named<>("guest", Either.left(new ErrorStub("An error occured")))
             )
                 .result();
 
         assertFalse(result.isSuccessful());
-        assertEquals("An error occured", result.error());
+        assertEquals("An error occured", result.error().value().get("message"));
     }
 
     private JsonElement json()

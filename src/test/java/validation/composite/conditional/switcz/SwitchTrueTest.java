@@ -1,5 +1,6 @@
 package validation.composite.conditional.switcz;
 
+import validation.ErrorStub;
 import validation.composite.bloc.of.nameds.UnnamedBlocOfNameds;
 import validation.leaf.Unnamed;
 import validation.result.Named;
@@ -139,8 +140,8 @@ public class SwitchTrueTest
                         new UnnamedBlocOfNameds<>(
                             List.of(
                                 () -> new Named<>("vasya", Either.right(new Present<>("belov"))),
-                                () -> new Named<>("fedya", Either.left("Ooops")),
-                                () -> new Named<>("tolya", Either.left("Woooooooops")),
+                                () -> new Named<>("fedya", Either.left(new ErrorStub("Ooops"))),
+                                () -> new Named<>("tolya", Either.left(new ErrorStub("Woooooooops"))),
                                 () -> new Named<>("jenya", Either.right(new Present<>(false)))
                             ),
                             Team.class
@@ -156,7 +157,7 @@ public class SwitchTrueTest
                 "fedya", "Ooops",
                 "tolya", "Woooooooops"
             ),
-            result.error()
+            result.error().value()
         );
     }
 }

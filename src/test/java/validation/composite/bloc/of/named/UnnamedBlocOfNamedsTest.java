@@ -1,5 +1,6 @@
 package validation.composite.bloc.of.named;
 
+import validation.ErrorStub;
 import validation.composite.bloc.of.nameds.UnnamedBlocOfNameds;
 import validation.result.Named;
 import validation.result.Result;
@@ -50,8 +51,8 @@ public class UnnamedBlocOfNamedsTest
             new UnnamedBlocOfNameds<>(
                 List.of(
                     () -> new Named<>("vasya", Either.right(new Present<>("belov"))),
-                    () -> new Named<>("fedya", Either.left("Ooops")),
-                    () -> new Named<>("tolya", Either.left("Woooooooops")),
+                    () -> new Named<>("fedya", Either.left(new ErrorStub("Ooops"))),
+                    () -> new Named<>("tolya", Either.left(new ErrorStub("Woooooooops"))),
                     () -> new Named<>("jenya", Either.right(new Present<>(false)))
                 ),
                 Team.class
@@ -64,7 +65,7 @@ public class UnnamedBlocOfNamedsTest
                 "fedya", "Ooops",
                 "tolya", "Woooooooops"
             ),
-            result.error()
+            result.error().value()
         );
     }
 }

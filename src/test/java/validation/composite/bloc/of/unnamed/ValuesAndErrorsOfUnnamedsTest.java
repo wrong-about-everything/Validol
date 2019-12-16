@@ -3,6 +3,7 @@ package validation.composite.bloc.of.unnamed;
 import com.spencerwi.either.Either;
 import org.javatuples.Pair;
 import org.junit.Test;
+import validation.ErrorStub;
 import validation.composite.bloc.of.unnameds.ValuesAndErrorsOfUnnameds;
 import validation.composite.bloc.of.unnamed.bag.Integers;
 import validation.leaf.Unnamed;
@@ -11,7 +12,6 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 
-// TODO: reach 100% test coverage
 public class ValuesAndErrorsOfUnnamedsTest
 {
     @Test
@@ -56,7 +56,7 @@ public class ValuesAndErrorsOfUnnamedsTest
                     ),
                     new Unnamed<>(
                         Either.left(
-                            "error 2"
+                            new ErrorStub("error 2")
                         )
                     )
                 )

@@ -10,6 +10,7 @@ import com.tngtech.java.junit.dataprovider.DataProviderRunner;
 import com.tngtech.java.junit.dataprovider.UseDataProvider;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import validation.ErrorStub;
 import validation.leaf.is.NamedStub;
 import validation.leaf.is.of.format.nonblank.IsNotBlank;
 import validation.result.value.Absent;
@@ -30,13 +31,13 @@ public class IsNotBlankTest
             new IsNotBlank(
                 new NamedStub<>(
                     "vasya",
-                    Either.left("Wooops")
+                    Either.left(new ErrorStub("Wooops"))
                 )
             );
 
         assertFalse(named.result().isSuccessful());
         assertEquals("vasya", named.result().name());
-        assertEquals("Wooops", named.result().error());
+        assertEquals("Wooops", named.result().error().value().get("message"));
     }
 
     @Test

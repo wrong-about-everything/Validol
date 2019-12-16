@@ -2,6 +2,7 @@ package validation.leaf.is.of.value;
 
 import com.spencerwi.either.Either;
 import org.junit.Test;
+import validation.ErrorStub;
 import validation.leaf.is.NamedStub;
 import validation.leaf.is.of.value.equalto.genericvalue.IsEqualTo;
 import validation.result.value.Absent;
@@ -17,14 +18,14 @@ public class IsEqualToTest
             new IsEqualTo<>(
                 new NamedStub<>(
                     "vasya",
-                    Either.left("Wooops")
+                    Either.left(new ErrorStub("Wooops"))
                 ),
                 1
             );
 
         assertFalse(named.result().isSuccessful());
         assertEquals("vasya", named.result().name());
-        assertEquals("Wooops", named.result().error());
+        assertEquals("Wooops", named.result().error().value().get("message"));
     }
 
     @Test

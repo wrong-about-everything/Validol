@@ -2,6 +2,7 @@ package validation.composite.operator.logical;
 
 import com.spencerwi.either.Either;
 import org.junit.Test;
+import validation.ErrorStub;
 import validation.composite.operator.logical.xor.Xor;
 import validation.result.Result;
 import validation.result.Unnamed;
@@ -29,7 +30,7 @@ public class XorTest
     {
         assertTrue(
             (new Xor(
-                () -> new Unnamed<>(Either.left("vasya-vasya...")),
+                () -> new Unnamed<>(Either.left(new ErrorStub("vasya-vasya..."))),
                 () -> new Unnamed<>(Either.right(new Present<>(true)))
             ))
                 .result()
@@ -43,7 +44,7 @@ public class XorTest
         assertTrue(
             (new Xor(
                 () -> new Unnamed<>(Either.right(new Present<>(true))),
-                () -> new Unnamed<>(Either.left("fedya-fedya..."))
+                () -> new Unnamed<>(Either.left(new ErrorStub("fedya-fedya...")))
             ))
                 .result()
                     .isSuccessful()
@@ -55,12 +56,12 @@ public class XorTest
     {
         Result<Boolean> result =
             (new Xor(
-                () -> new Unnamed<>(Either.left("vasya-vasya...")),
-                () -> new Unnamed<>(Either.left("fedya-fedya..."))
+                () -> new Unnamed<>(Either.left(new ErrorStub("vasya-vasya..."))),
+                () -> new Unnamed<>(Either.left(new ErrorStub("fedya-fedya...")))
             ))
                 .result();
 
         assertFalse(result.isSuccessful());
-        assertEquals("", result.error());
+        assertEquals("", result.error().value().get("message"));
     }
 }

@@ -3,6 +3,7 @@ package validation.composite.bloc.of.named;
 import com.spencerwi.either.Either;
 import org.javatuples.Pair;
 import org.junit.Test;
+import validation.ErrorStub;
 import validation.composite.bloc.of.nameds.ValuesAndErrorsOfNameds;
 import validation.result.Named;
 import validation.result.value.Present;
@@ -48,9 +49,9 @@ public class ValuesAndErrorsOfNamedsTest
             new ValuesAndErrorsOfNameds(
                 List.of(
                     () -> new Named<>("vasya", Either.right(new Present<>("belov"))),
-                    () -> new Named<>("fedya", Either.left("Ooops")),
+                    () -> new Named<>("fedya", Either.left(new ErrorStub("Ooops"))),
                     () -> new Named<>("jenya", Either.right(new Present<>(false))),
-                    () -> new Named<>("tolya", Either.left("Woooooooops")),
+                    () -> new Named<>("tolya", Either.left(new ErrorStub("Woooooooops"))),
                     () -> new Named<>("misha", Either.right(new Present<>(true)))
                 )
             )

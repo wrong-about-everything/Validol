@@ -2,6 +2,7 @@ package validation.leaf.is.of.value;
 
 import com.spencerwi.either.Either;
 import org.junit.Test;
+import validation.ErrorStub;
 import validation.leaf.is.NamedStub;
 import validation.leaf.is.of.value.oneof.IsOneOf;
 import validation.result.value.Absent;
@@ -20,14 +21,14 @@ public class IsOneOfTest
             new IsOneOf<>(
                 new NamedStub<>(
                     "vasya",
-                    Either.left("Wooops")
+                    Either.left(new ErrorStub("Wooops"))
                 ),
                 List.of(1)
             );
 
         assertFalse(named.result().isSuccessful());
         assertEquals("vasya", named.result().name());
-        assertEquals("Wooops", named.result().error());
+        assertEquals("Wooops", named.result().error().value().get("message"));
     }
 
     @Test

@@ -1,5 +1,6 @@
 package validation.composite.bloc.of.unnamed;
 
+import validation.ErrorStub;
 import validation.composite.bloc.of.nameds.UnnamedBlocOfNameds;
 import validation.composite.bloc.of.unnameds.UnnamedBlocOfUnnameds;
 import validation.composite.bloc.of.unnamed.bag.Integers;
@@ -111,7 +112,7 @@ public class UnnamedBlocOfUnnamedsTest
                         List.of(
                             new NamedStub<>(
                                 "id",
-                                Either.left("Wooooooops")
+                                Either.left(new ErrorStub("Wooooooops"))
                             )
                         ),
                         Item.class
@@ -126,7 +127,7 @@ public class UnnamedBlocOfUnnamedsTest
                 Map.of("id", "Wooooooops"),
                 Map.of("id", "Wooooooops")
             ),
-            result.error()
+            result.error().value()
         );
     }
 
@@ -141,7 +142,7 @@ public class UnnamedBlocOfUnnamedsTest
                         List.of(
                             new NamedStub<>(
                                 "id",
-                                Either.left("Wooooooops")
+                                Either.left(new ErrorStub("Wooooooops"))
                             )
                         ),
                         Item.class
@@ -153,7 +154,7 @@ public class UnnamedBlocOfUnnamedsTest
         assertFalse(result.isSuccessful());
         assertEquals(
             "This block must be an array.",
-            result.error()
+            result.error().value().get("message")
         );
     }
 

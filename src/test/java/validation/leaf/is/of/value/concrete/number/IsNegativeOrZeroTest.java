@@ -2,6 +2,7 @@ package validation.leaf.is.of.value.concrete.number;
 
 import com.spencerwi.either.Either;
 import org.junit.Test;
+import validation.ErrorStub;
 import validation.leaf.is.NamedStub;
 import validation.leaf.is.of.value.lessthanorequal.zero.IsNegativeOrZero;
 import validation.result.value.Absent;
@@ -17,13 +18,13 @@ public class IsNegativeOrZeroTest
             new IsNegativeOrZero(
                 new NamedStub<>(
                     "vasya",
-                    Either.left("Wooops")
+                    Either.left(new ErrorStub("Wooops"))
                 )
             );
 
         assertFalse(named.result().isSuccessful());
         assertEquals("vasya", named.result().name());
-        assertEquals("Wooops", named.result().error());
+        assertEquals("Wooops", named.result().error().value().get("message"));
     }
 
     @Test

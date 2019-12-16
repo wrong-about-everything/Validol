@@ -1,5 +1,6 @@
 package validation.composite;
 
+import validation.ErrorStub;
 import validation.leaf.is.NamedStub;
 import validation.result.Result;
 import validation.result.value.Present;
@@ -29,12 +30,12 @@ public class FastFailTest
     {
         Result<?> result =
             new FastFail<>(
-                () ->new validation.result.Named<>("vasya", Either.left("Erroneous vasya")),
+                () ->new validation.result.Named<>("vasya", Either.left(new ErrorStub("Erroneous vasya"))),
                 belov -> new NamedStub<>("fedya", Either.right(new Present<>("vasiliev")))
             )
                 .result();
 
         assertFalse(result.isSuccessful());
-        assertEquals("Erroneous vasya", result.error());
+        assertEquals("Erroneous vasya", result.error().value().get("message"));
     }
 }
