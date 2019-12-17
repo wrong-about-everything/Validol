@@ -2,7 +2,10 @@ package validation.leaf.as.format;
 
 import validation.Validatable;
 import validation.leaf.is.of.format.date.IsDate;
+import validation.leaf.is.of.format.date.MustBeValidDate;
 import validation.result.*;
+import validation.result.error.Error;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -10,35 +13,33 @@ final public class AsDate implements Validatable<Date>
 {
     private Validatable<String> original;
     private SimpleDateFormat format;
-    private Error customErrorMessage;
+    private Error error;
 
-//    public AsDate(Validatable<String> original, SimpleDateFormat format, Error customErrorMessage) throws Exception
-//    {
-//        if (original == null) {
-//            throw new Exception("Decorated validatable element can not be null");
-//        }
-//        if (format == null) {
-//            throw new Exception("Format can not be null");
-//        }
-//        if (customErrorMessage == null) {
-//            throw new Exception("customErrorMessage can not be null");
-//        }
-//
-//        this.original = original;
-//        this.format = format;
-//        this.customErrorMessage = customErrorMessage;
-//    }
+    public AsDate(Validatable<String> original, SimpleDateFormat format, Error error) throws Exception
+    {
+        if (original == null) {
+            throw new Exception("Decorated validatable element can not be null");
+        }
+        if (format == null) {
+            throw new Exception("Format can not be null");
+        }
+        if (error == null) {
+            throw new Exception("error can not be null");
+        }
+
+        this.original = original;
+        this.format = format;
+        this.error = error;
+    }
 
     public AsDate(Validatable<String> original, SimpleDateFormat format) throws Exception
     {
-        this.original = original;
-        this.format = format;
-//        this(original, format, this.error());
+        this(original, format, new MustBeValidDate());
     }
 
     public Result<Date> result() throws Exception
     {
-        Result<String> isDateResult = new IsDate(this.original, this.format/*, this.error()*/).result();
+        Result<String> isDateResult = new IsDate(this.original, this.format, this.error).result();
 
         if (!isDateResult.isSuccessful()) {
             return new FromNonSuccessful<>(isDateResult);
@@ -56,9 +57,4 @@ final public class AsDate implements Validatable<Date>
         this.format.setLenient(false);
         return this.format.parse(prevResult.value().raw().trim());
     }
-
-//    private error()
-//    {
-//        return new Invalid();
-//    }
 }

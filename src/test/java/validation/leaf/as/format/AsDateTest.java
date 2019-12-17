@@ -40,19 +40,19 @@ public class AsDateTest
         assertEquals("This value must be a date of a certain format.", named.result().error().value().get("message"));
     }
 
-//    @Test
-//    public void nonSuccessfulWithNotADateAndCustomErrorMessage() throws Exception
-//    {
-//        AsDate named =
-//            new AsDate(
-//                () -> new Unnamed<>(Either.right(new Present<>("hello vasya"))),
-//                new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"),
-//                "You must specify a valid date."
-//            );
-//
-//        assertFalse(named.result().isSuccessful());
-//        assertEquals("This value must be a date of a certain format.", named.result().error());
-//    }
+    @Test
+    public void nonSuccessfulWithNotADateAndCustomErrorMessage() throws Exception
+    {
+        AsDate named =
+            new AsDate(
+                () -> new Unnamed<>(Either.right(new Present<>("hello vasya"))),
+                new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"),
+                new ErrorStub("hey there")
+            );
+
+        assertFalse(named.result().isSuccessful());
+        assertEquals(new ErrorStub("hey there").value(), named.result().error().value());
+    }
 
     @Test
     public void successfulWithAbsentField() throws Exception
