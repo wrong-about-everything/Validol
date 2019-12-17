@@ -10,6 +10,9 @@ import example.correct.bag.items.Items;
 import example.correct.bag.items.item.Item;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import validation.leaf.is.of.structure.jsonprimitive.MustBeJsonPrimitive;
+import validation.leaf.is.of.type.integer.MustBeInteger;
+import validation.leaf.is.required.MustBePresent;
 import validation.result.Result;
 
 import java.util.List;
@@ -55,7 +58,7 @@ public class SourceTest
 
         assertFalse(result.isSuccessful());
         assertEquals("source", result.name());
-        assertEquals(errors, result.error());
+        assertEquals(errors, result.error().value());
     }
 
     @DataProvider
@@ -68,21 +71,21 @@ public class SourceTest
                         Map.of(),
                         new TypeToken<Map<String, Object>>() {}.getType()
                     ),
-                    "This field is obligatory"
+                    new MustBePresent().value()
                 },
                 {
                     new Gson().toJsonTree(
                         Map.of("source", "vasya"),
                         new TypeToken<Map<String, Object>>() {}.getType()
                     ),
-                    "This value must be an integer.",
+                    new MustBeInteger().value(),
                 },
                 {
                     new Gson().toJsonTree(
                         Map.of("source", Map.of("vasya", 1)),
                         new TypeToken<Map<String, Object>>() {}.getType()
                     ),
-                    "This value must be an integer.",
+                    new MustBeJsonPrimitive().value(),
                 },
             };
     }

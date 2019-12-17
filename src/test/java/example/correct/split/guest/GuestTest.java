@@ -14,6 +14,7 @@ import example.correct.bag.guest.Guest;
 import example.correct.split.delivery.courier.Courier;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import validation.leaf.is.required.MustBePresent;
 import validation.result.Result;
 
 import java.text.SimpleDateFormat;
@@ -63,7 +64,7 @@ public class GuestTest
 
         assertFalse(result.isSuccessful());
         assertEquals("guest", result.name());
-        assertEquals(errors, result.error());
+        assertEquals(errors, result.error().value());
     }
 
     @DataProvider
@@ -76,7 +77,7 @@ public class GuestTest
                         Map.of(),
                         new TypeToken<Map<String, Object>>() {}.getType()
                     ),
-                    "This field is obligatory"
+                    new MustBePresent().value()
                 },
                 {
                     new Gson().toJsonTree(
@@ -88,7 +89,7 @@ public class GuestTest
                         new TypeToken<Map<String, Object>>() {}.getType()
                     ),
                     Map.of(
-                        "name", "This field is obligatory"
+                        "name", new MustBePresent().value()
                     )
                 },
                 {
@@ -101,7 +102,7 @@ public class GuestTest
                         new TypeToken<Map<String, Object>>() {}.getType()
                     ),
                     Map.of(
-                        "email", "This field is obligatory"
+                        "email", new MustBePresent().value()
                     )
                 },
             };

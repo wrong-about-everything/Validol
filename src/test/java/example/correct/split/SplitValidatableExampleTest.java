@@ -14,11 +14,17 @@ import example.correct.bag.items.Items;
 import example.correct.bag.items.item.Item;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import validation.leaf.is.of.format.date.MustBeValidDate;
+import validation.leaf.is.of.type.integer.Message;
+import validation.leaf.is.of.type.integer.MustBeInteger;
+import validation.leaf.is.required.MustBePresent;
 import validation.result.Result;
 
 import java.text.SimpleDateFormat;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import static org.junit.Assert.*;
 
@@ -121,7 +127,7 @@ public class SplitValidatableExampleTest
         Result<OrderRegistrationRequestData> result = new ValidatedOrderRegistrationRequest(jsonRequest).result();
 
         assertFalse(result.isSuccessful());
-        assertEquals(errors, result.error());
+        assertEquals(errors, result.error().value());
     }
 
     @DataProvider
@@ -131,46 +137,60 @@ public class SplitValidatableExampleTest
             new Object[][] {
                 {
                     new Gson().toJson(
-                        Map.of(
-                            "guest", Map.of("name", "Vadim Samokhin"),
-                            "source", "vasya"
+                        sorted(
+                            Map.of(
+                                "guest", Map.of("name", "Vadim Samokhin"),
+                                "source", "vasya"
+                            )
                         ),
                         new TypeToken<Map<String, Object>>() {}.getType()
                     ),
-                    Map.of(
-                        "guest",
-                        Map.of("email", "This field is obligatory"),
-                        "items", "This field is obligatory",
-                        "delivery","This field is obligatory",
-                        "source","This value must be an integer."
+                    sorted(
+                        Map.of(
+                            "guest", Map.of("email", new MustBePresent().value()),
+                            "items", new MustBePresent().value(),
+                            "delivery", new MustBePresent().value(),
+                            "source", new MustBeInteger().value()
                         )
+                    )
                 },
                 {
                     new Gson().toJson(
-                        Map.of(
-                            "delivery", Map.of(
-                                "where", Map.of(
-                                    "building", true
+                        sorted(
+                            Map.of(
+                                "delivery",
+                                sorted(
+                                    Map.of(
+                                        "where", Map.of(
+                                            "building", true
+                                        ),
+                                        "when", Map.of(
+                                            "date", "2019-07-06 09:52:48"
+                                        )
+                                    )
                                 ),
-                                "when", Map.of(
-                                    "date", "2019-07-06 09:52:48"
-                                )
-                            ),
-                            "source", "vasya"
+                                "source", "vasya"
+                            )
                         ),
                         new TypeToken<Map<String, Object>>() {}.getType()
                     ),
-                    Map.of(
-                        "guest", "This field is obligatory",
-                        "items", "This field is obligatory",
-                        "delivery", Map.of(
-                            "where", Map.of(
-                                "street", "This field is obligatory",
-                                "building", "This value must be an integer."
+                    sorted(
+                        Map.of(
+                            "guest", new MustBePresent().value(),
+                            "items", new MustBePresent().value(),
+                            "delivery",
+                            Map.of(
+                                "where",
+                                sorted(
+                                    Map.of(
+                                        "street", new MustBePresent().value(),
+                                        "building", new MustBeInteger().value()
+                                    )
+                                )
+                            ),
+                            "source", new MustBeInteger().value()
                             )
-                        ),
-                        "source", "This value must be an integer."
-                        )
+                    )
                 },
                 {
                     new Gson().toJson(
@@ -180,40 +200,66 @@ public class SplitValidatableExampleTest
                         new TypeToken<Map<String, Object>>() {}.getType()
                     ),
                     Map.of(
-                        "guest", "This field is obligatory",
-                        "items", "This field is obligatory",
-                        "delivery", "This field is obligatory"
+                        "guest", new MustBePresent().value(),
+                        "items", new MustBePresent().value(),
+                        "delivery", new MustBePresent().value()
                     )
                 },
                 {
                     new Gson().toJson(
                         Map.of(
-                            "guest", Map.of(
+                            "guest",
+                            sorted(
+                                Map.of(
                                     "name", "Vadim Samokhin",
                                     "email", "samokhinvadim@gmail.com"
+                                )
                             ),
                             "items", List.of(
                                 Map.of("id", 'r')
                             ),
                             "delivery",
-                                Map.of(
-                                    "where", Map.of(
-                                            "street", "Res Square",
-                                            "building", 2
+                                sorted(
+                                    Map.of(
+                                        "where",
+                                        sorted(
+                                            Map.of(
+                                                "street", "Res Square",
+                                                "building", 2
+                                            )
                                         ),
-                                    "when", Map.of(
+                                        "when", Map.of(
                                             "date", "vasya"
                                         )
+                                    )
                                 ),
                             "source", 1
                         ),
                         new TypeToken<Map<String, Object>>() {}.getType()
                     ),
-                    Map.of(
-                        "items", List.of(Map.of("id", "This value must be an integer.")),
-                        "delivery", Map.of("when", Map.of("date", "This value must be a date of a certain format."))
+                    sorted(
+                        Map.of(
+                            "items", Map.of("0", Map.of("id", new MustBeInteger().value())),
+                            "delivery", Map.of("when", Map.of("date", new MustBeValidDate().value()))
+                        )
                     )
                 },
             };
+    }
+
+    private static <K extends Comparable<K>, V> Map<K, V> sorted(Map<K, V> m)
+    {
+        return
+            m
+                .entrySet()
+                .stream()
+                .sorted(Map.Entry.comparingByKey())
+                .collect(
+                     Collectors.toMap(
+                         e -> e.getKey(),
+                         e -> e.getValue()
+                     )
+                )
+            ;
     }
 }

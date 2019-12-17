@@ -1,6 +1,5 @@
 package validation.leaf.is.required;
 
-import validation.leaf.is.absent.MustBeAbsent;
 import validation.result.NonSuccessfulWithCustomError;
 import validation.result.Result;
 import validation.Validatable;
@@ -29,7 +28,7 @@ final public class Required implements Validatable<JsonElement>
         }
 
         if (!result.value().isPresent()) {
-            return new NonSuccessfulWithCustomError<>(result, new MustBeAbsent());
+            return new NonSuccessfulWithCustomError<>(result, new MustBePresent());
         }
 
         return result;

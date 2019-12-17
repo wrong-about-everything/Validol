@@ -6,11 +6,12 @@ import com.google.gson.reflect.TypeToken;
 import com.tngtech.java.junit.dataprovider.DataProvider;
 import com.tngtech.java.junit.dataprovider.DataProviderRunner;
 import com.tngtech.java.junit.dataprovider.UseDataProvider;
-import example.correct.bag.guest.Guest;
 import example.correct.bag.items.Items;
 import example.correct.bag.items.item.Item;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import validation.leaf.is.of.type.integer.MustBeInteger;
+import validation.leaf.is.required.MustBePresent;
 import validation.result.Result;
 
 import java.util.List;
@@ -58,7 +59,7 @@ public class ItemsTest
 
         assertFalse(result.isSuccessful());
         assertEquals("items", result.name());
-        assertEquals(errors, result.error());
+        assertEquals(errors, result.error().value());
     }
 
     @DataProvider
@@ -71,7 +72,7 @@ public class ItemsTest
                         Map.of(),
                         new TypeToken<Map<String, Object>>() {}.getType()
                     ),
-                    "This field is obligatory"
+                    new MustBePresent().value()
                 },
                 {
                     new Gson().toJsonTree(
@@ -87,9 +88,9 @@ public class ItemsTest
                         ),
                         new TypeToken<Map<String, Object>>() {}.getType()
                     ),
-                    List.of(
-                        Map.of("id", "This value must be an integer."),
-                        Map.of("id", "This field is obligatory")
+                    Map.of(
+                        "0", Map.of("id", new MustBeInteger().value()),
+                        "1", Map.of("id", new MustBePresent().value())
                     )
                 },
             };

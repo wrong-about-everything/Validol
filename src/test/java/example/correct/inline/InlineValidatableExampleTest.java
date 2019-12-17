@@ -7,6 +7,10 @@ import example.correct.bag.guest.Guest;
 import example.correct.bag.items.item.Item;
 import example.correct.bag.items.Items;
 import example.correct.bag.OrderRegistrationRequestData;
+import validation.leaf.is.of.format.date.MustBeValidDate;
+import validation.leaf.is.of.structure.jsonprimitive.MustBeJsonPrimitive;
+import validation.leaf.is.of.type.integer.MustBeInteger;
+import validation.leaf.is.required.MustBePresent;
 import validation.result.Result;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -119,7 +123,7 @@ public class InlineValidatableExampleTest
         Result<OrderRegistrationRequestData> result = new ValidatedOrderRegistrationRequest(jsonRequest).result();
 
         assertFalse(result.isSuccessful());
-        assertEquals(errors, result.error());
+        assertEquals(errors, result.error().value());
     }
 
     @DataProvider
@@ -137,10 +141,10 @@ public class InlineValidatableExampleTest
                     ),
                     Map.of(
                         "guest",
-                        Map.of("email", "This field is obligatory"),
-                        "items", "This field is obligatory",
-                        "delivery","This field is obligatory",
-                        "source","This value must be an integer."
+                        Map.of("email", new MustBePresent().value()),
+                        "items", new MustBePresent().value(),
+                        "delivery", new MustBePresent().value(),
+                        "source", new MustBeInteger().value()
                         )
                 },
                 {
@@ -159,15 +163,15 @@ public class InlineValidatableExampleTest
                         new TypeToken<Map<String, Object>>() {}.getType()
                     ),
                     Map.of(
-                        "guest", "This field is obligatory",
-                        "items", "This field is obligatory",
+                        "guest", new MustBePresent().value(),
+                        "items", new MustBePresent().value(),
                         "delivery", Map.of(
                             "where", Map.of(
-                                "street", "This field is obligatory",
-                                "building", "This value must be an integer."
+                                "street", new MustBePresent().value(),
+                                "building", new MustBeInteger().value()
                             )
                         ),
-                        "source", "This value must be an integer."
+                        "source", new MustBeInteger().value()
                         )
                 },
                 {
@@ -178,9 +182,9 @@ public class InlineValidatableExampleTest
                         new TypeToken<Map<String, Object>>() {}.getType()
                     ),
                     Map.of(
-                        "guest", "This field is obligatory",
-                        "items", "This field is obligatory",
-                        "delivery", "This field is obligatory"
+                        "guest", new MustBePresent().value(),
+                        "items", new MustBePresent().value(),
+                        "delivery", new MustBePresent().value()
                     )
                 },
                 {
@@ -208,8 +212,8 @@ public class InlineValidatableExampleTest
                         new TypeToken<Map<String, Object>>() {}.getType()
                     ),
                     Map.of(
-                        "items", List.of(Map.of("id", "This value must be an integer.")),
-                        "delivery", Map.of("when", Map.of("date", "This value must be a date of a certain format."))
+                        "items", Map.of("0", Map.of("id", new MustBeInteger().value())),
+                        "delivery", Map.of("when", Map.of("date", new MustBeValidDate().value()))
                     )
                 },
             };

@@ -14,6 +14,9 @@ import example.correct.bag.delivery.courier.where.EmptyWhere;
 import example.correct.bag.delivery.courier.where.Where;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import validation.leaf.is.of.format.date.MustBeValidDate;
+import validation.leaf.is.of.type.integer.MustBeInteger;
+import validation.leaf.is.required.MustBePresent;
 import validation.result.Result;
 
 import java.text.SimpleDateFormat;
@@ -99,7 +102,7 @@ public class CourierTest
         Result<Delivery> result = new Courier(jsonRequest).result();
 
         assertFalse(result.isSuccessful());
-        assertEquals(errors, result.error());
+        assertEquals(errors, result.error().value());
     }
 
     @DataProvider
@@ -121,8 +124,8 @@ public class CourierTest
                     ),
                     Map.of(
                         "where", Map.of(
-                            "street", "This field is obligatory",
-                            "building", "This value must be an integer."
+                            "street", new MustBePresent().value(),
+                            "building", new MustBeInteger().value()
                         )
                     )
                 },
@@ -141,7 +144,7 @@ public class CourierTest
                     ),
                     Map.of(
                         "when", Map.of(
-                            "date", "This value must be a date of a certain format."
+                            "date", new MustBeValidDate().value()
                         )
                     )
                 },
