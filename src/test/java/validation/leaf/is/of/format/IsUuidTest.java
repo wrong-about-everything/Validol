@@ -50,6 +50,24 @@ public class IsUuidTest
         assertEquals("This value must be a valid UUID.", named.result().error().value().get("message"));
     }
 
+    @Test
+    @UseDataProvider("invalidUuids")
+    public void validationFailedWithInvalidUuidAndCustomError(String uuid) throws Exception
+    {
+        IsUuid named =
+            new IsUuid(
+                new NamedStub<>(
+                    "vasya",
+                    Either.right(new Present<>(uuid))
+                ),
+                new ErrorStub("hello, vasya!")
+            );
+
+        assertFalse(named.result().isSuccessful());
+        assertEquals("vasya", named.result().name());
+        assertEquals("hello, vasya!", named.result().error().value().get("message"));
+    }
+
     @DataProvider
     public static Object[][] invalidUuids()
     {

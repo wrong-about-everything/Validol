@@ -48,6 +48,24 @@ public class AsIpTest
         assertEquals("This value must be a valid ip.", named.result().error().value().get("message"));
     }
 
+    @Test
+    @UseDataProvider("invalidIps")
+    public void validationFailedWithInvalidIpAndCustomErrorMessage(String ip) throws Exception
+    {
+        AsIp named =
+            new AsIp(
+                new NamedStub<>(
+                    "vasya",
+                    Either.right(new Present<>(ip))
+                ),
+                new ErrorStub("hello, vasya!")
+            );
+
+        assertFalse(named.result().isSuccessful());
+        assertEquals("vasya", named.result().name());
+        assertEquals("hello, vasya!", named.result().error().value().get("message"));
+    }
+
     @DataProvider
     public static Object[][] invalidIps()
     {

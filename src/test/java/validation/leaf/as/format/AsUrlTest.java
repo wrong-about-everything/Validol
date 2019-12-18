@@ -51,6 +51,24 @@ public class AsUrlTest
         assertEquals("This value must be a valid url.", named.result().error().value().get("message"));
     }
 
+    @Test
+    @UseDataProvider("invalidUrls")
+    public void validationFailedWithInvalidUrlAndCustomErrorMessage(String url) throws Exception
+    {
+        AsUrl named =
+            new AsUrl(
+                new NamedStub<>(
+                    "vasya",
+                    Either.right(new Present<>(url))
+                ),
+                new ErrorStub("hey vasya!")
+            );
+
+        assertFalse(named.result().isSuccessful());
+        assertEquals("vasya", named.result().name());
+        assertEquals("hey vasya!", named.result().error().value().get("message"));
+    }
+
     @DataProvider
     public static Object[][] invalidUrls()
     {
