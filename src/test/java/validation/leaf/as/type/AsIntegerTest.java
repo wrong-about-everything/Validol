@@ -59,6 +59,6 @@ public class AsIntegerTest
             );
 
         assertFalse(named.result().isSuccessful());
-        assertEquals("This value must be a json primitive.", named.result().error().value().get("message"));
+        assertEquals("This value must be an integer.", named.result().error().value().get("message"));
     }
 }

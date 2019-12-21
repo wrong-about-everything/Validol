@@ -85,7 +85,7 @@ public class SourceTest
                         Map.of("source", Map.of("vasya", 1)),
                         new TypeToken<Map<String, Object>>() {}.getType()
                     ),
-                    new MustBeJsonPrimitive().value(),
+                    new MustBeInteger().value(),
                 },
             };
     }

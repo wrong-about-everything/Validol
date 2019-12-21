@@ -79,7 +79,7 @@ public class AsBooleanTest
             );
 
         assertFalse(named.result().isSuccessful());
-        assertEquals("This value must be a json primitive.", named.result().error().value().get("message"));
+        assertEquals("This value must be boolean.", named.result().error().value().get("message"));
     }
 
     @Test

@@ -2,11 +2,26 @@ package validation.leaf.is.of.value.equalto.genericvalue;
 
 import validation.Validatable;
 import validation.result.*;
+import validation.result.error.Error;
 
 final public class IsEqualTo<T> implements Validatable<T>
 {
     private Validatable<T> original;
     private T value;
+    private Error error;
+
+    public IsEqualTo(Validatable<T> original, T value) throws Exception
+    {
+        if (original == null) {
+            throw new Exception("Decorated validatable element can not be null");
+        }
+        if (value == null) {
+            throw new Exception("Value to check against can not be null");
+        }
+
+        this.original = original;
+        this.value = value;
+    }
 
     public IsEqualTo(Validatable<T> original, T value) throws Exception
     {

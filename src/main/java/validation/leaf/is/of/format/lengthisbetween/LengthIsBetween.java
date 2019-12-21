@@ -2,14 +2,16 @@ package validation.leaf.is.of.format.lengthisbetween;
 
 import validation.Validatable;
 import validation.result.*;
+import validation.result.error.Error;
 
 final public class LengthIsBetween implements Validatable<String>
 {
     private Validatable<String> original;
     private Integer min;
     private Integer max;
+    private Error error;
 
-    public LengthIsBetween(Validatable<String> original, Integer min, Integer max) throws Exception
+    public LengthIsBetween(Validatable<String> original, Integer min, Integer max, Error error) throws Exception
     {
         if (original == null) {
             throw new Exception("Decorated validatable element can not be null");
@@ -24,6 +26,12 @@ final public class LengthIsBetween implements Validatable<String>
         this.original = original;
         this.min = min;
         this.max = max;
+        this.error = error;
+    }
+
+    public LengthIsBetween(Validatable<String> original, Integer min, Integer max) throws Exception
+    {
+        this(original, min, max, new LengthMustBeBounded(min, max));
     }
 
     public Result<String> result() throws Exception
@@ -39,7 +47,7 @@ final public class LengthIsBetween implements Validatable<String>
         }
 
         if (result.value().raw().length() < this.min || result.value().raw().length() > this.max) {
-            return new NonSuccessfulWithCustomError<>(result, new LengthMustBeBounded(this.min, this.max));
+            return new NonSuccessfulWithCustomError<>(result, this.error);
         }
 
         return result;
