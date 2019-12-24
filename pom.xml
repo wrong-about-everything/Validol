@@ -7,7 +7,7 @@
     <groupId>com.github.wrong-about-everything</groupId>
     <artifactId>Validol</artifactId>
     <name>Validol</name>
-    <version>0.1.0</version>
+    <version>0.2.0</version>
     <description>Easy to use JSON validation library. It makes validation code concise and ensures declarative style.</description>
     <url>https://validol.readthedocs.io/en/latest/</url>
     <licenses>
