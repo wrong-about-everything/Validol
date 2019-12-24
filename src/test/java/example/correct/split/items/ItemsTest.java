@@ -90,7 +90,7 @@ final public class ItemsTest
                     ),
                     Map.of(
                         "0", Map.of("id", new MustBeInteger().value()),
-                        "1", Map.of("id", new MustBePresent().value())
+                        "1", Map.of("id", Map.of("code", "vasya", "message", "Item id is really required!"))
                     )
                 },
             };

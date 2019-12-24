@@ -2,6 +2,7 @@ package example.correct.split.items;
 
 import com.google.gson.JsonElement;
 import example.correct.bag.items.item.Item;
+import validation.ErrorStub;
 import validation.Validatable;
 import validation.composite.FastFail;
 import validation.composite.bloc.of.nameds.UnnamedBlocOfNameds;
@@ -10,8 +11,10 @@ import validation.leaf.is.IndexedValue;
 import validation.leaf.is.required.Required;
 import validation.leaf.as.type.AsInteger;
 import validation.result.Result;
+import validation.result.error.Error;
 
 import java.util.List;
+import java.util.Map;
 
 final public class Items implements Validatable<example.correct.bag.items.Items>
 {
@@ -34,7 +37,8 @@ final public class Items implements Validatable<example.correct.bag.items.Items>
                                 List.of(
                                     new AsInteger(
                                         new Required(
-                                            new IndexedValue("id", item)
+                                            new IndexedValue("id", item),
+                                            () -> Map.of("code", "vasya", "message", "Item id is really required!")
                                         )
                                     )
                                 ),

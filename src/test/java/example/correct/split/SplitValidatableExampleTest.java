@@ -244,6 +244,43 @@ final public class SplitValidatableExampleTest
                         )
                     )
                 },
+                {
+                    new Gson().toJson(
+                        Map.of(
+                            "guest",
+                            sorted(
+                                Map.of(
+                                    "name", "Vadim Samokhin",
+                                    "email", "samokhinvadim@gmail.com"
+                                )
+                            ),
+                            "items", List.of(Map.of()),
+                            "delivery",
+                                sorted(
+                                    Map.of(
+                                        "where",
+                                        sorted(
+                                            Map.of(
+                                                "street", "Res Square",
+                                                "building", 2
+                                            )
+                                        ),
+                                        "when", Map.of(
+                                            "date", "vasya"
+                                        )
+                                    )
+                                ),
+                            "source", 1
+                        ),
+                        new TypeToken<Map<String, Object>>() {}.getType()
+                    ),
+                    sorted(
+                        Map.of(
+                            "items", Map.of("0", Map.of("id", Map.of("code", "vasya", "message", "Item id is really required!"))),
+                            "delivery", Map.of("when", Map.of("date", new MustBeValidDate().value()))
+                        )
+                    )
+                },
             };
     }
 
