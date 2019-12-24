@@ -29,7 +29,7 @@ import java.util.stream.Collectors;
 import static org.junit.Assert.*;
 
 @RunWith(DataProviderRunner.class)
-public class SplitValidatableExampleTest
+final public class SplitValidatableExampleTest
 {
     @Test
     @UseDataProvider("validRequests")

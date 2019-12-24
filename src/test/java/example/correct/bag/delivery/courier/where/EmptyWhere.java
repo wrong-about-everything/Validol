@@ -2,7 +2,7 @@ package example.correct.bag.delivery.courier.where;
 
 import example.correct.bag.delivery.courier.Where;
 
-public class EmptyWhere implements Where
+final public class EmptyWhere implements Where
 {
     public Boolean isAbsent()
     {

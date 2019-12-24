@@ -1,6 +1,6 @@
 package example.incorrect.parameters.order;
 
-public class SampleRequest
+final public class SampleRequest
 {
     private Integer key1;
     private String key2;

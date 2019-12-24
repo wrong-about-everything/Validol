@@ -3,7 +3,7 @@ package validation.leaf.is.of.value.notequalto;
 import validation.result.error.Error;
 import java.util.Map;
 
-public class MustBeNonEqualTo<T> implements Error
+final public class MustBeNonEqualTo<T> implements Error
 {
     private T value;
 

@@ -2,7 +2,7 @@ package validation.leaf.is.of.format.pattern;
 
 import java.util.regex.Pattern;
 
-public class Message
+final public class Message
 {
     private Pattern pattern;
 

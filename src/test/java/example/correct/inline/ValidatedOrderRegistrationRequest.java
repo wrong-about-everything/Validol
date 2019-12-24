@@ -28,7 +28,7 @@ import validation.leaf.is.required.Required;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
-public class ValidatedOrderRegistrationRequest implements Validatable<OrderRegistrationRequestData>
+final public class ValidatedOrderRegistrationRequest implements Validatable<OrderRegistrationRequestData>
 {
     private String jsonRequestString;
 

@@ -5,13 +5,15 @@ import validation.result.AbsentField;
 import validation.result.FromNonSuccessful;
 import validation.result.NonSuccessfulWithCustomError;
 import validation.result.Result;
+import validation.result.error.Error;
 
 final public class IsGreaterThanOrEqual<T extends Comparable<T>> implements Validatable<T>
 {
     private Validatable<T> original;
     private T value;
+    private Error error;
 
-    public IsGreaterThanOrEqual(Validatable<T> original, T value) throws Exception
+    public IsGreaterThanOrEqual(Validatable<T> original, T value, Error error) throws Exception
     {
         if (original == null) {
             throw new Exception("Decorated validatable element can not be null");
@@ -19,9 +21,18 @@ final public class IsGreaterThanOrEqual<T extends Comparable<T>> implements Vali
         if (value == null) {
             throw new Exception("Value to check against can not be null");
         }
+        if (error == null) {
+            throw new Exception("Error can not be null");
+        }
 
         this.original = original;
         this.value = value;
+        this.error = error;
+    }
+
+    public IsGreaterThanOrEqual(Validatable<T> original, T value) throws Exception
+    {
+        this(original, value, new MustBeGreaterThanOrEqual<>(value));
     }
 
     public Result<T> result() throws Exception
@@ -37,7 +48,7 @@ final public class IsGreaterThanOrEqual<T extends Comparable<T>> implements Vali
         }
 
         if (prevResult.value().raw().compareTo(this.value) < 0) {
-            return new NonSuccessfulWithCustomError<>(prevResult, new MustBeGreaterThanOrEqual<>(this.value));
+            return new NonSuccessfulWithCustomError<>(prevResult, this.error);
         }
 
         return prevResult;

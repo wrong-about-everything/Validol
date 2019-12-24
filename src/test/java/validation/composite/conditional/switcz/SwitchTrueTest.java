@@ -14,7 +14,7 @@ import java.util.Map;
 
 import static org.junit.Assert.*;
 
-public class SwitchTrueTest
+final public class SwitchTrueTest
 {
     @Test
     public void firstCaseIsSatisfiedAndIsSuccessful() throws Exception

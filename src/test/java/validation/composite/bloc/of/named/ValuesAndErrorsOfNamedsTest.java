@@ -13,7 +13,7 @@ import java.util.Map;
 
 import static org.junit.Assert.*;
 
-public class ValuesAndErrorsOfNamedsTest
+final public class ValuesAndErrorsOfNamedsTest
 {
     @Test
     public void success() throws Exception

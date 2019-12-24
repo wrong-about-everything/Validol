@@ -18,7 +18,7 @@ import validation.result.Result;
 import validation.result.value.Present;
 import java.util.List;
 
-public class ValidatedOrderRegistrationRequest implements Validatable<OrderRegistrationRequestData>
+final public class ValidatedOrderRegistrationRequest implements Validatable<OrderRegistrationRequestData>
 {
     private String jsonRequestString;
 

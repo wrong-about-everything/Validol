@@ -21,7 +21,7 @@ import java.util.Map;
 import static org.junit.Assert.*;
 
 @RunWith(DataProviderRunner.class)
-public class IsNumberTest
+final public class IsNumberTest
 {
     @Test
     public void failedWithFailedOriginalValidatable() throws Exception

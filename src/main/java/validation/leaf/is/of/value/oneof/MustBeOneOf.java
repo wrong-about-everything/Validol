@@ -5,7 +5,7 @@ import validation.result.error.Error;
 import java.util.List;
 import java.util.Map;
 
-public class MustBeOneOf<T> implements Error
+final public class MustBeOneOf<T> implements Error
 {
     private List<T> value;
 

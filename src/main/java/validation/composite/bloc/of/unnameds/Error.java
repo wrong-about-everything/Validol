@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class Error implements validation.result.error.Error
+final public class Error implements validation.result.error.Error
 {
     private List<Object> m;
 

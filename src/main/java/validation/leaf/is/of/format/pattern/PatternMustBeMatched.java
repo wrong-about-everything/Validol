@@ -5,7 +5,7 @@ import validation.result.error.Error;
 import java.util.Map;
 import java.util.regex.Pattern;
 
-public class PatternMustBeMatched implements Error
+final public class PatternMustBeMatched implements Error
 {
     private Pattern pattern;
 

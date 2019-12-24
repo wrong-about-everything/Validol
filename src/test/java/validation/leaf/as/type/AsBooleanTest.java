@@ -12,7 +12,7 @@ import java.util.Map;
 
 import static org.junit.Assert.*;
 
-public class AsBooleanTest
+final public class AsBooleanTest
 {
     @Test
     public void isBoolean() throws Exception

@@ -1,6 +1,6 @@
 package validation.leaf.is.of.value.greaterthanorequal.genericvalue;
 
-public class Code
+final public class Code
 {
     public String value()
     {

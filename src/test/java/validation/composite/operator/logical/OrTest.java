@@ -12,7 +12,7 @@ import validation.result.value.Present;
 
 import static org.junit.Assert.*;
 
-public class OrTest
+final public class OrTest
 {
     @Test
     public void testSuccessful() throws Exception

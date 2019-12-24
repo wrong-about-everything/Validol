@@ -7,7 +7,7 @@ import validation.leaf.is.required.Required;
 import validation.leaf.as.type.AsInteger;
 import validation.result.Result;
 
-public class Source implements Validatable<Integer>
+final public class Source implements Validatable<Integer>
 {
     private Validatable<Integer> v;
 

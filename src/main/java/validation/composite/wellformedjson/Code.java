@@ -1,6 +1,6 @@
 package validation.composite.wellformedjson;
 
-public class Code
+final public class Code
 {
     public String value()
     {

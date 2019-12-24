@@ -4,7 +4,7 @@ import validation.result.error.Error;
 
 import java.util.Map;
 
-public class MustBeBoolean implements Error
+final public class MustBeBoolean implements Error
 {
     @Override
     public Map<String, Object> value()

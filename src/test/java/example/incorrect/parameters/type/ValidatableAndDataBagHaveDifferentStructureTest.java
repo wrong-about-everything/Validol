@@ -11,7 +11,7 @@ import java.util.Map;
 import static org.junit.Assert.*;
 
 @RunWith(DataProviderRunner.class)
-public class ValidatableAndDataBagHaveDifferentStructureTest
+final public class ValidatableAndDataBagHaveDifferentStructureTest
 {
     @Test
     public void requestWithInvalidDataClasses()

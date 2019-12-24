@@ -15,7 +15,7 @@ import validation.result.value.Present;
 import static org.junit.Assert.*;
 
 @RunWith(DataProviderRunner.class)
-public class IsUuidTest
+final public class IsUuidTest
 {
     @Test
     public void validationFailedWhenDecoratedElementIsInvalid() throws Exception

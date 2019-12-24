@@ -12,7 +12,7 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 
-public class ValuesAndErrorsOfUnnamedsTest
+final public class ValuesAndErrorsOfUnnamedsTest
 {
     @Test
     public void noErrorsInPlainUnnameds() throws Exception

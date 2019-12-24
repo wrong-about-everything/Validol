@@ -4,7 +4,7 @@ import validation.result.error.Error;
 
 import java.util.Map;
 
-public class MustBeJsonPrimitive implements Error
+final public class MustBeJsonPrimitive implements Error
 {
     @Override
     public Map<String, Object> value()

@@ -10,7 +10,7 @@ import validation.result.value.Present;
 
 import static org.junit.Assert.*;
 
-public class XorTest
+final public class XorTest
 {
     @Test
     public void testSuccessful() throws Exception

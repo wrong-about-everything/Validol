@@ -1,6 +1,6 @@
 package validation.composite.operator.logical.or;
 
-public class Message
+final public class Message
 {
     private String left;
     private String right;

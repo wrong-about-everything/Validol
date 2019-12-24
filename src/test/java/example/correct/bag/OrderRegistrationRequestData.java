@@ -3,7 +3,7 @@ package example.correct.bag;
 import example.correct.bag.guest.Guest;
 import example.correct.bag.items.Items;
 
-public class OrderRegistrationRequestData
+final public class OrderRegistrationRequestData
 {
     private Guest guest;
     private Items items;

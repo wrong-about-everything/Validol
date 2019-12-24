@@ -15,7 +15,7 @@ import validation.result.value.Present;
 import static org.junit.Assert.*;
 
 @RunWith(DataProviderRunner.class)
-public class IsLessThanOrEqualTest
+final public class IsLessThanOrEqualTest
 {
     @Test
     public void failedWithFailedOriginalValidatable() throws Exception

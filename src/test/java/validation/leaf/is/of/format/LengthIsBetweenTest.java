@@ -14,7 +14,7 @@ import validation.result.value.Present;
 import static org.junit.Assert.*;
 
 @RunWith(DataProviderRunner.class)
-public class LengthIsBetweenTest
+final public class LengthIsBetweenTest
 {
     @Test
     public void failedWithInvalidOriginalValidatable() throws Exception

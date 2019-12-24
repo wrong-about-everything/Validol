@@ -1,6 +1,6 @@
 package validation.composite.bloc.of.unnameds.MustBeAnArray;
 
-public class Code
+final public class Code
 {
     public String value()
     {

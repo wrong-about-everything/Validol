@@ -4,7 +4,7 @@ import example.correct.bag.items.item.Item;
 
 import java.util.List;
 
-public class Items
+final public class Items
 {
     private List<Item> list;
 

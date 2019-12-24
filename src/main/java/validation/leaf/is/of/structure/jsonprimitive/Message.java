@@ -1,6 +1,6 @@
 package validation.leaf.is.of.structure.jsonprimitive;
 
-public class Message
+final public class Message
 {
     public String value()
     {

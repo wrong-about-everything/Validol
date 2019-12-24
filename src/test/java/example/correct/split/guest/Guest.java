@@ -12,7 +12,7 @@ import validation.result.Result;
 
 import java.util.List;
 
-public class Guest implements Validatable<example.correct.bag.guest.Guest>
+final public class Guest implements Validatable<example.correct.bag.guest.Guest>
 {
     private Validatable<example.correct.bag.guest.Guest> v;
 

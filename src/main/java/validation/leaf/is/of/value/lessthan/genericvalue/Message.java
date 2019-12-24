@@ -1,6 +1,6 @@
 package validation.leaf.is.of.value.lessthan.genericvalue;
 
-public class Message<T>
+final public class Message<T>
 {
     private T value;
 

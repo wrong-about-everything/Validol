@@ -24,7 +24,7 @@ import java.util.Map;
 
 import static org.junit.Assert.*;
 
-public class UnnamedBlocOfUnnamedsTest
+final public class UnnamedBlocOfUnnamedsTest
 {
     @Test
     public void successfulValidationOfPlainUnnamed() throws Exception

@@ -25,7 +25,7 @@ import java.util.Map;
 import static org.junit.Assert.*;
 
 @RunWith(DataProviderRunner.class)
-public class InlineValidatableExampleTest
+final public class InlineValidatableExampleTest
 {
     @Test
     @UseDataProvider("validRequests")

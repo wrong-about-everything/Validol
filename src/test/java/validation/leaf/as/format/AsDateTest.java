@@ -12,7 +12,7 @@ import java.text.SimpleDateFormat;
 import static org.junit.Assert.*;
 
 @RunWith(DataProviderRunner.class)
-public class AsDateTest
+final public class AsDateTest
 {
     @Test
     public void nonSuccessfulPreviousResult() throws Exception

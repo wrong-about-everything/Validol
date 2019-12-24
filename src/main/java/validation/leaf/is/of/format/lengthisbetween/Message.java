@@ -1,6 +1,6 @@
 package validation.leaf.is.of.format.lengthisbetween;
 
-public class Message
+final public class Message
 {
     final private Integer min;
     final private Integer max;

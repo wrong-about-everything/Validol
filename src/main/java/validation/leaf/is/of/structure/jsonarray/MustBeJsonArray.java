@@ -4,7 +4,7 @@ import validation.result.error.Error;
 
 import java.util.Map;
 
-public class MustBeJsonArray implements Error
+final public class MustBeJsonArray implements Error
 {
     @Override
     public Map<String, Object> value()

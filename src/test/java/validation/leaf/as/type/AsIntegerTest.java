@@ -9,7 +9,7 @@ import java.util.Map;
 
 import static org.junit.Assert.*;
 
-public class AsIntegerTest
+final public class AsIntegerTest
 {
     @Test
     public void isInteger() throws Exception

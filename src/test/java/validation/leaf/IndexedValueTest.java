@@ -11,7 +11,7 @@ import java.util.HashMap;
 
 import static org.junit.Assert.*;
 
-public class IndexedValueTest
+final public class IndexedValueTest
 {
     @Test
     public void nonSuccessful() throws Exception

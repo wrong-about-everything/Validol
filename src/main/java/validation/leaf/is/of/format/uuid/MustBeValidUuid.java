@@ -4,7 +4,7 @@ import validation.result.error.Error;
 
 import java.util.Map;
 
-public class MustBeValidUuid implements Error
+final public class MustBeValidUuid implements Error
 {
     @Override
     public Map<String, Object> value()

@@ -1,6 +1,6 @@
 package validation.leaf.is.of.type.string;
 
-public class Code
+final public class Code
 {
     public String value()
     {

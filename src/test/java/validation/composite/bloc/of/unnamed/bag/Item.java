@@ -1,6 +1,6 @@
 package validation.composite.bloc.of.unnamed.bag;
 
-public class Item
+final public class Item
 {
     private Integer id;
 

@@ -15,7 +15,7 @@ import com.spencerwi.either.Either;
 
 import java.util.List;
 
-public class ValidatedSampleRequest implements Validatable<SampleRequest>
+final public class ValidatedSampleRequest implements Validatable<SampleRequest>
 {
     private String jsonRequestString;
 

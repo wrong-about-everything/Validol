@@ -15,7 +15,7 @@ import java.util.Map;
 
 import static org.junit.Assert.*;
 
-public class RequiredNamedBlocOfCallbackTest
+final public class RequiredNamedBlocOfCallbackTest
 {
     @Test
     public void success() throws Exception

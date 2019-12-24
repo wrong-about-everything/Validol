@@ -9,7 +9,7 @@ import validation.result.value.Absent;
 import validation.result.value.Present;
 import static org.junit.Assert.*;
 
-public class IsNegativeOrZeroTest
+final public class IsNegativeOrZeroTest
 {
     @Test
     public void failedWithFailedOriginalValidatable() throws Exception

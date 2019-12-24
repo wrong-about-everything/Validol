@@ -4,7 +4,7 @@ import validation.result.error.Error;
 
 import java.util.Map;
 
-public class MustBeNegativeOrZero implements Error
+final public class MustBeNegativeOrZero implements Error
 {
     @Override
     public Map<String, Object> value()

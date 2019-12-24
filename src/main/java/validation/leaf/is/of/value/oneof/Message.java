@@ -3,7 +3,7 @@ package validation.leaf.is.of.value.oneof;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Message<T>
+final public class Message<T>
 {
     private List<T> list;
 

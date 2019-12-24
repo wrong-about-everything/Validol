@@ -12,7 +12,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 @RunWith(DataProviderRunner.class)
-public class ValidatableAndDataClassHaveTheSameStructureButInDifferentOrderTest
+final public class ValidatableAndDataClassHaveTheSameStructureButInDifferentOrderTest
 {
     @Test
     public void requestWithInvalidDataClasses() throws Exception

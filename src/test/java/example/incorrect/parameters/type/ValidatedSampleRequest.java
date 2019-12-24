@@ -15,7 +15,7 @@ import validation.composite.wellformedjson.WellFormedJson;
 
 import java.util.List;
 
-public class ValidatedSampleRequest implements Validatable<SampleRequest>
+final public class ValidatedSampleRequest implements Validatable<SampleRequest>
 {
     private String jsonRequestString;
 

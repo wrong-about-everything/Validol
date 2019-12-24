@@ -16,7 +16,7 @@ import java.util.Map;
 
 import static org.junit.Assert.*;
 
-public class IsJsonArrayTest
+final public class IsJsonArrayTest
 {
     @Test
     public void failedWithJsonPrimitive() throws Exception

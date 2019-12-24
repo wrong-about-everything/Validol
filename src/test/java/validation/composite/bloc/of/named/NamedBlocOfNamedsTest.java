@@ -11,7 +11,7 @@ import java.util.*;
 
 import static org.junit.Assert.*;
 
-public class NamedBlocOfNamedsTest
+final public class NamedBlocOfNamedsTest
 {
     @Test
     public void success() throws Exception

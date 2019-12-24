@@ -6,7 +6,7 @@ import validation.result.value.Value;
 
 import java.util.Date;
 
-public class DefaultWhen implements When
+final public class DefaultWhen implements When
 {
     private Date date;
 

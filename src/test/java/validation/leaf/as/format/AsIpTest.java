@@ -13,7 +13,7 @@ import validation.result.value.Present;
 import static org.junit.Assert.*;
 
 @RunWith(DataProviderRunner.class)
-public class AsIpTest
+final public class AsIpTest
 {
     @Test
     public void validationFailedWhenDecoratedElementIsInvalid() throws Exception

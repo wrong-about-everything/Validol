@@ -7,7 +7,7 @@ import com.spencerwi.either.Either;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-public class NamedStubTest
+final public class NamedStubTest
 {
     @Test
     public void success() throws Exception

@@ -16,7 +16,7 @@ import java.util.Map;
 
 import static org.junit.Assert.*;
 
-public class IsStringTest
+final public class IsStringTest
 {
     @Test
     public void failedWithFailedOriginalValidatable() throws Exception

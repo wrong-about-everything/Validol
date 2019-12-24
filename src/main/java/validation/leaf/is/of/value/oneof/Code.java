@@ -1,6 +1,6 @@
 package validation.leaf.is.of.value.oneof;
 
-public class Code
+final public class Code
 {
     public String value()
     {

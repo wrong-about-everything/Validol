@@ -9,7 +9,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class FastFailTest
+final public class FastFailTest
 {
     @Test
     public void success() throws Exception

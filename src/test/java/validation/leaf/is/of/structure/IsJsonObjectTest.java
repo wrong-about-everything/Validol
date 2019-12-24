@@ -12,7 +12,7 @@ import java.util.HashMap;
 
 import static org.junit.Assert.*;
 
-public class IsJsonObjectTest
+final public class IsJsonObjectTest
 {
     @Test
     public void failsWithJsonPrimitive() throws Exception

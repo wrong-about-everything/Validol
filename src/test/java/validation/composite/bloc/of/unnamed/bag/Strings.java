@@ -2,7 +2,7 @@ package validation.composite.bloc.of.unnamed.bag;
 
 import java.util.List;
 
-public class Strings
+final public class Strings
 {
     private List<String> list;
 

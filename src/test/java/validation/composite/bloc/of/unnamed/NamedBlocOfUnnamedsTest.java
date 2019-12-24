@@ -19,7 +19,7 @@ import java.util.Map;
 
 import static org.junit.Assert.*;
 
-public class NamedBlocOfUnnamedsTest
+final public class NamedBlocOfUnnamedsTest
 {
     @Test
     public void success() throws Exception

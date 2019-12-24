@@ -7,7 +7,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class UnnamedTest
+final public class UnnamedTest
 {
     @Test
     public void success() throws Exception

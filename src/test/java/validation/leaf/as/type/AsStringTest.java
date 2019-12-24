@@ -9,7 +9,7 @@ import java.util.Map;
 
 import static org.junit.Assert.*;
 
-public class AsStringTest
+final public class AsStringTest
 {
     @Test
     public void isString() throws Exception

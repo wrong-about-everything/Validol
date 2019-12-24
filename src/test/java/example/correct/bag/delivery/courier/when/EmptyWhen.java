@@ -6,7 +6,7 @@ import validation.result.value.Value;
 
 import java.util.Date;
 
-public class EmptyWhen implements When
+final public class EmptyWhen implements When
 {
     public Value<Date> date()
     {

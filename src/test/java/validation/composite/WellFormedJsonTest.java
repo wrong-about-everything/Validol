@@ -13,7 +13,7 @@ import org.junit.Test;
 import java.util.*;
 import static org.junit.Assert.*;
 
-public class WellFormedJsonTest
+final public class WellFormedJsonTest
 {
     @Test
     public void invalidJson() throws Exception

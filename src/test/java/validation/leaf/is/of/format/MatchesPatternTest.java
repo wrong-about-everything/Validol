@@ -14,7 +14,7 @@ import java.util.regex.Pattern;
 import static org.junit.Assert.*;
 
 @RunWith(DataProviderRunner.class)
-public class MatchesPatternTest {
+final public class MatchesPatternTest {
     @Test
     public void validationFailedWhenDecoratedElementIsInvalid() throws Exception {
         MatchesPattern named =

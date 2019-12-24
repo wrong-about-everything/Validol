@@ -1,6 +1,6 @@
 package example.incorrect.parameters.type;
 
-public class SampleRequest
+final public class SampleRequest
 {
     private String key1;
     private Boolean key2;

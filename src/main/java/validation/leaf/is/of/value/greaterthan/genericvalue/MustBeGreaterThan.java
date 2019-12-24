@@ -4,7 +4,7 @@ import validation.result.error.Error;
 
 import java.util.Map;
 
-public class MustBeGreaterThan<T> implements Error
+final public class MustBeGreaterThan<T> implements Error
 {
     private T value;
 

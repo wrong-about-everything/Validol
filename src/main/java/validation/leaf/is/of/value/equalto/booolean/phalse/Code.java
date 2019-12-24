@@ -1,6 +1,6 @@
 package validation.leaf.is.of.value.equalto.booolean.phalse;
 
-public class Code
+final public class Code
 {
     public String value()
     {

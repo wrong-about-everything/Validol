@@ -8,7 +8,7 @@ import validation.result.Unnamed;
 import static org.junit.Assert.*;
 import validation.result.value.Present;
 
-public class AndTest
+final public class AndTest
 {
     @Test
     public void testSuccessful() throws Exception

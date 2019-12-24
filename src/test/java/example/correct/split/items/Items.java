@@ -13,7 +13,7 @@ import validation.result.Result;
 
 import java.util.List;
 
-public class Items implements Validatable<example.correct.bag.items.Items>
+final public class Items implements Validatable<example.correct.bag.items.Items>
 {
     private Validatable<example.correct.bag.items.Items> v;
 

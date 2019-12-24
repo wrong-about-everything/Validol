@@ -14,7 +14,7 @@ import java.util.Map;
 import static org.junit.Assert.*;
 
 @RunWith(DataProviderRunner.class)
-public class AsNumberTest
+final public class AsNumberTest
 {
     @Test
     @UseDataProvider("validNumbers")

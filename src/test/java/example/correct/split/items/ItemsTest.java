@@ -20,7 +20,7 @@ import java.util.Map;
 import static org.junit.Assert.*;
 
 @RunWith(DataProviderRunner.class)
-public class ItemsTest
+final public class ItemsTest
 {
     @Test
     @UseDataProvider("validRequests")

@@ -4,7 +4,7 @@ import example.correct.bag.delivery.courier.when.EmptyWhen;
 import example.correct.bag.Delivery;
 import example.correct.bag.delivery.courier.where.EmptyWhere;
 
-public class CourierDelivery implements Delivery
+final public class CourierDelivery implements Delivery
 {
     private Where where;
     private When when;

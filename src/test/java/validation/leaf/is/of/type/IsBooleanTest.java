@@ -16,7 +16,7 @@ import java.util.Map;
 
 import static org.junit.Assert.*;
 
-public class IsBooleanTest
+final public class IsBooleanTest
 {
     @Test
     public void failedWithFailedOriginalValidatable() throws Exception

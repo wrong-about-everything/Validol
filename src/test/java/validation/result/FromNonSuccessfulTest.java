@@ -6,7 +6,7 @@ import validation.ErrorStub;
 
 import static org.junit.Assert.*;
 
-public class FromNonSuccessfulTest
+final public class FromNonSuccessfulTest
 {
     @Test
     public void createdFromNonSuccessfulNamed() throws Exception

@@ -8,7 +8,7 @@ import validation.leaf.is.IndexedValue;
 import validation.leaf.is.required.Required;
 import validation.result.Result;
 
-public class RequiredNamedBlocOfCallback<T> implements Validatable<T>
+final public class RequiredNamedBlocOfCallback<T> implements Validatable<T>
 {
     private Validatable<T> v;
 

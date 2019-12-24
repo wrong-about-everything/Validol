@@ -12,7 +12,7 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 
-public class IsOneOfTest
+final public class IsOneOfTest
 {
     @Test
     public void failedWithFailedOriginalValidatable() throws Exception

@@ -25,7 +25,7 @@ import java.util.Map;
 import static org.junit.Assert.*;
 
 @RunWith(DataProviderRunner.class)
-public class CourierTest
+final public class CourierTest
 {
     @Test
     @UseDataProvider("validRequests")

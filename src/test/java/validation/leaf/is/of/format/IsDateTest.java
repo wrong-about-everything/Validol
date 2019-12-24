@@ -14,7 +14,7 @@ import java.text.SimpleDateFormat;
 import static org.junit.Assert.*;
 
 @RunWith(DataProviderRunner.class)
-public class IsDateTest
+final public class IsDateTest
 {
     @Test
     public void nonSuccessfulPreviousResult() throws Exception

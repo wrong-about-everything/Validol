@@ -1,6 +1,6 @@
 package example.correct.bag.guest;
 
-public class Guest
+final public class Guest
 {
     private String email;
     private String name;

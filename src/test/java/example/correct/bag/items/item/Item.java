@@ -1,6 +1,6 @@
 package example.correct.bag.items.item;
 
-public class Item
+final public class Item
 {
     private Integer id;
 

@@ -22,7 +22,7 @@ import java.util.Map;
 import static org.junit.Assert.*;
 
 @RunWith(DataProviderRunner.class)
-public class IsNotBlankTest
+final public class IsNotBlankTest
 {
     @Test
     public void failedWithInvalidOriginalValidatable() throws Exception

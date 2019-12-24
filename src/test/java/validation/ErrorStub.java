@@ -4,7 +4,7 @@ import validation.result.error.Error;
 
 import java.util.Map;
 
-public class ErrorStub implements Error
+final public class ErrorStub implements Error
 {
     private String message;
 

@@ -10,7 +10,7 @@ import validation.result.value.Present;
 
 import static org.junit.Assert.*;
 
-public class IsPositiveTest
+final public class IsPositiveTest
 {
     @Test
     public void failedWithFailedOriginalValidatable() throws Exception

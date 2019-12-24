@@ -19,7 +19,7 @@ import validation.result.Result;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
-public class Courier implements Validatable<Delivery>
+final public class Courier implements Validatable<Delivery>
 {
     private Validatable<Delivery> v;
 

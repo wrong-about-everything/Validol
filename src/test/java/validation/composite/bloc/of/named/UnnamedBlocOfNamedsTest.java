@@ -13,7 +13,7 @@ import java.util.Map;
 
 import static org.junit.Assert.*;
 
-public class UnnamedBlocOfNamedsTest
+final public class UnnamedBlocOfNamedsTest
 {
     @Test
     public void success() throws Exception

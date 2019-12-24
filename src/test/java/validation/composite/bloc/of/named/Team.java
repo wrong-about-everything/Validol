@@ -2,7 +2,7 @@ package validation.composite.bloc.of.named;
 
 import java.util.Map;
 
-public class Team
+final public class Team
 {
     private String vasya;
     private Integer fedya;

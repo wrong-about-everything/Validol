@@ -16,7 +16,7 @@ import java.net.URL;
 import static org.junit.Assert.*;
 
 @RunWith(DataProviderRunner.class)
-public class AsUrlTest
+final public class AsUrlTest
 {
     @Test
     public void validationFailedWhenDecoratedElementIsInvalid() throws Exception

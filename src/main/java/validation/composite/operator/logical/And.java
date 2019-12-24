@@ -6,7 +6,7 @@ import validation.result.Result;
 import validation.result.Unnamed;
 import validation.result.value.Absent;
 
-public class And implements Validatable<Boolean>
+final public class And implements Validatable<Boolean>
 {
     private Validatable<Boolean> left;
     private Validatable<Boolean> right;

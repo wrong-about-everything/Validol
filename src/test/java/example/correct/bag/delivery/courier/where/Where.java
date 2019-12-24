@@ -1,6 +1,6 @@
 package example.correct.bag.delivery.courier.where;
 
-public class Where implements example.correct.bag.delivery.courier.Where
+final public class Where implements example.correct.bag.delivery.courier.Where
 {
     private String street;
     private Integer building;

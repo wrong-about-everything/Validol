@@ -14,7 +14,7 @@ import com.tngtech.java.junit.dataprovider.DataProviderRunner;
 import com.tngtech.java.junit.dataprovider.UseDataProvider;
 
 @RunWith(DataProviderRunner.class)
-public class IsGreaterThanOrEqualTest
+final public class IsGreaterThanOrEqualTest
 {
     @Test
     public void failedWithFailedOriginalValidatable() throws Exception

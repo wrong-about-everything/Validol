@@ -4,7 +4,7 @@ import validation.result.error.Error;
 
 import java.util.Map;
 
-public class EitherLeftOrRightButNotBoth implements Error
+final public class EitherLeftOrRightButNotBoth implements Error
 {
     private String left;
     private String right;

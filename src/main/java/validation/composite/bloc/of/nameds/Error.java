@@ -2,7 +2,7 @@ package validation.composite.bloc.of.nameds;
 
 import java.util.Map;
 
-public class Error implements validation.result.error.Error
+final public class Error implements validation.result.error.Error
 {
     private Map<String, Object> m;
 

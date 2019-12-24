@@ -9,7 +9,7 @@ import validation.result.value.Present;
 import static org.junit.Assert.*;
 
 // doc: makes sure no such field exists
-public class IsAbsentTest
+final public class IsAbsentTest
 {
     @Test
     public void isPresent() throws Exception
