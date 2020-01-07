@@ -75,7 +75,7 @@ both encapsulated and descriptive, contrary to prescriptive.
 What declarative is not?
 ^^^^^^^^^^^^^^^^^^^^^^^^
 One of the miconceptions I see quite often is that the fact that you've put all your dependencies in a config file automatically makes your code declarative.
-Nope. Declarative code is much more than mechanical actions. Simply sticking your `service classes <https://www.yegor256.com/2014/05/05/oop-alternative-to-utility-classes.html>`_
+Nope. Declarative code is much more than mechanical actions. Simply sticking your `service classes <https://hackernoon.com/you-dont-need-a-domain-service-class-in-ddd-9ecd3140782>`_
 in a config file won't bring you closer to maintainable code.
 
 Using functions does not ensure your code to be declarative either. You can wrap each implementation step into its own function
@@ -83,7 +83,7 @@ Using functions does not ensure your code to be declarative either. You can wrap
 
 Declarative validation
 ^^^^^^^^^^^^^^^^^^^^^^^
-If you're tired of spaghetti validation code mess, you can try a `declarative approach <https://github.com/wrong-about-everything/Validol>`_.
+If you're tired of spaghetti validation code mess, you can try a `declarative approach <https://www.yegor256.com/2015/02/20/utility-classes-vs-functional-programming.html>`_.
 Class names reflect what is validated, not how. Their implementation doesn't clutter the higher-level validation logic description.
 It's especially convenient in case of complex json data structures, when your validation composite object reflects the request structure.
 And as a nice declarative-approach side-effect, your code is not `temporally coupled <https://blog.ploeh.dk/2011/05/24/DesignSmellTemporalCoupling/>`_.
@@ -133,7 +133,7 @@ JSON structure looks the following:
 
 The semantics basically doesn't really matter, though you can guess that it has something to do with food delivery order registration.
 Schema is quite large. Typically, validation code is less then clear.
-Here is the declarative validation composite with `Validol library <https://https://github.com/wrong-about-everything/Validol/>`_
+Here is the declarative validation composite with `Validol library <https://github.com/wrong-about-everything/Validol/>`_
 (check :doc:`Validol's Quick start page <../quick_start>` for a line-by-line analysis, it's not as scary as you imagine):
 
 .. code-block:: java
@@ -305,7 +305,7 @@ like the following:
             )
     )
 
-If you have a block structure that depends on passed type (like ``type_id``), ``SwitchTrue`` is your friend. It represents a sort of declarative
+If you have a block structure that depends on passed type (like ``delivery.type_id``), ``SwitchTrue`` is your friend. It represents a sort of declarative
 switch-case expression, where the value checked against is always ``true`` (hence the name, ``SwitchTrue``).
 
 If everything's successful, you get a data object reflecting the request structure, with type hinted values:
@@ -316,19 +316,25 @@ If everything's successful, you get a data object reflecting the request structu
     // get an email:
     result.value().raw().guest().email();
 
-In case of error:
+In case you passed only ``guest.email`` and ``source``, you would get a following error:
 
 .. code-block:: java
 
     assertFalse(result.isSuccessful());
-    // Error is represented as generally as Object itself,
-    // for it can be a String, a List<String>, a Map<String, String>, a Map<String, Map<String, String>>, or mixed.
-    result.error();
+    assertEquals(
+        Map.of(
+            "guest", Map.of("email", new MustBePresent().value()),
+            "items", new MustBePresent().value(),
+            "delivery", new MustBePresent().value(),
+            "source", new MustBeInteger().value()
+        ),
+        result.error().value()
+    );
 
 There is plenty of space left to extend the logic, just add another validating decorator.
 
 More examples
 ^^^^^^^^^^^^^^
-Check out more usage examples `here <https://github.com/wrong-about-everything/Validol/tree/master/src/test/java/example>`_.
+Check out more usage examples `in Unit-tests <https://github.com/wrong-about-everything/Validol/tree/master/src/test/java/example>`_.
 `Here <https://github.com/wrong-about-everything/Validol/tree/master/src/test/java/example/correct/inline>`_ is an example of inline validation in greater detail.
-`Here <https://github.com/wrong-about-everything/Validol/tree/master/src/test/java/example/correct/split>`_ you can find out how to split the validation logic according to semantic request blocks.
+`And here <https://github.com/wrong-about-everything/Validol/tree/master/src/test/java/example/correct/split>`_ you can find out how to split the validation logic according to semantic request blocks.

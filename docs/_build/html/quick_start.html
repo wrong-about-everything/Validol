@@ -81,7 +81,13 @@
             
             
               <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Validol Quick start</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Validol Quick start</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#example">Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#the-whole-validation-from-a-bird-s-view">The whole validation from a bird’s view</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#line-by-line-analysis">Line-by-line analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#learn-by-doing">Learn by doing!</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="the_why.html">The Why</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="the_why.html#it-s-declarative">It’s declarative</a></li>
 <li class="toctree-l2"><a class="reference internal" href="the_why.html#it-s-contextual">It’s contextual</a></li>
@@ -101,7 +107,7 @@
 <li class="toctree-l2"><a class="reference internal" href="faq/how_to_perform_validation_in_java.html#do-it-declaratively">Do it declaratively</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="faq/what_is_the_best_way_to_validate_json_request_in_java.html">What is the best way to validate json request in Java?</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="faq/what_is_the_best_way_to_validate_json_request_in_java.html">What is the best way to validate a json request in Java?</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="faq/what_is_the_best_way_to_validate_json_request_in_java.html#problem">Problem</a></li>
 <li class="toctree-l2"><a class="reference internal" href="faq/what_is_the_best_way_to_validate_json_request_in_java.html#how-not-to-do-it">How not to do it</a></li>
 <li class="toctree-l2"><a class="reference internal" href="faq/what_is_the_best_way_to_validate_json_request_in_java.html#solution">Solution</a></li>
@@ -115,6 +121,7 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="faq/how_to_parse_and_validate_json_schema_in_java.html#solution">Solution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq/how_to_parse_and_validate_json_schema_in_java.html#further-reading">Further reading</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="faq/what_is_the_best_java_email_address_validation_method.html">What is the best Java email address validation method?</a></li>
@@ -203,6 +210,8 @@
 <h1>Validol Quick start<a class="headerlink" href="#validol-quick-start" title="Permalink to this headline">¶</a></h1>
 <p>Let’s start with an example of what <a class="reference external" href="https://github.com/wrong-about-everything/Validol/">Validol</a> can do.
 Here I’ll describe features that will be enough for you in most of the cases.</p>
+<div class="section" id="example">
+<h2>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
 <p>Consider the following JSON schema:</p>
 <div class="highlight-JSON notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
    <span class="nt">&quot;guest&quot;</span><span class="p">:{</span>
@@ -245,6 +254,9 @@ Here I’ll describe features that will be enough for you in most of the cases.<
 </div>
 <p>This is a request that clearly has something to do with food order delivery. There must be plenty of things to validate before an order will be registered.
 First, take a really deep breath and have a glance at the whole picture.</p>
+</div>
+<div class="section" id="the-whole-validation-from-a-bird-s-view">
+<h2>The whole validation from a bird’s view<a class="headerlink" href="#the-whole-validation-from-a-bird-s-view" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-java notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>  1
   2
   3
@@ -490,6 +502,10 @@ First, take a really deep breath and have a glance at the whole picture.</p>
     <span class="o">.</span><span class="na">result</span><span class="o">()</span>
 </pre></div>
 </td></tr></table></div>
+<p>Now breath out. It’s not that scary.</p>
+</div>
+<div class="section" id="line-by-line-analysis">
+<h2>Line-by-line analysis<a class="headerlink" href="#line-by-line-analysis" title="Permalink to this headline">¶</a></h2>
 <p>Fancy some line-by-line analysis? Here it goes:</p>
 <div class="line-block">
 <div class="line"><code class="docutils literal notranslate"><span class="pre">Lines</span> <span class="pre">1-4</span></code>: check whether the input request data represents well-formed json. Otherwise, fail fast and return a corresponding error.</div>
@@ -563,6 +579,22 @@ First, take a really deep breath and have a glance at the whole picture.</p>
 <div class="line"><code class="docutils literal notranslate"><span class="pre">Line</span> <span class="pre">122</span></code>: An object of class <code class="docutils literal notranslate"><span class="pre">Result&lt;OrderRegistrationRequestData&gt;</span></code> is returned.</div>
 <div class="line">If the result is successful, it contains an <code class="docutils literal notranslate"><span class="pre">OrderRegistrationRequestData</span></code> object. Otherwise, there is an <code class="docutils literal notranslate"><span class="pre">Object</span></code> of arbitrary structure.</div>
 <div class="line">Typically, you, backend engineer, shouldn’t even have a clue of its structure – your system’s frontend should.</div>
+</div>
+</div>
+<div class="section" id="learn-by-doing">
+<h2>Learn by doing!<a class="headerlink" href="#learn-by-doing" title="Permalink to this headline">¶</a></h2>
+<p>The quickest way to get the taste of this declarative style is to try it out for yourself.</p>
+<p>If you use Maven, here’s how you can install it:</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">dependency</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">groupId</span><span class="o">&gt;</span><span class="n">com</span><span class="o">.</span><span class="na">github</span><span class="o">.</span><span class="na">wrong</span><span class="o">-</span><span class="n">about</span><span class="o">-</span><span class="n">everything</span><span class="o">&lt;/</span><span class="n">groupId</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">artifactId</span><span class="o">&gt;</span><span class="n">Validol</span><span class="o">&lt;/</span><span class="n">artifactId</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">version</span><span class="o">&gt;</span><span class="mf">0.2.0</span><span class="o">&lt;/</span><span class="n">version</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="n">dependency</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>If you use any other dependency manager, you can find the instructions you need <a class="reference external" href="https://search.maven.org/artifact/com.github.wrong-about-everything/Validol/0.2.0/jar">here</a>.
+Please make sure you’re installing the latest version!</p>
+<p>Have fun!</p>
 </div>
 </div>
 

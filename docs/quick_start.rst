@@ -4,6 +4,8 @@ Validol Quick start
 Let's start with an example of what `Validol <https://github.com/wrong-about-everything/Validol/>`_ can do.
 Here I'll describe features that will be enough for you in most of the cases.
 
+Example
+--------
 Consider the following JSON schema:
 
 .. code-block:: JSON
@@ -48,6 +50,9 @@ Consider the following JSON schema:
 
 This is a request that clearly has something to do with food order delivery. There must be plenty of things to validate before an order will be registered.
 First, take a really deep breath and have a glance at the whole picture.
+
+The whole validation from a bird's view
+------------------------------------------
 
 .. code-block:: java
     :linenos:
@@ -175,6 +180,10 @@ First, take a really deep breath and have a glance at the whole picture.
     )
         .result()
 
+Now breath out. It's not that scary.
+
+Line-by-line analysis
+-----------------------
 Fancy some line-by-line analysis? Here it goes:
 
 | ``Lines 1-4``: check whether the input request data represents well-formed json. Otherwise, fail fast and return a corresponding error.
@@ -248,3 +257,22 @@ Fancy some line-by-line analysis? Here it goes:
 | ``Line 122``: An object of class ``Result<OrderRegistrationRequestData>`` is returned.
 | If the result is successful, it contains an ``OrderRegistrationRequestData`` object. Otherwise, there is an ``Object`` of arbitrary structure.
 | Typically, you, backend engineer, shouldn't even have a clue of its structure -- your system's frontend should.
+
+Learn by doing!
+-----------------
+The quickest way to get the taste of this declarative style is to try it out for yourself.
+
+If you use Maven, here's how you can install it:
+
+.. code-block:: java
+
+    <dependency>
+        <groupId>com.github.wrong-about-everything</groupId>
+        <artifactId>Validol</artifactId>
+        <version>0.2.0</version>
+    </dependency>
+
+If you use any other dependency manager, you can find the instructions you need `here <https://search.maven.org/artifact/com.github.wrong-about-everything/Validol/0.2.0/jar>`_.
+Please make sure you're installing the latest version!
+
+Have fun!
