@@ -82,6 +82,9 @@
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="../quick_start.html">Validol Quick start</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../quick_start.html#example">Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../quick_start.html#the-whole-validation-from-a-bird-s-view">The whole validation from a bird’s view</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../quick_start.html#line-by-line-analysis">Line-by-line analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../quick_start.html#learn-by-doing">Learn by doing!</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../the_why.html">The Why</a><ul>
@@ -348,10 +351,12 @@ belong to a specific controller (or Application service, or user-story). That’
 comes in handy. You can first check basic, format-related validations, and proceed with however complicated ones.</p>
 <p>Consider the following JSON request:</p>
 <div class="highlight-JSON notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
-   <span class="nt">&quot;where&quot;</span><span class="p">:{</span>
-      <span class="nt">&quot;building&quot;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span>
-      <span class="nt">&quot;street&quot;</span><span class="p">:</span><span class="s2">&quot;Red Square&quot;</span>
-   <span class="p">}</span>
+    <span class="nt">&quot;delivery&quot;</span><span class="p">:{</span>
+       <span class="nt">&quot;where&quot;</span><span class="p">:{</span>
+          <span class="nt">&quot;building&quot;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span>
+          <span class="nt">&quot;street&quot;</span><span class="p">:</span><span class="s2">&quot;Red Square&quot;</span>
+       <span class="p">}</span>
+    <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
 </div>

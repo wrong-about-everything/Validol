@@ -170,10 +170,12 @@ Consider the following JSON request:
 .. code-block:: JSON
 
     {
-       "where":{
-          "building":1,
-          "street":"Red Square"
-       }
+        "delivery":{
+           "where":{
+              "building":1,
+              "street":"Red Square"
+           }
+        }
     }
 
 Validation could look like that:
