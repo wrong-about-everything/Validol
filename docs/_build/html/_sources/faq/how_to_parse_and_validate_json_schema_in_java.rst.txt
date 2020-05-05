@@ -58,8 +58,8 @@ For brevity sake, I'll put only this one in the request:
 
     {
         "payment":{
-            "card_number":12345612341234,
-            "expires_at":"12/29"
+            "expires_at":"12/29",
+            "card_number":12345612341234
         }
     }
 
@@ -100,10 +100,10 @@ Here is how the actual validation code looks like:
                                         new NamedBlocOfNameds<>(
                                             "payment",
                                             List.of(
-                                                new ValidThrueIsNotExpired(
+                                                new CardIsNotExpired(
                                                     new AsString(
                                                         new Required(
-                                                            new IndexedValue("valid_thru", paymentJsonObject)
+                                                            new IndexedValue("expires_at", paymentJsonObject)
                                                         )
                                                     )
                                                 ),
@@ -143,7 +143,7 @@ Let's see what's going on here, line by line:
 | ``Line 23``: If not, an error will be returned right away because it's a ``FailFast`` object.
 | ``Line 29``: Otherwise, a closure is invoked.
 | ``Line 30``: Payment block is a named block consisting of other named entries -- objects or scalars.
-| ``Line 36``: The first one is called ``valid_thru``
+| ``Line 36``: The first one is called ``expires_at``
 | ``Line 35``: It's required.
 | ``Line 34``: And represented as a string.
 | ``Line 33``: Finally, check that it's not expired.

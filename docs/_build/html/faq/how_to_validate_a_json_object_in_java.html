@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>How to parse and validate json in Java? &mdash; Validol  documentation</title>
+  <title>How to validate a JSON object in java? &mdash; Validol  documentation</title>
   
 
   
@@ -35,8 +35,8 @@
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="What is the best Java email address validation method?" href="what_is_the_best_java_email_address_validation_method.html" />
-    <link rel="prev" title="What is the best way to validate a json request in Java?" href="what_is_the_best_way_to_validate_json_request_in_java.html" /> 
+    <link rel="next" title="How to perform validation in Java?" href="how_to_perform_validation_in_java.html" />
+    <link rel="prev" title="The Why" href="../the_why.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -99,10 +99,10 @@
 </ul>
 <p class="caption"><span class="caption-text">FAQ</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="how_to_validate_a_json_object_in_java.html">How to validate a JSON object in java?</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="how_to_validate_a_json_object_in_java.html#request-validation">Request validation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="how_to_validate_a_json_object_in_java.html#response-validation">Response validation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="how_to_validate_a_json_object_in_java.html#what-to-use-for-json-validation">What to use for json validation</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">How to validate a JSON object in java?</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#request-validation">Request validation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#response-validation">Response validation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#what-to-use-for-json-validation">What to use for json validation</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="how_to_perform_validation_in_java.html">How to perform validation in Java?</a><ul>
@@ -120,14 +120,14 @@
 <li class="toctree-l2"><a class="reference internal" href="what_is_the_best_way_to_validate_json_request_in_java.html#example">Example</a></li>
 </ul>
 </li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">How to parse and validate json in Java?</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#problems">Problems</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#validation-is-often-an-imperative-code-clutter">Validation is often an imperative code-clutter</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#json-schema-could-be-not-so-desirable-to-deal-with">JSON Schema could be not so desirable to deal with</a></li>
+<li class="toctree-l1"><a class="reference internal" href="how_to_parse_and_validate_json_schema_in_java.html">How to parse and validate json in Java?</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="how_to_parse_and_validate_json_schema_in_java.html#problems">Problems</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="how_to_parse_and_validate_json_schema_in_java.html#validation-is-often-an-imperative-code-clutter">Validation is often an imperative code-clutter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="how_to_parse_and_validate_json_schema_in_java.html#json-schema-could-be-not-so-desirable-to-deal-with">JSON Schema could be not so desirable to deal with</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#solution">Solution</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#further-reading">Further reading</a></li>
+<li class="toctree-l2"><a class="reference internal" href="how_to_parse_and_validate_json_schema_in_java.html#solution">Solution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="how_to_parse_and_validate_json_schema_in_java.html#further-reading">Further reading</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="what_is_the_best_java_email_address_validation_method.html">What is the best Java email address validation method?</a></li>
@@ -193,13 +193,13 @@
     
       <li><a href="../index.html">Docs</a> &raquo;</li>
         
-      <li>How to parse and validate json in Java?</li>
+      <li>How to validate a JSON object in java?</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="../_sources/faq/how_to_parse_and_validate_json_schema_in_java.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/faq/how_to_validate_a_json_object_in_java.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -212,61 +212,26 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="how-to-parse-and-validate-json-in-java">
-<h1>How to parse and validate json in Java?<a class="headerlink" href="#how-to-parse-and-validate-json-in-java" title="Permalink to this headline">¶</a></h1>
-<p>In this entry, we’ll consider typical problems that arise when you’re setting off parsing json with following validation.
-At the end of it, I’ll show how you can do it in concise and declarative fashion with
-<a class="reference external" href="https://github.com/wrong-about-everything/Validol">Validol</a> library.</p>
-<div class="section" id="problems">
-<h2>Problems<a class="headerlink" href="#problems" title="Permalink to this headline">¶</a></h2>
-<p>Parsing JSON is usually a no-brainer. There are at least a couple of great libraries that do that:
-<a class="reference external" href="https://github.com/FasterXML/jackson">Jackson</a> and <a class="reference external" href="https://github.com/google/gson">GSON</a>. The problem is that
-there seems to be no nice way to combine them with validation facility. That’s where the following problems unfold.</p>
-<div class="section" id="validation-is-often-an-imperative-code-clutter">
-<h3>Validation is often an imperative code-clutter<a class="headerlink" href="#validation-is-often-an-imperative-code-clutter" title="Permalink to this headline">¶</a></h3>
-<p>Typically, json schema validation looks like a huge,
-<a class="reference external" href="https://enterprisecraftsmanship.com/posts/temporal-coupling-and-immutability/">highly temporally coupled</a>
-sequence of imperative instructions. In library-independent java-like pseudo-code, it looks like the following:</p>
-<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="n">JsonObject</span> <span class="n">jsonObject</span> <span class="o">=</span> <span class="n">JSON</span><span class="o">.</span><span class="na">parse</span><span class="o">(</span><span class="n">request</span><span class="o">);</span>
-<span class="k">if</span> <span class="o">(!</span><span class="n">jsonObject</span><span class="o">.</span><span class="na">has</span><span class="o">(</span><span class="s">&quot;guest&quot;</span><span class="o">))</span> <span class="o">{</span>
-    <span class="k">return</span> <span class="n">error</span><span class="o">(</span><span class="s">&quot;guest block is required&quot;</span><span class="o">);</span>
-<span class="o">}</span>
-<span class="k">if</span> <span class="o">(!</span><span class="n">jsonObject</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="s">&quot;guest&quot;</span><span class="o">).</span><span class="na">has</span><span class="o">(</span><span class="s">&quot;name&quot;</span><span class="o">))</span> <span class="o">{</span>
-    <span class="k">return</span> <span class="n">error</span><span class="o">(</span><span class="s">&quot;guest name is required&quot;</span><span class="o">);</span>
-<span class="o">}</span>
-
-<span class="n">String</span> <span class="n">name</span> <span class="o">=</span> <span class="n">jsonObject</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="s">&quot;guest&quot;</span><span class="o">).</span><span class="na">get</span><span class="o">(</span><span class="s">&quot;name&quot;</span><span class="o">);</span>
-<span class="k">if</span> <span class="o">(</span><span class="n">name</span><span class="o">.</span><span class="na">length</span> <span class="o">&gt;</span> <span class="mi">70</span><span class="o">)</span> <span class="o">{</span>
-    <span class="k">return</span> <span class="n">error</span><span class="o">(</span><span class="s">&quot;guest name must be shorter than 70 characters&quot;</span><span class="o">);</span>
-<span class="o">}</span>
-<span class="k">if</span> <span class="o">(</span><span class="n">name</span><span class="o">.</span><span class="na">length</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="o">)</span> <span class="o">{</span>
-    <span class="k">return</span> <span class="n">error</span><span class="o">(</span><span class="s">&quot;guest name must be at least 3 characters&quot;</span><span class="o">);</span>
-<span class="o">}</span>
-<span class="k">if</span> <span class="o">(!</span><span class="n">Pattern</span><span class="o">.</span><span class="na">compile</span><span class="o">(</span><span class="s">&quot;[a-Z]+&quot;</span><span class="o">).</span><span class="na">matcher</span><span class="o">(</span><span class="n">name</span><span class="o">).</span><span class="na">matches</span><span class="o">()</span> <span class="o">{</span>
-    <span class="k">return</span> <span class="n">error</span><span class="o">(</span><span class="s">&quot;guest name must contain only alpha characters&quot;</span><span class="o">);</span>
-<span class="o">}</span>
-</pre></div>
+  <div class="section" id="how-to-validate-a-json-object-in-java">
+<h1>How to validate a JSON object in java?<a class="headerlink" href="#how-to-validate-a-json-object-in-java" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="request-validation">
+<h2>Request validation<a class="headerlink" href="#request-validation" title="Permalink to this headline">¶</a></h2>
+<p>When you implement a REST API using json, apparently, you need to <a class="reference internal" href="what_is_the_best_way_to_validate_json_request_in_java.html"><span class="doc">validate requests</span></a> somehow.
+Using JSON Schema might be an overkill and, all in all, a tedious task. Binding validation to a data model, an approach often used in Java Spring,
+<a class="reference internal" href="../inspired_by/context_specific_validation.html"><span class="doc">doesn’t seem to be good either</span></a>: validation and data model should be independent from each other.</p>
 </div>
+<div class="section" id="response-validation">
+<h2>Response validation<a class="headerlink" href="#response-validation" title="Permalink to this headline">¶</a></h2>
+<p>Besides validating json requests, you might want to validate some third-party service json responses. Depending on whether it’s successful or not,
+you want different code branches to execute. From the practical point of view, there is actually no difference what to validate, be it a request or response/</p>
 </div>
-<div class="section" id="json-schema-could-be-not-so-desirable-to-deal-with">
-<h3>JSON Schema could be not so desirable to deal with<a class="headerlink" href="#json-schema-could-be-not-so-desirable-to-deal-with" title="Permalink to this headline">¶</a></h3>
-<p>Those who want to break free from this imperative spaghetti hell often turn to quite complicated and intricate beast called
-<a class="reference external" href="https://json-schema.org/latest/json-schema-core.html">JSON Schema</a>. It’s a specification describing the structure and
-validation rules of json documents. Besides having a steep learning curve, it is a little bit too verbose.
-And things get worse quickly: JSON schema definition file grows twice as fast as the validated json itself.</p>
-<p>Among the pluses, this format is a declarative one, which is a huge step forward comparing to the previous option.
-And there are <a class="reference external" href="https://github.com/java-json-tools/json-schema-validator">couple</a> of <a class="reference external" href="https://github.com/everit-org/json-schema">libraries</a> supporting it.</p>
-</div>
-</div>
-<div class="section" id="solution">
-<h2>Solution<a class="headerlink" href="#solution" title="Permalink to this headline">¶</a></h2>
-<p><a class="reference external" href="https://github.com/wrong-about-everything/Validol">Validol</a> provides both parsing and validating capabilities, as well as solves both validation problems: it is <a class="reference internal" href="../inspired_by/declarative_validation.html"><span class="doc">declarative</span></a> and concise.</p>
-<p>Check out a quick example. Suppose we have a registration request. It has a couple of blocks, <code class="docutils literal notranslate"><span class="pre">payment</span></code> being one of them.
-For brevity sake, I’ll put only this one in the request:</p>
+<div class="section" id="what-to-use-for-json-validation">
+<h2>What to use for json validation<a class="headerlink" href="#what-to-use-for-json-validation" title="Permalink to this headline">¶</a></h2>
+<p>You might want to give validol a shot. It’s simple, intuitive, declarative library. Here is how a json object validation could look like:</p>
 <div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="o">{</span>
-    <span class="s">&quot;payment&quot;</span><span class="o">:{</span>
-        <span class="s">&quot;expires_at&quot;</span><span class="o">:</span><span class="s">&quot;12/29&quot;</span><span class="o">,</span>
-        <span class="s">&quot;card_number&quot;</span><span class="o">:</span><span class="mi">12345612341234</span>
+    <span class="s">&quot;discount&quot;</span><span class="o">:{</span>
+        <span class="s">&quot;valid_until&quot;</span><span class="o">:</span><span class="s">&quot;2032-05-04 00:00:00+07&quot;</span><span class="o">,</span>
+        <span class="s">&quot;promo_code&quot;</span><span class="o">:</span><span class="s">&quot;VASYA1988&quot;</span>
     <span class="o">}</span>
 <span class="o">}</span>
 </pre></div>
@@ -330,19 +295,19 @@ For brevity sake, I’ll put only this one in the request:</p>
 56
 57
 58
-59</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">ValidatedRegistrationRequest</span> <span class="kd">implements</span> <span class="n">Validatable</span><span class="o">&lt;</span><span class="n">RegistrationRequest</span><span class="o">&gt;</span>
+59</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">ValidatedJsonObjectRepresentingRequestOrResponse</span> <span class="kd">implements</span> <span class="n">Validatable</span><span class="o">&lt;</span><span class="n">JsonObjectRepresentingRequestOrResponse</span><span class="o">&gt;</span>
 <span class="o">{</span>
-    <span class="kd">private</span> <span class="n">String</span> <span class="n">jsonRequestString</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">String</span> <span class="n">jsonString</span><span class="o">;</span>
     <span class="kd">private</span> <span class="n">Connection</span> <span class="n">dbConnection</span><span class="o">;</span>
 
-    <span class="kd">public</span> <span class="nf">ValidatedRegistrationRequest</span><span class="o">(</span><span class="n">String</span> <span class="n">jsonRequestString</span><span class="o">,</span> <span class="n">Connection</span> <span class="n">dbConnection</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="nf">ValidatedJsonObjectRepresentingRequestOrResponse</span><span class="o">(</span><span class="n">String</span> <span class="n">jsonString</span><span class="o">,</span> <span class="n">Connection</span> <span class="n">dbConnection</span><span class="o">)</span>
     <span class="o">{</span>
-        <span class="k">this</span><span class="o">.</span><span class="na">jsonRequestString</span> <span class="o">=</span> <span class="n">jsonRequestString</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">jsonString</span> <span class="o">=</span> <span class="n">jsonString</span><span class="o">;</span>
         <span class="k">this</span><span class="o">.</span><span class="na">dbConnection</span> <span class="o">=</span> <span class="n">dbConnection</span><span class="o">;</span>
     <span class="o">}</span>
 
     <span class="nd">@Override</span>
-    <span class="kd">public</span> <span class="n">Result</span><span class="o">&lt;</span><span class="n">RegistrationRequest</span><span class="o">&gt;</span> <span class="nf">result</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span>
+    <span class="kd">public</span> <span class="n">Result</span><span class="o">&lt;</span><span class="n">JsonObjectRepresentingRequestOrResponse</span><span class="o">&gt;</span> <span class="nf">result</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span>
     <span class="o">{</span>
         <span class="k">return</span>
             <span class="k">new</span> <span class="n">FastFail</span><span class="o">&lt;&gt;(</span>
@@ -355,34 +320,34 @@ For brevity sake, I’ll put only this one in the request:</p>
                             <span class="k">new</span> <span class="n">FastFail</span><span class="o">&lt;&gt;(</span>
                                 <span class="k">new</span> <span class="n">IsJsonObject</span><span class="o">(</span>
                                     <span class="k">new</span> <span class="n">Required</span><span class="o">(</span>
-                                        <span class="k">new</span> <span class="n">IndexedValue</span><span class="o">(</span><span class="s">&quot;payment&quot;</span><span class="o">,</span> <span class="n">requestJsonObject</span><span class="o">)</span>
+                                        <span class="k">new</span> <span class="n">IndexedValue</span><span class="o">(</span><span class="s">&quot;discount&quot;</span><span class="o">,</span> <span class="n">requestJsonObject</span><span class="o">)</span>
                                     <span class="o">)</span>
                                 <span class="o">),</span>
-                                <span class="n">paymentJsonObject</span> <span class="o">-&gt;</span>
+                                <span class="n">discountObject</span> <span class="o">-&gt;</span>
                                     <span class="k">new</span> <span class="n">NamedBlocOfNameds</span><span class="o">&lt;&gt;(</span>
-                                        <span class="s">&quot;payment&quot;</span><span class="o">,</span>
+                                        <span class="s">&quot;discount&quot;</span><span class="o">,</span>
                                         <span class="n">List</span><span class="o">.</span><span class="na">of</span><span class="o">(</span>
-                                            <span class="k">new</span> <span class="n">CardIsNotExpired</span><span class="o">(</span>
+                                            <span class="k">new</span> <span class="n">PromoCodeIsNotExpired</span><span class="o">(</span>
                                                 <span class="k">new</span> <span class="n">AsString</span><span class="o">(</span>
                                                     <span class="k">new</span> <span class="n">Required</span><span class="o">(</span>
-                                                        <span class="k">new</span> <span class="n">IndexedValue</span><span class="o">(</span><span class="s">&quot;expires_at&quot;</span><span class="o">,</span> <span class="n">paymentJsonObject</span><span class="o">)</span>
+                                                        <span class="k">new</span> <span class="n">IndexedValue</span><span class="o">(</span><span class="s">&quot;valid_until&quot;</span><span class="o">,</span> <span class="n">discountObject</span><span class="o">)</span>
                                                     <span class="o">)</span>
                                                 <span class="o">)</span>
                                             <span class="o">),</span>
-                                            <span class="k">new</span> <span class="n">CardNumberIsNotBlacklisted</span><span class="o">(</span>
-                                                <span class="k">new</span> <span class="n">CardNumberSatisfiesLuhnAlgorithm</span><span class="o">(</span>
+                                            <span class="k">new</span> <span class="n">PromoCodeIsNotAlreadyRedeemed</span><span class="o">(</span>
+                                                <span class="k">new</span> <span class="n">PromoCodeContainsBothLettersAndDigits</span><span class="o">(</span>
                                                     <span class="k">new</span> <span class="n">Required</span><span class="o">(</span>
-                                                        <span class="k">new</span> <span class="n">IndexedValue</span><span class="o">(</span><span class="s">&quot;card_number&quot;</span><span class="o">,</span> <span class="n">paymentJsonObject</span><span class="o">)</span>
+                                                        <span class="k">new</span> <span class="n">IndexedValue</span><span class="o">(</span><span class="s">&quot;promo_code&quot;</span><span class="o">,</span> <span class="n">discountObject</span><span class="o">)</span>
                                                     <span class="o">)</span>
                                                 <span class="o">),</span>
                                                 <span class="k">this</span><span class="o">.</span><span class="na">dbConnection</span>
                                             <span class="o">)</span>
                                         <span class="o">),</span>
-                                        <span class="n">Payment</span><span class="o">.</span><span class="na">class</span>
+                                        <span class="n">Discount</span><span class="o">.</span><span class="na">class</span>
                                     <span class="o">)</span>
                             <span class="o">)</span>
                         <span class="o">),</span>
-                        <span class="n">RegistrationRequest</span><span class="o">.</span><span class="na">class</span>
+                        <span class="n">JsonObjectRepresentingRequestOrResponse</span><span class="o">.</span><span class="na">class</span>
                     <span class="o">)</span>
             <span class="o">)</span>
                 <span class="o">.</span><span class="na">result</span><span class="o">()</span>
@@ -393,43 +358,37 @@ For brevity sake, I’ll put only this one in the request:</p>
 </td></tr></table></div>
 <p>Let’s see what’s going on here, line by line:</p>
 <div class="line-block">
-<div class="line"><code class="docutils literal notranslate"><span class="pre">Line</span> <span class="pre">1</span></code> Declaration of <code class="docutils literal notranslate"><span class="pre">ValidatedRegistrationRequest</span></code>.</div>
-<div class="line"><code class="docutils literal notranslate"><span class="pre">Line</span> <span class="pre">6</span></code> Its constructor accepts not yet parsed json string. It might come from an incoming request, from received response, or from pretty much anywhere else.</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">Line</span> <span class="pre">1</span></code> Declaration of <code class="docutils literal notranslate"><span class="pre">ValidatedJsonObjectRepresentingRequestOrResponse</span></code>.</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">Line</span> <span class="pre">6</span></code> Its constructor accepts raw json string. It might be either an incoming request or received response, or pretty much anything else.</div>
 <div class="line"><code class="docutils literal notranslate"><span class="pre">Line</span> <span class="pre">13</span></code>: Validation starts when this method is invoked.</div>
 <div class="line"><code class="docutils literal notranslate"><span class="pre">Lines</span> <span class="pre">16</span></code>: The higher-level validation object is <code class="docutils literal notranslate"><span class="pre">FastFail</span></code> block. If the first argument is invalid, an error is returned right away.</div>
 <div class="line"><code class="docutils literal notranslate"><span class="pre">Lines</span> <span class="pre">17-19</span></code>: json is checked whether it’s well-formed or not. If the latter, validation fails fast and returns a corresponding error.</div>
 <div class="line"><code class="docutils literal notranslate"><span class="pre">Line</span> <span class="pre">20</span></code>: if json is well-formed, a closure is invoked, and json data is passed as its single argument.</div>
 <div class="line"><code class="docutils literal notranslate"><span class="pre">Line</span> <span class="pre">21</span></code>: json data is validated. Its structure is an unnamed block of named blocks. It corresponds to a JSON Object.</div>
-<div class="line"><code class="docutils literal notranslate"><span class="pre">Line</span> <span class="pre">26</span></code>: The first (and the only) block is called <code class="docutils literal notranslate"><span class="pre">payment</span></code>.</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">Line</span> <span class="pre">26</span></code>: The first (and the only) block is called <code class="docutils literal notranslate"><span class="pre">discount</span></code>.</div>
 <div class="line"><code class="docutils literal notranslate"><span class="pre">Line</span> <span class="pre">25</span></code>: It’s required.</div>
 <div class="line"><code class="docutils literal notranslate"><span class="pre">Line</span> <span class="pre">24</span></code>: It must be a json object.</div>
 <div class="line"><code class="docutils literal notranslate"><span class="pre">Line</span> <span class="pre">23</span></code>: If not, an error will be returned right away because it’s a <code class="docutils literal notranslate"><span class="pre">FailFast</span></code> object.</div>
 <div class="line"><code class="docutils literal notranslate"><span class="pre">Line</span> <span class="pre">29</span></code>: Otherwise, a closure is invoked.</div>
-<div class="line"><code class="docutils literal notranslate"><span class="pre">Line</span> <span class="pre">30</span></code>: Payment block is a named block consisting of other named entries – objects or scalars.</div>
-<div class="line"><code class="docutils literal notranslate"><span class="pre">Line</span> <span class="pre">36</span></code>: The first one is called <code class="docutils literal notranslate"><span class="pre">expires_at</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">Line</span> <span class="pre">30</span></code>: Discount block is a named block consisting of other named entries – objects or scalars.</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">Line</span> <span class="pre">36</span></code>: The first one is called <code class="docutils literal notranslate"><span class="pre">valid_until</span></code></div>
 <div class="line"><code class="docutils literal notranslate"><span class="pre">Line</span> <span class="pre">35</span></code>: It’s required.</div>
 <div class="line"><code class="docutils literal notranslate"><span class="pre">Line</span> <span class="pre">34</span></code>: And represented as a string.</div>
 <div class="line"><code class="docutils literal notranslate"><span class="pre">Line</span> <span class="pre">33</span></code>: Finally, check that it’s not expired.</div>
-<div class="line"><code class="docutils literal notranslate"><span class="pre">Line</span> <span class="pre">43</span></code>: Second parameter is called <code class="docutils literal notranslate"><span class="pre">card_number</span></code>.</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">Line</span> <span class="pre">43</span></code>: Second parameter is called <code class="docutils literal notranslate"><span class="pre">promo_code</span></code>.</div>
 <div class="line"><code class="docutils literal notranslate"><span class="pre">Line</span> <span class="pre">42</span></code>: It’s required as well.</div>
-<div class="line"><code class="docutils literal notranslate"><span class="pre">Line</span> <span class="pre">41</span></code>: It must satisfy Luhn algorithm.</div>
-<div class="line"><code class="docutils literal notranslate"><span class="pre">Line</span> <span class="pre">40</span></code>: And it should not be blacklisted in our database, hence …</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">Line</span> <span class="pre">41</span></code>: It must contain both letters and digits.</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">Line</span> <span class="pre">40</span></code>: And it should not be already redeemed. This fact is certainly persisted in our database, hence …</div>
 <div class="line"><code class="docutils literal notranslate"><span class="pre">Line</span> <span class="pre">46</span></code>:  … <code class="docutils literal notranslate"><span class="pre">this.dbConnection</span></code> parameter.</div>
-<div class="line"><code class="docutils literal notranslate"><span class="pre">Line</span> <span class="pre">49</span></code>: If all previous validation checks are successful, an object of class <code class="docutils literal notranslate"><span class="pre">Payment</span></code> is created.</div>
-<div class="line"><code class="docutils literal notranslate"><span class="pre">Line</span> <span class="pre">53</span></code>: Finally, <code class="docutils literal notranslate"><span class="pre">RegistrationRequest</span></code> is created and returned.</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">Line</span> <span class="pre">49</span></code>: If all previous validation checks are successful, an object of class <code class="docutils literal notranslate"><span class="pre">Discount</span></code> is created.</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">Line</span> <span class="pre">53</span></code>: Finally, <code class="docutils literal notranslate"><span class="pre">JsonObjectRepresentingRequestOrResponse</span></code> is created and returned.</div>
 </div>
 <p>Here is how a calling code looks when validation is successful:</p>
-<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="n">Result</span><span class="o">&lt;</span><span class="n">RegistrationRequest</span><span class="o">&gt;</span> <span class="n">result</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ValidatedRegistrationRequest</span><span class="o">(</span><span class="n">jsonRequestString</span><span class="o">).</span><span class="na">result</span><span class="o">();</span>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="n">Result</span><span class="o">&lt;</span><span class="n">JsonObjectRepresentingRequestOrResponse</span><span class="o">&gt;</span> <span class="n">result</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ValidatedJsonObjectRepresentingRequestOrResponse</span><span class="o">(</span><span class="n">jsonRequestString</span><span class="o">).</span><span class="na">result</span><span class="o">();</span>
 <span class="n">result</span><span class="o">.</span><span class="na">isSuccessful</span><span class="o">();</span>
-<span class="n">result</span><span class="o">.</span><span class="na">value</span><span class="o">().</span><span class="na">raw</span><span class="o">().</span><span class="na">payment</span><span class="o">().</span><span class="na">cardNumber</span><span class="o">();</span> <span class="c1">// 12345612341234</span>
+<span class="n">result</span><span class="o">.</span><span class="na">value</span><span class="o">().</span><span class="na">raw</span><span class="o">().</span><span class="na">discount</span><span class="o">().</span><span class="na">promoCode</span><span class="o">();</span> <span class="c1">// VASYA1988</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="further-reading">
-<h2>Further reading<a class="headerlink" href="#further-reading" title="Permalink to this headline">¶</a></h2>
-<p>For more detailed example, check out Validol’s <a class="reference internal" href="../quick_start.html"><span class="doc">quick-start</span></a> entry.
-Also, there are plenty of <a class="reference external" href="https://github.com/wrong-about-everything/Validol/tree/master/src/test/java/example">higher-level unit tests</a>.
-And finally feel free to contribute!</p>
 </div>
 </div>
 
@@ -441,10 +400,10 @@ And finally feel free to contribute!</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="what_is_the_best_java_email_address_validation_method.html" class="btn btn-neutral float-right" title="What is the best Java email address validation method?" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="how_to_perform_validation_in_java.html" class="btn btn-neutral float-right" title="How to perform validation in Java?" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="what_is_the_best_way_to_validate_json_request_in_java.html" class="btn btn-neutral float-left" title="What is the best way to validate a json request in Java?" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="../the_why.html" class="btn btn-neutral float-left" title="The Why" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
