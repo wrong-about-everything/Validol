@@ -7,10 +7,10 @@ final public class ValidatableThrowingUncheckedException<T> implements Validatab
 {
     private Validatable<T> original;
 
-    public ValidatableThrowingUncheckedException(Validatable<T> original) throws Exception
+    public ValidatableThrowingUncheckedException(Validatable<T> original)
     {
         if (original == null) {
-            throw new Exception("Decorated validatable element can not be null");
+            throw new RuntimeException("Decorated validatable element can not be null");
         }
 
         this.original = original;
