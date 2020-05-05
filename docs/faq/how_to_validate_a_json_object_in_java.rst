@@ -3,18 +3,24 @@ How to validate a JSON object in java?
 
 Request validation
 ^^^^^^^^^^^^^^^^^^^
-When you implement a REST API using json, apparently, you need to :doc:`validate requests <what_is_the_best_way_to_validate_json_request_in_java>` somehow.
+When you implement a REST API using json, apparently, you need to :doc:`validate json requests <what_is_the_best_way_to_validate_json_request_in_java>` somehow.
 Using JSON Schema might be an overkill and, all in all, a tedious task. Binding validation to a data model, an approach often used in Java Spring,
 :doc:`doesn't seem to be good either <../inspired_by/context_specific_validation>`: validation and data model should be independent from each other.
 
 Response validation
 ^^^^^^^^^^^^^^^^^^^
 Besides validating json requests, you might want to validate some third-party service json responses. Depending on whether it's successful or not,
-you want different code branches to execute. From the practical point of view, there is actually no difference what to validate, be it a request or response/
+you want different code branches to execute. From the practical point of view, there is actually no difference what to validate, be it a request or response.
+
+Validate json anywhere
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Json validation with validol library is standing on the shoulders of giants: it encourages
+:doc:`context-specific validation <../inspired_by/context_specific_validation>` and :doc:`declarative code <../inspired_by/declarative_validation>`.
+The resulting code is concise, extendable, and maintainable.
 
 What to use for json validation
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-You might want to give validol a shot. It's simple, intuitive, declarative library. Here is how a json object validation could look like:
+You might want to give validol a shot. Here is how a json object validation could look like:
 
 .. code-block:: java
 

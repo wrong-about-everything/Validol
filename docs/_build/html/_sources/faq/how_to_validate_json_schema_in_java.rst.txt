@@ -1,5 +1,5 @@
-How to parse and validate json in Java?
--------------------------------------------------------------
+How to validate json schema in Java?
+-----------------------------------------
 In this entry, we'll consider typical problems that arise when you're setting off parsing json with following validation.
 At the end of it, I'll show how you can do it in concise and declarative fashion with
 `Validol <https://github.com/wrong-about-everything/Validol>`_ library.
@@ -48,7 +48,7 @@ Among the pluses, this format is a declarative one, which is a huge step forward
 And there are `couple <https://github.com/java-json-tools/json-schema-validator>`_ of `libraries <https://github.com/everit-org/json-schema>`_ supporting it.
 
 Solution
-^^^^^^^^^^^^^^^
+^^^^^^^^^^^
 `Validol <https://github.com/wrong-about-everything/Validol>`_ provides both parsing and validating capabilities, as well as solves both validation problems: it is :doc:`declarative <../inspired_by/declarative_validation>` and concise.
 
 Check out a quick example. Suppose we have a registration request. It has a couple of blocks, ``payment`` being one of them.
