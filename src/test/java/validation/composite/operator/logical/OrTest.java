@@ -1,5 +1,7 @@
 package validation.composite.operator.logical;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
 import com.spencerwi.either.Either;
 import org.junit.Test;
 import validation.composite.operator.logical.or.EitherLeftOrRight;
@@ -10,6 +12,8 @@ import validation.result.Result;
 import validation.result.Unnamed;
 import validation.result.value.Present;
 
+import java.util.Map;
+
 import static org.junit.Assert.*;
 
 final public class OrTest
@@ -17,6 +21,13 @@ final public class OrTest
     @Test
     public void testSuccessful() throws Exception
     {
+        JsonElement json =
+            new Gson().toJsonTree(
+                Map.of(
+                    "header", 124
+                )
+            );
+
         assertTrue(
             (new Or(
                 () -> new Unnamed<>(Either.right(new Present<>(true))),

@@ -5,6 +5,7 @@ import com.google.gson.JsonElement;
 import org.junit.Test;
 import validation.ErrorStub;
 import validation.composite.bloc.of.nameds.UnnamedBlocOfNameds;
+import validation.composite.operator.logical.or.Or;
 import validation.composite.operator.logical.xor.SingleSuccessful;
 import validation.leaf.as.type.AsBoolean;
 import validation.leaf.as.type.AsInteger;
@@ -23,15 +24,15 @@ final public class SingleSuccessfulTest
     @Test
     public void testAllFieldsAreSuccessful() throws Exception
     {
-        JsonElement json =
-            new Gson().toJsonTree(
-                Map.of(
-                    "first_field", "vasya",
-                    "second_field", false,
-                    "third_field", 777,
-                    "unrelated", "Rinse"
-                )
-            );
+    JsonElement json =
+        new Gson().toJsonTree(
+            Map.of(
+                "first_field", "vasya",
+                "second_field", false,
+                "third_field", 777,
+                "unrelated", "Rinse"
+            )
+        );
 
         Result<?> result =
             new UnnamedBlocOfNameds<SomeTestStructure>(
@@ -143,7 +144,7 @@ final public class SingleSuccessfulTest
         Result<SomeTestStructure> result =
             new UnnamedBlocOfNameds<SomeTestStructure>(
                 List.of(
-                    new SingleSuccessful(
+                    new Or(
                         "global",
                         new ErrorStub("Only one of the fields must be present"),
                         new AsString(

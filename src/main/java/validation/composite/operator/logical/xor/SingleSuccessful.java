@@ -5,10 +5,7 @@ import validation.Validatable;
 import validation.composite.ValidatableThrowingUncheckedException;
 import validation.result.Named;
 import validation.result.Result;
-import validation.result.Unnamed;
 import validation.result.error.Error;
-import validation.result.value.Absent;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
