@@ -24,13 +24,22 @@ final public class IndexedValueTest
     }
 
     @Test
-    public void successful() throws Exception
+    public void successfulNonNull() throws Exception
     {
-        IndexedValue named = new IndexedValue("vasya", this.json());
+        IndexedValue vasya = new IndexedValue("vasya", this.json());
 
-        assertTrue(named.result().isSuccessful());
-        assertEquals("vasya", named.result().name());
-        assertEquals(1, named.result().value().raw().getAsInt());
+        assertTrue(vasya.result().isSuccessful());
+        assertEquals("vasya", vasya.result().name());
+        assertEquals(1, vasya.result().value().raw().getAsInt());
+    }
+
+    @Test
+    public void successfulNull() throws Exception
+    {
+        IndexedValue fedya = new IndexedValue("fedya", this.json());
+
+        assertTrue(fedya.result().isSuccessful());
+        assertFalse(fedya.result().value().isPresent());
     }
 
     private JsonObject emptyJson()
@@ -45,7 +54,7 @@ final public class IndexedValueTest
     {
         HashMap<String, Object> target = new HashMap<>();
         target.put("vasya", 1);
-        target.put("fedya", "vasiliev");
+        target.put("fedya", null);
         target.put("tolya", false);
         HashMap<String, Object> inner = new HashMap<>();
         inner.put("lesha", "letyagin");

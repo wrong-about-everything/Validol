@@ -2,22 +2,15 @@ package validation.composite.operator.logical.or;
 
 final public class Message
 {
-    private String left;
-    private String right;
+    private String message;
 
-    public Message(String left, String right)
+    public Message(String message)
     {
-        this.left = left;
-        this.right = right;
+        this.message = message;
     }
 
     public String value()
     {
-        return
-            String.format(
-                "Either %s or %s",
-                this.left,
-                this.right
-            );
+        return this.message;
     }
 }

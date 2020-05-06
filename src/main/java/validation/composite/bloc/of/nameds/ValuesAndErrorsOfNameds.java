@@ -27,13 +27,7 @@ final public class ValuesAndErrorsOfNameds
         return
             this.validatables.stream()
                 .map(
-                    (validatable) -> {
-                        try {
-                            return new ValidatableThrowingUncheckedException<>(validatable);
-                        } catch (Exception e) {
-                            throw new RuntimeException(e);
-                        }
-                    }
+                    (validatable) -> new ValidatableThrowingUncheckedException<>(validatable)
                 )
                 .map((validatableThrowingUncheckedException) -> validatableThrowingUncheckedException.result())
                 .reduce(

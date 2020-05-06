@@ -4,15 +4,13 @@ import validation.result.error.Error;
 
 import java.util.Map;
 
-final public class EitherLeftOrRight implements Error
+final public class AtLeastOneMustBeSuccessful implements Error
 {
-    private String left;
-    private String right;
+    private String message;
 
-    public EitherLeftOrRight(String left, String right)
+    public AtLeastOneMustBeSuccessful(String message)
     {
-        this.left = left;
-        this.right = right;
+        this.message = message;
     }
 
     @Override
@@ -21,7 +19,7 @@ final public class EitherLeftOrRight implements Error
         return
             Map.of(
                 "code", new Code().value(),
-                "message", new Message(this.left, this.right).value()
+                "message", new Message(this.message).value()
             );
     }
 }

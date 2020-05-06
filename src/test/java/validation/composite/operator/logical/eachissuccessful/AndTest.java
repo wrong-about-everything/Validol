@@ -1,8 +1,9 @@
-package validation.composite.operator.logical;
+package validation.composite.operator.logical.eachissuccessful;
 
 import com.spencerwi.either.Either;
 import org.junit.Test;
 import validation.ErrorStub;
+import validation.composite.operator.logical.And;
 import validation.result.Result;
 import validation.result.Unnamed;
 import static org.junit.Assert.*;

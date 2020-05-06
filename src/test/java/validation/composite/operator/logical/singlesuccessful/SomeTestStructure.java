@@ -1,4 +1,4 @@
-package validation.composite.operator.logical;
+package validation.composite.operator.logical.singlesuccessful;
 
 final public class SomeTestStructure
 {
