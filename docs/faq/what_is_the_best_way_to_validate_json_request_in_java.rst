@@ -2,7 +2,7 @@ What is the best way to validate a json request in Java?
 -------------------------------------------------------------
 Problem
 ^^^^^^^^
-Validating json fields can be a tedious task. Its :doc:`schema <how_to_validate_json_schema_in_java>` might be deeply nested, and you want to make sure not to have forgotten
+Validating json fields can be a tedious task. Its :doc:`schema <how_to_parse_and_validate_json_schema_in_java>` might be deeply nested, and you want to make sure not to have forgotten
 all those json key existence checks. Validation constraints can include business-specific checks, not only related to format.
 And they are usually way more complicated.
 You want to keep them all in a specific place, the one everybody is well aware of.
