@@ -71,35 +71,49 @@ then the structure as a whole, the required fields, their format, and further so
     new FastFail<>(
         new IsJsonObject(
             new WellFormedJson(
-                new IndexedValue("when", jsonString)
+                new Unnamed<>(Either.right(new Present<>(this.jsonRequestString)))
             )
         ),
-        whenJsonElement ->
-            new NamedBlocOfNameds<>(
-                "when",
+        requestJsonObject ->
+            new UnnamedBlocOfNameds<>(
                 List.of(
-                    new RestaurantIsAbleToDeliverBySpecifiedTime(
-                        new IsGreaterThan(
-                            new AsDate(
-                                new AsString(
-                                    new Required(
-                                        new IndexedValue("datetime", whenJsonElement)
-                                    )
-                                )
-                            ),
-                            new Now().value()
+                    new FastFail<>(
+                        new IsJsonObject(
+                            new WellFormedJson(
+                                new IndexedValue("when", requestJsonObject)
+                            )
                         ),
-                        this.dbConnection
+                        whenJsonElement ->
+                            new NamedBlocOfNameds<>(
+                                "when",
+                                List.of(
+                                    new RestaurantIsAbleToDeliverBySpecifiedTime(
+                                        new IsGreaterThan(
+                                            new AsDate(
+                                                new AsString(
+                                                    new Required(
+                                                        new IndexedValue("datetime", whenJsonElement)
+                                                    )
+                                                )
+                                            ),
+                                            new Now().value()
+                                        ),
+                                        this.dbConnection
+                                    )
+                                ),
+                                When.class
+                            )
+
                     )
                 ),
-                When.class
+                Request.class
             )
     )
         .result();
 
 The whole validation logic constitutes in a single expression. It is a higher-level ``FastFail`` (declared on (``Line 1``)) block, the one returning an error
 if the first argument results in an error. So the first thing is to check whether it's a valid json at all (``Line 3``), then whether it's a
-json object (``Line 2``). If everything's fine, a closure is invoked (``Line 7``), with the first argument being the well-formed json structure.
+json object (``Line 2``). If everything's fine, a closure is invoked (`Line 7`), with the first argument being the well-formed json structure.
 Then the structure itself is validated: it's a block (``Line 8``) named ``when`` (``Line 9``) consisting of other named entities. In this particular case
 we expect a single key called ``datetime`` (``Line 16``). It's required (``Line 15``), turned to string (``Line 14``) and checked whether it's a valid date (``Line 13``)
 which is greater than now (``Line 12``). Finally, I involve a database to find out whether some restaurant is able to deliver

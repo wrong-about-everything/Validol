@@ -2,7 +2,13 @@
    :hidden:
 
    quick_start
+
+.. toctree::
+   :caption: General
+   :maxdepth: 3
+
    the_why
+   http_status_codes_for_failed_validation
 
 .. toctree::
    :hidden:
