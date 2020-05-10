@@ -88,12 +88,19 @@
 <li class="toctree-l2"><a class="reference internal" href="../quick_start.html#learn-by-doing">Learn by doing!</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../the_why.html">The Why</a><ul>
+</ul>
+<p class="caption"><span class="caption-text">General</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../the_why.html">Why Validol?</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../the_why.html#it-s-declarative">It’s declarative</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../the_why.html#it-s-contextual">It’s contextual</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../the_why.html#it-s-infinitely-extendable">It’s infinitely extendable</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../the_why.html#it-s-re-usable">It’s re-usable</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../the_why.html#no-magic-and-hidden-dependencies">No magic and hidden dependencies</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../http_status_codes_for_failed_validation.html">HTTP status codes for failed validation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../http_status_codes_for_failed_validation.html#final-and-non-final-errors">Final and non-final errors</a></li>
 </ul>
 </li>
 </ul>
@@ -297,31 +304,59 @@ then the structure as a whole, the required fields, their format, and further so
 25
 26
 27
-28</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">new</span> <span class="n">FastFail</span><span class="o">&lt;&gt;(</span>
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">new</span> <span class="n">FastFail</span><span class="o">&lt;&gt;(</span>
     <span class="k">new</span> <span class="n">IsJsonObject</span><span class="o">(</span>
         <span class="k">new</span> <span class="n">WellFormedJson</span><span class="o">(</span>
-            <span class="k">new</span> <span class="n">IndexedValue</span><span class="o">(</span><span class="s">&quot;when&quot;</span><span class="o">,</span> <span class="n">jsonString</span><span class="o">)</span>
+            <span class="k">new</span> <span class="n">Unnamed</span><span class="o">&lt;&gt;(</span><span class="n">Either</span><span class="o">.</span><span class="na">right</span><span class="o">(</span><span class="k">new</span> <span class="n">Present</span><span class="o">&lt;&gt;(</span><span class="k">this</span><span class="o">.</span><span class="na">jsonRequestString</span><span class="o">)))</span>
         <span class="o">)</span>
     <span class="o">),</span>
-    <span class="n">whenJsonElement</span> <span class="o">-&gt;</span>
-        <span class="k">new</span> <span class="n">NamedBlocOfNameds</span><span class="o">&lt;&gt;(</span>
-            <span class="s">&quot;when&quot;</span><span class="o">,</span>
+    <span class="n">requestJsonObject</span> <span class="o">-&gt;</span>
+        <span class="k">new</span> <span class="n">UnnamedBlocOfNameds</span><span class="o">&lt;&gt;(</span>
             <span class="n">List</span><span class="o">.</span><span class="na">of</span><span class="o">(</span>
-                <span class="k">new</span> <span class="n">RestaurantIsAbleToDeliverBySpecifiedTime</span><span class="o">(</span>
-                    <span class="k">new</span> <span class="n">IsGreaterThan</span><span class="o">(</span>
-                        <span class="k">new</span> <span class="n">AsDate</span><span class="o">(</span>
-                            <span class="k">new</span> <span class="n">AsString</span><span class="o">(</span>
-                                <span class="k">new</span> <span class="n">Required</span><span class="o">(</span>
-                                    <span class="k">new</span> <span class="n">IndexedValue</span><span class="o">(</span><span class="s">&quot;datetime&quot;</span><span class="o">,</span> <span class="n">whenJsonElement</span><span class="o">)</span>
-                                <span class="o">)</span>
-                            <span class="o">)</span>
-                        <span class="o">),</span>
-                        <span class="k">new</span> <span class="n">Now</span><span class="o">().</span><span class="na">value</span><span class="o">()</span>
+                <span class="k">new</span> <span class="n">FastFail</span><span class="o">&lt;&gt;(</span>
+                    <span class="k">new</span> <span class="n">IsJsonObject</span><span class="o">(</span>
+                        <span class="k">new</span> <span class="n">WellFormedJson</span><span class="o">(</span>
+                            <span class="k">new</span> <span class="n">IndexedValue</span><span class="o">(</span><span class="s">&quot;when&quot;</span><span class="o">,</span> <span class="n">requestJsonObject</span><span class="o">)</span>
+                        <span class="o">)</span>
                     <span class="o">),</span>
-                    <span class="k">this</span><span class="o">.</span><span class="na">dbConnection</span>
+                    <span class="n">whenJsonElement</span> <span class="o">-&gt;</span>
+                        <span class="k">new</span> <span class="n">NamedBlocOfNameds</span><span class="o">&lt;&gt;(</span>
+                            <span class="s">&quot;when&quot;</span><span class="o">,</span>
+                            <span class="n">List</span><span class="o">.</span><span class="na">of</span><span class="o">(</span>
+                                <span class="k">new</span> <span class="n">RestaurantIsAbleToDeliverBySpecifiedTime</span><span class="o">(</span>
+                                    <span class="k">new</span> <span class="n">IsGreaterThan</span><span class="o">(</span>
+                                        <span class="k">new</span> <span class="n">AsDate</span><span class="o">(</span>
+                                            <span class="k">new</span> <span class="n">AsString</span><span class="o">(</span>
+                                                <span class="k">new</span> <span class="n">Required</span><span class="o">(</span>
+                                                    <span class="k">new</span> <span class="n">IndexedValue</span><span class="o">(</span><span class="s">&quot;datetime&quot;</span><span class="o">,</span> <span class="n">whenJsonElement</span><span class="o">)</span>
+                                                <span class="o">)</span>
+                                            <span class="o">)</span>
+                                        <span class="o">),</span>
+                                        <span class="k">new</span> <span class="n">Now</span><span class="o">().</span><span class="na">value</span><span class="o">()</span>
+                                    <span class="o">),</span>
+                                    <span class="k">this</span><span class="o">.</span><span class="na">dbConnection</span>
+                                <span class="o">)</span>
+                            <span class="o">),</span>
+                            <span class="n">When</span><span class="o">.</span><span class="na">class</span>
+                        <span class="o">)</span>
+
                 <span class="o">)</span>
             <span class="o">),</span>
-            <span class="n">When</span><span class="o">.</span><span class="na">class</span>
+            <span class="n">Request</span><span class="o">.</span><span class="na">class</span>
         <span class="o">)</span>
 <span class="o">)</span>
     <span class="o">.</span><span class="na">result</span><span class="o">();</span>
@@ -329,7 +364,7 @@ then the structure as a whole, the required fields, their format, and further so
 </td></tr></table></div>
 <p>The whole validation logic constitutes in a single expression. It is a higher-level <code class="docutils literal notranslate"><span class="pre">FastFail</span></code> (declared on (<code class="docutils literal notranslate"><span class="pre">Line</span> <span class="pre">1</span></code>)) block, the one returning an error
 if the first argument results in an error. So the first thing is to check whether it’s a valid json at all (<code class="docutils literal notranslate"><span class="pre">Line</span> <span class="pre">3</span></code>), then whether it’s a
-json object (<code class="docutils literal notranslate"><span class="pre">Line</span> <span class="pre">2</span></code>). If everything’s fine, a closure is invoked (<code class="docutils literal notranslate"><span class="pre">Line</span> <span class="pre">7</span></code>), with the first argument being the well-formed json structure.
+json object (<code class="docutils literal notranslate"><span class="pre">Line</span> <span class="pre">2</span></code>). If everything’s fine, a closure is invoked (<cite>Line 7</cite>), with the first argument being the well-formed json structure.
 Then the structure itself is validated: it’s a block (<code class="docutils literal notranslate"><span class="pre">Line</span> <span class="pre">8</span></code>) named <code class="docutils literal notranslate"><span class="pre">when</span></code> (<code class="docutils literal notranslate"><span class="pre">Line</span> <span class="pre">9</span></code>) consisting of other named entities. In this particular case
 we expect a single key called <code class="docutils literal notranslate"><span class="pre">datetime</span></code> (<code class="docutils literal notranslate"><span class="pre">Line</span> <span class="pre">16</span></code>). It’s required (<code class="docutils literal notranslate"><span class="pre">Line</span> <span class="pre">15</span></code>), turned to string (<code class="docutils literal notranslate"><span class="pre">Line</span> <span class="pre">14</span></code>) and checked whether it’s a valid date (<code class="docutils literal notranslate"><span class="pre">Line</span> <span class="pre">13</span></code>)
 which is greater than now (<code class="docutils literal notranslate"><span class="pre">Line</span> <span class="pre">12</span></code>). Finally, I involve a database to find out whether some restaurant is able to deliver

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>FAQ &mdash; Validol  documentation</title>
+  <title>HTTP status codes for failed validation &mdash; Validol  documentation</title>
   
 
   
@@ -34,7 +34,9 @@
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" /> 
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="How to validate a JSON object in java?" href="faq/how_to_validate_a_json_object_in_java.html" />
+    <link rel="prev" title="Why Validol?" href="the_why.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -88,7 +90,7 @@
 </li>
 </ul>
 <p class="caption"><span class="caption-text">General</span></p>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="the_why.html">Why Validol?</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="the_why.html#it-s-declarative">It’s declarative</a></li>
 <li class="toctree-l2"><a class="reference internal" href="the_why.html#it-s-contextual">It’s contextual</a></li>
@@ -97,8 +99,8 @@
 <li class="toctree-l2"><a class="reference internal" href="the_why.html#no-magic-and-hidden-dependencies">No magic and hidden dependencies</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="http_status_codes_for_failed_validation.html">HTTP status codes for failed validation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="http_status_codes_for_failed_validation.html#final-and-non-final-errors">Final and non-final errors</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">HTTP status codes for failed validation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#final-and-non-final-errors">Final and non-final errors</a></li>
 </ul>
 </li>
 </ul>
@@ -199,13 +201,13 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>FAQ</li>
+      <li>HTTP status codes for failed validation</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="_sources/FAQ.rst.txt" rel="nofollow"> View page source</a>
+            <a href="_sources/http_status_codes_for_failed_validation.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -218,39 +220,13 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="faq">
-<h1>FAQ<a class="headerlink" href="#faq" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="where-should-i-put-a-validation-logic">
-<h2>Where should I put a validation logic?<a class="headerlink" href="#where-should-i-put-a-validation-logic" title="Permalink to this headline">¶</a></h2>
-<p>e</p>
-</div>
-<div class="section" id="where-should-validation-go-in-domain-driven-design">
-<h2>Where should validation go in Domain-Driven Design<a class="headerlink" href="#where-should-validation-go-in-domain-driven-design" title="Permalink to this headline">¶</a></h2>
-<p>i</p>
-</div>
-<div class="section" id="should-i-throw-an-exception-or-return-a-bool-value-in-validation">
-<h2>Should I throw an exception or return a bool value in validation?<a class="headerlink" href="#should-i-throw-an-exception-or-return-a-bool-value-in-validation" title="Permalink to this headline">¶</a></h2>
-<p>j</p>
-</div>
-<div class="section" id="how-to-check-whether-a-given-string-is-valid-json-in-java">
-<h2>How to check whether a given string is valid JSON in Java?<a class="headerlink" href="#how-to-check-whether-a-given-string-is-valid-json-in-java" title="Permalink to this headline">¶</a></h2>
-<p>f</p>
-</div>
-<div class="section" id="how-to-check-whether-an-url-is-valid-in-java">
-<h2>How to check whether an URL is valid in Java?<a class="headerlink" href="#how-to-check-whether-an-url-is-valid-in-java" title="Permalink to this headline">¶</a></h2>
-<p>g</p>
-</div>
-<div class="section" id="how-to-validate-ipv4-string-in-java">
-<h2>How to validate IPv4 string in Java<a class="headerlink" href="#how-to-validate-ipv4-string-in-java" title="Permalink to this headline">¶</a></h2>
-<p>h</p>
-</div>
-<div class="section" id="how-to-perform-a-validation-against-regex-in-java">
-<h2>How to perform a validation against regex in Java?<a class="headerlink" href="#how-to-perform-a-validation-against-regex-in-java" title="Permalink to this headline">¶</a></h2>
-<p>k</p>
-</div>
-<div class="section" id="how-to-reduce-a-cyclomatic-complexity-in-validation">
-<h2>How to reduce a cyclomatic complexity in validation?<a class="headerlink" href="#how-to-reduce-a-cyclomatic-complexity-in-validation" title="Permalink to this headline">¶</a></h2>
-<p>l</p>
+  <div class="section" id="http-status-codes-for-failed-validation">
+<h1>HTTP status codes for failed validation<a class="headerlink" href="#http-status-codes-for-failed-validation" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="final-and-non-final-errors">
+<h2>Final and non-final errors<a class="headerlink" href="#final-and-non-final-errors" title="Permalink to this headline">¶</a></h2>
+<p>There are four states in total.</p>
+<p>They map to http codes.</p>
+<p>How to handle server error with side effect?</p>
 </div>
 </div>
 
@@ -259,6 +235,15 @@
            
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="faq/how_to_validate_a_json_object_in_java.html" class="btn btn-neutral float-right" title="How to validate a JSON object in java?" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="the_why.html" class="btn btn-neutral float-left" title="Why Validol?" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>

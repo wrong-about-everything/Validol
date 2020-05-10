@@ -88,12 +88,19 @@
 <li class="toctree-l2"><a class="reference internal" href="../quick_start.html#learn-by-doing">Learn by doing!</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../the_why.html">The Why</a><ul>
+</ul>
+<p class="caption"><span class="caption-text">General</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../the_why.html">Why Validol?</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../the_why.html#it-s-declarative">It’s declarative</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../the_why.html#it-s-contextual">It’s contextual</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../the_why.html#it-s-infinitely-extendable">It’s infinitely extendable</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../the_why.html#it-s-re-usable">It’s re-usable</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../the_why.html#no-magic-and-hidden-dependencies">No magic and hidden dependencies</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../http_status_codes_for_failed_validation.html">HTTP status codes for failed validation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../http_status_codes_for_failed_validation.html#final-and-non-final-errors">Final and non-final errors</a></li>
 </ul>
 </li>
 </ul>
@@ -431,6 +438,50 @@ For brevity sake, I’ll put only this one in the request:</p>
 <p>For more detailed example, check out Validol’s <a class="reference internal" href="../quick_start.html"><span class="doc">quick-start</span></a> entry.
 Also, there are plenty of <a class="reference external" href="https://github.com/wrong-about-everything/Validol/tree/master/src/test/java/example">higher-level unit tests</a>.
 And finally feel free to contribute!</p>
+<p>/<a href="#id2"><span class="problematic" id="id3">*</span></a>1 <a href="#id4"><span class="problematic" id="id5">*</span></a>/new FastFail&lt;&gt;(
+/<a href="#id6"><span class="problematic" id="id7">*</span></a>2 <a href="#id8"><span class="problematic" id="id9">*</span></a>/    new IsJsonObject(
+/<a href="#id10"><span class="problematic" id="id11">*</span></a>3 <a href="#id12"><span class="problematic" id="id13">*</span></a>/        new WellFormedJson(
+/<a href="#id14"><span class="problematic" id="id15">*</span></a>4 <a href="#id16"><span class="problematic" id="id17">*</span></a>/            new IndexedValue(“when”, jsonString)</p>
+<blockquote>
+<div><blockquote>
+<div>)</div></blockquote>
+<p>),</p>
+</div></blockquote>
+<p>/<em>7 */    whenJsonElement -&gt;
+/*8 */        new NamedBlocOfNameds&lt;&gt;(
+/*9 */            “when”,
+/*10</em>/            List.of(
+/<em>11</em>/                new RestaurantIsAbleToDeliverBySpecifiedTime(
+/<em>12</em>/                    new IsGreaterThan(
+/<em>13</em>/                        new AsDate(
+/<em>14</em>/                            new AsString(
+/<em>15</em>/                                new Required(
+/<em>16</em>/                                    new IndexedValue(“datetime”, whenJsonElement)</p>
+<blockquote>
+<div><blockquote>
+<div><blockquote>
+<div>)</div></blockquote>
+<p>)</p>
+</div></blockquote>
+<p>),</p>
+</div></blockquote>
+<dl class="docutils">
+<dt>/<em>20</em>/                        new Now().value()</dt>
+<dd>),</dd>
+<dt>/<em>22</em>/                    this.dbConnection</dt>
+<dd><blockquote class="first">
+<div>)</div></blockquote>
+<p class="last">),</p>
+</dd>
+<dt>/<em>25</em>/            When.class</dt>
+<dd><blockquote class="first">
+<div>)</div></blockquote>
+<dl class="last docutils">
+<dt>)</dt>
+<dd>.result();</dd>
+</dl>
+</dd>
+</dl>
 </div>
 </div>
 

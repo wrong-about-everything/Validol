@@ -1,5 +1,5 @@
-The Why
-=========
+Why Validol?
+==============
 
 There are quite a few libraries for data validation. Why `another one <https://github.com/wrong-about-everything/Validol>`_?
 
