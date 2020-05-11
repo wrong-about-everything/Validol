@@ -168,33 +168,3 @@ Further reading
 For more detailed example, check out Validol's :doc:`quick-start <../quick_start>` entry.
 Also, there are plenty of `higher-level unit tests <https://github.com/wrong-about-everything/Validol/tree/master/src/test/java/example>`_.
 And finally feel free to contribute!
-
-
-/*1 */new FastFail<>(
-/*2 */    new IsJsonObject(
-/*3 */        new WellFormedJson(
-/*4 */            new IndexedValue("when", jsonString)
-              )
-          ),
-/*7 */    whenJsonElement ->
-/*8 */        new NamedBlocOfNameds<>(
-/*9 */            "when",
-/*10*/            List.of(
-/*11*/                new RestaurantIsAbleToDeliverBySpecifiedTime(
-/*12*/                    new IsGreaterThan(
-/*13*/                        new AsDate(
-/*14*/                            new AsString(
-/*15*/                                new Required(
-/*16*/                                    new IndexedValue("datetime", whenJsonElement)
-                                      )
-                                  )
-                              ),
-/*20*/                        new Now().value()
-                          ),
-/*22*/                    this.dbConnection
-                      )
-                  ),
-/*25*/            When.class
-              )
-      )
-          .result();

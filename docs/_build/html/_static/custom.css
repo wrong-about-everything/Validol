@@ -1,0 +1,13 @@
+div.sphinxsidebarwrapper li.toctree-l1 {
+    padding-top: 3px;
+    padding-bottom: 4px;
+}
+
+div.sphinxsidebarwrapper p.caption {
+    /*color: #000;*/
+    font-size: 1.3em;
+    font-style: italic;
+    font-weight: bold;
+    margin-top: 25px;
+    margin-bottom: -10px;
+}

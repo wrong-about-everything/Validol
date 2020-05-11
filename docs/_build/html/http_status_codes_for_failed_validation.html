@@ -1,294 +1,262 @@
 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-<!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
-<head>
-  <meta charset="utf-8">
-  
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
-  <title>HTTP status codes for failed validation &mdash; Validol  documentation</title>
-  
-
-  
-  
-  
-  
-
-  
-  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
-  
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-        <script type="text/javascript" src="_static/jquery.js"></script>
-        <script type="text/javascript" src="_static/underscore.js"></script>
-        <script type="text/javascript" src="_static/doctools.js"></script>
-        <script type="text/javascript" src="_static/language_data.js"></script>
-    
-    <script type="text/javascript" src="_static/js/theme.js"></script>
-
-    
-
-  
-  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Final and non-final errors, failed client validation and server bugs, HTTP status codes, and other things to consider in a client-server communication &#8212; Validol  documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="How to validate a JSON object in java?" href="faq/how_to_validate_a_json_object_in_java.html" />
-    <link rel="prev" title="Why Validol?" href="the_why.html" /> 
-</head>
-
-<body class="wy-body-for-nav">
-
+    <link rel="next" title="Declarative validation" href="inspired_by/declarative_validation.html" />
+    <link rel="prev" title="Why Validol?" href="the_why.html" />
    
-  <div class="wy-grid-for-nav">
-    
-    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
-      <div class="wy-side-scroll">
-        <div class="wy-side-nav-search" >
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
           
 
-          
-            <a href="index.html" class="icon icon-home"> Validol
-          
-
-          
-          </a>
-
-          
+          <div class="body" role="main">
             
-            
-          
-
-          
-<div role="search">
-  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
-    <input type="hidden" name="check_keywords" value="yes" />
-    <input type="hidden" name="area" value="default" />
-  </form>
+  <div class="section" id="final-and-non-final-errors-failed-client-validation-and-server-bugs-http-status-codes-and-other-things-to-consider-in-a-client-server-communication">
+<h1>Final and non-final errors, failed client validation and server bugs, HTTP status codes, and other things to consider in a client-server communication<a class="headerlink" href="#final-and-non-final-errors-failed-client-validation-and-server-bugs-http-status-codes-and-other-things-to-consider-in-a-client-server-communication" title="Permalink to this headline">¶</a></h1>
+<p>Here are some general thoughts on two topics. First one covers a scenario when you’re a client dealing with some third party API.
+The second one is when you’re someone’s third party API, and you need to use a consistent strategy for error codes that your service can return.</p>
+<div class="section" id="as-a-client">
+<h2>As a client<a class="headerlink" href="#as-a-client" title="Permalink to this headline">¶</a></h2>
+<p>There is a huge amount of errors that a third-party service you’re intergrated with can return. Typically, they fall under a very
+limited amount of types. Each type corresponds to some strategy to implemement. Besides, putting yourself in the shoes of a client
+makes a perfect sense to come up with a consistent strategy regarding error response codes.</p>
+<dl class="docutils">
+<dt>As a client, I need to consider the following scenarios:</dt>
+<dd><ol class="first last arabic simple">
+<li>Can I even parse a response? That is, do I understand it?</li>
+<li>Is response successful, or not?</li>
+<li>Is it final?</li>
+</ol>
+</dd>
+</dl>
+<p>What do I need to do in each of those cases?</p>
+<p>Typically, it depends on whether a request you’re performing is with side-effects or not. For example, if you’re sending a request
+for a bank card authorization, it apparently implies a side-effect: a certain sum of money should be withdrawn from someone’s account.
+Otherwise, if you want to get a list of a customer’s previous orders, there is no side-effect involved.</p>
+<div class="section" id="request-with-side-effects">
+<h3>Request with side effects<a class="headerlink" href="#request-with-side-effects" title="Permalink to this headline">¶</a></h3>
+<p>If you don’t understand a response or can’t obtain it whatsoever, you need to perform a manual handling.
+The problem here is that you simply don’t have an idea of what happened with a request. Was it successful? Or it wasn’t? You don’t know.
+At the very least, you should log this response with a high severity.
+Better option is to programmatically pass this problem to tech support, so that they can connect with a corresponding third party service’s IT support.</p>
+<p>If you can parse a response, and you see that it’s not successful, it would be great to know whether you can try again. That is,
+whether a problem is final or not. If it’s not, you could save this request and try send it some time later.
+This option improves overall user experience, so is highly preferred. If it’s final, you can inform a customer right away,
+so she can try something else.</p>
+<p>If everything was fine and response was successful, it can be final and non-final, again. Typically this happens when you
+send some withdrawal request, but due to the asynchronous nature of a fintech world, you can’t know whether money were withdrawn right away.
+Often times, you get a response like “Thanks, we got your request. We’ll either send you a notification with a result, or you can request us for payment status from time to time”.</p>
+</div>
+<div class="section" id="request-without-side-effects">
+<h3>Request without side effects<a class="headerlink" href="#request-without-side-effects" title="Permalink to this headline">¶</a></h3>
+<p>This one is way easier. If you can’t parse a response, you can either try again, or you can tell your customer to try again.
+For example, the easiest option is to reload a page.</p>
+<p>If a response was not successful, or was not final, again, you don’t need any complex manipulations. Just try again, or let your customer to do it.</p>
+</div>
+</div>
+<div class="section" id="as-a-server">
+<h2>As a server<a class="headerlink" href="#as-a-server" title="Permalink to this headline">¶</a></h2>
+<p>Since you already have an idea what a client has to deal with when integrating with a third-party service, you as a server can make her life easier.
+In total, you have four states that you should handle explicitly:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>Invalid response (that is, the one that a client doesn’t understand).</li>
+<li>Successful response.</li>
+<li>Final non-successful response.</li>
+<li>Non-final non-successful response.</li>
+</ol>
+</div></blockquote>
+<div class="section" id="easy-parts">
+<h3>Easy parts<a class="headerlink" href="#easy-parts" title="Permalink to this headline">¶</a></h3>
+<p>OK, you can’t handle a case when your response is not a part of your <a class="reference internal" href="faq/how_to_parse_and_validate_json_schema_in_java.html"><span class="doc">schema</span></a>. Because if you could, there would be no such responses whatsoever.</p>
+<p>If a client request was successful, then it’s easy: you just return http code 200.</p>
+</div>
+<div class="section" id="what-is-non-successful-response">
+<h3>What is non-successful response?<a class="headerlink" href="#what-is-non-successful-response" title="Permalink to this headline">¶</a></h3>
+<p>The final two are about non-successful responses. First, you should have a firm grasp of what it is to be non-successful response.
+Is it that a payment request was not processed right away? I doubt this one is an erroneous case. Non-successful responses
+are for cases when there is no chance to be otherwise in principle. That is, when something’s wrong with a customer’s request data,
+or with your service.</p>
+</div>
+<div class="section" id="final-non-successful-responses-are-for-client-errors">
+<h3>Final non-successful responses are for client errors<a class="headerlink" href="#final-non-successful-responses-are-for-client-errors" title="Permalink to this headline">¶</a></h3>
+<p>So, third, final non-successful responses. If you give all those responses a long hard look, there is one thing in common to almost all of them:
+they are such because of a customer’s request data. It’s the case in a vast majority of cases.
+Should there was a different card number, or a different delivery address, or a different email, a request would a have a chance to be successful.
+So, all the final non-successful responses should have an http status code 40X, a variation of a client error.</p>
+</div>
+<div class="section" id="non-final-non-successful-responses-are-for-server-errors">
+<h3>Non-final non-successful responses are for server errors<a class="headerlink" href="#non-final-non-successful-responses-are-for-server-errors" title="Permalink to this headline">¶</a></h3>
+<p>And, what does a non-final non-successful response look like? It’s when your server behaves in an exceptional way. Typically, when there is a bug in your code,
+or some other services you request return an error. Customer’s request is perfectly fine, and she can try again.
+Probably it was a network error somewhere in between you and, say, your database instance. Or it’s a bug in your code that you might fix in a matter of minutes.
+Anyways, an http error status 500 is an indicator that an error is transient.</p>
+</div>
+<div class="section" id="employ-safety-nets-for-code-with-significant-side-effect">
+<h3>Employ safety nets for code with significant side-effect<a class="headerlink" href="#employ-safety-nets-for-code-with-significant-side-effect" title="Permalink to this headline">¶</a></h3>
+<p>The problem here is that you should deliniate parts of code where a bug happened before any significant side-effects could have happened,
+and where a bug happened after significant side-effects happened. For example, if an exception was thrown during validation, it’s not so problematic.</p>
+<p>But when an unexpected error occured after you have sent a payment request in a bank, you should treat this case extremely carefully.
+This danger zone should be wrapped in a <code class="code docutils literal notranslate"><span class="pre">try</span> <span class="pre">...</span> <span class="pre">catch</span></code> blocks, and if something went wrong, you should persist this state in a database.
+Why? Because if a customer sends this request for the second time (you can’t prohibit this), you don’t want her to be charged twice.</p>
+</div>
+<div class="section" id="send-an-operation-id">
+<h3>Send an operation id<a class="headerlink" href="#send-an-operation-id" title="Permalink to this headline">¶</a></h3>
+<p>Flash news: http is a stateless protocol. It can’t know whether two requests are in any way similar. It is you who should take care of it.
+How? Probably the easiest way is to make a customer to send some kind of an operation id, be it an order id generated by a frontend, or a transaction id, or something similar.
+If she tries again, or reloads the page, the request will be sent with the same operation id, and we as a backend service, will process it accordingly.</p>
+<p>I won’t consider a request without side effects here, since it’s way easier. Basically, it boils down to the fact that,
+most of the time, no special treatment is needed.</p>
+<hr class="docutils" />
+<p>A good way to implement complex validation in a <a class="reference internal" href="inspired_by/declarative_validation.html"><span class="doc">declarative</span></a>,
+hence maintainable, way is to use the validol library.
+It encourages <a class="reference internal" href="inspired_by/context_specific_validation.html"><span class="doc">contextual validation</span></a> and is infinitely extendable.
+<a class="reference internal" href="quick_start.html"><span class="doc">Check it out</span></a>.</p>
+</div>
+</div>
 </div>
 
+
+          </div>
           
         </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Validol</a></h1>
 
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
-              <ul>
-<li class="toctree-l1"><a class="reference internal" href="quick_start.html">Validol Quick start</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="quick_start.html#example">Example</a></li>
-<li class="toctree-l2"><a class="reference internal" href="quick_start.html#the-whole-validation-from-a-bird-s-view">The whole validation from a bird’s view</a></li>
-<li class="toctree-l2"><a class="reference internal" href="quick_start.html#line-by-line-analysis">Line-by-line analysis</a></li>
-<li class="toctree-l2"><a class="reference internal" href="quick_start.html#learn-by-doing">Learn by doing!</a></li>
-</ul>
-</li>
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="quick_start.html">Validol Quick start</a></li>
 </ul>
 <p class="caption"><span class="caption-text">General</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="the_why.html">Why Validol?</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="the_why.html#it-s-declarative">It’s declarative</a></li>
-<li class="toctree-l2"><a class="reference internal" href="the_why.html#it-s-contextual">It’s contextual</a></li>
-<li class="toctree-l2"><a class="reference internal" href="the_why.html#it-s-infinitely-extendable">It’s infinitely extendable</a></li>
-<li class="toctree-l2"><a class="reference internal" href="the_why.html#it-s-re-usable">It’s re-usable</a></li>
-<li class="toctree-l2"><a class="reference internal" href="the_why.html#no-magic-and-hidden-dependencies">No magic and hidden dependencies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="the_why.html">Why Validol?</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Final and non-final errors, failed client validation and server bugs, HTTP status codes, and other things to consider in a client-server communication</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#as-a-client">As a client</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#request-with-side-effects">Request with side effects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#request-without-side-effects">Request without side effects</a></li>
 </ul>
 </li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">HTTP status codes for failed validation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#final-and-non-final-errors">Final and non-final errors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#as-a-server">As a server</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#easy-parts">Easy parts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#what-is-non-successful-response">What is non-successful response?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#final-non-successful-responses-are-for-client-errors">Final non-successful responses are for client errors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#non-final-non-successful-responses-are-for-server-errors">Non-final non-successful responses are for server errors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#employ-safety-nets-for-code-with-significant-side-effect">Employ safety nets for code with significant side-effect</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#send-an-operation-id">Send an operation id</a></li>
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">FAQ</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="faq/how_to_validate_a_json_object_in_java.html">How to validate a JSON object in java?</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="faq/how_to_validate_a_json_object_in_java.html#request-validation">Request validation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="faq/how_to_validate_a_json_object_in_java.html#response-validation">Response validation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="faq/how_to_validate_a_json_object_in_java.html#validate-json-anywhere">Validate json anywhere</a></li>
-<li class="toctree-l2"><a class="reference internal" href="faq/how_to_validate_a_json_object_in_java.html#what-to-use-for-json-validation">What to use for json validation</a></li>
-</ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="faq/how_to_perform_validation_in_java.html">How to perform validation in Java?</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="faq/how_to_perform_validation_in_java.html#first-put-it-into-a-particular-scenario-the-one-you-re-validating">First, put it into a particular scenario – the one you’re validating</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="faq/how_to_perform_validation_in_java.html#quick-example">Quick example</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="faq/how_to_perform_validation_in_java.html#do-it-declaratively">Do it declaratively</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="faq/what_is_the_best_way_to_validate_json_request_in_java.html">What is the best way to validate a json request in Java?</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="faq/what_is_the_best_way_to_validate_json_request_in_java.html#problem">Problem</a></li>
-<li class="toctree-l2"><a class="reference internal" href="faq/what_is_the_best_way_to_validate_json_request_in_java.html#how-not-to-do-it">How not to do it</a></li>
-<li class="toctree-l2"><a class="reference internal" href="faq/what_is_the_best_way_to_validate_json_request_in_java.html#solution">Solution</a></li>
-<li class="toctree-l2"><a class="reference internal" href="faq/what_is_the_best_way_to_validate_json_request_in_java.html#example">Example</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="faq/how_to_parse_and_validate_json_schema_in_java.html">How to validate json schema in Java?</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="faq/how_to_parse_and_validate_json_schema_in_java.html#problems">Problems</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="faq/how_to_parse_and_validate_json_schema_in_java.html#validation-is-often-an-imperative-code-clutter">Validation is often an imperative code-clutter</a></li>
-<li class="toctree-l3"><a class="reference internal" href="faq/how_to_parse_and_validate_json_schema_in_java.html#json-schema-could-be-not-so-desirable-to-deal-with">JSON Schema could be not so desirable to deal with</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="faq/how_to_parse_and_validate_json_schema_in_java.html#solution">Solution</a></li>
-<li class="toctree-l2"><a class="reference internal" href="faq/how_to_parse_and_validate_json_schema_in_java.html#further-reading">Further reading</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="faq/what_is_the_best_java_email_address_validation_method.html">What is the best Java email address validation method?</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Inspired by</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="inspired_by/declarative_validation.html">Declarative validation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="inspired_by/declarative_validation.html#what-is-declarative">What is declarative?</a></li>
-<li class="toctree-l2"><a class="reference internal" href="inspired_by/declarative_validation.html#the-consequences-of-being-imperative-on-a-bigger-scale">The consequences of being imperative on a bigger scale</a></li>
-<li class="toctree-l2"><a class="reference internal" href="inspired_by/declarative_validation.html#what-declarative-is-not">What declarative is not?</a></li>
-<li class="toctree-l2"><a class="reference internal" href="inspired_by/declarative_validation.html#id1">Declarative validation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="inspired_by/declarative_validation.html#more-examples">More examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="inspired_by/declarative_validation.html">Declarative validation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="inspired_by/context_specific_validation.html">Contextual validation</a></li>
 </ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="inspired_by/context_specific_validation.html">Contextual validation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="inspired_by/context_specific_validation.html#context-independent-validation-bound-to-data-model">Context-independent validation bound to data-model</a></li>
-<li class="toctree-l2"><a class="reference internal" href="inspired_by/context_specific_validation.html#arguably-better-context-independent-validation-in-domain-objects">Arguably better: context-independent validation in domain objects</a></li>
-<li class="toctree-l2"><a class="reference internal" href="inspired_by/context_specific_validation.html#contextual-validation-that-is-specific-to-a-concrete-user-story">Contextual validation that is specific to a concrete user story</a></li>
-</ul>
-</li>
+<p class="caption"><span class="caption-text">FAQ</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="faq/how_to_validate_a_json_object_in_java.html">How to validate a JSON object in java?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="faq/how_to_perform_validation_in_java.html">How to perform validation in Java?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="faq/what_is_the_best_way_to_validate_json_request_in_java.html">What is the best way to validate a json request in Java?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="faq/how_to_parse_and_validate_json_schema_in_java.html">How to validate json schema in Java?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="faq/what_is_the_best_java_email_address_validation_method.html">What is the best Java email address validation method?</a></li>
 </ul>
 
-            
-          
-        </div>
-      </div>
-    </nav>
-
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
-          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="index.html">Validol</a>
-        
-      </nav>
-
-
-      <div class="wy-nav-content">
-        
-        <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
-  <ul class="wy-breadcrumbs">
-    
-      <li><a href="index.html">Docs</a> &raquo;</li>
-        
-      <li>HTTP status codes for failed validation</li>
-    
-    
-      <li class="wy-breadcrumbs-aside">
-        
-            
-            <a href="_sources/http_status_codes_for_failed_validation.rst.txt" rel="nofollow"> View page source</a>
-          
-        
-      </li>
-    
-  </ul>
-
-  
-  <hr/>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="the_why.html" title="previous chapter">Why Validol?</a></li>
+      <li>Next: <a href="inspired_by/declarative_validation.html" title="next chapter">Declarative validation</a></li>
+  </ul></li>
+</ul>
 </div>
-          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
-           <div itemprop="articleBody">
-            
-  <div class="section" id="http-status-codes-for-failed-validation">
-<h1>HTTP status codes for failed validation<a class="headerlink" href="#http-status-codes-for-failed-validation" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="final-and-non-final-errors">
-<h2>Final and non-final errors<a class="headerlink" href="#final-and-non-final-errors" title="Permalink to this headline">¶</a></h2>
-<p>There are four states in total.</p>
-<p>They map to http codes.</p>
-<p>How to handle server error with side effect?</p>
-</div>
-</div>
-
-
-           </div>
-           
-          </div>
-          <footer>
-  
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="faq/how_to_validate_a_json_object_in_java.html" class="btn btn-neutral float-right" title="How to validate a JSON object in java?" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
-      
-      
-        <a href="the_why.html" class="btn btn-neutral float-left" title="Why Validol?" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
-      
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
     </div>
-  
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
 
-  <hr/>
 
-  <div role="contentinfo">
-    <p>
-        &copy; Copyright 2019, Vadim Samokhin (samokhinvadim at gmail dot com)
 
-    </p>
-  </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
-</footer>
+
+
+
 
         </div>
       </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019, Vadim Samokhin (samokhinvadim at gmail dot com).
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/http_status_codes_for_failed_validation.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
 
-    </section>
-
-  </div>
-  
-
-
-  <script type="text/javascript">
-      jQuery(function () {
-          SphinxRtdTheme.Navigation.enable(true);
-      });
-  </script>
-
-  
-  
     
-    <!-- Theme Analytics -->
-    <script>
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
-    ga('create', 'UA-165581170-1', 'auto');
-    ga('send', 'pageview');
+    
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-165581170-1']);
+      _gaq.push(['_setDomainName', 'none']);
+      _gaq.push(['_setAllowLinker', true]);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
     </script>
-
     
-   
-
-</body>
+  </body>
 </html>

@@ -1,224 +1,38 @@
 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-<!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
-<head>
-  <meta charset="utf-8">
-  
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
-  <title>What is the best way to validate a json request in Java? &mdash; Validol  documentation</title>
-  
-
-  
-  
-  
-  
-
-  
-  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
-  
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-    
-    <script type="text/javascript" src="../_static/js/theme.js"></script>
-
-    
-
-  
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>What is the best way to validate a json request in Java? &#8212; Validol  documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="How to validate json schema in Java?" href="how_to_parse_and_validate_json_schema_in_java.html" />
-    <link rel="prev" title="How to perform validation in Java?" href="how_to_perform_validation_in_java.html" /> 
-</head>
-
-<body class="wy-body-for-nav">
-
+    <link rel="prev" title="How to perform validation in Java?" href="how_to_perform_validation_in_java.html" />
    
-  <div class="wy-grid-for-nav">
-    
-    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
-      <div class="wy-side-scroll">
-        <div class="wy-side-nav-search" >
-          
-
-          
-            <a href="../index.html" class="icon icon-home"> Validol
-          
-
-          
-          </a>
-
-          
-            
-            
-          
-
-          
-<div role="search">
-  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
-    <input type="hidden" name="check_keywords" value="yes" />
-    <input type="hidden" name="area" value="default" />
-  </form>
-</div>
-
-          
-        </div>
-
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
-              <ul>
-<li class="toctree-l1"><a class="reference internal" href="../quick_start.html">Validol Quick start</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../quick_start.html#example">Example</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../quick_start.html#the-whole-validation-from-a-bird-s-view">The whole validation from a bird’s view</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../quick_start.html#line-by-line-analysis">Line-by-line analysis</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../quick_start.html#learn-by-doing">Learn by doing!</a></li>
-</ul>
-</li>
-</ul>
-<p class="caption"><span class="caption-text">General</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../the_why.html">Why Validol?</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../the_why.html#it-s-declarative">It’s declarative</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../the_why.html#it-s-contextual">It’s contextual</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../the_why.html#it-s-infinitely-extendable">It’s infinitely extendable</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../the_why.html#it-s-re-usable">It’s re-usable</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../the_why.html#no-magic-and-hidden-dependencies">No magic and hidden dependencies</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../http_status_codes_for_failed_validation.html">HTTP status codes for failed validation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../http_status_codes_for_failed_validation.html#final-and-non-final-errors">Final and non-final errors</a></li>
-</ul>
-</li>
-</ul>
-<p class="caption"><span class="caption-text">FAQ</span></p>
-<ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="how_to_validate_a_json_object_in_java.html">How to validate a JSON object in java?</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="how_to_validate_a_json_object_in_java.html#request-validation">Request validation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="how_to_validate_a_json_object_in_java.html#response-validation">Response validation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="how_to_validate_a_json_object_in_java.html#validate-json-anywhere">Validate json anywhere</a></li>
-<li class="toctree-l2"><a class="reference internal" href="how_to_validate_a_json_object_in_java.html#what-to-use-for-json-validation">What to use for json validation</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="how_to_perform_validation_in_java.html">How to perform validation in Java?</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="how_to_perform_validation_in_java.html#first-put-it-into-a-particular-scenario-the-one-you-re-validating">First, put it into a particular scenario – the one you’re validating</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="how_to_perform_validation_in_java.html#quick-example">Quick example</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="how_to_perform_validation_in_java.html#do-it-declaratively">Do it declaratively</a></li>
-</ul>
-</li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">What is the best way to validate a json request in Java?</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#problem">Problem</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#how-not-to-do-it">How not to do it</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#solution">Solution</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#example">Example</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="how_to_parse_and_validate_json_schema_in_java.html">How to validate json schema in Java?</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="how_to_parse_and_validate_json_schema_in_java.html#problems">Problems</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="how_to_parse_and_validate_json_schema_in_java.html#validation-is-often-an-imperative-code-clutter">Validation is often an imperative code-clutter</a></li>
-<li class="toctree-l3"><a class="reference internal" href="how_to_parse_and_validate_json_schema_in_java.html#json-schema-could-be-not-so-desirable-to-deal-with">JSON Schema could be not so desirable to deal with</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="how_to_parse_and_validate_json_schema_in_java.html#solution">Solution</a></li>
-<li class="toctree-l2"><a class="reference internal" href="how_to_parse_and_validate_json_schema_in_java.html#further-reading">Further reading</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="what_is_the_best_java_email_address_validation_method.html">What is the best Java email address validation method?</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Inspired by</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../inspired_by/declarative_validation.html">Declarative validation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../inspired_by/declarative_validation.html#what-is-declarative">What is declarative?</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../inspired_by/declarative_validation.html#the-consequences-of-being-imperative-on-a-bigger-scale">The consequences of being imperative on a bigger scale</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../inspired_by/declarative_validation.html#what-declarative-is-not">What declarative is not?</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../inspired_by/declarative_validation.html#id1">Declarative validation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../inspired_by/declarative_validation.html#more-examples">More examples</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../inspired_by/context_specific_validation.html">Contextual validation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../inspired_by/context_specific_validation.html#context-independent-validation-bound-to-data-model">Context-independent validation bound to data-model</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../inspired_by/context_specific_validation.html#arguably-better-context-independent-validation-in-domain-objects">Arguably better: context-independent validation in domain objects</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../inspired_by/context_specific_validation.html#contextual-validation-that-is-specific-to-a-concrete-user-story">Contextual validation that is specific to a concrete user story</a></li>
-</ul>
-</li>
-</ul>
-
-            
-          
-        </div>
-      </div>
-    </nav>
-
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
-          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../index.html">Validol</a>
-        
-      </nav>
-
-
-      <div class="wy-nav-content">
-        
-        <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
-  <ul class="wy-breadcrumbs">
-    
-      <li><a href="../index.html">Docs</a> &raquo;</li>
-        
-      <li>What is the best way to validate a json request in Java?</li>
-    
-    
-      <li class="wy-breadcrumbs-aside">
-        
-            
-            <a href="../_sources/faq/what_is_the_best_way_to_validate_json_request_in_java.rst.txt" rel="nofollow"> View page source</a>
-          
-        
-      </li>
-    
-  </ul>
-
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
   
-  <hr/>
-</div>
-          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
-           <div itemprop="articleBody">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
             
   <div class="section" id="what-is-the-best-way-to-validate-a-json-request-in-java">
 <h1>What is the best way to validate a json request in Java?<a class="headerlink" href="#what-is-the-best-way-to-validate-a-json-request-in-java" title="Permalink to this headline">¶</a></h1>
@@ -341,64 +155,113 @@ Let’s take a look what’s going on here, line by line.</p>
 </div>
 
 
-           </div>
-           
           </div>
-          <footer>
-  
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="how_to_parse_and_validate_json_schema_in_java.html" class="btn btn-neutral float-right" title="How to validate json schema in Java?" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
-      
-      
-        <a href="how_to_perform_validation_in_java.html" class="btn btn-neutral float-left" title="How to perform validation in Java?" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
-      
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">Validol</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../quick_start.html">Validol Quick start</a></li>
+</ul>
+<p class="caption"><span class="caption-text">General</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../the_why.html">Why Validol?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../http_status_codes_for_failed_validation.html">Final and non-final errors, failed client validation and server bugs, HTTP status codes, and other things to consider in a client-server communication</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Inspired by</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../inspired_by/declarative_validation.html">Declarative validation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../inspired_by/context_specific_validation.html">Contextual validation</a></li>
+</ul>
+<p class="caption"><span class="caption-text">FAQ</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="how_to_validate_a_json_object_in_java.html">How to validate a JSON object in java?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="how_to_perform_validation_in_java.html">How to perform validation in Java?</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">What is the best way to validate a json request in Java?</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#problem">Problem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#how-not-to-do-it">How not to do it</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#solution">Solution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#example">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="how_to_parse_and_validate_json_schema_in_java.html">How to validate json schema in Java?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="what_is_the_best_java_email_address_validation_method.html">What is the best Java email address validation method?</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="how_to_perform_validation_in_java.html" title="previous chapter">How to perform validation in Java?</a></li>
+      <li>Next: <a href="how_to_parse_and_validate_json_schema_in_java.html" title="next chapter">How to validate json schema in Java?</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
     </div>
-  
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
 
-  <hr/>
 
-  <div role="contentinfo">
-    <p>
-        &copy; Copyright 2019, Vadim Samokhin (samokhinvadim at gmail dot com)
 
-    </p>
-  </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
-</footer>
+
+
+
 
         </div>
       </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019, Vadim Samokhin (samokhinvadim at gmail dot com).
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/faq/what_is_the_best_way_to_validate_json_request_in_java.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
 
-    </section>
-
-  </div>
-  
-
-
-  <script type="text/javascript">
-      jQuery(function () {
-          SphinxRtdTheme.Navigation.enable(true);
-      });
-  </script>
-
-  
-  
     
-    <!-- Theme Analytics -->
-    <script>
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
-    ga('create', 'UA-165581170-1', 'auto');
-    ga('send', 'pageview');
+    
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-165581170-1']);
+      _gaq.push(['_setDomainName', 'none']);
+      _gaq.push(['_setAllowLinker', true]);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
     </script>
-
     
-   
-
-</body>
+  </body>
 </html>
