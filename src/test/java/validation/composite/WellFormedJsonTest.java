@@ -1,5 +1,9 @@
 package validation.composite;
 
+import com.tngtech.java.junit.dataprovider.DataProvider;
+import com.tngtech.java.junit.dataprovider.DataProviderRunner;
+import com.tngtech.java.junit.dataprovider.UseDataProvider;
+import org.junit.runner.RunWith;
 import validation.composite.wellformedjson.WellFormedJson;
 import validation.leaf.is.NamedStub;
 import validation.result.Result;
@@ -9,23 +13,37 @@ import com.google.gson.JsonElement;
 import com.google.gson.reflect.TypeToken;
 import com.spencerwi.either.Either;
 import org.junit.Test;
-
 import java.util.*;
 import static org.junit.Assert.*;
 
+@RunWith(DataProviderRunner.class)
 final public class WellFormedJsonTest
 {
     @Test
-    public void invalidJson() throws Exception
+    @UseDataProvider("invalidJsons")
+    public void invalidJson(String json) throws Exception
     {
         Result<JsonElement> result =
             (new WellFormedJson(
-                new NamedStub<>("vasya", Either.right(new Present<>("invalid json azaza")))
+                new NamedStub<>("vasya", Either.right(new Present<>(json)))
             ))
                 .result();
 
         assertFalse(result.isSuccessful());
         assertEquals("This must be a well-formed json.", result.error().value().get("message"));
+    }
+
+    @DataProvider
+    public static Object[][] invalidJsons()
+    {
+        return
+            new Object[][] {
+                {"{\"hey\": there\"}"},
+                {"invalid json azaza\""},
+                {"[\"a\": 123]"},
+                {"{\"a\":{1, 2}}"},
+                {""}
+            };
     }
 
     @Test

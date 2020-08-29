@@ -1,5 +1,6 @@
 package validation.composite.wellformedjson;
 
+import com.google.gson.Gson;
 import validation.result.Named;
 import validation.result.NonSuccessfulWithCustomError;
 import validation.result.Result;
@@ -10,6 +11,8 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
 import com.spencerwi.either.Either;
+
+import java.io.IOException;
 
 final public class WellFormedJson implements Validatable<JsonElement>
 {
@@ -40,8 +43,7 @@ final public class WellFormedJson implements Validatable<JsonElement>
                             originalResult.name(),
                             Either.right(
                                 new Present<>(
-                                    new JsonParser().parse(originalResult.value().raw())
-                                        .getAsJsonObject()
+                                    new Gson().getAdapter(JsonElement.class).fromJson(originalResult.value().raw())
                                 )
                             )
                         )
@@ -49,13 +51,11 @@ final public class WellFormedJson implements Validatable<JsonElement>
                         new Unnamed<>(
                             Either.right(
                                 new Present<>(
-                                    new JsonParser().parse(originalResult.value().raw())
-                                        .getAsJsonObject()
+                                    new Gson().getAdapter(JsonElement.class).fromJson(originalResult.value().raw())
                                 )
                             )
-                        )
-                ;
-        } catch(JsonSyntaxException ex) {
+                        );
+        } catch(IOException ex) {
             return new NonSuccessfulWithCustomError<>(originalResult, new MustBeWellFormedJson());
         }
     }
